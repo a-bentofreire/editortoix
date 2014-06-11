@@ -1,0 +1,9 @@
+/*jshint esnext:true */
+var square = (x) => {
+  return x * x;
+};
+alert(square(2)  +4);
+for (var element of [1, 2, 3]) {
+  res.push(element * element);
+}
+var t = 3 * 4; 

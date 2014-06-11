@@ -16,7 +16,7 @@ The list of commands are:
 1. Case Change: **UpperCase**, **LowerCase**, **Capitalize**, **CamelCase**  
 2. Encoders: **HtmlEncode**, **UrlEncode**  
 3. Slash Change: **Unix To Win**, **Win To Unix**, **Single Slash To Double**, **Double To Single Slash**  
-4. Spacing: **Tab To Space**, **Space To Tab**  -   Space to Tab only works with leading spaces
+4. Spacing: **Tab To Space**, **Space To Tab**  -   Space to Tab only works with leading spaces  
 5. Line Commands:  
 
   * **Join**, **Split**

@@ -60,7 +60,7 @@ By default, the compile on save is not active. You can use the **Options** to ac
 
 These are the plans for next versions implementations:  
 
-* Text transforms: **HtmlDecode**, **Num To Hex**, **Hex To Num **  
+* Text transforms: **HtmlDecode**, **Num To Hex**, **Hex To Num**  
 * Line Commands: **Eliminate Empty lines**  
 * Trim Trailing on save  
 * Display the compilation error on a bottom panel  

@@ -90,7 +90,7 @@ define(function () {
     // commands options (showinmenu, hotkey)
     commands: {
         value: { 
-            showinmenu: ["uppercase", "lowercase", /*"capitalize", "camelcase", "htmlencode", "urlencode", "join", "split", "number", "trimleading", */"trimtrailing", /*"sortascending", "sortdescending", "removeduplicates", "unixtowin", "wintounix", "singleslashtodouble", "doubletosingleslash", "tabtospace", "spacetotab", "openurl", "websearch", "copyfilename", "copyfullname",*/ "compiler", /*"rungrunt"*/, "commands", "commandsmapper", "options", "help"],
+            showinmenu: ["uppercase", "lowercase", /*"capitalize", "camelcase", "htmlencode", "urlencode", "join", "split", "number", "trimleading", */"trimtrailing", /*"sortascending", "sortdescending", "removeduplicates", "removeemptylines", "unixtowin", "wintounix", "singleslashtodouble", "doubletosingleslash", "tabtospace", "spacetotab", "openurl", "websearch", "copyfilename", "copyfullname",*/ "compiler", /*"rungrunt"*/, "commands", "commandsmapper", "options", "help"],
         hotkeys: {},
         }        
     },

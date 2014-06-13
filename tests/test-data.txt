@@ -5,4 +5,12 @@
     apple
     test-data.txt
 
+Test Western languages:
+    áãóíú
+Test Chinese:
+    你好
+
+Test HtmlEncode/Decode
+    <gf h=&&*>
+
 http://www.site.com

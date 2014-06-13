@@ -45,8 +45,11 @@
     function cmdExec(cmdline, callback, param) {
         nodeExec(cmdline, function (error, stdout, stderr) {
             console.log('Executed' + cmdline);
+            if (stderr) {
+                console.log('StdErr:' + stderr);
+            }
             if (callback) {
-                callback(error, stdout, stderr, param);
+                callback(error, stdout, stderr, param);                
             }
         });
     }

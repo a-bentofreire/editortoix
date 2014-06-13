@@ -244,6 +244,14 @@ define(function (require, exports, module) {
         });
     }
 
+    function htmlDecode() {
+        changeSelection(function (text) {
+            var d = document.createElement('div');
+            d.innerHTML = text;
+            return d.textContent;
+        });
+    }
+
     function urlEncode() {
         changeSelection(function (text) {
             return window.encodeURIComponent(text);
@@ -261,6 +269,19 @@ define(function (require, exports, module) {
             return arr;
         }, true);
     }
+
+    function removeEmptyLines() {
+        changeSelection(function (arr) {
+            var i = arr.length - 1;
+            for(;i >= 0; i--) {
+                if(!arr[i].trim()) {
+                    arr.splice(i, 1);
+                }
+            }
+            return arr;
+        }, true);
+    }
+    
 
     function tabToSpace() {
         replaceSelection(/\t/gm, strrepeat(' ', prefs.tabSize.value));
@@ -363,6 +384,7 @@ define(function (require, exports, module) {
                         outfile = infile.substr(0, infile.length - ext.inext.length) + ext.outext;
                         cmdline = pref.value;
                         nodeExec(cmdline.replace('{{out}}', outfile).replace('{{in}}', infile)/*, showResultsPanel, true*/);
+                        break;
                     }
                 }
             }
@@ -467,6 +489,7 @@ define(function (require, exports, module) {
             {name: "Capitalize", f: capitalizeText},
             {name: "CamelCase", f: camelCaseText},
             {name: "HtmlEncode", f: htmlEncode},
+            {name: "HtmlDecode", f: htmlDecode},
             {name: "UrlEncode", f: urlEncode},
             {name: "Join", f: joinText},
             {name: "Split...", f: splitText},
@@ -476,6 +499,7 @@ define(function (require, exports, module) {
             {name: "Sort Ascending", f: sortAscending},
             {name: "Sort Descending", f: sortDescending},
             {name: "Remove Duplicates", f: removeDuplicates},
+            {name: "Remove Empty Lines", f: removeEmptyLines},
             {},
             {name: "Unix To Win", f: unixToWin},
             {name: "Win To Unix", f: winToUnix},

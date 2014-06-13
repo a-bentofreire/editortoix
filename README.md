@@ -11,10 +11,10 @@ No default shortcuts were define to prevent collision with other plugins.
 
 ## Text Transformations
 
-This commands will **only** operate the selected text.  
+These commands will **only** operate the selected text.  
 The list of commands are:  
 1. Case Change: **UpperCase**, **LowerCase**, **Capitalize**, **CamelCase**  
-2. Encoders: **HtmlEncode**, **UrlEncode**  
+2. Encoders/Decoders: **HtmlEncode**, **HtmlDecode**, **UrlEncode**  
 3. Slash Change: **Unix To Win**, **Win To Unix**, **Single Slash To Double**, **Double To Single Slash**  
 4. Spacing: **Tab To Space**, **Space To Tab**  -   Space to Tab only works with leading spaces  
 5. Line Commands:  
@@ -22,8 +22,8 @@ The list of commands are:
   * **Join**, **Split**
   * **Number** - this commands add a number prefix to every selected line
   * **Trim Leading**, **Trim Trailing**  
-  * **Sort Ascending**, **Sort Descending** 
-  * **Remove Duplicates**  - only works with already sorted lines  
+  * **Sort Ascending**, **Sort Descending**, **Eliminate Empty lines** 
+  * **Remove Duplicates** - only works with already sorted lines  
 
 ## Clipboard Commands  
 
@@ -56,13 +56,17 @@ By default, the compile on save is not active. You can use the **Options** to ac
   * **Commands Mapper** - Allows to define which commands are on the menu, and associate shortcuts.
   * **Options** - Configuration dialog
 
+## Version History
+* 1.1 - Adds:Eliminate Empty lines, HtmlDecode. Fixes:documentation errors
+
+
 ## Roadmap
 
 These are the plans for next versions implementations:  
 
-* Text transforms: **HtmlDecode**, **Num To Hex**, **Hex To Num**  
-* Line Commands: **Eliminate Empty lines**  
+* Text transforms: **Num To Hex**, **Hex To Num**  
 * Trim Trailing on save  
+* Initially focus Command field on the Commands dialog
 * Display the compilation error on a bottom panel  
 * File Extension mapper. Ex: inc->php  
 * Code snippets 

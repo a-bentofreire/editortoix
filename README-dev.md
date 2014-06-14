@@ -15,6 +15,7 @@ Most of the commands operate on selected text.
 If no text is selected, a command will:
 [word] - Use the nearest word (before and after the cursor)
 [sentence] - All the nearest text until a whitespace or newline
+[line] - Uses all the text where is cursor is located
 [all] - Use all the editor text
 
 ## Text Transformations
@@ -90,7 +91,9 @@ By default, the compile on save is not active. You can use the **Options** to ac
     Root scripts are whitespace compressed with Google Closure 
 * 1.2.1
     Fixes: Documentation errors
-
+* 1.2.2
+    Adds Regnize to ExtractortoIX and ReplacetoIX dialogs
+    The current editor is re-activated after a dialog.
 
 ## Roadmap
 
@@ -113,7 +116,7 @@ These are the plans for next versions implementations:
 This extension was created and tested on Windows 8.1,
 feedback of bugs on this and other platforms are welcome.
 
-## License ##
+## License 
 
 MIT license
 

@@ -39,7 +39,7 @@ define(function () {
     function _buildIo(prefs, prefsio, preftoio) {
         Object.keys(prefs).forEach(function (key) {
             var pref = prefs[key], prefio;
-
+                        
             if (pref.value !== undefined) {
                 prefio = prefsio[key];
                 if (prefio === undefined) {
@@ -120,12 +120,14 @@ define(function () {
     findre : {
         value: '',
         label: 'Find',
+        buttons: [{label: 'Regnize'}]
     },
         
     // replacetoix command options
     find : {
         value: '',
         label: 'Find',
+        buttons: [{label: 'Regnize'}]
     },
     replace : {
         value: '',

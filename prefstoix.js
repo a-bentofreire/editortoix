@@ -1,5 +1,5 @@
-/*
- * Copyright (c) 2014 Alexandre Bento Freire. All rights reserved.
+/**
+ * @preserve Copyright (c) 2014 Alexandre Bento Freire. All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -89,10 +89,7 @@ define(function () {
 
     // commands options (showinmenu, hotkey)
     commands: {
-        value: { 
-            showinmenu: ["uppercase", "lowercase", /*"capitalize", "camelcase", "htmlencode", "urlencode", "join", "split", "number", "trimleading", */"trimtrailing", /*"sortascending", "sortdescending", "removeduplicates", "removeemptylines", "unixtowin", "wintounix", "singleslashtodouble", "doubletosingleslash", "tabtospace", "spacetotab", "openurl", "websearch", "copyfilename", "copyfullname",*/ "compiler", /*"rungrunt"*/, "commands", "commandsmapper", "options", "help"],
-        hotkeys: {},
-        }        
+        value: { showinmenu: [], hotkeys: {} }        
     },
         
     // splitText command options
@@ -119,7 +116,48 @@ define(function () {
         label: 'Tab Size',
         type: 'number'
     },
+    // extractortoix command options
+    findre : {
+        value: '',
+        label: 'Find',
+    },
         
+    // replacetoix command options
+    find : {
+        value: '',
+        label: 'Find',
+    },
+    replace : {
+        value: '',
+        label: 'Replace',
+        canempty: true,
+    },
+    iswordsonly : {
+        value: false,
+        label: 'Words Only',
+        type: 'boolean',
+        canempty: true,
+    },
+    isregexpr : {
+        value: true,
+        label: 'Regular Expression',
+        type: 'boolean',
+        canempty: true,
+    },
+    isignorecase : {
+        value: false,
+        label: 'Ignore Case',        
+        type: 'boolean',
+        canempty: true,
+    },
+
+    isall : {
+        value: true,
+        label: 'Replace All',
+        type: 'boolean',
+        canempty: true,
+    },
+    
     // webSearch command options
     webSearch: {
         value: 'https://www.google.com/search?q=',

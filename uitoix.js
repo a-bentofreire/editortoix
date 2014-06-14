@@ -1,5 +1,5 @@
-/*
- * Copyright (c) 2014 Alexandre Bento Freire. All rights reserved.
+/**
+ * @preserve Copyright (c) 2014 Alexandre Bento Freire. All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -46,13 +46,13 @@ define(function () {
                 DEFSIZE = 25,
                 BRACKETSTOIX_DIALOG_ID = "bracketstoix-dialog";
 
-            var dlg, qdlg;
+            var dlg, qdlg, firstfieldid;
 
 
             // Builds Field
             function buildField(html, field, fieldname, suffix) {
                 // Creates visual field values based on prefs
-                var i, inptype, hint, inpelement;
+                var i, inptype, hint, inpelement, id;
 
                 hint = field.hint || '';
                 inptype = 'text';
@@ -77,7 +77,9 @@ define(function () {
                 if (field.label) {
                     html += '<td>' + i18n(field.label) + ':</td>';
                 }
-                html += '<td align=' + (field.align || 'left') + '><' + inpelement + ' id=' + PREFIX + fieldname + suffix +
+                id = PREFIX + fieldname + suffix;
+                firstfieldid = firstfieldid || id;
+                html += '<td align=' + (field.align || 'left') + '><' + inpelement + ' id=' + id +
                     (field.max ? ' max=' + field.max : '') +
                     ' title="' + _htmlencode(hint) + '"' +
                     ' value="' + _htmlencode(field.value) + '"' +
@@ -111,7 +113,7 @@ define(function () {
                 var html = '';
 
                 if(opts && opts.msg) {
-                    html += '<th>' + _htmlencode(opts.msg) + '</th>';
+                    html += '<div>' + opts.msg + '</div>';
                 }
 
                 html += '<table>';
@@ -136,8 +138,18 @@ define(function () {
                 i18n(title),
                 buildHtml(), [{className: Dialogs.DIALOG_BTN_CLASS_PRIMARY, id: Dialogs.DIALOG_BTN_OK, text: "OK"},
                        {className: Dialogs.DIALOG_BTN_CLASS_NORMAL, id: Dialogs.DIALOG_BTN_CANCEL, text: "Cancel"}], false);
-
+            
             qdlg = dlg.getElement();
+            if (firstfieldid) {
+                qdlg.find('#' + firstfieldid).focus();
+            }
+            qdlg.keydown(function(event) {
+                if (event.which === 27) { // escape
+                    event.preventDefault();
+                    dlg.close();
+                }
+            });
+            
             qdlg.one("click", ".dialog-button", function (e) {
 
                 function storeField(field, fieldname, suffix) {

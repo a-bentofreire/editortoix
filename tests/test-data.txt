@@ -1,16 +1,39 @@
-/a/b/ cc\dd\f<f>f
+[Case]
+getSelection SetSelection alllower ALLUPPER
+[lower+UPPER LOWER+UPPER SEMI mi]
 
-    orange
-    clear
-    apple
-    test-data.txt
+[Slashes]
+/a/b/ 
+cc\dd\f
+cc\\dd\\f
+    
+[Tabs]
+ 1 before
+  2 before
+    3 after
 
-Test Western languages:
+[List]
+orange
+apple
+
+clear   
+Apple
+apple
+test-data.txt
+
+[Test Regnize]
+(ab.*?.+)
+
+[Test HtmlEncode/Decode]
+<input class="inp_class" type="text">
+
+[Test Url]
+http://www.a-bentofreire.com
+google
+
+[Test Western languages]
     áãóíú
-Test Chinese:
+
+[Test Chinese]
     你好
-
-Test HtmlEncode/Decode
-    <gf h=&&*>
-
-http://www.site.com
+LAST LINE (DON'T ADD ENTER!)

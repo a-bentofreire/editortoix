@@ -87,16 +87,26 @@ define(function () {
                     (inptype === 'checkbox' && field.value ? ' checked' : '') +
                     (!field.canempty ? ' required' : '');
 
-                if (inpelement === 'input') {
-                    html += ' type=' + inptype + '>';
-                } else {
-                    html += '>';
-                    field.values.forEach(function (v) {
-                        html += '<option value="' + _htmlencode(v) + '">' + _htmlencode(v) + '</option>';
+                switch(inpelement) {
+                    case 'input' : 
+                        html += ' type=' + inptype + '>';
+                        break;
+                        
+                    case 'select' :
+                        html += '>';
+                        field.values.forEach(function (v) {
+                            html += '<option value="' + _htmlencode(v) + '">' + _htmlencode(v) + '</option>';
+                        });
+                        html += '</select>';
+                        break;
+                } 
+                if (field.buttons) {
+                    field.buttons.forEach(function (button, index) {
+                        html += '<button class="field-button" data-info="' + id + ',' + fieldname + ',' + index + '"' + 
+                            '">' + _htmlencode(button.label) + '</button>';
                     });
-                    html += '</select>';
                 }
-
+                
                 html += '</td>';
                 // Subfields
                 if (field.fields) {
@@ -106,7 +116,6 @@ define(function () {
                 }
                 return html;
             }
-
 
 
             function buildHtml() {
@@ -136,8 +145,8 @@ define(function () {
             dlg = Dialogs.showModalDialog(
                 BRACKETSTOIX_DIALOG_ID,
                 i18n(title),
-                buildHtml(), [{className: Dialogs.DIALOG_BTN_CLASS_PRIMARY, id: Dialogs.DIALOG_BTN_OK, text: "OK"},
-                       {className: Dialogs.DIALOG_BTN_CLASS_NORMAL, id: Dialogs.DIALOG_BTN_CANCEL, text: "Cancel"}], false);
+                buildHtml(), [{className: Dialogs.DIALOG_BTN_CLASS_PRIMARY, id: Dialogs.DIALOG_BTN_OK, text: 'OK'},
+                       {className: Dialogs.DIALOG_BTN_CLASS_NORMAL, id: Dialogs.DIALOG_BTN_CANCEL, text: 'Cancel'}], false);
             
             qdlg = dlg.getElement();
             if (firstfieldid) {
@@ -149,6 +158,15 @@ define(function () {
                     dlg.close();
                 }
             });
+            qdlg.find(".field-button").click(function (e) {
+                var qfld, fld, info, idx, id;
+                info = $(this).attr('data-info').split(','); 
+                id = info[0];
+                fld = info[1];
+                idx = info[2];
+                qfld = qdlg.find('#' + id);
+                qfld.val(allfields[fld].buttons[idx].f(qfld.val()));            
+            });    
             
             qdlg.one("click", ".dialog-button", function (e) {
 
@@ -191,7 +209,8 @@ define(function () {
                     return true;
                 }
 
-                var isOK = $(this).attr("data-button-id") === "ok";
+                // THE CODE STARTS HERE 
+                var isOK = $(this).attr('data-button-id') === 'ok';
                 if (isOK) {
                     $.each(fieldnames, function(index, fieldname) {
                         isOK = storeField(allfields[fieldname], fieldname, '');

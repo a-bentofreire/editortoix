@@ -17,7 +17,7 @@ orange
 apple
 
 clear   
-Apple
+apple
 apple
 test-data.txt
 

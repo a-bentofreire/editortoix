@@ -180,6 +180,7 @@ define(function (require, exports, module) {
                 so.cursel = so.cm.getRange(so.start, so.end);    
             }
         }
+        so.cm.focus();
         return so;
     }
 
@@ -200,7 +201,7 @@ define(function (require, exports, module) {
                 so.cm.replaceSelection(newsel, so);
             } else {
                 so.cm.replaceRange(newsel, so.start, so.end);
-            }
+            }            
         }
     }
 
@@ -618,7 +619,8 @@ define(function (require, exports, module) {
             {name: "Copy Fullname", f: fullnameToClipboard},
             {name: "Regnize", f: regnize},
             {},
-            {name: "Compiler", f: runCompiler, label: "Compile(js6, scss)", priority: SHOWONMENU}, //TODO: Implement "/Run(py, js)"
+            //{name: "Regex Tester", f: regexTester},
+               {name: "Compiler", f: runCompiler, label: "Compile(js6, scss)", priority: SHOWONMENU}, //TODO: Implement "/Run(py, js)"
             /*{name: "Run grunt", f: runGrunt}, */
             {},
             {name: "Commands...", f: showCommands, priority: SHOWONMENU},
@@ -672,11 +674,18 @@ define(function (require, exports, module) {
             }
         });
     }
-
+ 
+    function initprefbuttons() {
+        prefs.find.buttons[0].f = function(text) { return getregnize(text, true); };
+        prefs.findre.buttons[0].f = prefs.find.buttons[0].f;
+    }
+    
     fillshowonmenu(); // must be before loadextprefs
+    initprefbuttons();
     loadextprefs();
     buildCommands();
     runLanguageMapper();
+    initprefbuttons();
 /** ------------------------------------------------------------------------
  *                               Save Commands
  ** ------------------------------------------------------------------------ */

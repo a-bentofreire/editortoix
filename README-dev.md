@@ -88,6 +88,8 @@ By default, the compile on save is not active. You can use the **Options** to ac
     Commands dialog shows sorted list of commands
     Fixes: Command command
     Root scripts are whitespace compressed with Google Closure 
+* 1.2.1
+    Fixes: Documentation errors
 
 
 ## Roadmap

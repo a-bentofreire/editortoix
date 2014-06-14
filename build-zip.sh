@@ -2,7 +2,7 @@
 #If running Windows. Install GitHub for Windows. Add it to the search path. And install a zip.exe for windows 
 rm -f -r dist/
 mkdir dist
-cat README-dev.md | sed 's/$/  g/' > README.md
+cat README-dev.md | sed 's/$/  /' > README.md
 find -type d -maxdepth 1 | perl -n -e 'if(!/\.git/ && !/dist/ && !/tests/ && !/compressors/) { s/^\.(.+)/cp -r .\1 dist\1/; print;}' | bash
 find -type f -maxdepth 1 | perl -n -e 'if(!/\.git/ && !/\.sh/ && !/-dev/) { s/^\.(.+)/cp -r .\1 dist\1/; print;}' | bash
 #Brackets doesn't recognizes after names are renamed. So I use only --compilation_level WHITESPACE_ONLY

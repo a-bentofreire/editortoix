@@ -248,7 +248,7 @@ define(function () {
                         if (!res) {
                             return false;
                         }
-                    }
+                    } 
                     return true;
                 }
 

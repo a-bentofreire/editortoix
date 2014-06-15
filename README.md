@@ -6,7 +6,7 @@ This extension adds a bundle of features to Adobe Brackets.
   
 ## Interface  
   
-BracketstoIX adds an top-menu called 'IX'.  
+BracketstoIX adds a top-menu called 'IX'.  
 To prevent from cluttering the menu with all the commands, only a few commands were added to the menu.  
 Use Command mapper to add which ones you prefer, and setup the shortcuts.  
 No default shortcuts were define to prevent collision with other plugins.  
@@ -80,7 +80,7 @@ By default, the compile on save is not active. You can use the **Options** to ac
   
 ## Version History  
 * 1.2.3  
-    Dialogs: Support transparency slider  
+    Dialogs: Supports transparency slider  
   
 * 1.2.2  
     Adds Regnize to ExtractortoIX and ReplacetoIX dialogs  
@@ -103,7 +103,7 @@ By default, the compile on save is not active. You can use the **Options** to ac
   
 ## Roadmap  
   
-These are the plans for next versions implementations:  
+These are the plans for the next versions:  
   
 * Go back to the previous edit cursor positions  
 * Text transforms: **Num To Hex**, **Hex To Num**  

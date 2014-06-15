@@ -32,6 +32,26 @@ define(function () {
     function _htmlencode(text) {
         return escape(text).replace(/%(\w\w)/g, '&#x$1;');
     }
+    
+    // Recomputes the background-color of a jQuery obj for a different a transparency
+    function _retransparency(qObj, transparency) {
+        var RGB, color = qObj.css('background-color').trim();
+        if (!color) {
+            return false;
+        } 
+        if (color[1] === '#') {
+            RGB = [1, 3, 5];
+            RGB.forEach(function (v, i) {
+                RGB[i] = parseInt(color.substr(v, v + 2), 16);
+            });
+        } else if (color.indexOf('rgb') > -1) {
+            RGB = color.split('(')[1].split(')')[0].split(',');
+        } else {
+            return false;
+        }
+        qObj.css('background-color', 'rgba(' + RGB[0] + ',' + RGB[1] + ',' + RGB[2] + ',' + transparency + ')');                         
+        return true;
+    }
 /** ------------------------------------------------------------------------
  *                               Exported
  ** ------------------------------------------------------------------------ */
@@ -49,7 +69,7 @@ define(function () {
             var dlg, qdlg, firstfieldid;
 
 
-            // Builds Field
+            // Builds the Visual Field
             function buildField(html, field, fieldname, suffix) {
                 // Creates visual field values based on prefs
                 var i, inptype, hint, inpelement, id;
@@ -121,8 +141,12 @@ define(function () {
             function buildHtml() {
                 var html = '';
 
+            
+                html += '<input id=dlgtransparency title="Transparency" type=range min=20 max=100 value=100 ' +
+                    'style="position:absolute;right:+10px;top:0px;border:dotted #8c8c8c 1px"><div style="margin-bottom:5px">&nbsp;</div>';
+                
                 if(opts && opts.msg) {
-                    html += '<div>' + opts.msg + '</div>';
+                    html += '<div style="margin-bottom:5px">' + opts.msg + '</div>';
                 }
 
                 html += '<table>';
@@ -142,6 +166,9 @@ define(function () {
                 return html;
             }
 
+    // Main code starts hereby
+            
+            
             dlg = Dialogs.showModalDialog(
                 BRACKETSTOIX_DIALOG_ID,
                 i18n(title),
@@ -158,6 +185,20 @@ define(function () {
                     dlg.close();
                 }
             });
+            
+            // Transparency support
+            
+            qdlg.find("#dlgtransparency").change(function (e) {
+                var qMBody = qdlg.find('.modal-body');
+                var val = $(this).val() / 100; 
+                _retransparency(qdlg, 0);
+                ['.modal-header', '.modal-body', '.modal-footer'].forEach(function(tag) {
+                    _retransparency(qdlg.find(tag), val);
+                });
+            });                
+            
+            // Field buttons. ex: Regnize
+            
             qdlg.find(".field-button").click(function (e) {
                 var qfld, fld, info, idx, id;
                 info = $(this).attr('data-info').split(','); 
@@ -167,6 +208,8 @@ define(function () {
                 qfld = qdlg.find('#' + id);
                 qfld.val(allfields[fld].buttons[idx].f(qfld.val()));            
             });    
+            
+            // Cancel and OK button
             
             qdlg.one("click", ".dialog-button", function (e) {
 

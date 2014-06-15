@@ -1,8 +1,8 @@
 {
     "name": "bracketstoix",
     "title": "BracketstoIX",
-    "version": "1.2.2",
-    "description": "This extension adds a bundle of features to Adobe Brackets without cluttering your menus:          Text Transforms(UpperCase, LowerCase, Capitalize, CamelCase, HtmlEncode, HtmlDecode, UrlEncode, Join, Split, Number, Trim Leading, Trim Trailing, Sort Ascending, Sort Descending, Remove Duplicates, Remove Empty Lines, Unix To Win, Win To Unix, Single Slash To Double, Double To Single Slash),        Clipboard(Copy Filename, Copy Fullname, Regnize, ExtratortoIX),  Replacer(ReplaceToIX),       Internet Search(Open Url, Web Search),     Compiler(scss, js6 [ECMAScript 6]).     Read the readme for the complete description and usage",
+    "version": "1.2.3",
+    "description": "This extension adds a bundle of features to Adobe Brackets without cluttering your menus:          Text Transforms(UpperCase, LowerCase, Capitalize, CamelCase, HtmlEncode, HtmlDecode, UrlEncode, Join, Split, Number, Trim Leading, Trim Trailing, Sort Ascending, Sort Descending, Remove Duplicates, Remove Empty Lines, Unix To Win, Win To Unix, Single Slash To Double, Double To Single Slash),        Clipboard(Copy Filename, Copy Fullname, Regnize, ExtratortoIX),  Replacer(ReplacetoIX),       Internet Search(Open Url, Web Search),     Compiler(scss, js6 [ECMAScript 6]).     Read the readme for the complete description and usage",
     "homepage": "https://github.com/a-bentofreire/bracketstoix",
     "license": "MIT",
     "author": "Alexandre Bento Freire <github@a-bentofreire.com>",

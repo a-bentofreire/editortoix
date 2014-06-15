@@ -10,5 +10,5 @@ find *.js -maxdepth 1 | perl -p -e 's/^(.+)/java -jar compressors\/compiler.jar 
 cd dist
 zip -o -r -x tests/* -x *.zip -x .git/* -x *.sh -9 bracketstoix.zip *
 cd ..
-read -p "Press a key to finish"
+read -p "Press ENTER to finish"
 

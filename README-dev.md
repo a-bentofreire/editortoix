@@ -14,32 +14,33 @@ No default shortcuts were define to prevent collision with other plugins.
 ## Intelligent Usage
 
 Most of the commands operate on selected text.
-If no text is selected, a command will:
-[word] - Use the nearest word (before and after the cursor)
-[sentence] - All the nearest text until a whitespace or newline
-[line] - Uses all the text where is cursor is located
-[all] - Use all the editor text
+If no text is selected, a command will use:
+[word] - The nearest word (before and after the cursor)
+[sentence] - The nearest text until a whitespace or newline
+[line] - The text line where the cursor is located
+[all] - All the editor text
 
 ## Text Transformations
 
 The list of commands are:
-1. Case Change[word]: **UpperCase**, **LowerCase**[word], **Capitalize**, **CamelCase**
+1. Case Change[word]: **UpperCase**, **LowerCase**, **Capitalize**, **CamelCase**
 2. Encoders/Decoders[line]: **HtmlEncode**, **HtmlDecode**, **UrlEncode**
 3. Slash Change [line]: **Unix To Win**, **Win To Unix**, **Single Slash To Double**, **Double To Single Slash**
 4. Spacing[all]: **Tab To Space**, **Space To Tab**  -   Space to Tab only works with leading spaces
-5. **rgb-hex**[sentence] - Converts from #HHHHHH to rgb(dec, dec, dec) and vice-versa. Supports multiple conversions 
+5. **rgb-hex**[sentence] - Converts from #HHHHHH to rgb(dec, dec, dec) and vice-versa. It supports multiple conversions 
+
 6. Line Commands[all]:
 
   * **Join**, **Split**
-  * **Number** - this commands add a number prefix to every selected line
+  * **Number** - It adds a number prefix to every selected line
   * **Trim Leading**, **Trim Trailing**
   * **Sort Ascending**, **Sort Descending**, **Eliminate Empty lines**
-  * **Remove Duplicates** - only works with already sorted lines
+  * **Remove Duplicates** - Only works with already sorted lines
   * **Markdown Trim Trailing** - Trims trailing spaces and adds 2 trailing spaces
 
 ## Clipboard Commands
 
-**Copy Filename**, **Copy Fullname** - will copy the filename of the active file to the clipboard
+**Copy Filename**, **Copy Fullname** - Copies the filename of the active file to the clipboard
 **Regnize**[sentence] - Copies to clipboard the text with all the regular expression special characters slashed.
   This command simplifies the usage of on find/replace dialogs.
 **ExtractortoIX**[all] - Copies to clipboard all the text matches. One per line.
@@ -50,8 +51,9 @@ This command provides a replace dialog with the following options:
 * Ignore Case
 * Word Only
 * Replace All
+* Only Selection
 
-Just like all the other commands only operates on the selected text, if not text is selected it uses all the text
+Just like all the other commands, it only operates on the selected text, if no text is selected it uses all the text.
 
 ## Internet Search Commands
 

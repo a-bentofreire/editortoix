@@ -72,9 +72,10 @@ define(function () {
             // Builds the Visual Field
             function buildField(html, field, fieldname, suffix) {
                 // Creates visual field values based on prefs
-                var i, inptype, hint, inpelement, id;
+                var i, inptype, hint, inpelement, id, fieldhtml;
 
                 hint = field.hint || '';
+                fieldhtml = ' ' + (field.htmltext || ''); // must be added just be the html '>'
                 inptype = 'text';
                 inpelement = 'input';
                 switch(field.type) {
@@ -109,11 +110,11 @@ define(function () {
 
                 switch(inpelement) {
                     case 'input' : 
-                        html += ' type=' + inptype + '>';
+                        html += ' type=' + inptype + fieldhtml + '>';
                         break;
                         
                     case 'select' :
-                        html += '>';
+                        html += fieldhtml + '>';
                         field.values.forEach(function (v) {
                             html += '<option value="' + _htmlencode(v) + '">' + _htmlencode(v) + '</option>';
                         });
@@ -179,6 +180,16 @@ define(function () {
             if (firstfieldid) {
                 qdlg.find('#' + firstfieldid).focus();
             }
+            
+            // Brackets bug workaround. Brackets doesn't preventDefault on enter key.
+            /* It doesn't work due the Brackets keydown global hook
+            qdlg.find('input, select').keydown(function(event) {
+                if (event.which === 13) { 
+                    event.preventDefault();
+                    dlg.close();
+                }
+            });*/
+            
             qdlg.keydown(function(event) {
                 if (event.which === 27) { // escape
                     event.preventDefault();

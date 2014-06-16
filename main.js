@@ -180,7 +180,9 @@ define(function (require, exports, module) {
                 so.cursel = so.cm.getRange(so.start, so.end);    
             }
         }
-        so.cm.focus();
+        /* Disactivated due a brackets bug, that doesn't preventsDefault on ENTER key
+          so.cm.focus();
+        */
         return so;
     }
 
@@ -293,6 +295,10 @@ define(function (require, exports, module) {
         trimTrailingex(SP_ALL);
     }
 
+    function markdownTrimTrailing() {
+        replaceSelection(/[ \t]+$/gm, '  ', SP_ALL);
+    }
+
     function sortAscending() {
         sortSelection(function (a, b) {
             return a > b ? 1 : (a < b ? -1 : 0);
@@ -373,6 +379,22 @@ define(function (require, exports, module) {
             nodeClipbrdCopy(getregnize(text, true));
         }, SP_SENTENCE);
     }
+    
+    function rgbHex() {
+        replaceSelection(/(?:#([a-f0-9]{2,2})([a-f0-9]{2,2})([a-f0-9]{2,2}))|(?:rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\))/ig, 
+            function (text, h1, h2, h3, r1, r2, r3) { 
+                function toHex2(v) {
+                    var res = parseInt(v, 10).toString(16);
+                    return res.length < 2 ? '0' + res : res;
+                }
+                
+                if (h1 === undefined) { 
+                    return '#' + toHex2(r1) + toHex2(r2) + toHex2(r3);
+                } else {
+                    return 'rgb(' + parseInt(h1, 16) + ',' + parseInt(h2, 16) + ',' + parseInt(h3, 16) + ')';
+                }                
+        }, SP_SENTENCE);
+    }
 /** ------------------------------------------------------------------------
  *                               Commands: Slash
  ** ------------------------------------------------------------------------ */
@@ -421,14 +443,17 @@ define(function (require, exports, module) {
     }
 
     function replacetoix() {
-        ask('ReplacetoIX', ['find', 'replace', 'iswordsonly', 'isregexpr', 'isignorecase', 'isall'], function () {
+        var text = getSelObj(SP_LINE).cursel.split('\n');
+        prefs.find.value = text.length > 0 ? text[0].trim() : '';
+        prefs.replace.value = '';
+        ask('ReplacetoIX', ['find', 'replace', 'iswordsonly', 'isregexpr', 'isignorecase', 'isall', 'isselonly'], function () {
             var findtext = prefs.isregexpr.value ? prefs.find.value : getregnize(prefs.find.value, true),
                 repltext = prefs.isregexpr.value ? prefs.replace.value : getregnize(prefs.replace.value, false);
             if (prefs.iswordsonly.value && !prefs.isregexpr.value) {
                 findtext = '\\b' + findtext + '\\b';
             }
             replaceSelection(new RegExp(findtext, (prefs.isall.value ? 'g' : '') + (prefs.isignorecase.value ? 'i' : '')),
-                repltext, SP_ALL);
+                repltext, prefs.isselonly.value ? SP_ALL : SP_FORCEALL);
         });
     }
 /** ------------------------------------------------------------------------
@@ -597,6 +622,7 @@ define(function (require, exports, module) {
             {name: "Number...", f: numberText},
             {name: "Trim Leading", f: trimLeading},
             {name: "Trim Trailing", f: trimTrailing},
+            {name: "Markdown Trim Trailing", f: markdownTrimTrailing},
             {name: "Sort Ascending", f: sortAscending},
             {name: "Sort Descending", f: sortDescending},
             {name: "Remove Duplicates", f: removeDuplicates},
@@ -608,6 +634,7 @@ define(function (require, exports, module) {
             {name: "Double To Single Slash", f: doubleToSingle},
             {name: "Tab To Space", f: tabToSpace},
             {name: "Space To Tab", f: spaceToTab},
+            {name: "rgb-hex", f: rgbHex},
             {},
             {name: "ExtractorToIX...", f: extractortoix, priority: SHOWONMENU},
             {name: "ReplaceToIX...", f: replacetoix, priority: SHOWONMENU},

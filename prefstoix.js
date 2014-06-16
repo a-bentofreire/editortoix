@@ -127,16 +127,19 @@ define(function () {
     find : {
         value: '',
         label: 'Find',
+        htmltext: 'autocomplete=on',
         buttons: [{label: 'Regnize'}]
     },
     replace : {
         value: '',
         label: 'Replace',
+        htmltext: 'autocomplete=on',
         canempty: true,
     },
     iswordsonly : {
         value: false,
         label: 'Words Only',
+        hint: 'Only works if is not a regular expression',
         type: 'boolean',
         canempty: true,
     },
@@ -156,6 +159,13 @@ define(function () {
     isall : {
         value: true,
         label: 'Replace All',
+        type: 'boolean',
+        canempty: true,
+    },
+    isselonly : {
+        value: true,
+        label: 'Only Selection',
+        hint: 'If there is a selected text only replaces the selected text',
         type: 'boolean',
         canempty: true,
     },

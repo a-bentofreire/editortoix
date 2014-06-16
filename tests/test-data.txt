@@ -12,9 +12,13 @@ cc\\dd\\f
   2 before
     3 after
 
+[rgb-hex]
+rgb(1, 100, 23)
+#AC1E3F
+
 [List]
-orange
-apple
+green
+APPLE
 
 clear   
 apple

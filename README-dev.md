@@ -27,13 +27,15 @@ The list of commands are:
 2. Encoders/Decoders[line]: **HtmlEncode**, **HtmlDecode**, **UrlEncode**
 3. Slash Change [line]: **Unix To Win**, **Win To Unix**, **Single Slash To Double**, **Double To Single Slash**
 4. Spacing[all]: **Tab To Space**, **Space To Tab**  -   Space to Tab only works with leading spaces
-5. Line Commands[all]:
+5. **rgb-hex**[sentence] - Converts from #HHHHHH to rgb(dec, dec, dec) and vice-versa. Supports multiple conversions 
+6. Line Commands[all]:
 
   * **Join**, **Split**
   * **Number** - this commands add a number prefix to every selected line
   * **Trim Leading**, **Trim Trailing**
   * **Sort Ascending**, **Sort Descending**, **Eliminate Empty lines**
   * **Remove Duplicates** - only works with already sorted lines
+  * **Markdown Trim Trailing** - Trims trailing spaces and adds 2 trailing spaces
 
 ## Clipboard Commands
 
@@ -79,6 +81,11 @@ By default, the compile on save is not active. You can use the **Options** to ac
   * **Options** - Configuration dialog
 
 ## Version History
+* 1.3
+    Adds: rgb-hex, Markdown Trim Trailing
+    Disactivated: 'current editor is re-activated after a dialog'. Due a brackets bug that doesn't preventDefault on ENTER key
+    ReplacetoIX: Uses the selected line as Find. Always empties replace. Supports Only Selection
+    
 * 1.2.3
     Dialogs: Supports transparency slider
 

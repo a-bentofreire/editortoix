@@ -50,12 +50,17 @@ define(function (require, exports, module) {
         PreferencesManager = brackets.getModule("preferences/PreferencesManager"),
         PanelManager = brackets.getModule('view/PanelManager'),
         LanguageManager = brackets.getModule("language/LanguageManager"),
+        KeyBindingManager = brackets.getModule("command/KeyBindingManager"),
+        KeyEvent = brackets.getModule("utils/KeyEvent"),
+        FileUtils = brackets.getModule("file/FileUtils"),
+        
         extprefs = PreferencesManager.getExtensionPrefs(MODULENAME),
         ui = require('uitoix'),
-
         ixDomains = new NodeDomain("IXDomains", ExtensionUtils.getModulePath(module, "node/IXDomains")),
         // WARNING: these field names are used in prefsinfo
-        prefs = require('prefstoix');
+        prefs = require('prefstoix'),
+        // Snippets are only loaded after the 1st usage
+        snippets;
 /** ------------------------------------------------------------------------
  *                               Tools
  ** ------------------------------------------------------------------------ */
@@ -105,6 +110,8 @@ define(function (require, exports, module) {
  ** ------------------------------------------------------------------------ */
     function loadextprefs() {
         prefs.load(prefs, extprefs);
+        //Simple workaround to support versions < 1.4. TODO: Support subfield copy on prefs.load
+        prefs.commands.value.showinctxmenu = prefs.commands.value.showinctxmenu || [];
     }
 
     function saveextprefs() {
@@ -135,7 +142,7 @@ define(function (require, exports, module) {
  ** ------------------------------------------------------------------------ */
     function ask(title, fieldlist, callback, opts, fields) {
         return ui.ask(title, fieldlist, callback, opts, fields || prefs, i18n, Dialogs,
-            opts && opts.nosaveprefs ? undefined : saveextprefs);
+            opts && opts.nosaveprefs ? undefined : saveextprefs, prefs.historySize.value, KeyBindingManager, KeyEvent);
     }
 /** ------------------------------------------------------------------------
  *                               Controlers
@@ -180,9 +187,9 @@ define(function (require, exports, module) {
                 so.cursel = so.cm.getRange(so.start, so.end);    
             }
         }
-        /* Disactivated due a brackets bug, that doesn't preventsDefault on ENTER key
+        // Disactivated due a brackets bug, that doesn't preventsDefault on ENTER key
           so.cm.focus();
-        */
+        
         return so;
     }
 
@@ -203,6 +210,9 @@ define(function (require, exports, module) {
                 so.cm.replaceSelection(newsel, so);
             } else {
                 so.cm.replaceRange(newsel, so.start, so.end);
+                if(so.cursor) {
+                    so.cm.setCursor(so.cursor);
+                }
             }            
         }
     }
@@ -520,6 +530,33 @@ define(function (require, exports, module) {
     /*function runGrunt() {
         nodeExec(prefs.grunt.value);
     }*/
+    
+/** ------------------------------------------------------------------------
+ *                               Snippets
+ ** ------------------------------------------------------------------------ */
+/* Initial implementation, not finished.
+
+function getSnippets(callback) {
+    if(!snippets) {
+        $.getJSON(FileUtils.getNativeModuleDirectoryPath(module) + '/snippets.json', function(data) {
+            snippets = data;
+            callback();
+        });
+    } else {
+        callback();          
+    }
+}
+
+function execSnippets() {
+    getSnippets(function() {
+        var so = getSelObj(SP_WORD);
+        if (!so.cursel) {
+            return;
+        }
+        
+    });
+}
+*/
 /** ------------------------------------------------------------------------
  *                               showOptions
  ** ------------------------------------------------------------------------ */
@@ -560,6 +597,7 @@ define(function (require, exports, module) {
             fields = {},
             fieldlist = [],
             showinmenu = prefs.commands.value.showinmenu,
+            showinctxmenu = prefs.commands.value.showinctxmenu,
             hotkeys = prefs.commands.value.hotkeys;
 
         cmds.forEach(function(cmd) {
@@ -568,7 +606,8 @@ define(function (require, exports, module) {
                 key = cmdToName(cmd.name);
                 fields[key] = {value: hotkeys[key] || '', label: cmdToLabel(cmd.name), size: 15, canempty: true,
                                hint: 'Ex: Ctrl-Shift-U (win).  Cmd-Shift-U (mac)',
-                    fields: {showinmenu: {value: showinmenu.indexOf(key) > -1, type: 'boolean', align: 'center', canempty: true}}};
+                    fields: {showinmenu: {value: showinmenu.indexOf(key) > -1, type: 'boolean', align: 'center', canempty: true},
+                            showinctxmenu: {value: showinctxmenu.indexOf(key) > -1, type: 'boolean', align: 'center', canempty: true}}};
                 fieldlist.push(key);
             }
         });
@@ -587,13 +626,16 @@ define(function (require, exports, module) {
                     if (field.fields.showinmenu.value) {
                       showinmenu.push(key);
                     }
+                    if (field.fields.showinctxmenu.value) {
+                      showinctxmenu.push(key);
+                    }
                 }
             });
             prefs.commands.value.showinmenu = showinmenu;
             prefs.commands.value.hotkeys = hotkeys;
             saveextprefs();
 
-        }, {nosaveprefs : true, msg : 'Only takes effect after restart!', header: ['Command', 'Hotkey', 'Show on Menu']},
+        }, {nosaveprefs : true, msg : 'Only takes effect after restart!', header: ['Command', 'Hotkey', 'Show on Menu', 'Show on CtxMenu']},
             fields);
     }
 /** ------------------------------------------------------------------------
@@ -647,7 +689,8 @@ define(function (require, exports, module) {
             {name: "Regnize", f: regnize},
             {},
             //{name: "Regex Tester", f: regexTester},
-               {name: "Compiler", f: runCompiler, label: "Compile(js6, scss)", priority: SHOWONMENU}, //TODO: Implement "/Run(py, js)"
+            {name: "Compiler", f: runCompiler, label: "Compile(js6, scss)", priority: SHOWONMENU}, //TODO: Implement "/Run(py, js)"
+            //{name: "Snippets", f: execSnippets, priority: SHOWONMENU},
             /*{name: "Run grunt", f: runGrunt}, */
             {},
             {name: "Commands...", f: showCommands, priority: SHOWONMENU},
@@ -658,13 +701,33 @@ define(function (require, exports, module) {
     }
 
     function buildCommands() {
+        
+        function addToMenu(cmd, menu, lastid) {
+            var opts, platform, hotkey, 
+                id = MODULENAME + "." + cmdToName(cmd.name);
+            // Register Command
+            if (id !== lastid) {
+                CommandManager.register(cmd.label || cmd.name, id, cmd.f);
+            }    
+            // Register Menu Items
+            opts = [];
+            hotkey = hotkeys[nm];
+            if (hotkey) {
+                opts.push({key: hotkey, platform: brackets.platform});
+            }
+            menu.addMenuItem(id, opts);
+            return id;
+        }
+        
         var cmdlist = getCommandList(),
             Menus = brackets.getModule("command/Menus"),
             //menu = Menus.getMenu(Menus.AppMenuBar.VIEW_MENU),
             // Since Brackets has no submenu support it's better to create a top menu
             menu = Menus.addMenu(IXMENU, IXMENU),
-            i, j, cmd, id, opts, platform, hotkey, nm,
+            ctxmenu = Menus.getContextMenu(Menus.ContextMenuIds.EDITOR_MENU),            
+            i, cmd, nm, lastid,
             showinmenu = prefs.commands.value.showinmenu,
+            showinctxmenu = prefs.commands.value.showinctxmenu,
             hotkeys = prefs.commands.value.hotkeys,
             hasdiv = false;
 
@@ -680,17 +743,13 @@ define(function (require, exports, module) {
             nm = cmdToName(cmd.name);
             if (cmd.showalways || (showinmenu.indexOf(nm) > -1)) {
                 hasdiv = false;
-                id = MODULENAME + "." + cmdToName(cmd.name);
-                // Register Command
-                CommandManager.register(cmd.label || cmd.name, id, cmd.f);
-                // Register Menu Items
-                opts = [];
-                hotkey = hotkeys[nm];
-                if (hotkey) {
-                    opts.push({key: hotkey, platform: brackets.platform});
-                }
-                menu.addMenuItem(id, opts);
+                lastid = addToMenu(cmd, menu, lastid);
             }
+            
+            if (showinctxmenu.indexOf(nm) > -1) {
+                lastid = addToMenu(cmd, ctxmenu, lastid);
+            }
+
         }
     }
 

@@ -22,7 +22,7 @@
  */
 
 /*jslint vars: true, plusplus: true, devel: true, white: true, nomen: true, indent: 4, maxerr: 50 */
-/*global define, brackets, $, escape */
+/*global define, brackets, $, escape, document */
 
 define(function () {
     "use strict";
@@ -60,13 +60,14 @@ define(function () {
             return _htmlencode(text);
         },
 
-        ask : function (title, fieldnames, callback, opts, allfields, i18n, Dialogs, saveextprefs) {
+        ask : function (title, fieldnames, callback, opts, allfields, i18n, Dialogs, saveextprefs, historysize, 
+                         KeyBindingManager, KeyEvent) {
             var
                 PREFIX = 'toix',
                 DEFSIZE = 25,
                 BRACKETSTOIX_DIALOG_ID = "bracketstoix-dialog";
 
-            var dlg, qdlg, firstfieldid;
+            var dlg, $dlg, firstfieldid;
 
 
             // Builds the Visual Field
@@ -74,7 +75,7 @@ define(function () {
                 // Creates visual field values based on prefs
                 var i, inptype, hint, inpelement, id, fieldhtml;
 
-                hint = field.hint || '';
+                hint = (field.hint || '') + (field.history ? ' Use Ctrl+UP/DOWN to fetch the history' : '');
                 fieldhtml = ' ' + (field.htmltext || ''); // must be added just be the html '>'
                 inptype = 'text';
                 inpelement = 'input';
@@ -110,7 +111,27 @@ define(function () {
 
                 switch(inpelement) {
                     case 'input' : 
-                        html += ' type=' + inptype + fieldhtml + '>';
+                        html += ' type=' + inptype;
+                        if (field.history) {
+                            field.historyindex = -1;
+                            // Brackets has no support for datalist, so this code is disactivated until there is datalist support
+                            // check keyboardWorkaround for keyboard implementation
+                            /*
+                            html += ' list="' + id + 'list" ' + fieldhtml + '><datalist id=" ' + id + 'list">';
+                            var d = document.createElement('div');
+                            field.history.forEach(function(item) {
+                                d.textContent = item;
+                                item = d.innerHTML;
+                                html += '<option value="' + item + '">';// + item + '</option>'; 
+                            });
+                            html += '</datalist>';
+                            */ 
+                            // this code is an alternative and provides data for keyboardWorkaround
+                            html += ' data-history="' + fieldname + '" ' + fieldhtml + '>';
+                            
+                        } else {
+                            html += fieldhtml + '>';
+                        }    
                         break;
                         
                     case 'select' :
@@ -141,7 +162,6 @@ define(function () {
 
             function buildHtml() {
                 var html = '';
-
             
                 html += '<input id=dlgtransparency title="Transparency" type=range min=20 max=100 value=100 ' +
                     'style="position:absolute;right:+10px;top:0px;border:dotted #8c8c8c 1px"><div style="margin-bottom:5px">&nbsp;</div>';
@@ -167,66 +187,129 @@ define(function () {
                 return html;
             }
 
-    // Main code starts hereby
             
             
+            // Since Brack Brackets doesn't preventDefault on enter key, nor supports datalist, 
+            // I created this Brackets bug workaround. If in the future Brackets has this fixed, this code should be removed and 
+            // replaced with datalists. NOTE: Also includes escape key and close dialog if ENTER on input:focus, select:focus
+            // This code is based on /widgets/Dialogs
+            
+            function keyboardWorkaround($dlg) {
+                var _keyhook = function (event) {
+                    
+                    function handleHistory(delta) {
+                        var datahistory, history, curindex, field,
+                            $focusEl = $dlg.find("input:focus");
+
+                        if (!$focusEl.length) {
+                            return false;
+                        }
+                        
+                        datahistory = $focusEl.attr('data-history');
+                        if (!datahistory) {
+                            return false;
+                        }                   
+                        
+                        field = allfields[datahistory];
+                        history = field.history;
+                        curindex = field.historyindex + delta;
+                        if ((curindex < 0) || (curindex >= history.length)) {
+                            return false;
+                        }
+                        field.historyindex = curindex;
+                        $focusEl.val(field.history[curindex]);
+                        
+                        return true;    
+                    }
+                    
+                    
+                    var $primaryBtn, 
+                        which = event.which;
+                    
+                    if (which === KeyEvent.DOM_VK_RETURN) {
+                        $primaryBtn = $dlg.find(".primary");
+                        if (($primaryBtn.length > 0) && ($dlg.find("input:focus, select:focus, .dialog-button:focus, a:focus").length > 0)) { 
+                            event.preventDefault();
+                            event.stopPropagation();
+                            $primaryBtn.click();
+                            return true;
+                        }
+                    }                
+
+
+                    if (which === KeyEvent.DOM_VK_ESCAPE) { 
+                        event.preventDefault();
+                        event.stopPropagation();
+                        dlg.close();
+                        return true;
+                    }
+
+                    if ((event.ctrlKey) && (which === KeyEvent.DOM_VK_UP) || (which === KeyEvent.DOM_VK_DOWN)) { 
+                        if (handleHistory(which === KeyEvent.DOM_VK_UP ? -1 : 1)) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                            return true;
+                        }
+                    }
+
+                    return false;
+                };
+                
+                $dlg.one("hidden", function () {
+                    KeyBindingManager.removeGlobalKeydownHook(_keyhook);
+                });
+                // This code is executed after Dialog show event, so I can't use one("show", ....
+                KeyBindingManager.addGlobalKeydownHook(_keyhook);
+            }
+            
+                        
+/** ------------------------------------------------------------------------
+ *                               Main code
+ ** ------------------------------------------------------------------------ */
             dlg = Dialogs.showModalDialog(
                 BRACKETSTOIX_DIALOG_ID,
                 i18n(title),
                 buildHtml(), [{className: Dialogs.DIALOG_BTN_CLASS_PRIMARY, id: Dialogs.DIALOG_BTN_OK, text: 'OK'},
                        {className: Dialogs.DIALOG_BTN_CLASS_NORMAL, id: Dialogs.DIALOG_BTN_CANCEL, text: 'Cancel'}], false);
             
-            qdlg = dlg.getElement();
+            $dlg = dlg.getElement();
+            // By default, Brackets will focus the primary button, this code will override that action
             if (firstfieldid) {
-                qdlg.find('#' + firstfieldid).focus();
+                $dlg.find('#' + firstfieldid).focus();
             }
-            
-            // Brackets bug workaround. Brackets doesn't preventDefault on enter key.
-            /* It doesn't work due the Brackets keydown global hook
-            qdlg.find('input, select').keydown(function(event) {
-                if (event.which === 13) { 
-                    event.preventDefault();
-                    dlg.close();
-                }
-            });*/
-            
-            qdlg.keydown(function(event) {
-                if (event.which === 27) { // escape
-                    event.preventDefault();
-                    dlg.close();
-                }
-            });
+                        
+            keyboardWorkaround($dlg);                                           
             
             // Transparency support
             
-            qdlg.find("#dlgtransparency").change(function (e) {
-                var qMBody = qdlg.find('.modal-body');
+            $dlg.find("#dlgtransparency").change(function (e) {
+                var qMBody = $dlg.find('.modal-body');
                 var val = $(this).val() / 100; 
-                _retransparency(qdlg, 0);
+                _retransparency($dlg, 0);
                 ['.modal-header', '.modal-body', '.modal-footer'].forEach(function(tag) {
-                    _retransparency(qdlg.find(tag), val);
+                    _retransparency($dlg.find(tag), val);
                 });
             });                
             
             // Field buttons. ex: Regnize
             
-            qdlg.find(".field-button").click(function (e) {
+            $dlg.find(".field-button").click(function (e) {
                 var qfld, fld, info, idx, id;
                 info = $(this).attr('data-info').split(','); 
                 id = info[0];
                 fld = info[1];
                 idx = info[2];
-                qfld = qdlg.find('#' + id);
+                qfld = $dlg.find('#' + id);
                 qfld.val(allfields[fld].buttons[idx].f(qfld.val()));            
             });    
             
             // Cancel and OK button
             
-            qdlg.one("click", ".dialog-button", function (e) {
+            $dlg.one("click", ".dialog-button", function (e) {
 
                 function storeField(field, fieldname, suffix) {
-                    var msg, res,
-                        qfld = qdlg.find('#' + PREFIX + fieldname + suffix),
+                    var msg, res, index,
+                        qfld = $dlg.find('#' + PREFIX + fieldname + suffix),
                         v = field.type !== 'boolean' ? qfld.val() : qfld.get(0).checked;
                     // Check canempty
                     if (!v && !field.canempty) {
@@ -248,6 +331,16 @@ define(function () {
                             break;
                     }                    
                     field.value = v;
+                    if (field.history && historysize && v) {
+                        index = field.history.indexOf(v);
+                        if (index > -1) {
+                            field.history.splice(index, 1);    
+                        }
+                        field.history.splice(0, 0, v);
+                        if (field.history.length > historysize) { 
+                            field.history.length = historysize;
+                        }
+                    }
                     
                     // Store subfields
                     if (field.fields) {

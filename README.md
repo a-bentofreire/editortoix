@@ -20,6 +20,10 @@ If no text is selected, a command will use:
 [line] - The text line where the cursor is located  
 [all] - All the editor text  
   
+##  Dialogs  
+  
+Input fields on the dialogs support history (CTRL+UP/DOWN).  
+  
 ## Text Transformations  
   
 The list of commands are:  
@@ -83,6 +87,14 @@ By default, the compile on save is not active. You can use the **Options** to ac
   * **Options** - Configuration dialog  
   
 ## Version History  
+* 1.4  
+    Extension description displays the correct .zip size  
+    Implements a workaround for the ENTER key.  
+    Editor focused after a dialog box  
+    Dialogs support history  
+    When there is no text selected, and after a command execution, the cursor is set to his previous position  
+    Command Mapper also supports Context Menus   
+      
 * 1.3  
     Adds: rgb-hex, Markdown Trim Trailing  
     Disactivated: 'current editor is re-activated after a dialog'. Due a brackets bug that doesn't preventDefault on ENTER key  
@@ -114,6 +126,7 @@ By default, the compile on save is not active. You can use the **Options** to ac
   
 These are the plans for the next versions:  
   
+* Improve the User Interface  
 * Go back to the previous edit cursor positions  
 * Text transforms: **Num To Hex**, **Hex To Num**  
 * Trim Trailing on save  
@@ -123,6 +136,7 @@ These are the plans for the next versions:
 * Run grunt  
 * Run node scripts  
 * Run python scripts  
+* Clean up the code  
   
 ## Feedback  
   

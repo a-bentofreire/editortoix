@@ -3,21 +3,20 @@ getSelection SetSelection alllower ALLUPPER
 [lower+UPPER LOWER+UPPER SEMI mi]
 
 [Slashes]
-/a/b/ 
+/a// 
 cc\dd\f
 cc\\dd\\f
     
-[Tabs]
- 1 before
-  2 before
-    3 after
+[Tas]
+ 1 efore
+  2 efore
+    
 
-[rgb-hex]
-rgb(1, 100, 23)
+[rg-hex]
+rg(1, 100, 23)
 #AC1E3F
 
 [List]
-green
 APPLE
 
 clear   
@@ -26,13 +25,13 @@ apple
 test-data.txt
 
 [Test Regnize]
-(ab.*?.+)
+(a.*?.+)
 
 [Test HtmlEncode/Decode]
 <input class="inp_class" type="text">
 
 [Test Url]
-http://www.a-bentofreire.com
+http://www.a-entofreire.com
 google
 
 [Test Western languages]

@@ -49,9 +49,15 @@ define(function () {
 
                 if (preftoio) {
                     prefio.value = pref.value;
+                    if (pref.history) {
+                        prefio.history = pref.history;
+                    }
                 } else {
                     if (prefio !== undefined && prefio.value !== undefined) {
                         pref.value = prefio.value;
+                        if (pref.history && prefio.history) {
+                            pref.history = prefio.history;
+                        }
                     }
                 }
                 if (pref.fields) {
@@ -85,11 +91,11 @@ define(function () {
 /** ------------------------------------------------------------------------
  *                               Fields
  ** ------------------------------------------------------------------------ */
-    OPTIONFIELDS: ['tabSize', 'webSearch', /*'grunt',*/ 'js6', 'scss'],
+    OPTIONFIELDS: ['tabSize', 'historySize', 'webSearch', /*'grunt',*/ 'js6', 'scss'],
 
-    // commands options (showinmenu, hotkey)
+    // commands options (showinmenu, showinctxmenu, hotkey)
     commands: {
-        value: { showinmenu: [], hotkeys: {} }        
+        value: { showinmenu: [], showinctxmenu: [], hotkeys: {} }        
     },
         
     // splitText command options
@@ -98,6 +104,12 @@ define(function () {
         label: 'Split Marker'
     },
 
+    // Used in dialogs
+    historySize: {
+        value: 20,
+        label: 'History Size',
+        type: 'number'
+    },
     // numberText command options
     startNum: {
         value: 1,
@@ -106,6 +118,7 @@ define(function () {
     },
     numSep: {
         value : ".\\$",
+        history: [],
         label: 'Separator after Number',
         canempty: true,
         type: 'spacetext'
@@ -120,6 +133,7 @@ define(function () {
     findre : {
         value: '',
         label: 'Find',
+        history: [],
         buttons: [{label: 'Regnize'}]
     },
         
@@ -127,13 +141,13 @@ define(function () {
     find : {
         value: '',
         label: 'Find',
-        htmltext: 'autocomplete=on',
+        history: [],
         buttons: [{label: 'Regnize'}]
     },
     replace : {
         value: '',
         label: 'Replace',
-        htmltext: 'autocomplete=on',
+        history: [],
         canempty: true,
     },
     iswordsonly : {

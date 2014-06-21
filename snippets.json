@@ -1,0 +1,12 @@
+{
+    "js" : { 
+        "f" : {
+            "description" : "var $index; for ($index = 0, $index < $array.length; $index++) { }",
+            "vars" : {
+                "index": "i",
+                "array": ""
+            },
+            "code" : "var $index;\nfor ($index = 0, $index < $array.length; $index++) {\n $cursor}\n"            
+        }
+    }
+}

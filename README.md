@@ -80,7 +80,8 @@ Will become:
 * @param {} param2  
 * @return {}   
 */  
-function foo(param1, param2) { }```  
+function foo(param1, param2) { }  
+```  
   
 Also supports privates methods:  
 `function _foo() { }`  
@@ -91,7 +92,8 @@ Will become:
 * foo  
 * @return {}   
 */  
-function _foo() { }```  
+function _foo() { }  
+```  
   
 ## Compiler  
   

@@ -75,25 +75,25 @@ Ex:
 `function foo(param1, param2) { }`  
   
 Will become:  
-```/*** foo  
-* @param {} param1  
-* @param {} param2  
-* @return {}   
-*/  
-function foo(param1, param2) { }  
-```  
+```/*** foo
+* @param {} param1
+* @param {} param2
+* @return {}
+*/
+function foo(param1, param2) { }
+```
   
 Also supports privates methods:  
 `function _foo() { }`  
   
 Will become:  
-```/**  
-* @private  
-* foo  
-* @return {}   
-*/  
-function _foo() { }  
-```  
+```/**
+* @private
+* foo
+* @return {}
+*/
+function _foo() { }
+```
 
 ## Compiler  
   

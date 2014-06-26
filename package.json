@@ -1,14 +1,14 @@
 {
     "name": "bracketstoix",
     "title": "BracketstoIX",
-    "version": "1.4.0",
-    "description": "This minified(__size__) extension puts Brackets on steroids without cluttering your menus:          Text Transforms(UpperCase, LowerCase, Capitalize, CamelCase, HtmlEncode, HtmlDecode, UrlEncode, Join, Split, Number, Trim Leading, Trim Trailing, Sort Ascending, Sort Descending, Remove Duplicates, Remove Empty Lines, Unix To Win, Win To Unix, Single Slash To Double, Double To Single Slash, rgb-hex, Markdown Trim Trailing),            Clipboard(Copy Filename, Copy Fullname, Regnize, ExtratortoIX),              ReplacetoIX(Replace including Words only, Selection only, Regnize, History),            Internet Search(Open Url, Web Search),       Compiler(scss, js6 [ECMAScript 6]).              Read the readme for the complete description and usage",
+    "version": "1.5.0",
+    "description": "This minified(__size__) extension puts Brackets on steroids without cluttering your menus:          Text Transforms(UpperCase, LowerCase, Capitalize, CamelCase, HtmlEncode, HtmlDecode, UrlEncode, Join, Split, Number, Trim Leading, Trim Trailing, Sort Ascending, Sort Descending, Remove Duplicates, Remove Empty Lines, Unix To Win, Win To Unix, Single Slash To Double, Double To Single Slash, rgb-hex, Markdown Trim Trailing, Function JSDoc),            Clipboard(Copy Filename, Copy Fullname, Regnize, ExtratortoIX, Html Report),              ReplacetoIX(Replace including Words only, Selection only, Multiline, Regnize, History),            Internet Search(Open Url, Web Search),       Compiler(scss, js6 [ECMAScript 6]).              Read the readme for the complete description and usage",
     "homepage": "https://github.com/a-bentofreire/bracketstoix",
     "license": "MIT",
     "author": "Alexandre Bento Freire <github@a-bentofreire.com>",
     "keywords": [
-        "js6", "ECMAScript 6", "traceur", "sass", "clipboard", "replace",
-        "UpperCase", "LowerCase", "Capitalize", "CamelCase", "HtmlEncode", "HtmlDecode", "UrlEncode", "Join", "Split", "Number", "Trim Leading", "Trim Trailing", "Sort Ascending", "Sort Descending", "Remove Duplicates", "Remove Empty Lines", "Unix To Win", "Win To Unix", "Single Slash To Double", "Double To Single Slash", "Tab To Space", "Space To Tab", "Open Url", "Web Search", "Copy Filename", "Copy Fullname", "Compiler", "Regnize", "ExtractortoIX", "ReplacetoIX", "rgb-num", "Markdown"       
+        "js6", "ECMAScript 6", "traceur", "sass", "clipboard", "replace", "jsdoc",
+        "UpperCase", "LowerCase", "Capitalize", "CamelCase", "HtmlEncode", "HtmlDecode", "UrlEncode", "Join", "Split", "Number", "Trim Leading", "Trim Trailing", "Sort Ascending", "Sort Descending", "Remove Duplicates", "Remove Empty Lines", "Unix To Win", "Win To Unix", "Single Slash To Double", "Double To Single Slash", "Tab To Space", "Space To Tab", "Open Url", "Web Search", "Copy Filename", "Copy Fullname", "Compiler", "Regnize", "ExtractortoIX", "Function JSDoc", "ReplacetoIX", "rgb-num", "Markdown", "Html Report"
     ],
     "engines": {
         "brackets": ">=0.38.0"

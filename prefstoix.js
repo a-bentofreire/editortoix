@@ -148,7 +148,7 @@ define(function () {
         value: '',
         label: 'Replace',
         history: [],
-        canempty: true,
+        canempty: true
     },
     iswordsonly : {
         value: false,
@@ -156,25 +156,32 @@ define(function () {
         hint: 'Only works if is not a regular expression',
         type: 'boolean',
         canempty: true,
+        groupcols: 3
     },
     isregexpr : {
         value: true,
         label: 'Regular Expression',
         type: 'boolean',
-        canempty: true,
+        canempty: true
     },
     isignorecase : {
         value: false,
         label: 'Ignore Case',        
         type: 'boolean',
         canempty: true,
+        groupcols: 1
     },
-
+    isimultiline : {
+        value: false,
+        label: 'Multiline',        
+        type: 'boolean',
+        canempty: true
+    },
     isall : {
         value: true,
         label: 'Replace All',
         type: 'boolean',
-        canempty: true,
+        canempty: true
     },
     isselonly : {
         value: true,

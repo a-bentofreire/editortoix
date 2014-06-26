@@ -56,12 +56,45 @@ This command provides a replace dialog with the following options:
 * Word Only
 * Replace All
 * Only Selection
+* Multiline
 
-Just like all the other commands, it only operates on the selected text, if no text is selected it uses all the text.
+Just like all the other commands, it only operates on the selected text(only selection mode), if no text is selected it uses all the text.
+
+##  Html Report Command
+
+This command will copy to clipboard a list of all the id's, classes and stylesheets used in the current html file [all].
 
 ## Internet Search Commands
 
 **Open Url**[sentence], **Web Search**[word] will open an external web browser with selected text either an url(**Open Url**) or text(**Web Search**)
+
+## Function JSDoc Command
+
+This command will create a JSDoc function skeleton of the function where the cursor is located.
+Ex:
+```function foo(param1, param2) { }
+```
+Will become:
+```/**
+* foo
+* @param {} param1
+* @param {} param2
+* @return {} 
+*/
+function foo(param1, param2) { }
+```
+
+Also supports privates methods:
+```function _foo() { }
+```
+Will become:
+```/**
+* @private
+* foo
+* @return {} 
+*/
+function _foo() { }
+```
 
 ## Compiler
 
@@ -87,6 +120,11 @@ By default, the compile on save is not active. You can use the **Options** to ac
   * **Options** - Configuration dialog
 
 ## Version History
+* 1.5 - Summer break Edition
+    Adds: Html Report, Function JSDoc 
+    ReplacetoIX: Supports multiline
+    ExtractortoIX, ReplacetoIX: Visual improvements in the Dialog Box
+    
 * 1.4
     Extension description displays the correct .zip size
     Implements a workaround for the ENTER key.
@@ -97,7 +135,7 @@ By default, the compile on save is not active. You can use the **Options** to ac
     
 * 1.3
     Adds: rgb-hex, Markdown Trim Trailing
-    Disactivated: 'current editor is re-activated after a dialog'. Due a brackets bug that doesn't preventDefault on ENTER key
+    Disactivated: 'current editor is re-activated after a dialog box'. Due a brackets bug that doesn't preventDefault on ENTER key
     ReplacetoIX: Uses the selected line as Find. Always empties replace. Supports Only Selection
     
 * 1.2.3
@@ -126,7 +164,6 @@ By default, the compile on save is not active. You can use the **Options** to ac
 
 These are the plans for the next versions:
 
-* Improve the User Interface
 * Go back to the previous edit cursor positions
 * Text transforms: **Num To Hex**, **Hex To Num**
 * Trim Trailing on save
@@ -136,7 +173,10 @@ These are the plans for the next versions:
 * Run grunt
 * Run node scripts
 * Run python scripts
+* Support localization
 * Clean up the code
+* Improve the User Interface
+* Improve the code documentation
 
 ## Feedback
 

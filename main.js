@@ -34,11 +34,13 @@ define(function (require, exports, module) {
         /** @const */ MODULENAME = 'bracketstoix',
         /** @const */ HELPLINK = 'https://github.com/a-bentofreire/bracketstoix',
 
+        // FORCE policy must be the negative of the regular policy
         /** @const */ SP_FORCEALL = -1,
         /** @const */ SP_ALL = 1,
         /** @const */ SP_WORD = 2,
         /** @const */ SP_SENTENCE = 3,
-        /** @const */ SP_LINE = 4;
+        /** @const */ SP_LINE = 4,
+        /** @const */ SP_FORCELINE = -4;
 
     var CommandManager = brackets.getModule("command/CommandManager"),
         EditorManager = brackets.getModule("editor/EditorManager"),
@@ -143,7 +145,7 @@ define(function (require, exports, module) {
     function ask(title, fieldlist, callback, opts, fields) {
         return ui.ask(title, fieldlist, callback, opts, fields || prefs, i18n, Dialogs,
             opts && opts.nosaveprefs ? undefined : saveextprefs, prefs.historySize.value, KeyBindingManager, KeyEvent);
-    }
+    } 
 /** ------------------------------------------------------------------------
  *                               Controlers
  ** ------------------------------------------------------------------------ */
@@ -151,13 +153,14 @@ define(function (require, exports, module) {
         var so = { cm: EditorManager.getActiveEditor()._codeMirror, selpolicy: selpolicy },
             len;
         so.cursor = so.cm.getCursor();
-        so.selected = (selpolicy != SP_FORCEALL) && so.cm.somethingSelected();
+        so.selected = (selpolicy >= 0) &&so.cm.somethingSelected();
         if (so.selected) {
             so.cursel = so.cm.getSelection();
         } else {
             so.cursel = '';
 
             switch(selpolicy) {
+            case SP_FORCELINE:
             case SP_LINE :
                 so.cursel = so.cm.getLine(so.cursor.line);
                 so.start = {ch: 0, line: so.cursor.line};
@@ -456,15 +459,37 @@ define(function (require, exports, module) {
         var text = getSelObj(SP_LINE).cursel.split('\n');
         prefs.find.value = text.length > 0 ? text[0].trim() : '';
         prefs.replace.value = '';
-        ask('ReplacetoIX', ['find', 'replace', 'iswordsonly', 'isregexpr', 'isignorecase', 'isall', 'isselonly'], function () {
+        ask('ReplacetoIX', ['find', 'replace', 'iswordsonly', 'isregexpr', 'isignorecase', 'isimultiline', 'isall', 'isselonly'], function () {
             var findtext = prefs.isregexpr.value ? prefs.find.value : getregnize(prefs.find.value, true),
                 repltext = prefs.isregexpr.value ? prefs.replace.value : getregnize(prefs.replace.value, false);
             if (prefs.iswordsonly.value && !prefs.isregexpr.value) {
                 findtext = '\\b' + findtext + '\\b';
             }
-            replaceSelection(new RegExp(findtext, (prefs.isall.value ? 'g' : '') + (prefs.isignorecase.value ? 'i' : '')),
+            replaceSelection(new RegExp(findtext, (prefs.isall.value ? 'g' : '') + 
+                (prefs.isignorecase.value ? 'i' : '') + (prefs.isimultiline.value ? 'm' : '')),
                 repltext, prefs.isselonly.value ? SP_ALL : SP_FORCEALL);
         });
+    }
+    
+    function buildFuncJSDoc() {
+        getSelection(function (text, so) {
+            var match = text.match(/function\s+(\w+)\s*\((.*?)\)/i), 
+                jsdoc, vars, initialspace;
+            if(match && match.length > 1) {
+                vars = match[2];
+                initialspace = text.match(/^\s*/i)[0];
+                jsdoc = '|/**\n' + (match[1][0] == '_' ? '|* @private\n' : '') + '|* ' + match[1] + '\n';
+                if(vars) {
+                    vars.split(',').forEach(function (v) {
+                        jsdoc += '|* @param {} ' + v.trim() + '\n';
+                    });                                            
+                }
+                jsdoc += '|* @return {} \n';
+                jsdoc += '|*/\n';
+                jsdoc = jsdoc.replace(/\|/g, initialspace);
+                so.cm.replaceRange(jsdoc, so.start, so.start);
+            }
+        }, SP_FORCELINE);        
     }
 /** ------------------------------------------------------------------------
  *                               Commands: Clipboard
@@ -480,6 +505,34 @@ define(function (require, exports, module) {
             var fullname = curfile._path || curfile.path;
             return brackets.platform === 'win' ? fullname.replace(/\//g, "\\") : fullname;
         });
+    }
+    
+    function buidHtmlReport() {
+        getSelection(function (text) {
+            var outp = [];
+            [['link rel="stylesheet" href', 'stylesheet', true], ['id'], ['class']].forEach(function(item) {
+                var token = item[0],
+                    list = [], i;
+                // although there is no text to replace, it's easier to use replace than using //.exec
+                text.replace(new RegExp(token + '=(?:(\\w+)|(?:"(.+?)"))', "gi"), function (data, p1, p2) { 
+                    list.push(p1 || p2); 
+                    return data; 
+                });
+                if (!item[2]) {
+                    list.sort();
+                }
+                // remove duplicates. this method is faster than use a indexOf during the push code
+                for (i = list.length; i > 0; i--) {
+                    if (list[i] === list[i - 1]) {
+                        list.splice(i, 1);
+                    }
+                }
+                outp.push('[' + (item[1] || token) + ']');
+                outp = outp.concat(list);
+                outp.push(''); // empty line
+            });
+            nodeClipbrdCopy(outp.join('\n'));
+        }, SP_ALL);
     }
 /** ------------------------------------------------------------------------
  *                               Js6
@@ -680,6 +733,7 @@ function execSnippets() {
             {},
             {name: "ExtractorToIX...", f: extractortoix, priority: SHOWONMENU},
             {name: "ReplaceToIX...", f: replacetoix, priority: SHOWONMENU},
+            {name: "Function JSDoc", f: buildFuncJSDoc},
             {},
             {name: "Open Url", f: openUrl},
             {name: "Web Search", f: webSearch},
@@ -687,6 +741,7 @@ function execSnippets() {
             {name: "Copy Filename", f: fileToClipboard},
             {name: "Copy Fullname", f: fullnameToClipboard},
             {name: "Regnize", f: regnize},
+            {name: "Html Report", f: buidHtmlReport},
             {},
             //{name: "Regex Tester", f: regexTester},
             {name: "Compiler", f: runCompiler, label: "Compile(js6, scss)", priority: SHOWONMENU}, //TODO: Implement "/Run(py, js)"

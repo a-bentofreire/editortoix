@@ -67,14 +67,15 @@ define(function () {
                 DEFSIZE = 25,
                 BRACKETSTOIX_DIALOG_ID = "bracketstoix-dialog";
 
-            var dlg, $dlg, firstfieldid;
+            var dlg, $dlg, firstfieldid, 
+                groupmode = false, groupcols, groupcolindex;
 
 
             // Builds the Visual Field
             function buildField(html, field, fieldname, suffix) {
                 // Creates visual field values based on prefs
                 var i, inptype, hint, inpelement, id, fieldhtml;
-
+                
                 hint = (field.hint || '') + (field.history ? ' Use Ctrl+UP/DOWN to fetch the history' : '');
                 fieldhtml = ' ' + (field.htmltext || ''); // must be added just be the html '>'
                 inptype = 'text';
@@ -96,12 +97,13 @@ define(function () {
                         inpelement = 'select';
                         break;
                 }
-                if (field.label) {
-                    html += '<td>' + i18n(field.label) + ':</td>';
+                if (field.label && !groupmode) {
+                    html += '<td style="padding-right:5px">' + i18n(field.label) + ':</td>';
                 }
                 id = PREFIX + fieldname + suffix;
                 firstfieldid = firstfieldid || id;
-                html += '<td align=' + (field.align || 'left') + '><' + inpelement + ' id=' + id +
+                html += '<td align=' + (field.align || 'left') + '>';
+                html += '<' + inpelement + ' id=' + id +
                     (field.max ? ' max=' + field.max : '') +
                     ' title="' + _htmlencode(hint) + '"' +
                     ' value="' + _htmlencode(field.value) + '"' +
@@ -148,6 +150,10 @@ define(function () {
                             '">' + _htmlencode(button.label) + '</button>';
                     });
                 }
+
+                if (field.label && groupmode) {
+                    html += '<span style="padding-right:10px; padding-left: 5px">' + i18n(field.label) + '</span>';
+                }
                 
                 html += '</td>';
                 // Subfields
@@ -161,7 +167,7 @@ define(function () {
 
 
             function buildHtml() {
-                var html = '';
+                var html = '<style>table.toix td { vertical-align: middle }</style>';
             
                 html += '<input id=dlgtransparency title="Transparency" type=range min=20 max=100 value=100 ' +
                     'style="position:absolute;right:+10px;top:0px;border:dotted #8c8c8c 1px"><div style="margin-bottom:5px">&nbsp;</div>';
@@ -170,7 +176,7 @@ define(function () {
                     html += '<div style="margin-bottom:5px">' + opts.msg + '</div>';
                 }
 
-                html += '<table>';
+                html += '<table class=toix>';
 
                 if(opts && opts.header) {
                     html += '<tr>';
@@ -181,7 +187,20 @@ define(function () {
                 }
 
                 fieldnames.forEach(function (prefname) {
-                    html = buildField(html + '<tr>', allfields[prefname], prefname, '') + '</tr>';
+                    var field = allfields[prefname];
+                    
+                    // groupmode support
+                    if (!groupmode && field.groupcols) {
+                        groupmode = true;
+                        html += '</table><table class=toix>';  
+                        groupcols = field.groupcols;
+                        groupcolindex = 0;
+                    }
+                    // if groupmode multiple fields will have the same table row
+                    html += groupmode && (groupcolindex % groupcols) ? '' : '<tr>';
+                    html = buildField(html, field, prefname, '');
+                    html += groupmode && (groupcolindex % groupcols !== (groupcols - 1)) ? '' : '</tr>';
+                    groupcolindex++;
                 });
                 html += '</table>';
                 return html;

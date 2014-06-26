@@ -72,10 +72,14 @@ This command will copy to clipboard a list of all the id's, classes and styleshe
 
 This command will create a JSDoc function skeleton of the function where the cursor is located.
 Ex:
-`function foo(param1, param2) { }`
+```
+function foo(param1, param2) { }
+```
 
 Will become:
-```/*** foo
+```
+/**
+* foo
 * @param {} param1
 * @param {} param2
 * @return {} 
@@ -84,12 +88,15 @@ function foo(param1, param2) { }
 ```
 
 Also supports privates methods:
-`function _foo() { }`
+```
+function _foo() { }
+```
 
 Will become:
-```/**
+```
+/**
 * @private
-* foo
+* _foo
 * @return {} 
 */
 function _foo() { }

@@ -412,19 +412,19 @@ define(function (require, exports, module) {
  *                               Commands: Slash
  ** ------------------------------------------------------------------------ */
     function unixToWin() {
-        replaceSelection(/\//g, '\\', SP_LINE);
+        replaceSelection(/\r?\n|\r/g, '\r\n', SP_LINE);
     }
 
     function winToUnix() {
-        replaceSelection(/\\/g, '/', SP_LINE);
+        replaceSelection(/\r?\n|\r/g, '\n', SP_LINE);
     }
 
     function singleToDouble() {
-        replaceSelection(/\\/g, '\\\\', SP_LINE);
+        replaceSelection(/\'/g, '\"', SP_LINE);
     }
 
     function doubleToSingle() {
-        replaceSelection(/\\\\/g, '\\', SP_LINE);
+        replaceSelection(/\"/g, "\'", SP_LINE);
     }
 /** ------------------------------------------------------------------------
  *                               Commands: External

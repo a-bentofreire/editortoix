@@ -1,5 +1,6 @@
 /**
- * @preserve Copyright (c) 2014 Alexandre Bento Freire. All rights reserved.
+ * @preserve Copyright (c) 2014 ApptoIX. All rights reserved.
+ * @author Alexandre Bento Freire
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -20,6 +21,11 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
+
+/* 
+    Preferences  
+*/
+
 
 /*jslint vars: true, plusplus: true, devel: true, white: true, nomen: true, indent: 4, maxerr: 50 */
 /*global define, brackets, $ */
@@ -224,7 +230,9 @@ define(function () {
         hint: 'You Must install sass 1st. Goto http://sass-lang.com/',
         fields: {
             autosave : { value: false, type: 'boolean', hint: 'AutoSave', align: 'center', canempty: true}
-        }
+        },      
+        buttons: [{label: 'Compass', setvalue: 'compass compile "{{inrelfile}}"'}, 
+                  {label: 'SCSS', setvalue: 'sass --sourcemap "{{in}}" "{{out}}"'}]
     }
 };
 });

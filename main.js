@@ -1,5 +1,6 @@
 /**
- * @preserve Copyright (c) 2014 Alexandre Bento Freire. All rights reserved.
+ * @preserve Copyright (c) 2014 ApptoIX. All rights reserved.
+ * @author Alexandre Bento Freire
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -23,7 +24,7 @@
 
 
 /*jslint vars: true, plusplus: true, continue: true, devel: true, white: true, nomen: true, indent: 4, maxerr: 50 */
-/*global define, brackets, CodeMirror, $, document, window */
+/*global define, brackets, CodeMirror, $, document, window, appshell */
 
 define(function (require, exports, module) {
     "use strict";
@@ -32,7 +33,12 @@ define(function (require, exports, module) {
  ** ------------------------------------------------------------------------ */
     var /** @const */ IXMENU = "IX",
         /** @const */ MODULENAME = 'bracketstoix',
-        /** @const */ HELPLINK = 'https://github.com/a-bentofreire/bracketstoix',
+        /** @const */ HELPLINK = 'http://www.apptoix.com/#bracketstoix',
+        /** @const */ EXPANDTAGS = ';bu=button;d=div;sp=span;te=textarea;in=input',
+        /** @const */ ABOUTTEXT = '<div style="font-size: 1.5em; padding-bottom: 20px">Brackets<sub>to</sub>IX</div>' +           
+          '<div style="font-size: 1.2em; ">(c) 2014 App<sub>to</sub>IX</div>' + 
+          '<div>Developed by Alexandre Bento Freire</div>' + 
+          '<a href="' + HELPLINK + '">' + HELPLINK + '</a>',
 
         // FORCE policy must be the negative of the regular policy
         /** @const */ SP_FORCEALL = -1,
@@ -40,6 +46,7 @@ define(function (require, exports, module) {
         /** @const */ SP_WORD = 2,
         /** @const */ SP_SENTENCE = 3,
         /** @const */ SP_LINE = 4,
+        /** @const */ __SP_FUNC = 5,
         /** @const */ SP_FORCELINE = -4;
 
     var CommandManager = brackets.getModule("command/CommandManager"),
@@ -58,6 +65,7 @@ define(function (require, exports, module) {
         
         extprefs = PreferencesManager.getExtensionPrefs(MODULENAME),
         ui = require('uitoix'),
+        tt = require('texttransformstoix'),
         ixDomains = new NodeDomain("IXDomains", ExtensionUtils.getModulePath(module, "node/IXDomains")),
         // WARNING: these field names are used in prefsinfo
         prefs = require('prefstoix'),
@@ -101,7 +109,7 @@ define(function (require, exports, module) {
     }
 
     var
-        REGNIZEFIND = /([\\.()[\]^$])/g,
+        REGNIZEFIND = /([\\.()[\]*^$])/g,
         REGNIZEREPL = '\\$1';
 
     function getregnize(text, isfind) {
@@ -123,21 +131,27 @@ define(function (require, exports, module) {
  *                               Node Commads
  ** ------------------------------------------------------------------------ */
     function nodeOpenUrl(url) {
-        ixDomains.exec("openUrl", url).fail(function (err) {
-            logErr("failed to openUrl", err);
-        });
+        appshell.app.openURLInDefaultBrowser(url);
     }
 
-    function nodeExec(cmdline) {
-        ixDomains.exec("exec", cmdline).fail(function (err) {
+    function nodeExec(cmdline, cwd) {
+        ixDomains.exec("exec", cmdline, cwd).fail(function (err) {
             logErr("failed to exec", err);
         });
     }
 
     function nodeClipbrdCopy(text) {
-        ixDomains.exec("clipbrdCopy", text).fail(function (err) {
-            logErr("failed to copy to clipboard", text);
-        });
+        /* Brackets has no support for: var copyEvent = new ClipboardEvent('copy', { dataType: 'text/plain', data: 'Data to be copied' } ); */      
+        var d = document.createElement("textarea");
+        d.contentEditable = true;
+        document.body.appendChild(d);
+        d.value = text;
+        d.unselectable = "off";
+        d.style.position = "absolute";
+        d.focus();
+        document.execCommand("SelectAll");
+        document.execCommand("Copy", false, null);
+        document.body.removeChild(d);          
     }
 /** ------------------------------------------------------------------------
  *                               UI
@@ -146,20 +160,27 @@ define(function (require, exports, module) {
         return ui.ask(title, fieldlist, callback, opts, fields || prefs, i18n, Dialogs,
             opts && opts.nosaveprefs ? undefined : saveextprefs, prefs.historySize.value, KeyBindingManager, KeyEvent);
     } 
+  
+    function showMessage(title, message) {
+      Dialogs.showModalDialog(
+        "bracketstoix-dialog", i18n(title), message, 
+        [{className: Dialogs.DIALOG_BTN_CLASS_PRIMARY, id: Dialogs.DIALOG_BTN_OK, text: 'Close'}], true);
+    }
 /** ------------------------------------------------------------------------
  *                               Controlers
  ** ------------------------------------------------------------------------ */
     function getSelObj(selpolicy) {
-        var so = { cm: EditorManager.getActiveEditor()._codeMirror, selpolicy: selpolicy },
-            len;
+        var so = { cm: EditorManager.getActiveEditor()._codeMirror, selfunc: selpolicy, 
+                  selpolicy: typeof selpolicy !== 'function' ? selpolicy : __SP_FUNC },
+            len, inf;
         so.cursor = so.cm.getCursor();
         so.selected = (selpolicy >= 0) &&so.cm.somethingSelected();
         if (so.selected) {
             so.cursel = so.cm.getSelection();
         } else {
             so.cursel = '';
-
-            switch(selpolicy) {
+            
+            switch(so.selpolicy) {
             case SP_FORCELINE:
             case SP_LINE :
                 so.cursel = so.cm.getLine(so.cursor.line);
@@ -178,7 +199,7 @@ define(function (require, exports, module) {
                 while ((so.start.ch > 0) && (so.cursel[so.start.ch - 1] !== ' ')) {
                     so.start.ch--;
                 }
-                while ((so.end.ch < len - 1) && (so.cursel[so.end.ch + 1] !== ' ')) {
+                while ((so.end.ch < len) && (so.cursel[so.end.ch] !== ' ')) {
                     so.end.ch++;
                 }
                 so.cursel = so.cursel.substring(so.start.ch, so.end.ch);
@@ -187,7 +208,35 @@ define(function (require, exports, module) {
             case SP_ALL : 
                 so.start = {ch:0, line: 0};
                 so.end = {ch:0, line: so.cm.lineCount()};
-                so.cursel = so.cm.getRange(so.start, so.end);    
+                so.cursel = so.cm.getRange(so.start, so.end);  
+                break;
+                    
+            case __SP_FUNC : 
+                //TODO: Support multiple lines
+                // It executes a selfunc twice(left, right direction) for each caracter. It stops eating chars if it selfunc returns false 
+                so.cursel = so.cm.getLine(so.cursor.line);
+                so.start = {ch: so.cursor.ch, line: so.cursor.line};
+                so.end = {ch: so.cursor.ch + 1, line: so.cursor.line};
+                inf = {so: so, dir: -1};
+                // the selfunc can reverse the direction to implement multiple passes, but careful since it cause an infinite loop    
+                while(so.start.ch > 0) {
+                    if (!so.selfunc(inf, so.cursel[so.start.ch])) {
+                        so.start.ch -= inf.dir;
+                        break;
+                    }
+                    so.start.ch += inf.dir;
+                }
+                inf.dir = 1;
+                // the selfunc can add text to the so.cursel, so it's better to not place the end test in a var such as len = so.cursel.length
+                while(so.end.ch < so.cursel.length) {
+                    if (!so.selfunc(inf, so.cursel[so.end.ch - 1])) {
+                        so.end.ch -= inf.dir;
+                        break;
+                    }
+                    so.end.ch += inf.dir;
+                }
+                so.cursel = so.cursel.substring(so.start.ch, so.end.ch);
+                break;
             }
         }
         // Disactivated due a brackets bug, that doesn't preventsDefault on ENTER key
@@ -204,9 +253,9 @@ define(function (require, exports, module) {
             return;
         }
         if (!asarray) {
-            newsel = callback(so.cursel);
+            newsel = callback(so.cursel, so);
         } else {
-            newsel = callback(so.cursel.split("\n")).join("\n");
+            newsel = callback(so.cursel.split("\n"), so).join("\n");
         }
         if (so.cursel !== newsel) {
             if (so.selected) {
@@ -253,7 +302,7 @@ define(function (require, exports, module) {
  *                               Commands: Transforms
  ** ------------------------------------------------------------------------ */
     function upperCaseText() {
-        changeSelection(function (text) {
+      changeSelection(function (text) {
             return text.toUpperCase();
         }, SP_WORD);
     }
@@ -264,17 +313,6 @@ define(function (require, exports, module) {
         }, SP_WORD);
     }
 
-    function capitalizeText() {
-        replaceSelection(/\b(_*\w)/g, function replacer(match, p1, offset, string) {
-            return p1.toUpperCase();
-        }, SP_WORD);
-    }
-
-    function camelCaseText() {
-        replaceSelection(/\b(_*\w)/g, function replacer(match, p1, offset, string) {
-            return p1.toLowerCase();
-        }, SP_WORD);
-    }
 
     function joinText() {
         replaceSelection(/\n/g, '', SP_ALL);
@@ -408,24 +446,114 @@ define(function (require, exports, module) {
                 }                
         }, SP_SENTENCE);
     }
+
+    function untag() {
+        replaceSelection(/<(\w+)(?:.*?)>(.*?)<\/(\1)\s*>/, "$2", 
+            // function policy. 
+            function(inf, ch) {
+            if (inf.stop) {
+                inf.stop = false;
+                return false;
+            } 
+            inf.stop = ch === (inf.dir === -1 ? '<' : '>');                            
+            return true;
+        });
+    }
+    
+    function tag() {
+        changeSelection(function (text, so) {
+            var tagname = text.split(' ', 1)[0];
+            
+            function getAttr(ch, prefix) {
+                var attr = tagname.split(ch);
+                if (attr.length > 1) {
+                    tagname = attr[0];
+                    attr = ' ' + prefix + '="' + attr[1] + '"';
+                } else {
+                    attr = '';
+                }
+                return attr;
+            }
+                        
+            var id, cls, at, base, removelen;
+            removelen = tagname.length + 1; // assumes a single space separator
+            text = text.substr(removelen).trim();
+            
+            // TAG#ID.CLASS  -> 1st retrieve the class, then the id
+            cls = getAttr('.', 'class');
+            id = getAttr('#', 'id');
+            at = EXPANDTAGS.indexOf(';' + tagname + '=');
+            if (at !== -1) {
+                tagname = EXPANDTAGS.substr(at + tagname.length + 2).split(';', 1)[0];
+            }
+            base = '<' + tagname + id + cls + '>';
+            // readjust cursor
+            if (so.start) {
+                so.cursor = { ch: so.start.ch + base.length, line: so.start.line};
+            }
+                        
+            return base + text + '</' + tagname + '>';
+                        
+        }, SP_SENTENCE);
+    }
 /** ------------------------------------------------------------------------
- *                               Commands: Slash
+ *                               Commands: Quotes
  ** ------------------------------------------------------------------------ */
-    function unixToWin() {
-        replaceSelection(/\//g, '\\', SP_LINE);
+    var /** @const */ Q_SINGLE = 0,
+        /** @const */ Q_DOUBLE = 1,
+        /** @const */ Q_TOGGLE = 2;
+    
+    function quoteOp(op) {
+        changeSelection(function (text) {
+            var arr = text.split('');
+            var i, ch, isin = false;
+            
+            for(i = 0; i <= arr.length; i++) {
+                ch = arr[i];
+                switch(ch) {
+                //TODO: Slash the quote if the reverse quote already exists. Support \" and \'
+                case "'" :
+                    if ((op === Q_SINGLE) || (op === Q_TOGGLE)) {
+                        arr[i] = '"';
+                        isin = !isin;
+                    }
+                    break;
+                case '"' :
+                    if ((op === Q_DOUBLE) || (op === Q_TOGGLE)) {
+                        arr[i] = "'";
+                        isin = !isin;
+                    }                        
+                    break;
+                }                
+            }
+            return arr.join('');
+        }, 
+            // function policy. it stops if the start(1st pass) and end(2nd pass) quote are the same.
+            function(inf, ch) {
+            if (inf.stop) {
+                inf.stop = false;
+                return false;
+            } 
+            
+            if ((ch === "'" || ch === '"') && (ch === inf.quote || !inf.quote)) {
+                inf.stop = true;                
+                inf.quote = ch;                
+            }
+            return true;
+        });
+    }
+    
+    function singleToDoubleQuote() {
+        quoteOp(Q_SINGLE);       
     }
 
-    function winToUnix() {
-        replaceSelection(/\\/g, '/', SP_LINE);
-    }
-
-    function singleToDouble() {
-        replaceSelection(/\\/g, '\\\\', SP_LINE);
-    }
-
-    function doubleToSingle() {
-        replaceSelection(/\\\\/g, '\\', SP_LINE);
-    }
+    function doubleToSingleQuote() {
+        quoteOp(Q_DOUBLE);               
+    }    
+    
+    function toggleQuote() {
+        quoteOp(Q_TOGGLE);               
+    }    
 /** ------------------------------------------------------------------------
  *                               Commands: External
  ** ------------------------------------------------------------------------ */
@@ -473,12 +601,16 @@ define(function (require, exports, module) {
     
     function buildFuncJSDoc() {
         getSelection(function (text, so) {
-            var match = text.match(/function\s+(\w+)\s*\((.*?)\)/i), 
-                jsdoc, vars, initialspace;
+            var match = text.match(/(?:(\w+)\s*[:=]\s*){0,1}function(?:\s+(\w+)){0,1}\s*\((.*?)\)/i), 
+                jsdoc, vars, func, initialspace;
             if(match && match.length > 1) {
-                vars = match[2];
+                func = match[1] || match[2];
+                if (!func) {
+                    return;
+                }
+                vars = match[3];
                 initialspace = text.match(/^\s*/i)[0];
-                jsdoc = '|/**\n' + (match[1][0] == '_' ? '|* @private\n' : '') + '|* ' + match[1] + '\n';
+                jsdoc = '|/**\n' + (func[0] == '_' ? '|* @private\n' : '') + '|* ' + func + '\n';
                 if(vars) {
                     vars.split(',').forEach(function (v) {
                         jsdoc += '|* @param {} ' + v.trim() + '\n';
@@ -555,25 +687,44 @@ define(function (require, exports, module) {
         }
     }*/
     function runCompilerEx(autosave) {
+        
+        function addrepl(list, prefix, filename, root) {
+            var parts = filename.match(/^(.*)\/([^/]*)$/),
+                relfile = filename.indexOf(root) === 0 ? filename.substr(root.length) : filename;          
+            list.push([prefix, filename]);
+            list.push([prefix + 'file', parts[2]]);
+            list.push([prefix + 'path', parts[1]]);
+            list.push([prefix + 'relfile', relfile]);
+        }
+        
         var exts = [
             {inext: '.js6', outext: '.js'},
             {inext: '.scss', outext: '.css'}
             ],
 
             infile = getCurFileName(),
-            outfile, i, ext, cmdline, pref;
-            for (i = 0; i < exts.length; i++) {
-                ext = exts[i];
-                if (checkExt(infile, ext.inext)) {
-                    pref = prefs[ext.inext.substr(1)];
-                    if (pref.fields.autosave.value || !autosave) {
-                        outfile = infile.substr(0, infile.length - ext.inext.length) + ext.outext;
-                        cmdline = pref.value;
-                        nodeExec(cmdline.replace('{{out}}', outfile).replace('{{in}}', infile)/*, showResultsPanel, true*/);
-                        break;
-                    }
+            outfile, i, ext, cmdline, pref, root, 
+            repllist = [];
+        
+        for (i = 0; i < exts.length; i++) {
+            ext = exts[i];
+            if (checkExt(infile, ext.inext)) {
+                pref = prefs[ext.inext.substr(1)];
+                if (pref.fields.autosave.value || !autosave) {
+                    cmdline = pref.value;
+                    outfile = infile.substr(0, infile.length - ext.inext.length) + ext.outext;
+                    root = ProjectManager.getProjectRoot()._path;
+                    addrepl(repllist, 'in', infile, root);
+                    addrepl(repllist, 'out', outfile, root);
+                    repllist.forEach(function (macro) {
+                        cmdline = cmdline.replace('{{' + macro[0] + '}}', macro[1]);
+                    });
+                    console.log(cmdline);
+                    nodeExec(cmdline, root/*, showResultsPanel, true*/);
+                    break;
                 }
             }
+        }
     }
 
     function runCompiler() {
@@ -617,6 +768,10 @@ function execSnippets() {
         nodeOpenUrl(HELPLINK);
     }
 
+  function showAbout() {
+        showMessage('About', ABOUTTEXT);
+    }
+
     function showOptions() {
         ask('Options', prefs.OPTIONFIELDS, undefined, {header: ['Field', 'Value', 'Exec On Save']});
     }
@@ -636,7 +791,7 @@ function execSnippets() {
             var selcmd = fields.cmd.value;
             cmds.every(function(cmd) {
                 if (cmd.name && (selcmd === cmdToLabel(cmd.name))) {
-                    cmd.f();
+                    runCommand(cmd);
                     return false;
                 }
                 return true;
@@ -707,8 +862,8 @@ function execSnippets() {
         return [
             {name: "UpperCase", f: upperCaseText, priority: SHOWONMENU},
             {name: "LowerCase", f: lowerCaseText, priority: SHOWONMENU},
-            {name: "Capitalize", f: capitalizeText},
-            {name: "CamelCase", f: camelCaseText},
+            {name: "Capitalize", f: tt.capitalizeText, sp: SP_WORD},
+            {name: "CamelCase", f: tt.camelCaseText, sp: SP_WORD},
             {name: "HtmlEncode", f: htmlEncode},
             {name: "HtmlDecode", f: htmlDecode},
             {name: "UrlEncode", f: urlEncode},
@@ -723,13 +878,18 @@ function execSnippets() {
             {name: "Remove Duplicates", f: removeDuplicates},
             {name: "Remove Empty Lines", f: removeEmptyLines},
             {},
-            {name: "Unix To Win", f: unixToWin},
-            {name: "Win To Unix", f: winToUnix},
-            {name: "Single Slash To Double", f: singleToDouble},
-            {name: "Double To Single Slash", f: doubleToSingle},
+            {name: "Unix To Win", f: tt.unixToWin, sp: SP_LINE},
+            {name: "Win To Unix", f: tt.winToUnix, sp: SP_LINE},
+            {name: "Single Slash To Double", f: tt.singleToDoubleSlash, sp: SP_LINE},
+            {name: "Double To Single Slash", f: tt.doubleToSingleSlash, sp: SP_LINE},
+            {name: "Single Quote To Double", f: singleToDoubleQuote},
+            {name: "Double To Single Quote", f: doubleToSingleQuote},
+            {name: "Toggle Quote", f: toggleQuote},
             {name: "Tab To Space", f: tabToSpace},
             {name: "Space To Tab", f: spaceToTab},
             {name: "rgb-hex", f: rgbHex},
+            {name: "Untag", f: untag},
+            {name: "Tag", f: tag},
             {},
             {name: "ExtractorToIX...", f: extractortoix, priority: SHOWONMENU},
             {name: "ReplaceToIX...", f: replacetoix, priority: SHOWONMENU},
@@ -751,9 +911,24 @@ function execSnippets() {
             {name: "Commands...", f: showCommands, priority: SHOWONMENU},
             {name: "Commands Mapper...", f: showCommandMapper, showalways: true, priority: SHOWONMENU},
             {name: "Options...", f: showOptions, priority: SHOWONMENU},
-            {name: "Help", f: showHelp, priority: SHOWONMENU}
+            {name: "Help", f: showHelp, priority: SHOWONMENU},
+            {name: "About", f: showAbout, showalways: true, priority: SHOWONMENU}
         ];
     }
+
+    function runCommand(cmd) {
+        if(!cmd.sp) {
+            cmd.f();
+        } else {
+            replaceSelection(cmd.f.pat, cmd.f.repl, cmd.sp);
+        }
+    }
+    
+    // This function must be a top level function to mimimize the closure
+    function registerCommand(cmd, id) {        
+        CommandManager.register(cmd.label || cmd.name, id,  function () { runCommand(cmd); });
+    }
+    
 
     function buildCommands() {
         
@@ -762,7 +937,7 @@ function execSnippets() {
                 id = MODULENAME + "." + cmdToName(cmd.name);
             // Register Command
             if (id !== lastid) {
-                CommandManager.register(cmd.label || cmd.name, id, cmd.f);
+                registerCommand(cmd, id);
             }    
             // Register Menu Items
             opts = [];
@@ -804,7 +979,6 @@ function execSnippets() {
             if (showinctxmenu.indexOf(nm) > -1) {
                 lastid = addToMenu(cmd, ctxmenu, lastid);
             }
-
         }
     }
 
@@ -819,8 +993,14 @@ function execSnippets() {
     function initprefbuttons() {
         prefs.find.buttons[0].f = function(text) { return getregnize(text, true); };
         prefs.findre.buttons[0].f = prefs.find.buttons[0].f;
+        prefs.scss.buttons[0].f = function(text) { return prefs.scss.buttons[0].setvalue; };
+        prefs.scss.buttons[1].f = function(text) { return prefs.scss.buttons[1].setvalue; };
     }
     
+/** ------------------------------------------------------------------------
+ *                               Init
+ ** ------------------------------------------------------------------------ */    
+    console.log(window.navigator.userAgent);
     fillshowonmenu(); // must be before loadextprefs
     initprefbuttons();
     loadextprefs();

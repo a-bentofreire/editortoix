@@ -1,3 +1,33 @@
+
+[JsDoc]
+
+        function _retransparency(qObj, transparency) {
+        }
+
+        var Car = {
+        _color: 'red',
+        color: function(value) {
+        this._color = value;
+        }
+        };
+
+        var Dog = function(value) {
+        this.name = value;
+        }
+
+        Dog.prototype.Bark = function() {
+        alert(this.name + " bark");
+        };
+
+[Tag]
+  before<div id=34 class=56>div text</div>after 
+  d#myid.myclass test
+
+[Quotes]
+div
+hello + "abcd" + 'cdef'
+"abc'efg\"" + 'hij"klm"nop'
+
 [Case]
 getSelection SetSelection alllower ALLUPPER
 [lower+UPPER LOWER+UPPER SEMI mi]

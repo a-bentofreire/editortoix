@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2014 Alexandre Bento Freire. All rights reserved.
+ * @preserve Copyright (c) 2014 ApptoIX. All rights reserved.
+ * @author Alexandre Bento Freire
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -29,50 +30,34 @@
 /** ------------------------------------------------------------------------
  *                               Node Requires
  ** ------------------------------------------------------------------------ */
-    var nodeOpen = require('open'),
-        nodeCopyPaste = require('copy-paste'),
-        nodeExec = require('child_process').exec;
+    var nodeExec = require('child_process').exec,
+        fs = require('fs');
 /** ------------------------------------------------------------------------
  *                               Commands
- ** ------------------------------------------------------------------------ */
-    function cmdOpenUrl(url) {
-        nodeOpen(url, function (err) {
-          if (err) throw err;
-          console.log('Error opening ' + url);
-        });
-    }
-    
-    function cmdExec(cmdline, callback, param) {
-        nodeExec(cmdline, function (error, stdout, stderr) {
-            console.log('Executed' + cmdline);
+ ** ------------------------------------------------------------------------ */   
+    function cmdExec(cmdline, cwd, callback, param) {
+        var opts = {cwd: cwd};
+        nodeExec(cmdline, opts, function (error, stdout, stderr) {
+            console.log('Executed:'  + cmdline);
             if (stderr) {
-                console.log('StdErr:' + stderr);
+                console.log('StdErr: ' + stderr);
             }
             if (callback) {
                 callback(error, stdout, stderr, param);                
             }
         });
     }
-
-    function cmdClipbrdCopy(text) {
-        nodeCopyPaste.copy(text);
-    }   
 /** ------------------------------------------------------------------------
  *                               Init
  ** ------------------------------------------------------------------------ */
     function init(DomainManager) {
         var i, cmd,
           cmds = [
-          {name: 'openUrl', f: cmdOpenUrl, desc: 'Opens a url', 
-                params: [{name: 'url', type: 'string', description: 'url'}]},
-
           {name: 'exec', f: cmdExec, desc: 'Executes as a child process', 
-                params: [{name: 'cmdline', type: 'string', description: 'cmdline'}/*, //@TODO Implement a callback system to print the stderr and stdout
+                params: [{name: 'cmdline', type: 'string', description: 'cmdline'},
+                         {name: 'cwd', type: 'string', description: 'curpath'}/*, //@TODO Implement a callback system to print the stderr and stdout
                          {name: 'callback', type: 'function', description: 'callback'},
-                         {name: 'param', type: 'boolean', description: 'param'}*/]},
-              
-          {name: 'clipbrdCopy', f: cmdClipbrdCopy, desc: 'Copies text to the clipboard', 
-                params: [{name: 'text', type: 'string', description: 'text'}]}
+                         {name: 'param', type: 'boolean', description: 'param'}*/]}
         ];
 
         if (!DomainManager.hasDomain('IXDomains')) {

@@ -1,4 +1,4 @@
-![Logo](bracketstoix.png)  
+![Logo](bracketstoix64x64.png)  
   
 # BracketstoIX extension  
   
@@ -19,6 +19,7 @@ If no text is selected, a command will use:
 [sentence] - The nearest text until a whitespace or newline  
 [line] - The text line where the cursor is located  
 [all] - All the editor text  
+[function] - A function determines the text to use. Ex: Quote functions will use all the text between quotes that surrounds the cursor.  
   
 ##  Dialogs  
   
@@ -29,11 +30,16 @@ Input fields on the dialogs support history (CTRL+UP/DOWN).
 The list of commands are:  
 1. Case Change[word]: **UpperCase**, **LowerCase**, **Capitalize**, **CamelCase**  
 2. Encoders/Decoders[line]: **HtmlEncode**, **HtmlDecode**, **UrlEncode**  
-3. Slash Change [line]: **Unix To Win**, **Win To Unix**, **Single Slash To Double**, **Double To Single Slash**  
-4. Spacing[all]: **Tab To Space**, **Space To Tab**  -   Space to Tab only works with leading spaces  
-5. **rgb-hex**[sentence] - Converts from #HHHHHH to rgb(dec, dec, dec) and vice-versa. It supports multiple conversions   
+3. Quote Change [function]: **Single Quote To Double**, **Double To Single Quote**, **Toggle Quote**  
+4. Slash Change [line]: **Unix To Win**, **Win To Unix**, **Single Slash To Double**, **Double To Single Slash**  
+5. Spacing[all]: **Tab To Space**, **Space To Tab**  -   Space to Tab only works with leading spaces  
+6. **rgb-hex**[sentence] - Converts from #HHHHHH to rgb(dec, dec, dec) and vice-versa. It supports multiple conversions   
+7. **tag**[sentence] - Uses the 1st word of the selected text as html tag, and surrounds the remaining the text with nearest text.  
+The most common tags have shortcuts: bu=button  d=div   sp=span  te=textarea   in=input  
+Ex: d -> <div></div>       h3#hello.active text -> <h3 id="hello" class="active">text</h3>  
+8. ** untag**[function] - Removes the nearest tag  
   
-6. Line Commands[all]:  
+9. Line Commands[all]:  
   
   * **Join**, **Split**  
   * **Number** - It adds a number prefix to every selected line  
@@ -62,7 +68,7 @@ Just like all the other commands, it only operates on the selected text(only sel
   
 ##  Html Report Command  
   
-This command will copy to clipboard a list of all the id's, classes and stylesheets used in the current html file [all].  
+This command will copy to the clipboard a list of all the id's, classes and stylesheets used on the current html file [all].  
   
 ## Internet Search Commands  
   
@@ -109,7 +115,7 @@ function _foo() { }
 * .js6 Compiles a ECMAScript 6 into a .js file using traceur compiler.  
 * .scss Compiles a .scss into a .css file using sass compiler.  
   
-To prevent from creating an oversized plug-in, the compilers must be installed manually:  
+To prevent from creating an oversize plug-in, the compilers must be installed manually:  
   
 * To install sass compiler, follow the instructions on this link: [sass compiler][1]  
 * To install traceur, first install [nodejs][2], and then from the shell, execute "npm install -g traceur"  
@@ -121,11 +127,26 @@ By default, the compile on save is not active. You can use the **Options** to ac
   
 ## Dialog Commands  
   
-  * **Commands** - Displays a dialog box with the list of the commands to be executed.  
-  * **Commands Mapper** - Allows to define which commands are on the menu, and associate shortcuts.  
+  * **Commands** - Displays a dialog box with the list of the commands to be executed.   
+Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros  
+  
+  * **Commands Mapper** - Allows you to define which commands are on the menu, and its associate shortcuts.  
   * **Options** - Configuration dialog  
   
 ## Version History  
+* 1.6  
+    Github moved to https://github.com/apptoix/bracketstoix  
+    Add: About dialog  
+    Supports Compass compiler  
+    Adds: tag, untag command  
+    External commands support  {{in}}, {{inpath}}, {{infile}}, {{inrelfile}}, {{out}}, {{outpath}}, {{outfile}}, {{outrelfile}} macros  
+    Adds: Single Quote To Double, Double To Single Quote, Toggle Quote  
+    JSDoc command also supports function defined as prototype, variable, and property   
+    Dialogs' Labels are clickable  
+    Fixes: word selection policy  
+    Fixes: ReplacetoIX for * char when Regular Expression isn't selected  
+    Removed external dependencies  
+  
 * 1.5 - Summer break Edition  
     Adds: Html Report, Function JSDoc   
     ReplacetoIX: Supports multiline  
@@ -188,6 +209,11 @@ These are the plans for the next versions:
   
 This extension was created and tested on Windows 8.1,  
 feedback of bugs on this and other platforms are welcome.  
+  
+## Copyrights  
+  
+Copyright (c) 2014 ApptoIX  
+Author Alexandre Bento Freire  
   
 ## License  
   

@@ -1,9 +1,16 @@
 /*jshint esnext:true */
+/** @preserve
+* hello
+*/
 var square = (x) => {
   return x * x;
 };
 alert(square(2)  +4);
 for (var element of [1, 2, 3]) {
   res.push(element * element);
-}
-var t = 3 * 4; 
+}    
+var t = 3 * 5; 
+var k1 = 5;
+ // #put RADTODEG(3)+";"
+var t =5;
+var [a, b] = ['hello', 'world'];

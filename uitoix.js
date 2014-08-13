@@ -1,5 +1,6 @@
 /**
- * @preserve Copyright (c) 2014 Alexandre Bento Freire. All rights reserved.
+ * @preserve Copyright (c) 2014 ApptoIX. All rights reserved.
+ * @author Alexandre Bento Freire
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -97,10 +98,10 @@ define(function () {
                         inpelement = 'select';
                         break;
                 }
-                if (field.label && !groupmode) {
-                    html += '<td style="padding-right:5px">' + i18n(field.label) + ':</td>';
-                }
                 id = PREFIX + fieldname + suffix;
+                if (field.label && !groupmode) {
+                    html += '<td style="padding-right:5px"><label for="' + id + '">' + i18n(field.label) + ':</label></td>';
+                }
                 firstfieldid = firstfieldid || id;
                 html += '<td align=' + (field.align || 'left') + '>';
                 html += '<' + inpelement + ' id=' + id +
@@ -118,7 +119,7 @@ define(function () {
                             field.historyindex = -1;
                             // Brackets has no support for datalist, so this code is disactivated until there is datalist support
                             // check keyboardWorkaround for keyboard implementation
-                            /*
+                            /* 
                             html += ' list="' + id + 'list" ' + fieldhtml + '><datalist id=" ' + id + 'list">';
                             var d = document.createElement('div');
                             field.history.forEach(function(item) {
@@ -127,7 +128,7 @@ define(function () {
                                 html += '<option value="' + item + '">';// + item + '</option>'; 
                             });
                             html += '</datalist>';
-                            */ 
+                            */
                             // this code is an alternative and provides data for keyboardWorkaround
                             html += ' data-history="' + fieldname + '" ' + fieldhtml + '>';
                             
@@ -152,7 +153,8 @@ define(function () {
                 }
 
                 if (field.label && groupmode) {
-                    html += '<span style="padding-right:10px; padding-left: 5px">' + i18n(field.label) + '</span>';
+                    html += '<label for="' + id + '" style="display:inline-block; padding-right:10px; padding-left: 5px">' + 
+                        i18n(field.label) + '</label>';
                 }
                 
                 html += '</td>';
@@ -168,7 +170,7 @@ define(function () {
 
             function buildHtml() {
                 var html = '<style>table.toix td { vertical-align: middle }</style>';
-            
+                /*html += '<input name="frameworks" list="frameworks" type="text" /><datalist id="frameworks">	<option value="MooTools">	<option value="Moobile">	<option value="Dojo Toolkit">	<option value="jQuery">	<option value="YUI"></datalist>';*/ // datalist test
                 html += '<input id=dlgtransparency title="Transparency" type=range min=20 max=100 value=100 ' +
                     'style="position:absolute;right:+10px;top:0px;border:dotted #8c8c8c 1px"><div style="margin-bottom:5px">&nbsp;</div>';
                 

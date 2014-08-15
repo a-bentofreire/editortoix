@@ -36,7 +36,10 @@ The list of commands are:
 6. **rgb-hex**[sentence] - Converts from #HHHHHH to rgb(dec, dec, dec) and vice-versa. It supports multiple conversions   
 7. **tag**[sentence] - Uses the 1st word of the selected text as html tag, and surrounds the remaining the text with nearest text.  
 The most common tags have shortcuts: bu=button  d=div   sp=span  te=textarea   in=input  
+```  
 Ex: d -> <div></div>       h3#hello.active text -> <h3 id="hello" class="active">text</h3>  
+```  
+  
 8. ** untag**[function] - Removes the nearest tag  
   
 9. Line Commands[all]:  
@@ -190,7 +193,8 @@ Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros
 ## Roadmap  
   
 These are the plans for the next versions:  
-  
+* Reverse commands  
+* Default shortcuts  
 * Go back to the previous edit cursor positions  
 * Text transforms: **Num To Hex**, **Hex To Num**  
 * Trim Trailing on save  

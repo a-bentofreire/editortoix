@@ -137,13 +137,19 @@ Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros
   * **Options** - Configuration dialog
 
 ## Version History
+* 1.7 
+    Adds: Reverse, Browse File commands
+    ReplacetoIX supports numbering
+    Fixes regnize
+    
 * 1.6
+    Adds: Single Quote To Double, Double To Single Quote, Toggle Quote commands
+    Adds: Tag, Untag command
+
     Github moved to https://github.com/apptoix/bracketstoix
-    Add: About dialog
+    Adds: About dialog
     Supports Compass compiler
-    Adds: tag, untag command
     External commands support  {{in}}, {{inpath}}, {{infile}}, {{inrelfile}}, {{out}}, {{outpath}}, {{outfile}}, {{outrelfile}} macros
-    Adds: Single Quote To Double, Double To Single Quote, Toggle Quote
     JSDoc command also supports function defined as prototype, variable, and property 
     Dialogs' Labels are clickable
     Fixes: word selection policy
@@ -151,7 +157,8 @@ Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros
     Removed external dependencies
 
 * 1.5 - Summer break Edition
-    Adds: Html Report, Function JSDoc 
+    Adds: Html Report, Function JSDoc commands
+
     ReplacetoIX: Supports multiline
     ExtractortoIX, ReplacetoIX: Visual improvements in the Dialog Box
     
@@ -164,7 +171,8 @@ Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros
     Command Mapper also supports Context Menus 
     
 * 1.3
-    Adds: rgb-hex, Markdown Trim Trailing
+    Adds: rgb-hex, Markdown Trim Trailing commands
+    
     Disactivated: 'current editor is re-activated after a dialog box'. Due a brackets bug that doesn't preventDefault on ENTER key
     ReplacetoIX: Uses the selected line as Find. Always empties replace. Supports Only Selection
     
@@ -172,7 +180,7 @@ Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros
     Dialogs: Supports transparency slider
 
 * 1.2.2
-    Adds Regnize to ExtractortoIX and ReplacetoIX dialogs
+    Adds: Regnize to ExtractortoIX and ReplacetoIX dialogs    
     The current editor is re-activated after a dialog.
 
 * 1.2.1
@@ -193,7 +201,6 @@ Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros
 ## Roadmap
 
 These are the plans for the next versions:
-* Reverse commands
 * Default shortcuts
 * Go back to the previous edit cursor positions
 * Text transforms: **Num To Hex**, **Hex To Num**

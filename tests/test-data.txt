@@ -1,3 +1,9 @@
+[ReplaceToIX extractor]
+  var 
+    ST_INIT,
+    ST_MOVE,
+    ST_NEXT,
+    ST_LAST;
 
 [JsDoc]
 
@@ -45,6 +51,9 @@ cc\\dd\\f
 [rg-hex]
 rg(1, 100, 23)
 #AC1E3F
+
+[Reverse]
+var y != x[1]
 
 [List]
 APPLE

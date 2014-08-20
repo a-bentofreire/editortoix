@@ -1,14 +1,14 @@
 {
     "name": "bracketstoix",
     "title": "BracketstoIX",
-    "version": "1.6.0",
-    "description": "This minified(__size__) extension puts Brackets on steroids without cluttering your menus. It adds Change(Case, Quote, Slash), Sort, Tag, Clipboard Commands, Execute Compilers(traceur, sass, compass), Advanced Text Replace and Extrators, Internet Search. ----- Text Transforms(UpperCase, LowerCase, Capitalize, CamelCase, HtmlEncode, HtmlDecode, UrlEncode, Join, Split, Number, Trim Leading, Trim Trailing, Sort Ascending, Sort Descending, Remove Duplicates, Remove Empty Lines, Unix To Win, Win To Unix, Single Quote To Double, Double To Single Quote, Toggle Quote, Single Slash To Double, Double To Single Slash, rgb-hex, Markdown Trim Trailing, Function JSDoc, Tag, Untag), ----- Clipboard(Copy Filename, Copy Fullname, Regnize, ExtratortoIX, Html Report), ----- ReplacetoIX(Replace including Words only, Selection only, Multiline, Regnize, History), ----- Internet Search(Open Url, Web Search), ----- Compiler(scss, js6 [ECMAScript 6]). ----- Read the readme for the complete description and usage",
+    "version": "1.7.0",
+    "description": "[1.7:Numbering, Reverse, Browse File]. JsDoc, Change(Case, Quote, Slash, Tab, Encoding), Sort, (Un)Tag, Clipboard, Internet, (traceur, sass, compass), Text Replace, Extrators.<ul><li>Check out the web site for a usage demo</li><li>Text Transforms(Reverse, UpperCase, LowerCase, Capitalize, CamelCase, HtmlEncode, HtmlDecode, UrlEncode, Join, Split, Number, Trim Leading, Trim Trailing, Sort Ascending, Sort Descending, Remove Duplicates, Remove Empty Lines, Unix To Win, Win To Unix, Single Quote To Double, Double To Single Quote, Toggle Quote, Single Slash To Double, Double To Single Slash, rgb-hex, Markdown Trim Trailing, Function JSDoc, Tag, Untag)</li><li>Clipboard(Copy Filename, Copy Fullname, Regnize, ExtratortoIX, Html Report)</li><li>ReplacetoIX(Replace including Words only, Selection only, Multiline, Regnize, History)</li><li>Internet Search(Open Url, Web Search, Browse File)</li><li>Compiler(scss, js6 [ECMAScript 6], compass)</li></ul>",
     "homepage": "http://www.apptoix.com/#bracketstoix",
     "license": "MIT",
-    "author": "ApptoiX <apptoix@a-bentofreire.com>",
+    "author": "ApptoiX <bracketstoix@apptoix.com>",
     "keywords": [
-        "js6", "ECMAScript 6", "traceur", "sass", "compass", "clipboard", "replace", "jsdoc",
-        "UpperCase", "LowerCase", "Capitalize", "CamelCase", "HtmlEncode", "HtmlDecode", "UrlEncode", "Join", "Split", "Number", "Trim Leading", "Trim Trailing", "Sort Ascending", "Sort Descending", "Remove Duplicates", "Remove Empty Lines", "Unix To Win", "Win To Unix", "Single Slash To Double", "Double To Single Slash", "Tab To Space", "Space To Tab", "Open Url", "Web Search", "Copy Filename", "Copy Fullname", "Compiler", "Regnize", "ExtractortoIX", "Function JSDoc", "ReplacetoIX", "rgb-num", "Markdown", "Html Report", "tag", "untag"
+        "js6", "ECMAScript 6", "traceur", "sass", "compass", "clipboard", "replace", "jsdoc", 
+        "UpperCase", "LowerCase", "Capitalize", "CamelCase", "HtmlEncode", "HtmlDecode", "UrlEncode", "Join", "Split", "Number", "Trim Leading", "Trim Trailing", "Sort Ascending", "Sort Descending", "Remove Duplicates", "Remove Empty Lines", "Unix To Win", "Win To Unix", "Single Slash To Double", "Double To Single Slash", "Tab To Space", "Space To Tab", "Open Url", "Web Search", "Copy Filename", "Copy Fullname", "Compiler", "Regnize", "ExtractortoIX", "Function JSDoc", "ReplacetoIX", "rgb-hex", "Markdown", "Html Report", "Tag", "Untag", "Reverse", "Browse File", "Numbering"
     ],
     "engines": {
         "brackets": ">=0.38.0"

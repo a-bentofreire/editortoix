@@ -153,8 +153,21 @@ define(function () {
     replace : {
         value: '',
         label: 'Replace',
+        hint: 'Use $NUM$ for numbering macro',
         history: [],
         canempty: true
+    },
+    startValue : {
+        value: '',
+        label: 'Start',
+        hint: 'Leave empty for no numbering, since it slows down the process and only supports a small regular expression subset replacement. Must have Regular Expression checked',
+        historty: [],
+        canempty: true
+    },
+    stepValue : {
+        value: '',
+        label: 'Step',
+        historty: []
     },
     iswordsonly : {
         value: false,

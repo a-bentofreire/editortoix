@@ -109,7 +109,7 @@ define(function (require, exports, module) {
     }
 
     var
-        REGNIZEFIND = /([\\.()[\]*^$])/g,
+        REGNIZEFIND = /([\\.()[\]*+^$])/g,
         REGNIZEREPL = '\\$1';
 
     function getregnize(text, isfind) {
@@ -571,8 +571,12 @@ define(function (require, exports, module) {
             nodeOpenUrl(prefs.webSearch.value + encodeURIComponent(text));
         }, SP_SENTENCE);
     }
+  
+    function browseFile() {
+      nodeOpenUrl('file:///' + getCurFileName());
+    }  
 /** ------------------------------------------------------------------------
- *                               Commands: Clipboard
+ *                               Commands: toIX
  ** ------------------------------------------------------------------------ */
    function extractortoix() {
         ask('ExtractortoIX', ['findre', 'isignorecase'], function () {
@@ -587,18 +591,33 @@ define(function (require, exports, module) {
         var text = getSelObj(SP_LINE).cursel.split('\n');
         prefs.find.value = text.length > 0 ? text[0].trim() : '';
         prefs.replace.value = '';
-        ask('ReplacetoIX', ['find', 'replace', 'iswordsonly', 'isregexpr', 'isignorecase', 'isimultiline', 'isall', 'isselonly'], function () {
+        ask('ReplacetoIX', ['find', 'replace', 'startValue', 'stepValue',
+            'iswordsonly', 'isregexpr', 'isignorecase', 'isimultiline', 'isall', 'isselonly'], function () {
             var findtext = prefs.isregexpr.value ? prefs.find.value : getregnize(prefs.find.value, true),
-                repltext = prefs.isregexpr.value ? prefs.replace.value : getregnize(prefs.replace.value, false);
+                repltext = prefs.isregexpr.value ? prefs.replace.value : getregnize(prefs.replace.value, false),
+                startValue = prefs.startValue.value ? parseInt(prefs.startValue.value) : undefined,
+                stepValue = prefs.stepValue.value ? parseInt(prefs.stepValue.value) : undefined;
             if (prefs.iswordsonly.value && !prefs.isregexpr.value) {
                 findtext = '\\b' + findtext + '\\b';
             }
             replaceSelection(new RegExp(findtext, (prefs.isall.value ? 'g' : '') + 
                 (prefs.isignorecase.value ? 'i' : '') + (prefs.isimultiline.value ? 'm' : '')),
-                repltext, prefs.isselonly.value ? SP_ALL : SP_FORCEALL);
+                startValue && stepValue ? 
+                  function (data) {
+                    var i, out = repltext;
+                    for(i = 1; i < arguments.length - 2; i++) {
+                      out = out.replace(new RegExp('\\$' + i, 'g'), arguments[i]);                      
+                    }
+                    out = out.replace(/\$NUM\$/, startValue);                      
+                    startValue += stepValue;
+                    return out;
+                  }
+                  : repltext, prefs.isselonly.value ? SP_ALL : SP_FORCEALL);
         });
     }
-    
+/** ------------------------------------------------------------------------
+ *                               Commands: Function JSDoc 
+ ** ------------------------------------------------------------------------ */    
     function buildFuncJSDoc() {
         getSelection(function (text, so) {
             var match = text.match(/(?:(\w+)\s*[:=]\s*){0,1}function(?:\s+(\w+)){0,1}\s*\((.*?)\)/i), 
@@ -863,13 +882,14 @@ function execSnippets() {
             {name: "UpperCase", f: upperCaseText, priority: SHOWONMENU},
             {name: "LowerCase", f: lowerCaseText, priority: SHOWONMENU},
             {name: "Capitalize", f: tt.capitalizeText, sp: SP_WORD},
-            {name: "CamelCase", f: tt.camelCaseText, sp: SP_WORD},
+            {name: "CamelCase", f: tt.camelCaseText, sp: SP_WORD},          
             {name: "HtmlEncode", f: htmlEncode},
             {name: "HtmlDecode", f: htmlDecode},
             {name: "UrlEncode", f: urlEncode},
             {name: "Join", f: joinText},
             {name: "Split...", f: splitText},
             {name: "Number...", f: numberText},
+            {name: "Reverse", f: tt.reverse, sp: SP_SENTENCE, priority: SHOWONMENU},
             {name: "Trim Leading", f: trimLeading},
             {name: "Trim Trailing", f: trimTrailing},
             {name: "Markdown Trim Trailing", f: markdownTrimTrailing},
@@ -897,6 +917,7 @@ function execSnippets() {
             {},
             {name: "Open Url", f: openUrl},
             {name: "Web Search", f: webSearch},
+            {name: "Browse File", f: browseFile},
             {},
             {name: "Copy Filename", f: fileToClipboard},
             {name: "Copy Fullname", f: fullnameToClipboard},

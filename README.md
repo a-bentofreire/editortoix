@@ -41,8 +41,10 @@ Ex: d -> <div></div>       h3#hello.active text -> <h3 id="hello" class="active"
 ```  
   
 8. ** untag**[function] - Removes the nearest tag  
+9. **Reverse**[function] - Reverses the terms in a assignment or comparison.  
+10. **Declare JSLint Global**[word] - Adds the selected id to the /*global ... */ list  
   
-9. Line Commands[all]:  
+11. Line Commands[all]:  
   
   * **Join**, **Split**  
   * **Number** - It adds a number prefix to every selected line  
@@ -50,6 +52,7 @@ Ex: d -> <div></div>       h3#hello.active text -> <h3 id="hello" class="active"
   * **Sort Ascending**, **Sort Descending**, **Eliminate Empty lines**  
   * **Remove Duplicates** - Only works with already sorted lines  
   * **Markdown Trim Trailing** - Trims trailing spaces and adds 2 trailing spaces  
+  
   
 ## Clipboard Commands  
   
@@ -66,6 +69,8 @@ This command provides a replace dialog with the following options:
 * Replace All  
 * Only Selection  
 * Multiline  
+* Start Value (use for numbering)  
+* Step Value  (use for numbering)  
   
 Just like all the other commands, it only operates on the selected text(only selection mode), if no text is selected it uses all the text.  
   
@@ -137,6 +142,9 @@ Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros
   * **Options** - Configuration dialog  
   
 ## Version History  
+* 1.8  
+    Adds: Declare JSLint Global  
+  
 * 1.7   
     Adds: Reverse, Browse File commands  
     ReplacetoIX supports numbering  
@@ -203,7 +211,6 @@ Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros
 These are the plans for the next versions:  
 * Default shortcuts  
 * Go back to the previous edit cursor positions  
-* Text transforms: **Num To Hex**, **Hex To Num**  
 * Trim Trailing on save  
 * Display the compilation error on a bottom panel  
 * File Extension mapper. Ex: inc->php  

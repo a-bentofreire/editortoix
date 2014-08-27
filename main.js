@@ -240,7 +240,7 @@ define(function (require, exports, module) {
             }
         }
         // Disactivated due a brackets bug, that doesn't preventsDefault on ENTER key
-          so.cm.focus();
+         so.cm.focus();
         
         return so;
     }
@@ -288,6 +288,14 @@ define(function (require, exports, module) {
             arr.sort(sortfunc);
             return arr;
         }, selpolicy, true);
+    }
+  
+    function setRow(row, text, so) {
+      so.cm.replaceRange(text + '\n', {ch: 0, line: row}, {ch: 0, line: row + 1});
+    }
+
+    function insertRow(row, text, so) {
+      so.cm.replaceRange(text + '\n', {ch: 0, line: row}, {ch: 0, line: row});
     }
 
     function getCurFileName() {
@@ -496,6 +504,48 @@ define(function (require, exports, module) {
                         
         }, SP_SENTENCE);
     }
+  
+/** ------------------------------------------------------------------------
+ *                               declJSLintGlobal
+ ** ------------------------------------------------------------------------ */
+  function declJSLintGlobal() {
+    getSelection(function (ident, so) {      
+      var row = 0, max = so.cm.lineCount(), line, trimline, tokens;
+      ident = ident.trim();
+      if (!ident) {
+        return;
+      }
+      
+      while (row < max) {
+        line = so.cm.getLine(row);    
+        trimline = line.trim();
+        if (trimline) {
+          tokens = line.match(/\/\*global\s*(\S.*\S)\s*\*\//);
+          if (tokens) {
+            // found a global
+            if (tokens.length > 1) {
+              if (tokens[1].replace(/ /g, '').split(',').indexOf(ident) > -1) {
+                // already exists
+                return;
+              }
+              setRow(row, line.replace(tokens[1], tokens[1] + ', ' + ident), so);
+                     
+            } else {
+              // empty global statement
+              setRow(row, line.replace('global', 'global ' + ident));
+            }                
+            return;
+          } else {
+            if (trimline[0] !== '/' && trimline[0] !== '*') {
+              insertRow(row, '/*global ' + ident + ' */', so);
+              break;
+            }
+          }
+        }
+        row++;
+      }        
+    }, SP_WORD);
+  }
 /** ------------------------------------------------------------------------
  *                               Commands: Quotes
  ** ------------------------------------------------------------------------ */
@@ -914,6 +964,7 @@ function execSnippets() {
             {name: "ExtractorToIX...", f: extractortoix, priority: SHOWONMENU},
             {name: "ReplaceToIX...", f: replacetoix, priority: SHOWONMENU},
             {name: "Function JSDoc", f: buildFuncJSDoc},
+            {name: "Declare JSLint Global", f: declJSLintGlobal},
             {},
             {name: "Open Url", f: openUrl},
             {name: "Web Search", f: webSearch},

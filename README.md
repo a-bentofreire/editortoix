@@ -52,6 +52,7 @@ Ex: d -> <div></div>       h3#hello.active text -> <h3 id="hello" class="active"
   * **Sort Ascending**, **Sort Descending**, **Eliminate Empty lines**  
   * **Remove Duplicates** - Only works with already sorted lines  
   * **Markdown Trim Trailing** - Trims trailing spaces and adds 2 trailing spaces  
+  * **Break line at** - Breaks lines to have a maximum of N chars, with word break option  
   
   
 ## Clipboard Commands  
@@ -133,6 +134,10 @@ By default, the compile on save is not active. You can use the **Options** to ac
 [1]: http://sass-lang.com/  
 [2]: http://nodejs.org/  
   
+## Lorem Ipsum  
+  
+Inserts the classical lorem ipsum with options on the number of paragraphs, wrap, and max characters per line.  
+  
 ## Dialog Commands  
   
   * **Commands** - Displays a dialog box with the list of the commands to be executed.   
@@ -142,6 +147,13 @@ Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros
   * **Options** - Configuration dialog  
   
 ## Version History  
+* 2.0  
+    Menu redesigned  
+    Adds: Break Line At, Lorem Ipsum  
+    Fixed save of context menu commands  
+    Improved reverse  
+    Fixed function selection policy that affected commands such Reverse  
+      
 * 1.8  
     Adds: Declare JSLint Global  
   

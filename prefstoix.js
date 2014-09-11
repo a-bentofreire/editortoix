@@ -99,6 +99,10 @@ define(function () {
  ** ------------------------------------------------------------------------ */
     OPTIONFIELDS: ['tabSize', 'historySize', 'webSearch', /*'grunt',*/ 'js6', 'scss'],
 
+    version: {
+      value: '',
+    },
+      
     // commands options (showinmenu, showinctxmenu, hotkey)
     commands: {
         value: { showinmenu: [], showinctxmenu: [], hotkeys: {} }        
@@ -207,7 +211,7 @@ define(function () {
         label: 'Only Selection',
         hint: 'If there is a selected text only replaces the selected text',
         type: 'boolean',
-        canempty: true,
+        canempty: true
     },
     
     // webSearch command options
@@ -246,6 +250,40 @@ define(function () {
         },      
         buttons: [{label: 'Compass', setvalue: 'compass compile "{{inrelfile}}"'}, 
                   {label: 'SCSS', setvalue: 'sass --sourcemap "{{in}}" "{{out}}"'}]
-    }
+    },
+      
+    // Lorem Ipsum
+    linrparagraphs: {
+        value: '1',
+        label: 'Nr Paragraphs',
+        hint: 'Maximum is 100',
+    },
+    limaxcharsperline: {
+        value: '0',
+        label: 'Max Chars per line',
+        hint: 'Set 0 to no word wrap',
+    }, 
+    lihtmlparawrap: {
+        value: '',
+        label: 'html tag wrap',
+        hint: 'Wraps each paragraph with this tag. Ex: p',        
+        canempty: true
+    },
+
+    maxcharsperline: {
+        value: '80',
+        label: 'Max Chars per line',
+        hint: 'Min is 1',
+    }, 
+      
+    tobreakwords: {
+        value: false,
+        label: 'Break words',
+        hint: 'Set to true, if it can break words',
+        type: 'boolean',
+        canempty: true      
+    } 
+      
+  
 };
 });

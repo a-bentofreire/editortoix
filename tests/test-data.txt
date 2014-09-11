@@ -28,6 +28,7 @@
 [Tag]
   before<div id=34 class=56>div text</div>after 
   d#myid.myclass test
+  "<div>" + x + y + "</div>"
 
 [Quotes]
 div
@@ -48,7 +49,7 @@ cc\\dd\\f
   2 efore
     
 
-[rg-hex]
+[rgb-hex]
 rg(1, 100, 23)
 #AC1E3F
 

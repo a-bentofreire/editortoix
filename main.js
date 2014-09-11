@@ -31,7 +31,9 @@ define(function (require, exports, module) {
 /** ------------------------------------------------------------------------
  *                               i18n
  ** ------------------------------------------------------------------------ */
-    var /** @const */ IXMENU = "IX",
+    var /** @const */ VERSION = '2.0',    
+        /** @const */ IXMENU = "IX",
+        /** @const */ IXMENUTT = "IX TT",
         /** @const */ MODULENAME = 'bracketstoix',
         /** @const */ HELPLINK = 'http://www.apptoix.com/#bracketstoix',
         /** @const */ EXPANDTAGS = ';bu=button;d=div;sp=span;te=textarea;in=input',
@@ -46,6 +48,7 @@ define(function (require, exports, module) {
         /** @const */ SP_WORD = 2,
         /** @const */ SP_SENTENCE = 3,
         /** @const */ SP_LINE = 4,
+        /** @const */ SP_NONE = 5,        
         /** @const */ __SP_FUNC = 5,
         /** @const */ SP_FORCELINE = -4;
 
@@ -174,7 +177,7 @@ define(function (require, exports, module) {
                   selpolicy: typeof selpolicy !== 'function' ? selpolicy : __SP_FUNC },
             len, inf;
         so.cursor = so.cm.getCursor();
-        so.selected = (selpolicy >= 0) &&so.cm.somethingSelected();
+        so.selected = (so.selpolicy >= 0) && so.cm.somethingSelected();
         if (so.selected) {
             so.cursel = so.cm.getSelection();
         } else {
@@ -204,11 +207,17 @@ define(function (require, exports, module) {
                 }
                 so.cursel = so.cursel.substring(so.start.ch, so.end.ch);
                 break;
-            case SP_FORCEALL:
+                
+            case SP_FORCEALL :
             case SP_ALL : 
                 so.start = {ch:0, line: 0};
                 so.end = {ch:0, line: so.cm.lineCount()};
                 so.cursel = so.cm.getRange(so.start, so.end);  
+                break;
+
+            case SP_NONE:    
+                so.start = {ch: so.cursor.ch, line: so.cursor.line};
+                so.end = {ch: so.cursor.ch, line: so.cursor.line};
                 break;
                     
             case __SP_FUNC : 
@@ -249,7 +258,7 @@ define(function (require, exports, module) {
         var so = getSelObj(selpolicy),
             newsel;
 
-        if(!so.cursel) {
+        if(!so.cursel && selpolicy !== SP_NONE) {
             return;
         }
         if (!asarray) {
@@ -297,6 +306,10 @@ define(function (require, exports, module) {
     function insertRow(row, text, so) {
       so.cm.replaceRange(text + '\n', {ch: 0, line: row}, {ch: 0, line: row});
     }
+
+    /*function insertTextAtCursor(text) {
+      so.cm.replaceRange(text + '\n', {ch: 0, line: row}, {ch: 0, line: row});
+    }*/
 
     function getCurFileName() {
         var curfile = ProjectManager.getSelectedItem();
@@ -666,7 +679,7 @@ define(function (require, exports, module) {
         });
     }
 /** ------------------------------------------------------------------------
- *                               Commands: Function JSDoc 
+ *                               Command: Function JSDoc 
  ** ------------------------------------------------------------------------ */    
     function buildFuncJSDoc() {
         getSelection(function (text, so) {
@@ -691,6 +704,66 @@ define(function (require, exports, module) {
                 so.cm.replaceRange(jsdoc, so.start, so.start);
             }
         }, SP_FORCELINE);        
+    }
+  
+/** ------------------------------------------------------------------------
+ *                               Commands: LoremIpsum & BreakLineAt
+ ** ------------------------------------------------------------------------ */ 
+    function execBreakLineAt(line, maxchars, tobreakwords) {
+      var start = 0, at, stest;
+      while (start + maxchars < line.length) {
+        at = start + maxchars;
+        if (!tobreakwords) {
+          stest = line.substring(start, at).replace(/[\w_]/g, '0');
+          at -= start;
+          for (;at > 0 && stest[at - 1] === '0'; at--) {}
+          if (!at && stest[0] === '0') {
+            at = maxchars;
+          } 
+          at += start;
+        }
+        line = line.substr(0, at) + '\n' + line.substr(at);
+        start = at + 1;
+      }
+      return line;
+    }
+  
+    function breakLineAt() {
+        ask('Break Line At', ['maxcharsperline', 'tobreakwords'], function () {
+          var maxchars = Math.max(1, prefs.maxcharsperline.value.trim() >> 0),
+            tobreakwords = prefs.tobreakwords.value;
+          changeSelection(function (array, so) {       
+            array.forEach(function (line, index) {
+              array[index] = execBreakLineAt(line, maxchars, tobreakwords);
+            });
+            return array;
+            }, SP_LINE, true);
+      });
+    }
+  
+    function LoremIpsum() {
+      $.get(FileUtils.getNativeModuleDirectoryPath(module) + '/lorem.txt', function(data) {
+          ask('Lorem Ipsum', ['linrparagraphs', 'limaxcharsperline', 'lihtmlparawrap'], function () {
+            changeSelection(function (text, so) {       
+              var lines = data.split('\n', Math.min(100, Math.max(prefs.linrparagraphs.value >> 0))),
+                  wrap = prefs.lihtmlparawrap.value.trim(),
+                  wrapst = '<' + wrap + '>',
+                  wrapend = '</' + wrap.replace(/\s.+$/, '') + '>',
+                  maxchars = prefs.limaxcharsperline.value >> 0;
+            
+              lines.forEach(function (line, index) {
+                if (maxchars) {
+                  line = execBreakLineAt(line, maxchars, false);
+                }
+                if (wrap) {
+                  line =  wrapst + line + wrapend; 
+                }
+                lines[index] = line;
+              });
+              return lines.join('\n');
+              }, SP_NONE);
+        });
+      });      
     }
 /** ------------------------------------------------------------------------
  *                               Commands: Clipboard
@@ -891,6 +964,7 @@ function execSnippets() {
 
         ask('Commands', fieldlist, function () {
             showinmenu = [];
+            showinctxmenu = [];
             hotkeys = {};
             cmds.forEach(function(cmd) {
                 var key, field;
@@ -909,6 +983,7 @@ function execSnippets() {
                 }
             });
             prefs.commands.value.showinmenu = showinmenu;
+            prefs.commands.value.showinctxmenu = showinctxmenu;
             prefs.commands.value.hotkeys = hotkeys;
             saveextprefs();
 
@@ -931,49 +1006,53 @@ function execSnippets() {
         return [
             {name: "UpperCase", f: upperCaseText, priority: SHOWONMENU},
             {name: "LowerCase", f: lowerCaseText, priority: SHOWONMENU},
-            {name: "Capitalize", f: tt.capitalizeText, sp: SP_WORD},
-            {name: "CamelCase", f: tt.camelCaseText, sp: SP_WORD},          
-            {name: "HtmlEncode", f: htmlEncode},
-            {name: "HtmlDecode", f: htmlDecode},
-            {name: "UrlEncode", f: urlEncode},
-            {name: "Join", f: joinText},
-            {name: "Split...", f: splitText},
-            {name: "Number...", f: numberText},
+            {name: "Capitalize", f: tt.capitalizeText, sp: SP_WORD, priority: SHOWONMENU},
+            {name: "CamelCase", f: tt.camelCaseText, sp: SP_WORD, priority: SHOWONMENU},          
+            {name: "HtmlEncode", f: htmlEncode, priority: SHOWONMENU},
+            {name: "HtmlDecode", f: htmlDecode, priority: SHOWONMENU},
+            {name: "UrlEncode", f: urlEncode, priority: SHOWONMENU},
+            {name: "Join", f: joinText, priority: SHOWONMENU},
+            {name: "Split...", f: splitText, priority: SHOWONMENU},
+            {name: "Number...", f: numberText, priority: SHOWONMENU},
             {name: "Reverse", f: tt.reverse, sp: SP_SENTENCE, priority: SHOWONMENU},
-            {name: "Trim Leading", f: trimLeading},
-            {name: "Trim Trailing", f: trimTrailing},
-            {name: "Markdown Trim Trailing", f: markdownTrimTrailing},
-            {name: "Sort Ascending", f: sortAscending},
-            {name: "Sort Descending", f: sortDescending},
-            {name: "Remove Duplicates", f: removeDuplicates},
-            {name: "Remove Empty Lines", f: removeEmptyLines},
+            {name: "Trim Leading", f: trimLeading, priority: SHOWONMENU},
+            {name: "Trim Trailing", f: trimTrailing, priority: SHOWONMENU},
+            {name: "Markdown Trim Trailing", f: markdownTrimTrailing, priority: SHOWONMENU},
+            {name: "Sort Ascending", f: sortAscending, priority: SHOWONMENU},
+            {name: "Sort Descending", f: sortDescending, priority: SHOWONMENU},
+            {name: "Remove Duplicates", f: removeDuplicates, priority: SHOWONMENU},
+            {name: "Remove Empty Lines", f: removeEmptyLines, priority: SHOWONMENU},
             {},
-            {name: "Unix To Win", f: tt.unixToWin, sp: SP_LINE},
-            {name: "Win To Unix", f: tt.winToUnix, sp: SP_LINE},
-            {name: "Single Slash To Double", f: tt.singleToDoubleSlash, sp: SP_LINE},
-            {name: "Double To Single Slash", f: tt.doubleToSingleSlash, sp: SP_LINE},
-            {name: "Single Quote To Double", f: singleToDoubleQuote},
-            {name: "Double To Single Quote", f: doubleToSingleQuote},
-            {name: "Toggle Quote", f: toggleQuote},
-            {name: "Tab To Space", f: tabToSpace},
-            {name: "Space To Tab", f: spaceToTab},
-            {name: "rgb-hex", f: rgbHex},
-            {name: "Untag", f: untag},
-            {name: "Tag", f: tag},
+            {name: "Unix To Win", f: tt.unixToWin, sp: SP_LINE, priority: SHOWONMENU},
+            {name: "Win To Unix", f: tt.winToUnix, sp: SP_LINE, priority: SHOWONMENU},
+            {name: "Single Slash To Double", f: tt.singleToDoubleSlash, sp: SP_LINE, priority: SHOWONMENU},
+            {name: "Double To Single Slash", f: tt.doubleToSingleSlash, sp: SP_LINE, priority: SHOWONMENU},
+            {name: "Single Quote To Double", f: singleToDoubleQuote, priority: SHOWONMENU},
+            {name: "Double To Single Quote", f: doubleToSingleQuote, priority: SHOWONMENU},
+            {name: "Toggle Quote", f: toggleQuote, priority: SHOWONMENU},
+            {name: "Tab To Space", f: tabToSpace, priority: SHOWONMENU},
+            {name: "Space To Tab", f: spaceToTab, priority: SHOWONMENU},
+            {name: "rgb-hex", f: rgbHex, priority: SHOWONMENU},
+            {name: "Untag", f: untag, priority: SHOWONMENU},
+            {name: "Tag", f: tag, priority: SHOWONMENU},
+            {menu: 1},
+          
+            {name: "Break Line At", f: breakLineAt, priority: SHOWONMENU},          
+            {name: "Lorem ipsum", f: LoremIpsum, priority: SHOWONMENU},          
+            {name: "Function JSDoc", f: buildFuncJSDoc, priority: SHOWONMENU},
+            {name: "Declare JSLint Global", f: declJSLintGlobal, priority: SHOWONMENU},
             {},
             {name: "ExtractorToIX...", f: extractortoix, priority: SHOWONMENU},
             {name: "ReplaceToIX...", f: replacetoix, priority: SHOWONMENU},
-            {name: "Function JSDoc", f: buildFuncJSDoc},
-            {name: "Declare JSLint Global", f: declJSLintGlobal},
             {},
-            {name: "Open Url", f: openUrl},
-            {name: "Web Search", f: webSearch},
-            {name: "Browse File", f: browseFile},
+            {name: "Open Url", f: openUrl, priority: SHOWONMENU},
+            {name: "Web Search", f: webSearch, priority: SHOWONMENU},
+            {name: "Browse File", f: browseFile, priority: SHOWONMENU},
             {},
-            {name: "Copy Filename", f: fileToClipboard},
-            {name: "Copy Fullname", f: fullnameToClipboard},
-            {name: "Regnize", f: regnize},
-            {name: "Html Report", f: buidHtmlReport},
+            {name: "Copy Filename", f: fileToClipboard, priority: SHOWONMENU},
+            {name: "Copy Fullname", f: fullnameToClipboard, priority: SHOWONMENU},
+            {name: "Regnize", f: regnize, priority: SHOWONMENU},
+            {name: "Html Report", f: buidHtmlReport, priority: SHOWONMENU},
             {},
             //{name: "Regex Tester", f: regexTester},
             {name: "Compiler", f: runCompiler, label: "Compile(js6, scss)", priority: SHOWONMENU}, //TODO: Implement "/Run(py, js)"
@@ -1022,10 +1101,11 @@ function execSnippets() {
         }
         
         var cmdlist = getCommandList(),
+            menuidx = 0,
             Menus = brackets.getModule("command/Menus"),
             //menu = Menus.getMenu(Menus.AppMenuBar.VIEW_MENU),
             // Since Brackets has no submenu support it's better to create a top menu
-            menu = Menus.addMenu(IXMENU, IXMENU),
+            menulist = [Menus.addMenu(IXMENUTT, IXMENUTT), Menus.addMenu(IXMENU, IXMENU)],
             ctxmenu = Menus.getContextMenu(Menus.ContextMenuIds.EDITOR_MENU),            
             i, cmd, nm, lastid,
             showinmenu = prefs.commands.value.showinmenu,
@@ -1036,8 +1116,12 @@ function execSnippets() {
         for (i = 0; i < cmdlist.length; i++) {
             cmd = cmdlist[i];
             if (!cmd.name) {
-                if (!hasdiv) {
-                    menu.addMenuDivider();
+                if (cmd.menu) {
+                  menuidx = cmd.menu;
+                } else {
+                  if (!hasdiv) {
+                      menulist[menuidx].addMenuDivider();
+                  }
                 }
                 hasdiv = true;
                 continue;
@@ -1045,7 +1129,7 @@ function execSnippets() {
             nm = cmdToName(cmd.name);
             if (cmd.showalways || (showinmenu.indexOf(nm) > -1)) {
                 hasdiv = false;
-                lastid = addToMenu(cmd, menu, lastid);
+                lastid = addToMenu(cmd, menulist[menuidx], lastid);
             }
             
             if (showinctxmenu.indexOf(nm) > -1) {
@@ -1068,17 +1152,43 @@ function execSnippets() {
         prefs.scss.buttons[0].f = function(text) { return prefs.scss.buttons[0].setvalue; };
         prefs.scss.buttons[1].f = function(text) { return prefs.scss.buttons[1].setvalue; };
     }
-    
+/** ------------------------------------------------------------------------
+ *                               checkForVersion2
+ ** ------------------------------------------------------------------------ */    
+   function versionCheck() {
+     var svver = prefs.version.value,
+         i;
+     if (svver !== VERSION) {
+       if (!svver || ((svver.split('.')[0] >> 0) < 2)) {
+         prefs.version.showwelcome = true;
+         prefs.commands.value.showinmenu = prefs.commands.svshowinmenu;
+       }           
+       prefs.version.value = VERSION;
+       saveextprefs();
+     }
+   }
+  
+  function posVersionCheck() {
+    if (prefs.version.showwelcome) {
+       showMessage('Information', '<h2>Welcome to Brackets<sub>to</sub>IX ' + VERSION + '</h2>' + 
+          'The menus were reorganized so you can to have a quicker access to all the commands.<br>' +
+          'Now there two top menus with all the commands<br>' + 
+          'You can still remove commands from the Commands Mapper dialog');
+    }
+  }
 /** ------------------------------------------------------------------------
  *                               Init
  ** ------------------------------------------------------------------------ */    
     console.log(window.navigator.userAgent);
     fillshowonmenu(); // must be before loadextprefs
     initprefbuttons();
+    prefs.commands.svshowinmenu = prefs.commands.value.showinmenu;
     loadextprefs();
+    versionCheck();
     buildCommands();
     runLanguageMapper();
     initprefbuttons();
+    posVersionCheck();
 /** ------------------------------------------------------------------------
  *                               Save Commands
  ** ------------------------------------------------------------------------ */

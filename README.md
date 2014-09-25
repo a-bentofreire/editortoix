@@ -117,6 +117,10 @@ Will become:
 function _foo() { }  
 ```  
   
+##  Recent Files Command  
+  
+Displays of the all recent opened files. This list is independent of the project.  
+  
 ## Compiler  
   
 **Compiler** command with execute an external compiler. Supported file formats:  
@@ -147,6 +151,13 @@ Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros
   * **Options** - Configuration dialog  
   
 ## Version History  
+* 2.1  
+    Adds: Recent Files  
+    Improved Declare JSLint Global, and fixed when it contains vars with one character length  
+    Fixed selection policy which affected ToggleQuotes  
+    Fixed Split command bug  
+    Fixed ReplacetoIX numbering when Start Value = 0     
+  
 * 2.0  
     Menu redesigned  
     Adds: Break Line At, Lorem Ipsum  

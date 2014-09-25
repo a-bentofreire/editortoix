@@ -12,7 +12,7 @@ for (var $__0 = [1, 2, 3][Symbol.iterator](),
 }
 var t = 3 * 5;
 var k1 = 5;
-var t = 5;
+var $p = 5;
 var $__2 = ['hello', 'world'],
     a = $__2[0],
     b = $__2[1];

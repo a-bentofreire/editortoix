@@ -30,11 +30,11 @@
 /*jslint vars: true, plusplus: true, devel: true, white: true, nomen: true, indent: 4, maxerr: 50 */
 /*global define, brackets, $ */
 
-define(function () {
+define(function() {
     "use strict";
-/** ------------------------------------------------------------------------
- *                               Closure
- ** ------------------------------------------------------------------------ */
+    /** ------------------------------------------------------------------------
+     *                               Closure
+     ** ------------------------------------------------------------------------ */
     var PREFKEY = 'prefs';
 
     function _checkForHttp(text) {
@@ -43,10 +43,12 @@ define(function () {
 
     // Copies from prefs to prefsio, and vice-versa. Used for load & save
     function _buildIo(prefs, prefsio, preftoio) {
-        Object.keys(prefs).forEach(function (key) {
-            var pref = prefs[key], prefio;
-                        
-            if (pref.value !== undefined) {
+        Object.keys(prefs).forEach(function(key) {
+            var pref = prefs[key],
+                storeprop = pref.storeprop || 'value',
+                prefio;
+
+            if (pref[storeprop] !== undefined) {
                 prefio = prefsio[key];
                 if (prefio === undefined) {
                     prefsio[key] = {};
@@ -54,13 +56,13 @@ define(function () {
                 }
 
                 if (preftoio) {
-                    prefio.value = pref.value;
+                    prefio[storeprop] = pref[storeprop];
                     if (pref.history) {
                         prefio.history = pref.history;
                     }
                 } else {
-                    if (prefio !== undefined && prefio.value !== undefined) {
-                        pref.value = prefio.value;
+                    if (prefio !== undefined && prefio[storeprop] !== undefined) {
+                        pref[storeprop] = prefio[storeprop];
                         if (pref.history && prefio.history) {
                             pref.history = prefio.history;
                         }
@@ -78,212 +80,251 @@ define(function () {
     }
 
     return {
-/** ------------------------------------------------------------------------
- *                               Functions
- ** ------------------------------------------------------------------------ */
-    checkForHttp : function (text) {
-        return _checkForHttp(text);
-    },
+        /** ------------------------------------------------------------------------
+         *                               Functions
+         ** ------------------------------------------------------------------------ */
+        checkForHttp: function(text) {
+            return _checkForHttp(text);
+        },
 
-    load : function (prefs, extprefs) {
-        extprefs.definePreference(PREFKEY, 'object', _buildIo(prefs, {}, true));
-        _buildIo(prefs, extprefs.get(PREFKEY), false);
-    },
+        load: function(prefs, extprefs) {
+            extprefs.definePreference(PREFKEY, 'object', _buildIo(prefs, {}, true));
+            _buildIo(prefs, extprefs.get(PREFKEY), false);
+        },
 
-    save : function (prefs, extprefs) {
-        extprefs.set(PREFKEY, _buildIo(prefs, {}, true));
-        extprefs.save();
-    },
-/** ------------------------------------------------------------------------
- *                               Fields
- ** ------------------------------------------------------------------------ */
-    OPTIONFIELDS: ['tabSize', 'historySize', 'webSearch', /*'grunt',*/ 'js6', 'scss'],
+        save: function(prefs, extprefs) {
+            extprefs.set(PREFKEY, _buildIo(prefs, {}, true));
+            extprefs.save();
+        },
+        /** ------------------------------------------------------------------------
+         *                               Fields
+         ** ------------------------------------------------------------------------ */
+        OPTIONFIELDS: ['tabSize', 'historySize', 'recentSize', 'webSearch', /*'grunt',*/ 'js6', 'scss'],
 
-    version: {
-      value: '',
-    },
-      
-    // commands options (showinmenu, showinctxmenu, hotkey)
-    commands: {
-        value: { showinmenu: [], showinctxmenu: [], hotkeys: {} }        
-    },
-        
-    // splitText command options
-    splitMarker: {
-        value: ',',
-        label: 'Split Marker'
-    },
+        version: {
+            value: ''
+        },
 
-    // Used in dialogs
-    historySize: {
-        value: 20,
-        label: 'History Size',
-        type: 'number'
-    },
-    // numberText command options
-    startNum: {
-        value: 1,
-        label: 'Initial Value',
-        type: 'number'
-    },
-    numSep: {
-        value : ".\\$",
-        history: [],
-        label: 'Separator after Number',
-        canempty: true,
-        type: 'spacetext'
-    },
-    // Tab To Space, Space To Tab command options
-    tabSize: {
-        value: 2,
-        label: 'Tab Size',
-        type: 'number'
-    },
-    // extractortoix command options
-    findre : {
-        value: '',
-        label: 'Find',
-        history: [],
-        buttons: [{label: 'Regnize'}]
-    },
-        
-    // replacetoix command options
-    find : {
-        value: '',
-        label: 'Find',
-        history: [],
-        buttons: [{label: 'Regnize'}]
-    },
-    replace : {
-        value: '',
-        label: 'Replace',
-        hint: 'Use $NUM$ for numbering macro',
-        history: [],
-        canempty: true
-    },
-    startValue : {
-        value: '',
-        label: 'Start',
-        hint: 'Leave empty for no numbering, since it slows down the process and only supports a small regular expression subset replacement. Must have Regular Expression checked',
-        historty: [],
-        canempty: true
-    },
-    stepValue : {
-        value: '',
-        label: 'Step',
-        historty: []
-    },
-    iswordsonly : {
-        value: false,
-        label: 'Words Only',
-        hint: 'Only works if is not a regular expression',
-        type: 'boolean',
-        canempty: true,
-        groupcols: 3
-    },
-    isregexpr : {
-        value: true,
-        label: 'Regular Expression',
-        type: 'boolean',
-        canempty: true
-    },
-    isignorecase : {
-        value: false,
-        label: 'Ignore Case',        
-        type: 'boolean',
-        canempty: true,
-        groupcols: 1
-    },
-    isimultiline : {
-        value: false,
-        label: 'Multiline',        
-        type: 'boolean',
-        canempty: true
-    },
-    isall : {
-        value: true,
-        label: 'Replace All',
-        type: 'boolean',
-        canempty: true
-    },
-    isselonly : {
-        value: true,
-        label: 'Only Selection',
-        hint: 'If there is a selected text only replaces the selected text',
-        type: 'boolean',
-        canempty: true
-    },
-    
-    // webSearch command options
-    webSearch: {
-        value: 'https://www.google.com/search?q=',
-        label: 'Search Engine url',
-        checkfunc:
-            function (text) {
+        // commands options (showinmenu, showinctxmenu, hotkey)
+        commands: {
+            value: {
+                showinmenu: [],
+                showinctxmenu: [],
+                hotkeys: {}
+            }
+        },
+
+        // splitText command options
+        splitMarker: {
+            value: ',',
+            label: 'Split Marker'
+        },
+
+        // Used in dialogs
+        historySize: {
+            value: 20,
+            label: 'History Size',
+            type: 'number'
+        },
+        recentSize: {
+            value: 20,
+            label: 'Recent Size',
+            type: 'number'
+        },
+        // recentFiles command options
+        recentFiles: {
+            value: '',
+            rows: 20,
+            size: '105%',
+            type: 'list',
+            storeprop: 'files',
+            attributes: 'autofocus',
+            files: [],
+            values: []
+        },
+
+        // numberText command options
+        startNum: {
+            value: 1,
+            label: 'Initial Value',
+            type: 'number'
+        },
+        numSep: {
+            value: ".\\$",
+            history: [],
+            label: 'Separator after Number',
+            canempty: true,
+            type: 'spacetext'
+        },
+        // Tab To Space, Space To Tab command options
+        tabSize: {
+            value: 2,
+            label: 'Tab Size',
+            type: 'number'
+        },
+        // extractortoix command options
+        findre: {
+            value: '',
+            label: 'Find',
+            history: [],
+            buttons: [{
+                label: 'Regnize'
+            }]
+        },
+
+        // replacetoix command options
+        find: {
+            value: '',
+            label: 'Find',
+            history: [],
+            buttons: [{
+                label: 'Regnize'
+            }]
+        },
+        replace: {
+            value: '',
+            label: 'Replace',
+            hint: 'Use $NUM$ for numbering macro',
+            history: [],
+            canempty: true
+        },
+        startValue: {
+            value: '',
+            label: 'Start',
+            hint: 'Leave empty for no numbering, since it slows down the process and only supports a small regular expression subset replacement. Must have Regular Expression checked',
+            historty: [],
+            canempty: true
+        },
+        stepValue: {
+            value: '',
+            label: 'Step',
+            historty: []
+        },
+        iswordsonly: {
+            value: false,
+            label: 'Words Only',
+            hint: 'Only works if is not a regular expression',
+            type: 'boolean',
+            canempty: true,
+            groupcols: 3
+        },
+        isregexpr: {
+            value: true,
+            label: 'Regular Expression',
+            type: 'boolean',
+            canempty: true
+        },
+        isignorecase: {
+            value: false,
+            label: 'Ignore Case',
+            type: 'boolean',
+            canempty: true,
+            groupcols: 1
+        },
+        isimultiline: {
+            value: false,
+            label: 'Multiline',
+            type: 'boolean',
+            canempty: true
+        },
+        isall: {
+            value: true,
+            label: 'Replace All',
+            type: 'boolean',
+            canempty: true
+        },
+        isselonly: {
+            value: true,
+            label: 'Only Selection',
+            hint: 'If there is a selected text only replaces the selected text',
+            type: 'boolean',
+            canempty: true
+        },
+
+        // webSearch command options
+        webSearch: {
+            value: 'https://www.google.com/search?q=',
+            label: 'Search Engine url',
+            checkfunc: function(text) {
                 return _checkForHttp(text) ? '' : 'It must start with http(s)://';
             }
-    },    
-    // Run grunt command options
-    /* //TODO: Implement grunt
+        },
+        // Run grunt command options
+        /* //TODO: Implement grunt
     grunt: {
         value: 'grunt',
         label: 'Grunt',
         hint: 'You must install grunt',
     },*/
 
-    // js6 command options
-    js6: {
-        value: 'traceur --out "{{out}}" --script "{{in}}"',
-        label: 'js6 Compiler',
-        hint: 'You must install nodejs, and then "npm install -g traceur"',
-        fields: {
-            autosave : { value: false, type: 'boolean', hint: 'AutoSave', align: 'center', canempty: true}
-        }
-    },
-    // scss command options
-    scss: {
-        value: 'sass --sourcemap "{{in}}" "{{out}}"',
-        label: 'scss Compiler',
-        hint: 'You Must install sass 1st. Goto http://sass-lang.com/',
-        fields: {
-            autosave : { value: false, type: 'boolean', hint: 'AutoSave', align: 'center', canempty: true}
-        },      
-        buttons: [{label: 'Compass', setvalue: 'compass compile "{{inrelfile}}"'}, 
-                  {label: 'SCSS', setvalue: 'sass --sourcemap "{{in}}" "{{out}}"'}]
-    },
-      
-    // Lorem Ipsum
-    linrparagraphs: {
-        value: '1',
-        label: 'Nr Paragraphs',
-        hint: 'Maximum is 100',
-    },
-    limaxcharsperline: {
-        value: '0',
-        label: 'Max Chars per line',
-        hint: 'Set 0 to no word wrap',
-    }, 
-    lihtmlparawrap: {
-        value: '',
-        label: 'html tag wrap',
-        hint: 'Wraps each paragraph with this tag. Ex: p',        
-        canempty: true
-    },
+        // js6 command options
+        js6: {
+            value: 'traceur --out "{{out}}" --script "{{in}}"',
+            label: 'js6 Compiler',
+            hint: 'You must install nodejs, and then "npm install -g traceur"',
+            fields: {
+                autosave: {
+                    value: false,
+                    type: 'boolean',
+                    hint: 'AutoSave',
+                    align: 'center',
+                    canempty: true
+                }
+            }
+        },
+        // scss command options
+        scss: {
+            value: 'sass --sourcemap "{{in}}" "{{out}}"',
+            label: 'scss Compiler',
+            hint: 'You Must install sass 1st. Goto http://sass-lang.com/',
+            fields: {
+                autosave: {
+                    value: false,
+                    type: 'boolean',
+                    hint: 'AutoSave',
+                    align: 'center',
+                    canempty: true
+                }
+            },
+            buttons: [{
+                label: 'Compass',
+                setvalue: 'compass compile "{{inrelfile}}"'
+            }, {
+                label: 'SCSS',
+                setvalue: 'sass --sourcemap "{{in}}" "{{out}}"'
+            }]
+        },
 
-    maxcharsperline: {
-        value: '80',
-        label: 'Max Chars per line',
-        hint: 'Min is 1',
-    }, 
-      
-    tobreakwords: {
-        value: false,
-        label: 'Break words',
-        hint: 'Set to true, if it can break words',
-        type: 'boolean',
-        canempty: true      
-    } 
-      
-  
-};
+        // Lorem Ipsum
+        linrparagraphs: {
+            value: '1',
+            label: 'Nr Paragraphs',
+            hint: 'Maximum is 100'
+        },
+        limaxcharsperline: {
+            value: '0',
+            label: 'Max Chars per line',
+            hint: 'Set 0 to no word wrap'
+        },
+        lihtmlparawrap: {
+            value: '',
+            label: 'html tag wrap',
+            hint: 'Wraps each paragraph with this tag. Ex: p',
+            canempty: true
+        },
+
+        maxcharsperline: {
+            value: '80',
+            label: 'Max Chars per line',
+            hint: 'Min is 1'
+        },
+
+        tobreakwords: {
+            value: false,
+            label: 'Break words',
+            hint: 'Set to true, if it can break words',
+            type: 'boolean',
+            canempty: true
+        }
+    };
 });

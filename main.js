@@ -31,7 +31,7 @@ define(function (require, exports, module) {
 /** ------------------------------------------------------------------------
  *                               i18n
  ** ------------------------------------------------------------------------ */
-    var /** @const */ VERSION = '2.0',    
+    var /** @const */ VERSION = '2.1',    
         /** @const */ IXMENU = "IX",
         /** @const */ IXMENUTT = "IX TT",
         /** @const */ MODULENAME = 'bracketstoix',
@@ -49,10 +49,11 @@ define(function (require, exports, module) {
         /** @const */ SP_SENTENCE = 3,
         /** @const */ SP_LINE = 4,
         /** @const */ SP_NONE = 5,        
-        /** @const */ __SP_FUNC = 5,
+        /** @const */ __SP_FUNC = 6,
         /** @const */ SP_FORCELINE = -4;
 
     var CommandManager = brackets.getModule("command/CommandManager"),
+        Commands = brackets.getModule("command/Commands"),
         EditorManager = brackets.getModule("editor/EditorManager"),
         ProjectManager = brackets.getModule('project/ProjectManager'),
         DocumentManager = brackets.getModule('document/DocumentManager'),
@@ -341,8 +342,8 @@ define(function (require, exports, module) {
 
     function splitText() {
         ask('Split Text', ['splitMarker'], function () {
-            replaceSelection(new RegExp(prefs.splitMarker.value, 'g'), '\n');
-        }, SP_ALL);
+            replaceSelection(new RegExp(prefs.splitMarker.value, 'g'), '\n', SP_ALL);
+        });
     }
 
     function numberText() {
@@ -533,7 +534,7 @@ define(function (require, exports, module) {
         line = so.cm.getLine(row);    
         trimline = line.trim();
         if (trimline) {
-          tokens = line.match(/\/\*global\s*(\S.*\S)\s*\*\//);
+          tokens = line.match(/\/\*\s*global\s*(.*?)\s*\*\//);
           if (tokens) {
             // found a global
             if (tokens.length > 1) {
@@ -665,7 +666,7 @@ define(function (require, exports, module) {
             }
             replaceSelection(new RegExp(findtext, (prefs.isall.value ? 'g' : '') + 
                 (prefs.isignorecase.value ? 'i' : '') + (prefs.isimultiline.value ? 'm' : '')),
-                startValue && stepValue ? 
+                (startValue !== undefined) && (stepValue !== undefined) ? 
                   function (data) {
                     var i, out = repltext;
                     for(i = 1; i < arguments.length - 2; i++) {
@@ -876,7 +877,53 @@ define(function (require, exports, module) {
     /*function runGrunt() {
         nodeExec(prefs.grunt.value);
     }*/
+/** ------------------------------------------------------------------------
+ *                               Recent Files
+ ** ------------------------------------------------------------------------ */    
+  function _onDocumentChanged(event, doc) {
+    var file, idx, recentFiles;
+    if (doc && doc.file && doc.file._isFile) {
+      file = doc.file._path;
+      recentFiles = prefs.recentFiles.files;
+      idx = recentFiles.indexOf(file);
+      if (idx === -1) {
+        recentFiles.push(file);
+        if (recentFiles.length > prefs.recentSize.value) {
+          recentFiles.length = prefs.recentSize.value;
+        }
+      } else {
+        recentFiles.splice(idx, 1);
+        recentFiles.splice(0, 0, file);        
+      }
+      saveextprefs();
+    }
+  }
+  
+  function showRecentFiles() {
+    var rf = prefs.recentFiles, 
+      root, rlen;
     
+    rf.value = '';
+    rf.rows = Math.min(prefs.recentSize.value, 20);
+    rf.values = [];
+      
+    root = ProjectManager.getProjectRoot();
+    root = root ? root._path : '';
+    rlen = root.length;
+    
+    rf.files.forEach(function (file) {
+      if (file.substr(0, rlen) === root) {
+        file = file.substr(rlen);
+      }
+      rf.values.push(file);
+    });
+    
+    ask('Recent Files', ['recentFiles'], function () {
+      var rf = prefs.recentFiles;
+      CommandManager.execute(Commands.FILE_ADD_TO_WORKING_SET,
+        {fullPath: rf.files[rf.values.indexOf(rf.value)], silent: true});
+    }, {nosaveprefs : true});
+  }  
 /** ------------------------------------------------------------------------
  *                               Snippets
  ** ------------------------------------------------------------------------ */
@@ -1049,6 +1096,7 @@ function execSnippets() {
             {name: "Web Search", f: webSearch, priority: SHOWONMENU},
             {name: "Browse File", f: browseFile, priority: SHOWONMENU},
             {},
+            {name: "Recent Files", f: showRecentFiles, priority: SHOWONMENU},
             {name: "Copy Filename", f: fileToClipboard, priority: SHOWONMENU},
             {name: "Copy Fullname", f: fullnameToClipboard, priority: SHOWONMENU},
             {name: "Regnize", f: regnize, priority: SHOWONMENU},
@@ -1155,14 +1203,33 @@ function execSnippets() {
 /** ------------------------------------------------------------------------
  *                               checkForVersion2
  ** ------------------------------------------------------------------------ */    
+   function _verReq(prevver, checkver, list) {
+     if (prevver < checkver) {
+       list.forEach(function (item) {
+         if (prefs.commands.value.showinmenu.indexOf(item) === -1) {
+           prefs.commands.value.showinmenu.push(item);
+         }
+       });
+     }
+   }
+  
    function versionCheck() {
-     var svver = prefs.version.value,
+     var prevver = prefs.version.value,
          i;
-     if (svver !== VERSION) {
-       if (!svver || ((svver.split('.')[0] >> 0) < 2)) {
+     if (prevver !== VERSION) {
+       if (!prevver) {
+         prevver = 0;
+       } else {
+         prevver = prevver.split('.');
+         prevver = ((prevver[0] >> 0) * 1000) + (prevver[1] >> 0);
+       }
+       
+       if (prevver < 2000) {
          prefs.version.showwelcome = true;
          prefs.commands.value.showinmenu = prefs.commands.svshowinmenu;
-       }           
+       } else {
+         _verReq(prevver, 2001, ['recentfiles']); 
+       }
        prefs.version.value = VERSION;
        saveextprefs();
      }
@@ -1179,7 +1246,9 @@ function execSnippets() {
 /** ------------------------------------------------------------------------
  *                               Init
  ** ------------------------------------------------------------------------ */    
-    console.log(window.navigator.userAgent);
+  var 
+    $DocumentManager = $(DocumentManager);
+    //console.log(window.navigator.userAgent);
     fillshowonmenu(); // must be before loadextprefs
     initprefbuttons();
     prefs.commands.svshowinmenu = prefs.commands.value.showinmenu;
@@ -1189,6 +1258,7 @@ function execSnippets() {
     runLanguageMapper();
     initprefbuttons();
     posVersionCheck();
+    $DocumentManager.on("currentDocumentChange", _onDocumentChanged);
 /** ------------------------------------------------------------------------
  *                               Save Commands
  ** ------------------------------------------------------------------------ */
@@ -1197,5 +1267,5 @@ function execSnippets() {
         runCompilerEx(true);
     }
 
-    $(DocumentManager).on("documentSaved", runSaveCommands);
+    $DocumentManager.on("documentSaved", runSaveCommands);
 });

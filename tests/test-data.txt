@@ -80,3 +80,11 @@ google
 [Test Chinese]
     你好
 LAST LINE (DON'T ADD ENTER!)
+
+
+[Split]
+  abc
+ def
+ ghi
+ jki
+ khml

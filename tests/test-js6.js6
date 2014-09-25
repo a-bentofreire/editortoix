@@ -2,6 +2,9 @@
 /** @preserve
 * hello
 */
+
+/*global $, k1, p, $p */
+
 var square = (x) => {
   return x * x;
 };
@@ -15,5 +18,5 @@ for (var element of [1, 2, 3]) {
 var t = 3 * 5; 
 var k1 = 5;
  // #put RADTODEG(3)+";"
-var t =5;
+var $p =5;
 var [a, b] = ['hello', 'world'];

@@ -22,8 +22,8 @@
  *
  */
 
-/* 
-    Preferences  
+/*
+    Preferences
 */
 
 
@@ -134,11 +134,10 @@ define(function() {
         // recentFiles command options
         recentFiles: {
             value: '',
-            rows: 20,
-            size: '105%',
+            rows: 14,
+            size: '100%',
             type: 'list',
             storeprop: 'files',
-            attributes: 'autofocus',
             files: [],
             values: []
         },

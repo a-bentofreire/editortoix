@@ -151,6 +151,11 @@ Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros
   * **Options** - Configuration dialog
 
 ## Version History
+* 2.2     [http://www.apptoix.com/blog/?p=13]
+    Fixed Recent Files, and improved UI
+    Win to Unix renamed as Win to Unix Slash. Unix to Win renamed as Unix to Win Slash.    
+    Fixed hotkeys in case of lowercase metachars      
+
 * 2.1
     Adds: Recent Files
     Improved Declare JSLint Global, and fixed when it contains vars with one character length

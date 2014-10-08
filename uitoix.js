@@ -74,7 +74,7 @@ define(function() {
             function suffixSize(value, suffix) {
               return value + (value.match(/[^\d]/) ? '' : suffix);
             }
-          
+
             // Builds the Visual Field
             function buildField(html, field, fieldname, suffix) {
                 // Creates visual field values based on prefs
@@ -106,6 +106,7 @@ define(function() {
                 if (field.label && !groupmode) {
                     html += '<td style="padding-right:5px"><label for="' + id + '">' + i18n(field.label) + ':</label></td>';
                 }
+
                 firstfieldid = firstfieldid || id;
                 html += '<td align=' + (field.align || 'left') + '>';
                 html += '<' + inpelement + ' id=' + id +
@@ -125,13 +126,13 @@ define(function() {
                             field.historyindex = -1;
                             // Brackets has no support for datalist, so this code is disactivated until there is datalist support
                             // check keyboardWorkaround for keyboard implementation
-                            /* 
+                            /*
                             html += ' list="' + id + 'list" ' + fieldhtml + '><datalist id=" ' + id + 'list">';
                             var d = document.createElement('div');
                             field.history.forEach(function(item) {
                                 d.textContent = item;
                                 item = d.innerHTML;
-                                html += '<option value="' + item + '">';// + item + '</option>'; 
+                                html += '<option value="' + item + '">';// + item + '</option>';
                             });
                             html += '</datalist>';
                             */
@@ -145,8 +146,11 @@ define(function() {
 
                     case 'select':
                         html += fieldhtml + '>';
-                        field.values.forEach(function(v) {
-                            html += '<option value="' + _htmlencode(v) + '">' + _htmlencode(v) + '</option>';
+                        field.values.forEach(function(v, index) {
+                            html += '<option value="' + _htmlencode(v) + '"' +
+                              // the autofocus only works if one item is selected. Required for Recent Files command
+                              (!index ? " selected" : "") +
+                              '>' + _htmlencode(v) + '</option>';
                         });
                         html += '</select>';
                         break;
@@ -175,8 +179,9 @@ define(function() {
 
 
             function buildHtml() {
-                var html = '<style>table.toix td { vertical-align: middle }</style>';
-                /*html += '<input name="frameworks" list="frameworks" type="text" /><datalist id="frameworks">	<option value="MooTools">	<option value="Moobile">	<option value="Dojo Toolkit">	<option value="jQuery">	<option value="YUI"></datalist>';*/ // datalist test
+                var html = '<style>table.toix { width: 100%; box-sizing: border-box; padding-right: 20px;} ' +
+                    ' table.toix td { vertical-align: middle }</style>';
+                /*html += '<input name="frameworks" list="frameworks" type="text" /><datalist id="frameworks">	<option value="MooTools"><option value="jQuery">	<option value="YUI"></datalist>';*/ // datalist test
                 html += '<input id=dlgtransparency title="Transparency" type=range min=20 max=100 value=100 ' +
                     'style="position:absolute;right:+10px;top:0px;border:dotted #8c8c8c 1px"><div style="margin-bottom:5px">&nbsp;</div>';
 
@@ -216,8 +221,8 @@ define(function() {
 
 
 
-            // Since Brack Brackets doesn't preventDefault on enter key, nor supports datalist, 
-            // I created this Brackets bug workaround. If in the future Brackets has this fixed, this code should be removed and 
+            // Since Brack Brackets doesn't preventDefault on enter key, nor supports datalist,
+            // I created this Brackets bug workaround. If in the future Brackets has this fixed, this code should be removed and
             // replaced with datalists. NOTE: Also includes escape key and close dialog if ENTER on input:focus, select:focus
             // This code is based on /widgets/Dialogs
 
@@ -271,7 +276,7 @@ define(function() {
                         return true;
                     }
 
-                    if ((event.ctrlKey) && (which === KeyEvent.DOM_VK_UP) || (which === KeyEvent.DOM_VK_DOWN)) {
+                    if ((event.ctrlKey) && ((which === KeyEvent.DOM_VK_UP) || (which === KeyEvent.DOM_VK_DOWN))) {
                         if (handleHistory(which === KeyEvent.DOM_VK_UP ? -1 : 1)) {
                             event.preventDefault();
                             event.stopPropagation();
@@ -337,6 +342,7 @@ define(function() {
                 qfld.val(allfields[fld].buttons[idx].f(qfld.val()));
             });
 
+
             // Cancel and OK button
 
             $dlg.one("click", ".dialog-button", function(e) {
@@ -390,7 +396,7 @@ define(function() {
                     return true;
                 }
 
-                // THE CODE STARTS HERE 
+                // THE CODE STARTS HERE
                 var isOK = $(this).attr('data-button-id') === 'ok';
                 if (isOK) {
                     $.each(fieldnames, function(index, fieldname) {

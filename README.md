@@ -151,6 +151,15 @@ Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros
   * **Options** - Configuration dialog  
   
 ## Version History  
+* 2.3     [http://www.apptoix.com/blog/?p=22]  
+    Recent Files: It no longer adds _brackets_* files  
+    Recent Files: Double Click selects the file and closes dialog  
+    Recent Files: Supports Horizontal/Vertical View Splits  
+    Supports localization  
+    Added Portuguese translations  
+    Internal improvements  
+      
+      
 * 2.2     [http://www.apptoix.com/blog/?p=13]  
     Fixed Recent Files, and improved UI  
     Win to Unix renamed as Win to Unix Slash. Unix to Win renamed as Unix to Win Slash.      

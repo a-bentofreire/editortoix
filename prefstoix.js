@@ -33,6 +33,12 @@
 define(function() {
     "use strict";
     /** ------------------------------------------------------------------------
+     *                               UI
+     ** ------------------------------------------------------------------------ */
+    function selectAndClose(inf) {
+      inf.closedlg(true);
+    }
+    /** ------------------------------------------------------------------------
      *                               Closure
      ** ------------------------------------------------------------------------ */
     var PREFKEY = 'prefs';
@@ -117,18 +123,15 @@ define(function() {
         // splitText command options
         splitMarker: {
             value: ',',
-            label: 'Split Marker'
         },
 
         // Used in dialogs
         historySize: {
             value: 20,
-            label: 'History Size',
             type: 'number'
         },
         recentSize: {
             value: 20,
-            label: 'Recent Size',
             type: 'number'
         },
         // recentFiles command options
@@ -139,42 +142,40 @@ define(function() {
             type: 'list',
             storeprop: 'files',
             files: [],
-            values: []
+            values: [],
+            events: [{name: 'dblclick', f: selectAndClose}]
         },
 
         // numberText command options
         startNum: {
             value: 1,
-            label: 'Initial Value',
             type: 'number'
         },
         numSep: {
             value: ".\\$",
             history: [],
-            label: 'Separator after Number',
             canempty: true,
             type: 'spacetext'
         },
         // Tab To Space, Space To Tab command options
         tabSize: {
             value: 2,
-            label: 'Tab Size',
             type: 'number'
         },
         // extractortoix command options
         findre: {
             value: '',
-            label: 'Find',
+            
             history: [],
             buttons: [{
                 label: 'Regnize'
             }]
         },
+        findlabel: 'Find',
 
         // replacetoix command options
         find: {
             value: '',
-            label: 'Find',
             history: [],
             buttons: [{
                 label: 'Regnize'
@@ -182,60 +183,48 @@ define(function() {
         },
         replace: {
             value: '',
-            label: 'Replace',
-            hint: 'Use $NUM$ for numbering macro',
             history: [],
             canempty: true
         },
         startValue: {
             value: '',
-            label: 'Start',
-            hint: 'Leave empty for no numbering, since it slows down the process and only supports a small regular expression subset replacement. Must have Regular Expression checked',
             historty: [],
             canempty: true
         },
+
         stepValue: {
             value: '',
-            label: 'Step',
             historty: []
         },
         iswordsonly: {
             value: false,
-            label: 'Words Only',
-            hint: 'Only works if is not a regular expression',
             type: 'boolean',
             canempty: true,
             groupcols: 3
         },
         isregexpr: {
             value: true,
-            label: 'Regular Expression',
             type: 'boolean',
             canempty: true
         },
         isignorecase: {
             value: false,
-            label: 'Ignore Case',
             type: 'boolean',
             canempty: true,
             groupcols: 1
         },
         isimultiline: {
             value: false,
-            label: 'Multiline',
             type: 'boolean',
             canempty: true
         },
         isall: {
             value: true,
-            label: 'Replace All',
             type: 'boolean',
             canempty: true
         },
         isselonly: {
             value: true,
-            label: 'Only Selection',
-            hint: 'If there is a selected text only replaces the selected text',
             type: 'boolean',
             canempty: true
         },
@@ -243,7 +232,6 @@ define(function() {
         // webSearch command options
         webSearch: {
             value: 'https://www.google.com/search?q=',
-            label: 'Search Engine url',
             checkfunc: function(text) {
                 return _checkForHttp(text) ? '' : 'It must start with http(s)://';
             }
@@ -255,41 +243,35 @@ define(function() {
         label: 'Grunt',
         hint: 'You must install grunt',
     },*/
-
         // js6 command options
         js6: {
             value: 'traceur --out "{{out}}" --script "{{in}}"',
-            label: 'js6 Compiler',
-            hint: 'You must install nodejs, and then "npm install -g traceur"',
             fields: {
                 autosave: {
                     value: false,
                     type: 'boolean',
-                    hint: 'AutoSave',
                     align: 'center',
                     canempty: true
                 }
             }
         },
-        // scss command options
+      
+      // scss command options
         scss: {
             value: 'sass --sourcemap "{{in}}" "{{out}}"',
-            label: 'scss Compiler',
-            hint: 'You Must install sass 1st. Goto http://sass-lang.com/',
             fields: {
                 autosave: {
                     value: false,
                     type: 'boolean',
-                    hint: 'AutoSave',
                     align: 'center',
                     canempty: true
                 }
             },
             buttons: [{
-                label: 'Compass',
+                id: 'compass',
                 setvalue: 'compass compile "{{inrelfile}}"'
             }, {
-                label: 'SCSS',
+                id: 'sass',
                 setvalue: 'sass --sourcemap "{{in}}" "{{out}}"'
             }]
         },
@@ -297,31 +279,22 @@ define(function() {
         // Lorem Ipsum
         linrparagraphs: {
             value: '1',
-            label: 'Nr Paragraphs',
-            hint: 'Maximum is 100'
         },
         limaxcharsperline: {
             value: '0',
-            label: 'Max Chars per line',
-            hint: 'Set 0 to no word wrap'
         },
+      
         lihtmlparawrap: {
             value: '',
-            label: 'html tag wrap',
-            hint: 'Wraps each paragraph with this tag. Ex: p',
             canempty: true
         },
 
         maxcharsperline: {
             value: '80',
-            label: 'Max Chars per line',
-            hint: 'Min is 1'
-        },
-
+            
+        },      
         tobreakwords: {
-            value: false,
-            label: 'Break words',
-            hint: 'Set to true, if it can break words',
+            value: false,            
             type: 'boolean',
             canempty: true
         }

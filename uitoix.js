@@ -53,6 +53,15 @@ define(function() {
         qObj.css('background-color', 'rgba(' + RGB[0] + ',' + RGB[1] + ',' + RGB[2] + ',' + transparency + ')');
         return true;
     }
+         
+    function _getFieldLabel(i18n, field, fieldname, suffix) {
+      return field.label || i18n('FLD_' + fieldname + (suffix ? '_' : '') + suffix + '_label', '');
+    }
+
+    function _getFieldHint(i18n, field, fieldname, suffix) {
+      console.log('FLD_' + fieldname + (suffix ? '_' : '') + suffix + '_hint');
+      return field.hint || i18n('FLD_' + fieldname + (suffix ? '_' : '') + '_hint', '');
+    }
     /** ------------------------------------------------------------------------
      *                               Exported
      ** ------------------------------------------------------------------------ */
@@ -61,32 +70,35 @@ define(function() {
             return _htmlencode(text);
         },
 
-        ask: function(title, fieldnames, callback, opts, allfields, i18n, Dialogs, saveextprefs, historysize,
-            KeyBindingManager, KeyEvent) {
+        ask: function(title, storeid, fieldnames, callback, opts, allfields, saveextprefs, historysize, i18n, brk) {
             var PREFIX = 'toix',
                 DEFSIZE = 25,
                 BRACKETSTOIX_DIALOG_ID = "bracketstoix-dialog";
 
             var dlg, $dlg, firstfieldid,
                 groupmode = false,
-                groupcols, groupcolindex;
+                groupcols, groupcolindex,
+                eventQueue = [];
 
             function suffixSize(value, suffix) {
               return value + (value.match(/[^\d]/) ? '' : suffix);
             }
 
+            /** ------------------------------------------------------------------------
+             *                               buildField
+             ** ------------------------------------------------------------------------ */          
             // Builds the Visual Field
             function buildField(html, field, fieldname, suffix) {
                 // Creates visual field values based on prefs
-                var i, inptype, hint, inpelement, id, fieldhtml;
+                var i, inptype, hint, inpelement, id, fieldhtml, label;
 
-                hint = (field.hint || '') + (field.history ? ' Use Ctrl+UP/DOWN to fetch the history' : '');
+                hint = _getFieldHint(i18n, field, fieldname, suffix) + (field.history ? i18n("HISTORY_HINT") : '');
                 fieldhtml = ' ' + (field.htmltext || ''); // must be added just be the html '>'
                 inptype = 'text';
                 inpelement = 'input';
                 switch (field.type) {
                     case 'spacetext':
-                        hint += " use \\$ for leading and trimming spaces";
+                        hint += i18n("SPACETEXT_HINT");
                         break;
                     case 'regex':
                         hint += ' regular expression';
@@ -103,8 +115,9 @@ define(function() {
                         break;
                 }
                 id = PREFIX + fieldname + suffix;
-                if (field.label && !groupmode) {
-                    html += '<td style="padding-right:5px"><label for="' + id + '">' + i18n(field.label) + ':</label></td>';
+                label = _getFieldLabel(i18n, field, fieldname, suffix);
+                if (label && !groupmode) {
+                    html += '<td style="padding-right:5px"><label for="' + id + '">' + i18n(label) + ':</label></td>';
                 }
 
                 firstfieldid = firstfieldid || id;
@@ -118,6 +131,10 @@ define(function() {
                     (inptype === 'checkbox' && field.value ? ' checked' : '') +
                     (!field.canempty ? ' required' : '') +
                     ' ' + (field.attributes || '');
+
+                if (field.events) {
+                  eventQueue.push({id: id, events: field.events});  
+                }             
 
                 switch (inpelement) {
                     case 'input':
@@ -158,13 +175,13 @@ define(function() {
                 if (field.buttons) {
                     field.buttons.forEach(function(button, index) {
                         html += '<button class="field-button" data-info="' + id + ',' + fieldname + ',' + index + '"' +
-                            '">' + _htmlencode(button.label) + '</button>';
+                            '">' + _htmlencode(_getFieldLabel(i18n, button, fieldname, suffix + button.id)) + '</button>';
                     });
                 }
 
-                if (field.label && groupmode) {
+                if (label && groupmode) {
                     html += '<label for="' + id + '" style="display:inline-block; padding-right:10px; padding-left: 5px">' +
-                        i18n(field.label) + '</label>';
+                        i18n(label) + '</label>';
                 }
 
                 html += '</td>';
@@ -177,7 +194,9 @@ define(function() {
                 return html;
             }
 
-
+            /** ------------------------------------------------------------------------
+             *                               buildHtml
+             ** ------------------------------------------------------------------------ */
             function buildHtml() {
                 var html = '<style>table.toix { width: 100%; box-sizing: border-box; padding-right: 20px;} ' +
                     ' table.toix td { vertical-align: middle }</style>';
@@ -194,7 +213,7 @@ define(function() {
                 if (opts && opts.header) {
                     html += '<tr>';
                     opts.header.forEach(function(field) {
-                        html += '<th>' + _htmlencode(field) + '</th>';
+                        html += '<th>' + _htmlencode(i18n('HDR_' + storeid + '_' + field + '_label')) + '</th>';
                     });
                     html += '</tr>';
                 }
@@ -258,7 +277,7 @@ define(function() {
                     var $primaryBtn,
                         which = event.which;
 
-                    if (which === KeyEvent.DOM_VK_RETURN) {
+                    if (which === brk.KeyEvent.DOM_VK_RETURN) {
                         $primaryBtn = $dlg.find(".primary");
                         if (($primaryBtn.length > 0) && ($dlg.find("input:focus, select:focus, .dialog-button:focus, a:focus").length > 0)) {
                             event.preventDefault();
@@ -269,15 +288,15 @@ define(function() {
                     }
 
 
-                    if (which === KeyEvent.DOM_VK_ESCAPE) {
+                    if (which === brk.KeyEvent.DOM_VK_ESCAPE) {
                         event.preventDefault();
                         event.stopPropagation();
                         dlg.close();
                         return true;
                     }
 
-                    if ((event.ctrlKey) && ((which === KeyEvent.DOM_VK_UP) || (which === KeyEvent.DOM_VK_DOWN))) {
-                        if (handleHistory(which === KeyEvent.DOM_VK_UP ? -1 : 1)) {
+                    if ((event.ctrlKey) && ((which === brk.KeyEvent.DOM_VK_UP) || (which === brk.KeyEvent.DOM_VK_DOWN))) {
+                        if (handleHistory(which === brk.KeyEvent.DOM_VK_UP ? -1 : 1)) {
                             event.preventDefault();
                             event.stopPropagation();
                             return true;
@@ -288,27 +307,43 @@ define(function() {
                 };
 
                 $dlg.one("hidden", function() {
-                    KeyBindingManager.removeGlobalKeydownHook(_keyhook);
+                    brk.KeyBindingManager.removeGlobalKeydownHook(_keyhook);
                 });
                 // This code is executed after Dialog show event, so I can't use one("show", ....
-                KeyBindingManager.addGlobalKeydownHook(_keyhook);
+                brk.KeyBindingManager.addGlobalKeydownHook(_keyhook);
             }
 
-
+            /** ------------------------------------------------------------------------
+             *                               handleQueueEvents
+             ** ------------------------------------------------------------------------ */          
+            function handleQueueEvents($dlg) {
+              eventQueue.forEach(function (item) {
+                var $fld = $dlg.find('#' + item.id);
+                item.events.forEach(function (event) {
+                    $fld.bind(event.name, function () {
+                      var inf = { $dlg: $dlg, name: event.name, fldid: item.id };
+                      inf.closedlg = function (accept) {
+                        $dlg.find('[data-button-id="' + (accept ? 'ok' : 'cancel') + '"]').click();
+                      };
+                      event.f(inf);
+                    });
+                });
+              });
+            }
             /** ------------------------------------------------------------------------
              *                               Main code
              ** ------------------------------------------------------------------------ */
-            dlg = Dialogs.showModalDialog(
+            dlg = brk.Dialogs.showModalDialog(
                 BRACKETSTOIX_DIALOG_ID,
-                i18n(title),
+                title,
                 buildHtml(), [{
-                    className: Dialogs.DIALOG_BTN_CLASS_PRIMARY,
-                    id: Dialogs.DIALOG_BTN_OK,
-                    text: 'OK'
+                    className: brk.Dialogs.DIALOG_BTN_CLASS_PRIMARY,
+                    id: brk.Dialogs.DIALOG_BTN_OK,
+                    text: brk.CoreStrings.OK
                 }, {
-                    className: Dialogs.DIALOG_BTN_CLASS_NORMAL,
-                    id: Dialogs.DIALOG_BTN_CANCEL,
-                    text: 'Cancel'
+                    className: brk.Dialogs.DIALOG_BTN_CLASS_NORMAL,
+                    id: brk.Dialogs.DIALOG_BTN_CANCEL,
+                    text: brk.CoreStrings.CANCEL
                 }], false);
 
             $dlg = dlg.getElement();
@@ -318,6 +353,7 @@ define(function() {
             }
 
             keyboardWorkaround($dlg);
+            handleQueueEvents($dlg);
 
             // Transparency support
 
@@ -353,7 +389,8 @@ define(function() {
                         v = field.type !== 'boolean' ? qfld.val() : qfld.get(0).checked;
                     // Check canempty
                     if (!v && !field.canempty) {
-                        alert('Field ' + i18n(field.label) + ' can\'t be empty');
+                          // @TODO: Needs to port to the new system
+                        alert('Field ' + _getFieldLabel(i18n, field, fieldname, suffix) + ' can\'t be empty');
                         return false;
                     }
                     // run checkfunc

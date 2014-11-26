@@ -14,13 +14,18 @@
         "brackets": ">=0.44.0"
     },
     "i18n": [
-        "en", 
-        "pt" 
+        "en",
+        "pt",
+        "de"
     ],
     "package-i18n": {
         "pt": {
             "title": "BracketstoIX",
             "description": "Lorem ipsum, Quebrar Linhas, Ficheiros Recentes.Mudar(Case, Aspas, Barra, Tab, Codificação), Ordenar, (Un)Etiquetar, Clipboard, Internet, (traceur, sass, compass), Substituir Textos, Extratores, JSLint Global, JsDoc.<ul><li>Ver <a href=\"www.apptoix.com/#bracketstoix\">o sitio para uma demo</a></li><li>Transformações de Texto(Inverso, Maiúsculas, Minúsculas, Capitalizar, CamelCase, Codificar/Decodificar Html/Url, Juntar, Separar, Numerar, Apagar Espaços fim/inicio, Ordenar, Remover Duplicados, Remover Linhas vazias, Unix para Win, Win para Unix, Aspas Simples para Duplas, Aspas Duplas para simples, Alternar Aspas, Barra Simples para Dupla, Barra Dupla para simples, rgb-hex, Markdown Trim Trailing, Function JSDoc, Etiquetar, Numerar)</li><li>Clipboard(Copiar nome do Ficheiro, Copiar nome do Ficheiro completo, Regnize, SubstituirtoIX, Relatório Html)</li><li>SubstituirtoIX(Substituir incluindo Palavras completas, Apenas Selecção, Multi linha, Regnize, Historico)</li><li>Pesquisar na Web(Abrir Url, Web Search, Explorar ficheiro)</li><li>Compiler(scss, js6 [ECMAScript 6], compass)</li></ul>"
+        },
+        "de": {
+            "title": "BracketstoIX",
+            "description": "Lorem ipsum, Zeilenumbruch, kürzlich geöffnete Dateien. Ändern (Groß-/kleinschreibung, Anführungszeichen, Schrägstriche, Tabulator, Encoding), Sortieren, (Un)Tag, Clipboard, Internet, (traceur, sass, compass), Textersetzung, Extraktoren, JSLint Global, JsDoc. <ul><li>Siehe <a href=\"www.apptoix.com/#bracketstoix\">hier: Anwendungsdemo</a></li><li>Texttransformation (Umkehren, Großbuchstaben, Kleinbuchstaben, Wortanfang großschreiben, \"CamelCase\", HtmlEncode, HtmlDecode, UrlEncode, Zusammenführen, Trennen, Nummmerieren, Leerraum trimmen, Sortieren (auf- und absteigend), Doppelte Zeilen entfernen, Leerzeilen entfernen, Unix nach Windows, Windows nach Unix, Einfache Anführunszeichen zu doppelten und umgekehrt, Anführungszeichen umschalten, einfache Schrägstriche verdoppeln, doppelte Schrägstriche zu einfachen, RGB farben zu Hex, Markdown Leerraum trimmen, JSDoc-Kommentare einfügen, Tag einfügen, Tag entfernen, Nummerieren)</li><li>Zwischenablage (Dateiname, vollständiger Dateiname, Regnize, ExtratortoIX, Html Report)</li><li>ReplacetoIX (Ersetzen incl. nur ganzer Wörter, Auf Auswahl eingeschränkt, mehrzeilig, Regnize, History)</li><li>Internetsuche(URL öffnen, Web-Suche, Dateibrowser)</li><li>Compiler(scss, js6 [ECMAScript 6], compass)</li></ul>"
         }
-    }    
+    }
 }

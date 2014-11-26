@@ -1,7 +1,7 @@
 {
     "name": "bracketstoix",
     "title": "BracketstoIX",
-    "version": "2.3.0",
+    "version": "2.4.0",
     "description": "Lorem ipsum, Break Line, Recent Files.Change(Case, Quote, Slash, Tab, Encoding), Sort, (Un)Tag, Clipboard, Internet, (traceur, sass, compass), Text Replace, Extrators, JSLint Global, JsDoc.<ul><li>Check out the <a href=\"www.apptoix.com/#bracketstoix\">web site for a usage demo</a></li><li>Text Transforms(Reverse, UpperCase, LowerCase, Capitalize, CamelCase, HtmlEncode, HtmlDecode, UrlEncode, Join, Split, Number, Trim Leading, Trim Trailing, Sort Ascending, Sort Descending, Remove Duplicates, Remove Empty Lines, Unix To Win, Win To Unix, Single Quote To Double, Double To Single Quote, Toggle Quote, Single Slash To Double, Double To Single Slash, rgb-hex, Markdown Trim Trailing, Function JSDoc, Tag, Untag, Numbering)</li><li>Clipboard(Copy Filename, Copy Fullname, Regnize, ExtratortoIX, Html Report)</li><li>ReplacetoIX(Replace including Words only, Selection only, Multiline, Regnize, History)</li><li>Internet Search(Open Url, Web Search, Browse File)</li><li>Compiler(scss, js6 [ECMAScript 6], compass)</li></ul>",
     "homepage": "http://www.apptoix.com/#bracketstoix",
     "license": "MIT",
@@ -20,7 +20,7 @@
     "package-i18n": {
         "pt": {
             "title": "BracketstoIX",
-            "description": "Lorem ipsum, Quebrar Linhas, Ficheiros Recentes.Mudar(Case, Aspas, Barra, Tab, Codificação), Ordenar, (Un)Etiquetar, Clipboard, Internet, (traceur, sass, compass), Substituir Textos, Extratores, JSLint Global, JsDoc.<ul><li>Ver <a href=\"www.apptoix.com/#bracketstoix\">o sitio para uma demo</a></li><li>Transformações de Texto(Inverso, Maiúsculas, Minúsculas, Capitalizar, CamelCase, Codificar/Decodificar Html/Url, Juntar, Separar, Numerar, Apagar Espaços fim/inicio, Ordenar, Remover Duplicados, Remover Linhas vazias, Unix para Win, Win para Unix, Aspas Simples para Duplas, Aspas Duplas para simples, Alternar Aspas, Single Slash To Double, Double To Single Slash, rgb-hex, Markdown Trim Trailing, Function JSDoc, Etiquetar, Numerar)</li><li>Clipboard(Copy Filename, Copy Fullname, Regnize, ExtratortoIX, Html Report)</li><li>ReplacetoIX(Replace including Words only, Selection only, Multiline, Regnize, History)</li><li>Internet Search(Open Url, Web Search, Browse File)</li><li>Compiler(scss, js6 [ECMAScript 6], compass)</li></ul>"
+            "description": "Lorem ipsum, Quebrar Linhas, Ficheiros Recentes.Mudar(Case, Aspas, Barra, Tab, Codificação), Ordenar, (Un)Etiquetar, Clipboard, Internet, (traceur, sass, compass), Substituir Textos, Extratores, JSLint Global, JsDoc.<ul><li>Ver <a href=\"www.apptoix.com/#bracketstoix\">o sitio para uma demo</a></li><li>Transformações de Texto(Inverso, Maiúsculas, Minúsculas, Capitalizar, CamelCase, Codificar/Decodificar Html/Url, Juntar, Separar, Numerar, Apagar Espaços fim/inicio, Ordenar, Remover Duplicados, Remover Linhas vazias, Unix para Win, Win para Unix, Aspas Simples para Duplas, Aspas Duplas para simples, Alternar Aspas, Barra Simples para Dupla, Barra Dupla para simples, rgb-hex, Markdown Trim Trailing, Function JSDoc, Etiquetar, Numerar)</li><li>Clipboard(Copiar nome do Ficheiro, Copiar nome do Ficheiro completo, Regnize, SubstituirtoIX, Relatório Html)</li><li>SubstituirtoIX(Substituir incluindo Palavras completas, Apenas Selecção, Multi linha, Regnize, Historico)</li><li>Pesquisar na Web(Abrir Url, Web Search, Explorar ficheiro)</li><li>Compiler(scss, js6 [ECMAScript 6], compass)</li></ul>"
         }
-    }
+    }    
 }

@@ -39,7 +39,7 @@ define(function (require, exports, module) {
 /** ------------------------------------------------------------------------
  *                               i18n
  ** ------------------------------------------------------------------------ */
-    var /** @const */ VERSION = '2.3',
+    var /** @const */ VERSION = '2.4',
         /** @const */ IXMENU = "IX",
         /** @const */ IXMENUTT = "IX TT",
         /** @const */ MODULENAME = 'bracketstoix',
@@ -120,8 +120,12 @@ define(function (require, exports, module) {
         return res.join('');
     }
 
+    function textToID(text) {
+        return text.toLowerCase().replace(/\./g, '').replace(/ /g, '');
+    }
+
     function getCmdStoreID(cmd) {
-        return cmd.name.toLowerCase().replace(/\./g, '').replace(/ /g, '');
+        return textToID(cmd.name);
     }
 
     function buildCmdLabel(cmd) {
@@ -1198,7 +1202,7 @@ function execSnippets() {
             Menus = brackets.getModule('command/Menus'),
             //menu = Menus.getMenu(Menus.AppMenuBar.VIEW_MENU),
             // Since Brackets has no submenu support it"s better to create a top menu
-            menulist = [Menus.addMenu(IXMENUTT, IXMENUTT), Menus.addMenu(IXMENU, IXMENU)],
+            menulist = [Menus.addMenu(IXMENUTT, textToID(IXMENUTT)), Menus.addMenu(IXMENU, textToID(IXMENU))],
             ctxmenu = Menus.getContextMenu(Menus.ContextMenuIds.EDITOR_MENU),
             i, cmd, nm, lastid,
             showinmenu = prefs.commands.value.showinmenu,

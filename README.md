@@ -151,6 +151,9 @@ Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros
   * **Options** - Configuration dialog  
   
 ## Version History  
+* 2.4     [http://www.apptoix.com/blog/?p=26]  
+    Fixed bug running on Ubuntu  
+      
 * 2.3     [http://www.apptoix.com/blog/?p=22]  
     Recent Files: It no longer adds _brackets_* files  
     Recent Files: Double Click selects the file and closes dialog  

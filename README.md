@@ -151,6 +151,9 @@ Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros
   * **Options** - Configuration dialog  
   
 ## Version History  
+* 2.5       [http://www.apptoix.com/blog/?p=28]  
+    Add German translation: Contribution of Christian Knappke [https://github.com/k5e]   
+      
 * 2.4     [http://www.apptoix.com/blog/?p=26]  
     Fixed bug running on Ubuntu  
       

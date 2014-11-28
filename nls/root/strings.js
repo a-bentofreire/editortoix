@@ -54,6 +54,8 @@ define({
   'FLD_splitMarker_label': 'Split Marker',
   'FLD_historySize_label': 'History Size',
   'FLD_recentSize_label': 'Recent Size',
+  'FLD_showcxtedit_label': 'Show Cut/Copy on Ctx Menu',
+  'FLD_showcxtedit_hint': 'Requires a reload to take effect',
   'FLD_startNum_label': 'Initial Value',
   'FLD_numSep_label': 'Separator after Number',
   'FLD_tabSize_label': 'Tab Size',

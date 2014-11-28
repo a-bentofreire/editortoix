@@ -16,4 +16,4 @@ cd dist
 zip -o -r -x tests/* -x *.zip -x .git/* -x *.sh -9 bracketstoix.zip *
 cd ..
 echo $'\nRun this script twice to list the correct zip size\n'
-read -p "Press ENTER to finish. "
+

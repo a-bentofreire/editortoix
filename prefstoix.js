@@ -105,7 +105,7 @@ define(function() {
         /** ------------------------------------------------------------------------
          *                               Fields
          ** ------------------------------------------------------------------------ */
-        OPTIONFIELDS: ['tabSize', 'historySize', 'recentSize', 'webSearch', /*'grunt',*/ 'js6', 'scss'],
+        OPTIONFIELDS: ['tabSize', 'historySize', 'recentSize', 'showcxtedit', 'webSearch', /*'grunt',*/ 'js6', 'scss'],
 
         version: {
             value: ''
@@ -122,7 +122,7 @@ define(function() {
 
         // splitText command options
         splitMarker: {
-            value: ',',
+            value: ','
         },
 
         // Used in dialogs
@@ -133,6 +133,11 @@ define(function() {
         recentSize: {
             value: 20,
             type: 'number'
+        },
+        showcxtedit: {
+            value: true,
+            type: 'boolean',
+            canempty: true
         },
         // recentFiles command options
         recentFiles: {
@@ -278,10 +283,10 @@ define(function() {
 
         // Lorem Ipsum
         linrparagraphs: {
-            value: '1',
+            value: '1'
         },
         limaxcharsperline: {
-            value: '0',
+            value: '0'
         },
       
         lihtmlparawrap: {
@@ -290,7 +295,7 @@ define(function() {
         },
 
         maxcharsperline: {
-            value: '80',
+            value: '80'
             
         },      
         tobreakwords: {

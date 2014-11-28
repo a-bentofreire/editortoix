@@ -90,7 +90,8 @@ define(function() {
             // Builds the Visual Field
             function buildField(html, field, fieldname, suffix) {
                 // Creates visual field values based on prefs
-                var i, inptype, hint, inpelement, id, fieldhtml, label;
+                var i, inptype, hint, inpelement, 
+                    id, fieldhtml, label;
 
                 hint = _getFieldHint(i18n, field, fieldname, suffix) + (field.history ? i18n("HISTORY_HINT") : '');
                 fieldhtml = ' ' + (field.htmltext || ''); // must be added just be the html '>'
@@ -313,146 +314,153 @@ define(function() {
                 brk.KeyBindingManager.addGlobalKeydownHook(_keyhook);
             }
 
-            /** ------------------------------------------------------------------------
-             *                               handleQueueEvents
-             ** ------------------------------------------------------------------------ */          
+           /** ------------------------------------------------------------------------
+            *                               handleQueueEvents
+            ** ------------------------------------------------------------------------ */          
             function handleQueueEvents($dlg) {
-              eventQueue.forEach(function (item) {
-                var $fld = $dlg.find('#' + item.id);
-                item.events.forEach(function (event) {
-                    $fld.bind(event.name, function () {
-                      var inf = { $dlg: $dlg, name: event.name, fldid: item.id };
-                      inf.closedlg = function (accept) {
-                        $dlg.find('[data-button-id="' + (accept ? 'ok' : 'cancel') + '"]').click();
-                      };
-                      event.f(inf);
-                    });
-                });
+               eventQueue.forEach(function (item) {
+                 var $fld = $dlg.find('#' + item.id);
+                
+                 item.events.forEach(function (event) {
+                     $fld.bind(event.name, function () {
+                       var inf = { $dlg: $dlg, name: event.name, fldid: item.id };
+                      
+                       inf.closedlg = function (accept) {
+                         $dlg.find('[data-button-id="' + (accept ? 'ok' : 'cancel') + '"]').click();
+                       };
+                       event.f(inf);
+                     });
+                 });
+               });
+            }
+          /** ------------------------------------------------------------------------
+           *                               Main code
+           ** ------------------------------------------------------------------------ */
+          dlg = brk.Dialogs.showModalDialog(
+              BRACKETSTOIX_DIALOG_ID,
+              title,
+              buildHtml(), [{
+                  className: brk.Dialogs.DIALOG_BTN_CLASS_PRIMARY,
+                  id: brk.Dialogs.DIALOG_BTN_OK,
+                  text: brk.CoreStrings.OK
+              }, {
+                  className: brk.Dialogs.DIALOG_BTN_CLASS_NORMAL,
+                  id: brk.Dialogs.DIALOG_BTN_CANCEL,
+                  text: brk.CoreStrings.CANCEL
+              }], false);
+
+          $dlg = dlg.getElement();
+          // By default, Brackets will focus the primary button, this code will override that action
+          if (firstfieldid) {
+              $dlg.find('#' + firstfieldid).focus();
+          }
+
+          keyboardWorkaround($dlg);
+          handleQueueEvents($dlg);
+
+          // Transparency support
+
+          $dlg.find("#dlgtransparency").change(function(e) {
+              var qMBody = $dlg.find('.modal-body'),
+                  val = $(this).val() / 100;
+
+              _retransparency($dlg, 0);
+              ['.modal-header', '.modal-body', '.modal-footer'].forEach(function(tag) {
+                  _retransparency($dlg.find(tag), val);
               });
-            }
-            /** ------------------------------------------------------------------------
-             *                               Main code
-             ** ------------------------------------------------------------------------ */
-            dlg = brk.Dialogs.showModalDialog(
-                BRACKETSTOIX_DIALOG_ID,
-                title,
-                buildHtml(), [{
-                    className: brk.Dialogs.DIALOG_BTN_CLASS_PRIMARY,
-                    id: brk.Dialogs.DIALOG_BTN_OK,
-                    text: brk.CoreStrings.OK
-                }, {
-                    className: brk.Dialogs.DIALOG_BTN_CLASS_NORMAL,
-                    id: brk.Dialogs.DIALOG_BTN_CANCEL,
-                    text: brk.CoreStrings.CANCEL
-                }], false);
+          });
 
-            $dlg = dlg.getElement();
-            // By default, Brackets will focus the primary button, this code will override that action
-            if (firstfieldid) {
-                $dlg.find('#' + firstfieldid).focus();
-            }
+          // Field buttons. ex: Regnize
 
-            keyboardWorkaround($dlg);
-            handleQueueEvents($dlg);
+          $dlg.find(".field-button").click(function(e) {
+              var qfld, fld, 
+                  info, idx, id;
 
-            // Transparency support
-
-            $dlg.find("#dlgtransparency").change(function(e) {
-                var qMBody = $dlg.find('.modal-body');
-                var val = $(this).val() / 100;
-                _retransparency($dlg, 0);
-                ['.modal-header', '.modal-body', '.modal-footer'].forEach(function(tag) {
-                    _retransparency($dlg.find(tag), val);
-                });
-            });
-
-            // Field buttons. ex: Regnize
-
-            $dlg.find(".field-button").click(function(e) {
-                var qfld, fld, info, idx, id;
-                info = $(this).attr('data-info').split(',');
-                id = info[0];
-                fld = info[1];
-                idx = info[2];
-                qfld = $dlg.find('#' + id);
-                qfld.val(allfields[fld].buttons[idx].f(qfld.val()));
-            });
+              info = $(this).attr('data-info').split(',');
+              id = info[0];
+              fld = info[1];
+              idx = info[2];
+              qfld = $dlg.find('#' + id);
+              qfld.val(allfields[fld].buttons[idx].f(qfld.val()));
+          });
 
 
-            // Cancel and OK button
+          // Cancel and OK button
 
-            $dlg.one("click", ".dialog-button", function(e) {
+          $dlg.one("click", ".dialog-button", function(e) {
 
-                function storeField(field, fieldname, suffix) {
-                    var msg, res, index,
-                        qfld = $dlg.find('#' + PREFIX + fieldname + suffix),
-                        v = field.type !== 'boolean' ? qfld.val() : qfld.get(0).checked;
-                    // Check canempty
-                    if (!v && !field.canempty) {
-                          // @TODO: Needs to port to the new system
-                        alert('Field ' + _getFieldLabel(i18n, field, fieldname, suffix) + ' can\'t be empty');
-                        return false;
-                    }
-                    // run checkfunc
-                    if (field.checkfunc) {
-                        msg = field.checkfunc(v);
-                        if (msg) {
-                            alert(msg);
-                            return false;
-                        }
-                    }
+              function storeField(field, fieldname, suffix) {
+                  var msg, res, index,
+                      qfld = $dlg.find('#' + PREFIX + fieldname + suffix),
+                      v = field.type !== 'boolean' ? qfld.val() : qfld.get(0).checked;
 
-                    switch (field.type) {
-                        case 'number':
-                            v = parseInt(v, 10);
-                            break;
-                    }
-                    field.value = v;
-                    if (field.history && historysize && v) {
-                        index = field.history.indexOf(v);
-                        if (index > -1) {
-                            field.history.splice(index, 1);
-                        }
-                        field.history.splice(0, 0, v);
-                        if (field.history.length > historysize) {
-                            field.history.length = historysize;
-                        }
-                    }
+                  // Check canempty
+                  if (!v && !field.canempty) {
+                        // @TODO: Needs to port to the new system
+                      alert('Field ' + _getFieldLabel(i18n, field, fieldname, suffix) + ' can\'t be empty');
+                      return false;
+                  }
+                  // run checkfunc
+                  if (field.checkfunc) {
+                      msg = field.checkfunc(v);
+                      if (msg) {
+                          alert(msg);
+                          return false;
+                      }
+                  }
 
-                    // Store subfields
-                    if (field.fields) {
-                        res = true;
-                        $.each(Object.keys(field.fields), function(index, key) {
-                            res = storeField(field.fields[key], fieldname, key);
-                            return res;
-                        });
-                        if (!res) {
-                            return false;
-                        }
-                    }
-                    return true;
-                }
+                  switch (field.type) {
+                      case 'number':
+                          v = parseInt(v, 10);
+                          break;
+                  }
+                  field.value = v;
+                  if (field.history && historysize && v) {
+                      index = field.history.indexOf(v);
+                      if (index > -1) {
+                          field.history.splice(index, 1);
+                      }
+                      field.history.splice(0, 0, v);
+                      if (field.history.length > historysize) {
+                          field.history.length = historysize;
+                      }
+                  }
 
-                // THE CODE STARTS HERE
-                var isOK = $(this).attr('data-button-id') === 'ok';
-                if (isOK) {
-                    $.each(fieldnames, function(index, fieldname) {
-                        isOK = storeField(allfields[fieldname], fieldname, '');
-                        return isOK;
-                    });
-                }
-                dlg.close();
+                  // Store subfields
+                  if (field.fields) {
+                      res = true;
+                      $.each(Object.keys(field.fields), function(index, key) {
+                          res = storeField(field.fields[key], fieldname, key);
+                          return res;
+                      });
+                      if (!res) {
+                          return false;
+                      }
+                  }
+                  return true;
+              }
 
-                if (isOK) {
-                    if (saveextprefs) {
-                        saveextprefs();
-                    }
-                    // Calls callback only after closing the dialog
-                    if (callback) {
-                        callback();
-                    }
-                }
-            });
+              // THE CODE STARTS HERE
+              var isOK = $(this).attr('data-button-id') === 'ok';
+
+              if (isOK) {
+                  $.each(fieldnames, function(index, fieldname) {
+                      isOK = storeField(allfields[fieldname], fieldname, '');
+                      return isOK;
+                  });
+              }
+              dlg.close();
+
+              if (isOK) {
+                  if (saveextprefs) {
+                      saveextprefs();
+                  }
+                  // Calls callback only after closing the dialog
+                  if (callback) {
+                      callback();
+                  }
+              }
+          });
         }
     };
 });

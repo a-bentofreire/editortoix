@@ -27,19 +27,19 @@
 /*global define, brackets, CodeMirror, $, document, window, appshell, require, Mustache */
 
 require.config({
-  paths: {
-    "text" : "lib/text",
-    "i18n" : "lib/i18n"
-  },
-  locale: brackets.getLocale()
+    paths: {
+        "text": "lib/text",
+        "i18n": "lib/i18n"
+    },
+    locale: brackets.getLocale()
 });
 
-define(function (require, exports, module) {
+define(function(require, exports, module) {
     "use strict";
-/** ------------------------------------------------------------------------
- *                               i18n
- ** ------------------------------------------------------------------------ */
-    var /** @const */ VERSION = '2.6',
+    /** ------------------------------------------------------------------------
+     *                               i18n
+     ** ------------------------------------------------------------------------ */
+    var /** @const */ VERSION = '2.7',
         /** @const */ IXMENU = "IX",
         /** @const */ IXMENUTT = "IX TT",
         /** @const */ MODULENAME = 'bracketstoix',
@@ -61,8 +61,9 @@ define(function (require, exports, module) {
         /** @const */ __SP_FUNC = 6,
         /** @const */ SP_FORCELINE = -4;
 
+
     var brk = {};
-  
+
     brk.Dialogs = brackets.getModule('widgets/Dialogs');
     brk.CommandManager = brackets.getModule('command/CommandManager');
     brk.Commands = brackets.getModule('command/Commands');
@@ -71,7 +72,7 @@ define(function (require, exports, module) {
     brk.DocumentManager = brackets.getModule("document/DocumentManager");
     brk.PreferencesManager = brackets.getModule('preferences/PreferencesManager');
     brk.PanelManager = brackets.getModule('view/PanelManager');
-    brk.MainViewManager = brackets.getModule('view/MainViewManager');    
+    brk.MainViewManager = brackets.getModule('view/MainViewManager');
     brk.LanguageManager = brackets.getModule('language/LanguageManager');
     brk.KeyBindingManager = brackets.getModule('command/KeyBindingManager');
     brk.CoreStrings = brackets.getModule('strings');
@@ -82,23 +83,23 @@ define(function (require, exports, module) {
     brk.NodeDomain = brackets.getModule('utils/NodeDomain');
     brk.FileUtils = brackets.getModule('file/FileUtils');
     brk.extprefs = brk.PreferencesManager.getExtensionPrefs(MODULENAME);
-  
-  var ui = require('uitoix'),
-      tt = require('texttransformstoix'),    
-      prefs = require('prefstoix'),  // WARNING: these field names are used in prefsinfo
-      ixDomains = new brk.NodeDomain('IXDomains', brk.ExtensionUtils.getModulePath(module, 'node/IXDomains')),
-      // Snippets are only loaded after the 1st usage
-      snippets;
-  
-/** ------------------------------------------------------------------------
- *                               Tools
- ** ------------------------------------------------------------------------ */
+
+    var ui = require('uitoix'),
+        tt = require('texttransformstoix'),
+        prefs = require('prefstoix'), // WARNING: these field names are used in prefsinfo
+        ixDomains = new brk.NodeDomain('IXDomains', brk.ExtensionUtils.getModulePath(module, 'node/IXDomains')),
+        // Snippets are only loaded after the 1st usage
+        snippets;
+
+    /** ------------------------------------------------------------------------
+     *                               Tools
+     ** ------------------------------------------------------------------------ */
     function i18n(text, deftext) {
         return brk.Strings[text] || (deftext !== undefined ? deftext : text);
     }
 
     function logErr(msg) {
-        console.error('[' + MODULENAME + ']' + msg);
+        console.error('[' + MODULENAME + '] ' + msg);
     }
 
     function checkExt(file, ext) {
@@ -112,7 +113,7 @@ define(function (require, exports, module) {
     function strrepeat(ch, size) {
         var i,
             res = new Array(size);
-        for(i = 0; i < size; i++) { // Tip: forEach doesn't work with array of undefined
+        for (i = 0; i < size; i++) { // Tip: forEach doesn't work with array of undefined
             res[i] = ch;
         }
         return res.join('');
@@ -127,40 +128,42 @@ define(function (require, exports, module) {
     }
 
     function buildCmdLabel(cmd) {
-      var txt = cmd.name, 
-          fullen = txt.length, 
-          len = fullen, 
-          lab; 
-      if (cmd.corelabel) {
-        lab = brk.CoreStrings[cmd.corelabel];
-      } else {
-        // remove the trailing dots for the locatization matching
-        while (txt[len - 1] === '.') { len--; }
-        if (txt.substr(len - 4, 4) === 'toIX') {
-          len -= 4;
+        var txt = cmd.name,
+            fullen = txt.length,
+            len = fullen,
+            lab;
+        if (cmd.corelabel) {
+            lab = brk.CoreStrings[cmd.corelabel];
+        } else {
+            // remove the trailing dots for the locatization matching
+            while (txt[len - 1] === '.') {
+                len--;
+            }
+            if (txt.substr(len - 4, 4) === 'toIX') {
+                len -= 4;
+            }
+            lab = brk.Strings[txt.substr(0, len)];
+            if (lab) {
+                lab += txt.substr(len);
+            }
         }
-        lab = brk.Strings[txt.substr(0, len)];
-        if (lab) {
-          lab += txt.substr(len);
-        }
-      }
-      cmd.label = lab || txt;        
+        cmd.label = lab || txt;
     }
-  
-  
+
+
     function getCmdCleanLabel(cmd) {
         return cmd.label.replace(/\./g, '');
     }
-  
+
     var REGNIZEFIND = /([\\.()\[\]*+\^$])/g,
         REGNIZEREPL = '\\$1';
 
     function getregnize(text, isfind) {
         return text.replace(isfind ? REGNIZEFIND : /(\$\d)/g, REGNIZEREPL);
     }
-/** ------------------------------------------------------------------------
- *                               ExtPrefs
- ** ------------------------------------------------------------------------ */
+    /** ------------------------------------------------------------------------
+     *                               ExtPrefs
+     ** ------------------------------------------------------------------------ */
     function loadextprefs() {
         prefs.load(prefs, brk.extprefs);
         //Simple workaround to support versions < 1.4. TODO: Support subfield copy on prefs.load
@@ -170,20 +173,20 @@ define(function (require, exports, module) {
     function saveextprefs() {
         prefs.save(prefs, brk.extprefs);
     }
-/** ------------------------------------------------------------------------
- *                               Node Commads
- ** ------------------------------------------------------------------------ */
+    /** ------------------------------------------------------------------------
+     *                               Node Commads
+     ** ------------------------------------------------------------------------ */
     function nodeOpenUrl(url) {
         appshell.app.openURLInDefaultBrowser(url);
     }
 
     function nodeExec(cmdline, cwd) {
-        ixDomains.exec('exec', cmdline, cwd).fail(function (err) {
+        ixDomains.exec('exec', cmdline, cwd).fail(function(err) {
             logErr('failed to exec', err);
         });
     }
 
-    function nodeClipbrdCopy(text) {
+    function clipbrdCopy(text) {
         /* Brackets has no support for: var copyEvent = new ClipboardEvent("copy", { dataType: "text/plain", data: "Data to be copied" } ); */
         var d = document.createElement('textarea');
         d.contentEditable = true;
@@ -196,27 +199,48 @@ define(function (require, exports, module) {
         document.execCommand('Copy', false, null);
         document.body.removeChild(d);
     }
-/** ------------------------------------------------------------------------
- *                               UI
- ** ------------------------------------------------------------------------ */
+
+    function clipbrdPaste() {
+        var text, 
+            d = document.createElement('textarea');
+        d.contentEditable = true;
+        document.body.appendChild(d);
+        d.unselectable = 'off';
+        d.style.position = 'absolute';
+        d.focus();
+        document.execCommand('Paste', false, null);
+        document.execCommand('SelectAll');
+        text = d.value;
+        document.body.removeChild(d);
+        return text;
+    }
+    /** ------------------------------------------------------------------------
+     *                               UI
+     ** ------------------------------------------------------------------------ */
     function ask(title, cmd, fieldlist, callback, opts, fields) {
-        return ui.ask(title || getCmdCleanLabel(cmd), cmd ? getCmdStoreID(cmd) : '', 
-            fieldlist, callback, opts, fields || prefs, 
+        return ui.ask(title || getCmdCleanLabel(cmd), cmd ? getCmdStoreID(cmd) : '',
+            fieldlist, callback, opts, fields || prefs,
             opts && opts.nosaveprefs ? undefined : saveextprefs, prefs.historySize.value, i18n, brk);
     }
 
-  
+
     function showMessage(title, message) {
-      brk.Dialogs.showModalDialog(
-        'bracketstoix-dialog', i18n(title), message,
-        [{className: brk.Dialogs.DIALOG_BTN_CLASS_PRIMARY, id: brk.Dialogs.DIALOG_BTN_OK, text: brk.CoreStrings.CLOSE}], true);
+        brk.Dialogs.showModalDialog(
+            'bracketstoix-dialog', i18n(title), message, [{
+                className: brk.Dialogs.DIALOG_BTN_CLASS_PRIMARY,
+                id: brk.Dialogs.DIALOG_BTN_OK,
+                text: brk.CoreStrings.CLOSE
+            }], true);
     }
-/** ------------------------------------------------------------------------
- *                               Controlers
- ** ------------------------------------------------------------------------ */
+    /** ------------------------------------------------------------------------
+     *                               Controlers
+     ** ------------------------------------------------------------------------ */
     function getSelObj(selpolicy) {
-        var so = { cm: brk.EditorManager.getActiveEditor()._codeMirror, selfunc: selpolicy,
-                  selpolicy: typeof selpolicy !== 'function' ? selpolicy : __SP_FUNC },
+        var so = {
+            cm: brk.EditorManager.getActiveEditor()._codeMirror,
+            selfunc: selpolicy,
+            selpolicy: typeof selpolicy !== 'function' ? selpolicy : __SP_FUNC
+        },
             len, inf;
         so.cursor = so.cm.getCursor();
         so.selected = (so.selpolicy >= 0) && so.cm.somethingSelected();
@@ -225,73 +249,109 @@ define(function (require, exports, module) {
         } else {
             so.cursel = '';
 
-            switch(so.selpolicy) {
-            case SP_FORCELINE:
-            case SP_LINE :
-                so.cursel = so.cm.getLine(so.cursor.line);
-                so.start = {ch: 0, line: so.cursor.line};
-                so.end = {ch: so.cursel.length, line: so.cursor.line};
-                break;
-            case SP_SENTENCE :
-            case SP_WORD :
-                so.cursel = so.cm.getLine(so.cursor.line);
-                len = so.cursel.length;
-                if (selpolicy === SP_WORD) {
-                    so.cursel = so.cursel.replace(/(\W)/g, ' ');
-                }
-                so.start = {ch: so.cursor.ch, line: so.cursor.line};
-                so.end = {ch: so.cursor.ch, line: so.cursor.line};
-                while ((so.start.ch > 0) && (so.cursel[so.start.ch - 1] !== ' ')) {
-                    so.start.ch--;
-                }
-                while ((so.end.ch < len) && (so.cursel[so.end.ch] !== ' ')) {
-                    so.end.ch++;
-                }
-                so.cursel = so.cursel.substring(so.start.ch, so.end.ch);
-                break;
-
-            case SP_FORCEALL :
-            case SP_ALL :
-                so.start = {ch:0, line: 0};
-                so.end = {ch:0, line: so.cm.lineCount()};
-                so.cursel = so.cm.getRange(so.start, so.end);
-                break;
-
-            case SP_NONE:
-                so.start = {ch: so.cursor.ch, line: so.cursor.line};
-                so.end = {ch: so.cursor.ch, line: so.cursor.line};
-                break;
-
-            case __SP_FUNC :
-                //TODO: Support multiple lines
-                // It executes a selfunc twice(left, right direction) for each caracter. It stops eating chars if it selfunc returns false
-                so.cursel = so.cm.getLine(so.cursor.line);
-                so.start = {ch: so.cursor.ch, line: so.cursor.line};
-                so.end = {ch: so.cursor.ch + 1, line: so.cursor.line};
-                inf = {so: so, dir: -1};
-                // the selfunc can reverse the direction to implement multiple passes, but careful since it cause an infinite loop
-                while(so.start.ch > 0) {
-                    if (!so.selfunc(inf, so.cursel[so.start.ch])) {
-                        so.start.ch -= inf.dir;
-                        break;
+            switch (so.selpolicy) {
+                case SP_FORCELINE:
+                case SP_LINE:
+                    so.cursel = so.cm.getLine(so.cursor.line);
+                    so.start = {
+                        ch: 0,
+                        line: so.cursor.line
+                    };
+                    so.end = {
+                        ch: so.cursel.length,
+                        line: so.cursor.line
+                    };
+                    break;
+                case SP_SENTENCE:
+                case SP_WORD:
+                    so.cursel = so.cm.getLine(so.cursor.line);
+                    len = so.cursel.length;
+                    if (selpolicy === SP_WORD) {
+                        so.cursel = so.cursel.replace(/(\W)/g, ' ');
                     }
-                    so.start.ch += inf.dir;
-                }
-                inf.dir = 1;
-                // the selfunc can add text to the so.cursel, so it's better to not place the end test in a var such as len = so.cursel.length
-                while(so.end.ch < so.cursel.length) {
-                    if (!so.selfunc(inf, so.cursel[so.end.ch - 1])) {
-                        so.end.ch -= inf.dir;
-                        break;
+                    so.start = {
+                        ch: so.cursor.ch,
+                        line: so.cursor.line
+                    };
+                    so.end = {
+                        ch: so.cursor.ch,
+                        line: so.cursor.line
+                    };
+                    while ((so.start.ch > 0) && (so.cursel[so.start.ch - 1] !== ' ')) {
+                        so.start.ch--;
                     }
-                    so.end.ch += inf.dir;
-                }
-                so.cursel = so.cursel.substring(so.start.ch, so.end.ch);
-                break;
+                    while ((so.end.ch < len) && (so.cursel[so.end.ch] !== ' ')) {
+                        so.end.ch++;
+                    }
+                    so.cursel = so.cursel.substring(so.start.ch, so.end.ch);
+                    break;
+
+                case SP_FORCEALL:
+                case SP_ALL:
+                    so.start = {
+                        ch: 0,
+                        line: 0
+                    };
+                    so.end = {
+                        ch: 0,
+                        line: so.cm.lineCount()
+                    };
+                    so.cursel = so.cm.getRange(so.start, so.end);
+                    break;
+
+                case SP_NONE:
+                    so.start = {
+                        ch: so.cursor.ch,
+                        line: so.cursor.line
+                    };
+                    so.end = {
+                        ch: so.cursor.ch,
+                        line: so.cursor.line
+                    };
+                    break;
+
+                case __SP_FUNC:
+                    //TODO: Support multiple lines
+                    // It executes a selfunc twice(left, right direction) for each caracter. 
+                    // It stops eating chars if it selfunc returns false
+                    so.cursel = so.cm.getLine(so.cursor.line);
+                    so.start = {
+                        ch: so.cursor.ch,
+                        line: so.cursor.line
+                    };
+                    so.end = {
+                        ch: so.cursor.ch + 1,
+                        line: so.cursor.line
+                    };
+                    inf = {
+                        so: so,
+                        dir: -1
+                    };
+                    // the selfunc can reverse the direction to implement multiple passes, 
+                    // but careful since it cause an infinite loop
+                    while (so.start.ch > 0) {
+                        if (!so.selfunc(inf, so.cursel[so.start.ch])) {
+                            so.start.ch -= inf.dir;
+                            break;
+                        }
+                        so.start.ch += inf.dir;
+                    }
+                    inf.dir = 1;
+                    // the selfunc can add text to the so.cursel, so it's better to not place 
+                    // the end test in a var such as len = so.cursel.length
+                    while (so.end.ch < so.cursel.length) {
+                        if (!so.selfunc(inf, so.cursel[so.end.ch - 1])) {
+                            so.end.ch -= inf.dir;
+                            break;
+                        }
+                        so.end.ch += inf.dir;
+                    }
+                    so.cursel = so.cursel.substring(so.start.ch, so.end.ch);
+                    break;
             }
         }
         // Disactivated due a brackets bug, that doesn't preventsDefault on ENTER key
-         so.cm.focus();
+        so.cm.focus();
 
         return so;
     }
@@ -300,7 +360,7 @@ define(function (require, exports, module) {
         var so = getSelObj(selpolicy),
             newsel;
 
-        if(!so.cursel && selpolicy !== SP_NONE) {
+        if (!so.cursel && selpolicy !== SP_NONE) {
             return;
         }
         if (!asarray) {
@@ -313,7 +373,7 @@ define(function (require, exports, module) {
                 so.cm.replaceSelection(newsel, so);
             } else {
                 so.cm.replaceRange(newsel, so.start, so.end);
-                if(so.cursor) {
+                if (so.cursor) {
                     so.cm.setCursor(so.cursor);
                 }
             }
@@ -321,36 +381,48 @@ define(function (require, exports, module) {
     }
 
     function setSelection(so, newsel) {
-      so.cm.replaceSelection(newsel, so);
+        so.cm.replaceSelection(newsel, so);
     }
-  
+
     function getSelection(callback, selpolicy) {
         var so = getSelObj(selpolicy);
-        if(!so.cursel) {
+        if (!so.cursel) {
             return;
         }
         callback(so.cursel, so);
     }
 
     function replaceSelection(regex, repl, selpolicy) {
-        changeSelection(function (text, so) {
+        changeSelection(function(text, so) {
             return text.replace(regex, repl);
         }, selpolicy, false);
     }
 
     function sortSelection(sortfunc, selpolicy) {
-        changeSelection(function (arr) {
+        changeSelection(function(arr) {
             arr.sort(sortfunc);
             return arr;
         }, selpolicy, true);
     }
 
     function setRow(row, text, so) {
-      so.cm.replaceRange(text + '\n', {ch: 0, line: row}, {ch: 0, line: row + 1});
+        so.cm.replaceRange(text + '\n', {
+            ch: 0,
+            line: row
+        }, {
+            ch: 0,
+            line: row + 1
+        });
     }
 
     function insertRow(row, text, so) {
-      so.cm.replaceRange(text + '\n', {ch: 0, line: row}, {ch: 0, line: row});
+        so.cm.replaceRange(text + '\n', {
+            ch: 0,
+            line: row
+        }, {
+            ch: 0,
+            line: row
+        });
     }
 
     /*function insertTextAtCursor(text) {
@@ -363,19 +435,19 @@ define(function (require, exports, module) {
     }
 
     function copyToClipboard(callback) {
-        nodeClipbrdCopy(callback(brk.ProjectManager.getSelectedItem()));
+        clipbrdCopy(callback(brk.ProjectManager.getSelectedItem()));
     }
-/** ------------------------------------------------------------------------
- *                               Commands: Transforms
- ** ------------------------------------------------------------------------ */
+    /** ------------------------------------------------------------------------
+     *                               Commands: Transforms
+     ** ------------------------------------------------------------------------ */
     function upperCaseText() {
-      changeSelection(function (text) {
+        changeSelection(function(text) {
             return text.toUpperCase();
         }, SP_WORD);
     }
 
     function lowerCaseText() {
-        changeSelection(function (text) {
+        changeSelection(function(text) {
             return text.toLowerCase();
         }, SP_WORD);
     }
@@ -386,16 +458,16 @@ define(function (require, exports, module) {
     }
 
     function splitText(cmd) {
-        ask('', cmd, ['splitMarker'], function () {
+        ask('', cmd, ['splitMarker'], function() {
             replaceSelection(new RegExp(prefs.splitMarker.value, 'g'), '\n', SP_ALL);
         });
     }
 
     function numberText(cmd) {
-        ask('', cmd, ['startNum', 'numSep'], function () {
-           var num = prefs.startNum.value,
+        ask('', cmd, ['startNum', 'numSep'], function() {
+            var num = prefs.startNum.value,
                 numSep = getspacetext(prefs.numSep.value);
-           replaceSelection(/^(.*)$/gm, function replacer(match, p1, offset, string) {
+            replaceSelection(/^(.*)$/gm, function replacer(match, p1, offset, string) {
                 return (num++) + numSep + p1;
             }, SP_ALL);
         });
@@ -418,19 +490,19 @@ define(function (require, exports, module) {
     }
 
     function sortAscending() {
-        sortSelection(function (a, b) {
+        sortSelection(function(a, b) {
             return a > b ? 1 : (a < b ? -1 : 0);
         }, SP_ALL);
     }
 
     function sortDescending() {
-        sortSelection(function (a, b) {
+        sortSelection(function(a, b) {
             return a < b ? 1 : (a > b ? -1 : 0);
         }, SP_ALL);
     }
 
     function htmlEncode() {
-        changeSelection(function (text) {
+        changeSelection(function(text) {
             var d = document.createElement('div');
             d.textContent = text;
             return d.innerHTML;
@@ -438,7 +510,7 @@ define(function (require, exports, module) {
     }
 
     function htmlDecode() {
-        changeSelection(function (text) {
+        changeSelection(function(text) {
             var d = document.createElement('div');
             d.innerHTML = text;
             return d.textContent;
@@ -446,16 +518,16 @@ define(function (require, exports, module) {
     }
 
     function urlEncode() {
-        changeSelection(function (text) {
+        changeSelection(function(text) {
             return window.encodeURIComponent(text);
         }, SP_LINE);
     }
 
     function removeDuplicates() {
-        changeSelection(function (arr) {
+        changeSelection(function(arr) {
             var i;
-            for(i = arr.length - 1; i >= 0; i--) {
-                if(arr[i + 1] === arr[i]) {
+            for (i = arr.length - 1; i >= 0; i--) {
+                if (arr[i + 1] === arr[i]) {
                     arr.splice(i + 1, 1);
                 }
             }
@@ -464,10 +536,10 @@ define(function (require, exports, module) {
     }
 
     function removeEmptyLines() {
-        changeSelection(function (arr) {
+        changeSelection(function(arr) {
             var i;
-            for(i = arr.length - 1; i >= 0; i--) {
-                if(!arr[i].trim()) {
+            for (i = arr.length - 1; i >= 0; i--) {
+                if (!arr[i].trim()) {
                     arr.splice(i, 1);
                 }
             }
@@ -493,14 +565,14 @@ define(function (require, exports, module) {
     }
 
     function regnize() {
-        getSelection(function (text) {
-            nodeClipbrdCopy(getregnize(text, true));
+        getSelection(function(text) {
+            clipbrdCopy(getregnize(text, true));
         }, SP_SENTENCE);
     }
 
     function rgbHex() {
         replaceSelection(/(?:#([a-f0-9]{2,2})([a-f0-9]{2,2})([a-f0-9]{2,2}))|(?:rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\))/ig,
-            function (text, h1, h2, h3, r1, r2, r3) {
+            function(text, h1, h2, h3, r1, r2, r3) {
                 function toHex2(v) {
                     var res = parseInt(v, 10).toString(16);
                     return res.length < 2 ? '0' + res : res;
@@ -511,24 +583,24 @@ define(function (require, exports, module) {
                 } else {
                     return 'rgb(' + parseInt(h1, 16) + ', ' + parseInt(h2, 16) + ', ' + parseInt(h3, 16) + ')';
                 }
-        }, SP_SENTENCE);
+            }, SP_SENTENCE);
     }
 
     function untag() {
         replaceSelection(/<(\w+)(?:.*?)>(.*?)<\/(\1)\s*>/, "$2",
             // function policy.
             function(inf, ch) {
-            if (inf.stop) {
-                inf.stop = false;
-                return false;
-            }
-            inf.stop = ch === (inf.dir === -1 ? '<' : '>');
-            return true;
-        });
+                if (inf.stop) {
+                    inf.stop = false;
+                    return false;
+                }
+                inf.stop = ch === (inf.dir === -1 ? '<' : '>');
+                return true;
+            });
     }
 
     function tag() {
-        changeSelection(function (text, so) {
+        changeSelection(function(text, so) {
             var tagname = text.split(' ', 1)[0];
 
             function getAttr(ch, prefix) {
@@ -543,7 +615,7 @@ define(function (require, exports, module) {
             }
 
             var id, cls, at, base, removelen;
-          
+
             removelen = tagname.length + 1; // assumes a single space separator
             text = text.substr(removelen).trim();
 
@@ -557,7 +629,10 @@ define(function (require, exports, module) {
             base = '<' + tagname + id + cls + '>';
             // readjust cursor
             if (so.start) {
-                so.cursor = { ch: so.start.ch + base.length, line: so.start.line};
+                so.cursor = {
+                    ch: so.start.ch + base.length,
+                    line: so.start.line
+                };
             }
 
             return base + text + '</' + tagname + '>';
@@ -565,97 +640,128 @@ define(function (require, exports, module) {
         }, SP_SENTENCE);
     }
 
-/** ------------------------------------------------------------------------
- *                               declJSLintGlobal
- ** ------------------------------------------------------------------------ */
-  function declJSLintGlobal() {
-    getSelection(function (ident, so) {
-      var row = 0, 
-          max = so.cm.lineCount(), 
-          line, trimline, tokens;
-      
-      ident = ident.trim();
-      if (!ident) {
-        return;
-      }
+    /** ------------------------------------------------------------------------
+     *                               declJSLintGlobal
+     ** ------------------------------------------------------------------------ */
+    function declJSLintGlobal() {
+        getSelection(function(ident, so) {
+            var row = 0,
+                max = so.cm.lineCount(),
+                line, trimline, tokens, identlist, trimidentlist;
 
-      while (row < max) {
-        line = so.cm.getLine(row);
-        trimline = line.trim();
-        if (trimline) {
-          tokens = line.match(/\/\*\s*global\s*(.*?)\s*\*\//);
-          if (tokens) {
-            // found a global
-            if (tokens.length > 1) {
-              if (tokens[1].replace(/ /g, '').split(',').indexOf(ident) > -1) {
-                // already exists
+            function coreprocess(regmatch) {
+                line = so.cm.getLine(row);
+                tokens = null;
+                trimidentlist = null;
+                trimline = line.trim();
+                if (trimline) {
+                    tokens = line.match(regmatch);
+                    if (tokens) {
+                        // found a global
+                        if (tokens.length > 1) {
+                            identlist = tokens[1];
+                            if (identlist.replace(/ /g, '').split(',').indexOf(ident) > -1) {
+                                // already exists
+                                return null;
+                            }
+                            trimidentlist = identlist.trim();
+                        }
+                    }
+                }
+                return true;
+            }
+
+            ident = ident.trim();
+            if (!ident) {
                 return;
-              }
-              setRow(row, line.replace(tokens[1], tokens[1] + ', ' + ident), so);
+            }
 
-            } else {
-              // empty global statement
-              setRow(row, line.replace('global', 'global ' + ident));
+            while (row < max) {
+                line = so.cm.getLine(row);
+                trimline = line.trim();
+                if (!coreprocess(/^\s*\/\*\s*global\s*(.*?)\s*(\*\/){0,1}\s*$/)) {
+                    return;
+                }
+                if (trimline) {
+                    if (tokens) {
+                        // found a global
+                        if (tokens.length > 1) {
+                            // handles global statements with multiple rows
+                            while (trimidentlist[trimidentlist.length - 1] === ',') {
+                                row++;
+                                if (row === max || !coreprocess(/^\s*(.*?)\s*(\*\/){0,1}\s*$/) || !trimline || tokens.length <= 1) {
+                                    return;
+                                }
+                            }
+
+                            // adds a new ident to the row
+                            setRow(row, line.replace(identlist, identlist + ', ' + ident), so);
+
+                        } else {
+                            // empty global statement
+                            setRow(row, line.replace('global', 'global ' + ident));
+                        }
+                        return;
+                    } else {
+                        if (trimline[0] !== '/' && trimline[0] !== '*') {
+                            insertRow(row, '/*global ' + ident + ' */', so);
+                            break;
+                        }
+                    }
+                }
+                row++;
             }
-            return;
-          } else {
-            if (trimline[0] !== '/' && trimline[0] !== '*') {
-              insertRow(row, '/*global ' + ident + ' */', so);
-              break;
-            }
-          }
-        }
-        row++;
-      }
-    }, SP_WORD);
-  }
-/** ------------------------------------------------------------------------
- *                               Commands: Quotes
- ** ------------------------------------------------------------------------ */
+        }, SP_WORD);
+    }
+    /** ------------------------------------------------------------------------
+     *                               Commands: Quotes
+     ** ------------------------------------------------------------------------ */
     var /** @const */ Q_SINGLE = 0,
-        /** @const */ Q_DOUBLE = 1,
-        /** @const */ Q_TOGGLE = 2;
+        /** @const */
+        Q_DOUBLE = 1,
+        /** @const */
+        Q_TOGGLE = 2;
 
     function quoteOp(op) {
-        changeSelection(function (text) {
-            var arr = text.split(''),
-                isin = false,
-                i, ch;
+        changeSelection(function(text) {
+                var arr = text.split(''),
+                    isin = false,
+                    i, ch;
 
-            for(i = 0; i <= arr.length; i++) {
-                ch = arr[i];
-                switch(ch) {
-                //TODO: Slash the quote if the reverse quote already exists. Support \" and \'
-                case "'" :
-                    if ((op === Q_SINGLE) || (op === Q_TOGGLE)) {
-                        arr[i] = '"';
-                        isin = !isin;
+                for (i = 0; i <= arr.length; i++) {
+                    ch = arr[i];
+                    switch (ch) {
+                        //TODO: Slash the quote if the reverse quote already exists. Support \" and \'
+                        case "'":
+                            if ((op === Q_SINGLE) || (op === Q_TOGGLE)) {
+                                arr[i] = '"';
+                                isin = !isin;
+                            }
+                            break;
+
+                        case '"':
+                            if ((op === Q_DOUBLE) || (op === Q_TOGGLE)) {
+                                arr[i] = "'";
+                                isin = !isin;
+                            }
+                            break;
                     }
-                    break;
-                    
-                case '"' :
-                    if ((op === Q_DOUBLE) || (op === Q_TOGGLE)) {
-                        arr[i] = "'";
-                        isin = !isin;
-                    }
-                    break;
                 }
-            }
-            return arr.join('');
-        },
+                return arr.join('');
+            },
             // function policy. it stops if the start(1st pass) and end(2nd pass) quote are the same.
             function(inf, ch) {
-            if (inf.stop) {
-                inf.stop = false;
-                return false;
-            }
+                if (inf.stop) {
+                    inf.stop = false;
+                    return false;
+                }
 
-            if ((ch === "'" || ch === '"') && (ch === inf.quote || !inf.quote)) {
-                inf.stop = true;
-                inf.quote = ch;
-            }
-            return true;
-        });
+                if ((ch === "'" || ch === '"') && (ch === inf.quote || !inf.quote)) {
+                    inf.stop = true;
+                    inf.quote = ch;
+                }
+                return true;
+            });
     }
 
     function singleToDoubleQuote() {
@@ -669,11 +775,11 @@ define(function (require, exports, module) {
     function toggleQuote() {
         quoteOp(Q_TOGGLE);
     }
-/** ------------------------------------------------------------------------
- *                               Commands: External
- ** ------------------------------------------------------------------------ */
+    /** ------------------------------------------------------------------------
+     *                               Commands: External
+     ** ------------------------------------------------------------------------ */
     function openUrl() {
-        getSelection(function (text) {
+        getSelection(function(text) {
             if (!prefs.checkForHttp(text)) {
                 text = 'http://' + text;
             }
@@ -682,66 +788,67 @@ define(function (require, exports, module) {
     }
 
     function webSearch() {
-        getSelection(function (text) {
+        getSelection(function(text) {
             nodeOpenUrl(prefs.webSearch.value + encodeURIComponent(text));
         }, SP_SENTENCE);
     }
 
     function browseFile() {
-      nodeOpenUrl('file:///' + getCurFileName());
+        nodeOpenUrl('file:///' + getCurFileName());
     }
-/** ------------------------------------------------------------------------
- *                               Commands: toIX
- ** ------------------------------------------------------------------------ */
-   function extractortoix(cmd) {
-        ask('', cmd, ['findre', 'isignorecase'], function () {
-            getSelection(function (text) {
+    /** ------------------------------------------------------------------------
+     *                               Commands: toIX
+     ** ------------------------------------------------------------------------ */
+    function extractortoix(cmd) {
+        ask('', cmd, ['findre', 'isignorecase'], function() {
+            getSelection(function(text) {
                 var foundtext = text.match(new RegExp(prefs.findre.value, 'g' + (prefs.isignorecase.value ? 'i' : '')));
-                nodeClipbrdCopy(foundtext.join('\n'));
+                clipbrdCopy(foundtext.join('\n'));
             }, SP_ALL);
-        }, {msg: i18n('EXTRACTOR_MSG') });
+        }, {
+            msg: i18n('EXTRACTOR_MSG')
+        });
     }
 
     function replacetoix(cmd) {
         var text = getSelObj(SP_LINE).cursel.split('\n');
-      
+
         prefs.find.value = text.length > 0 ? text[0].trim() : '';
         prefs.replace.value = '';
         ask('', cmd, ['find', 'replace', 'startValue', 'stepValue',
-            'iswordsonly', 'isregexpr', 'isignorecase', 'isimultiline', 'isall', 'isselonly'], function () {
+            'iswordsonly', 'isregexpr', 'isignorecase', 'isimultiline', 'isall', 'isselonly'
+        ], function() {
             var findtext = prefs.isregexpr.value ? prefs.find.value : getregnize(prefs.find.value, true),
                 repltext = prefs.isregexpr.value ? prefs.replace.value : getregnize(prefs.replace.value, false),
                 startValue = prefs.startValue.value ? parseInt(prefs.startValue.value, 10) : undefined,
                 stepValue = prefs.stepValue.value ? parseInt(prefs.stepValue.value, 10) : undefined;
-          
+
             if (prefs.iswordsonly.value && !prefs.isregexpr.value) {
                 findtext = '\\b' + findtext + '\\b';
             }
             replaceSelection(new RegExp(findtext, (prefs.isall.value ? 'g' : '') +
-                (prefs.isignorecase.value ? 'i' : '') + (prefs.isimultiline.value ? 'm' : '')),
-                (startValue !== undefined) && (stepValue !== undefined) ?
-                  function (data) {
+                    (prefs.isignorecase.value ? 'i' : '') + (prefs.isimultiline.value ? 'm' : '')), (startValue !== undefined) && (stepValue !== undefined) ?
+                function(data) {
                     var i, out = repltext;
-              
-                    for(i = 1; i < arguments.length - 2; i++) {
-                      out = out.replace(new RegExp('\\$' + i, 'g'), arguments[i]);
+
+                    for (i = 1; i < arguments.length - 2; i++) {
+                        out = out.replace(new RegExp('\\$' + i, 'g'), arguments[i]);
                     }
                     out = out.replace(/\$NUM\$/, startValue);
                     startValue += stepValue;
                     return out;
-                  }
-                  : repltext, prefs.isselonly.value ? SP_ALL : SP_FORCEALL);
+                } : repltext, prefs.isselonly.value ? SP_ALL : SP_FORCEALL);
         });
     }
-/** ------------------------------------------------------------------------
- *                               Command: Function JSDoc
- ** ------------------------------------------------------------------------ */
+    /** ------------------------------------------------------------------------
+     *                               Command: Function JSDoc
+     ** ------------------------------------------------------------------------ */
     function buildFuncJSDoc() {
-        getSelection(function (text, so) {
+        getSelection(function(text, so) {
             var match = text.match(/(?:(\w+)\s*[:=]\s*){0,1}function(?:\s+(\w+)){0,1}\s*\((.*?)\)/i),
                 jsdoc, vars, func, initialspace;
-          
-            if(match && match.length > 1) {
+
+            if (match && match.length > 1) {
                 func = match[1] || match[2];
                 if (!func) {
                     return;
@@ -749,8 +856,8 @@ define(function (require, exports, module) {
                 vars = match[3];
                 initialspace = text.match(/^\s*/i)[0];
                 jsdoc = '|/**\n' + (func[0] === '_' ? '|* @private\n' : '') + '|* ' + func + '\n';
-                if(vars) {
-                    vars.split(',').forEach(function (v) {
+                if (vars) {
+                    vars.split(',').forEach(function(v) {
                         jsdoc += '|* @param {} ' + v.trim() + '\n';
                     });
                 }
@@ -762,91 +869,96 @@ define(function (require, exports, module) {
         }, SP_FORCELINE);
     }
 
-/** ------------------------------------------------------------------------
- *                               Commands: LoremIpsum & BreakLineAt
- ** ------------------------------------------------------------------------ */
+    /** ------------------------------------------------------------------------
+     *                               Commands: LoremIpsum & BreakLineAt
+     ** ------------------------------------------------------------------------ */
     function execBreakLineAt(line, maxchars, tobreakwords) {
-      var start = 0, 
-          at, stest;
-      
-      while (start + maxchars < line.length) {
-        at = start + maxchars;
-        if (!tobreakwords) {
-          stest = line.substring(start, at).replace(/[\w_]/g, '0');
-          for (at -= start; at > 0 && stest[at - 1] === '0'; at--) {}
-          if (!at && stest[0] === '0') {
-            at = maxchars;
-          }
-          at += start;
+        var start = 0,
+            at, stest;
+
+        while (start + maxchars < line.length) {
+            at = start + maxchars;
+            if (!tobreakwords) {
+                stest = line.substring(start, at).replace(/[\w_]/g, '0');
+                for (at -= start; at > 0 && stest[at - 1] === '0'; at--) {}
+                if (!at && stest[0] === '0') {
+                    at = maxchars;
+                }
+                at += start;
+            }
+            line = line.substr(0, at) + '\n' + line.substr(at);
+            start = at + 1;
         }
-        line = line.substr(0, at) + '\n' + line.substr(at);
-        start = at + 1;
-      }
-      return line;
+        return line;
     }
 
     function breakLineAt(cmd) {
-        ask('', cmd, ['maxcharsperline', 'tobreakwords'], function () {
-          var maxchars = Math.max(1, prefs.maxcharsperline.value.trim() >> 0),
-            tobreakwords = prefs.tobreakwords.value;
-          changeSelection(function (array, so) {
-            array.forEach(function (line, index) {
-              array[index] = execBreakLineAt(line, maxchars, tobreakwords);
-            });
-            return array;
+        ask('', cmd, ['maxcharsperline', 'tobreakwords'], function() {
+            var maxchars = Math.max(1, prefs.maxcharsperline.value.trim() >> 0),
+                tobreakwords = prefs.tobreakwords.value;
+            changeSelection(function(array, so) {
+                array.forEach(function(line, index) {
+                    array[index] = execBreakLineAt(line, maxchars, tobreakwords);
+                });
+                return array;
             }, SP_LINE, true);
-      });
+        });
     }
 
     function LoremIpsum(cmd) {
-      $.get(brk.FileUtils.getNativeModuleDirectoryPath(module) + '/lorem.txt', function(data) {
-          ask('', cmd, ['linrparagraphs', 'limaxcharsperline', 'lihtmlparawrap'], function () {
-            changeSelection(function (text, so) {
-              var lines = data.split('\n', Math.min(100, Math.max(prefs.linrparagraphs.value >> 0))),
-                  wrap = prefs.lihtmlparawrap.value.trim(),
-                  wrapst = '<' + wrap + '>',
-                  wrapend = '</' + wrap.replace(/\s.+$/, '') + '>',
-                  maxchars = prefs.limaxcharsperline.value >> 0;
+        $.get(brk.FileUtils.getNativeModuleDirectoryPath(module) + '/lorem.txt', function(data) {
+            ask('', cmd, ['linrparagraphs', 'limaxcharsperline', 'lihtmlparawrap'], function() {
+                changeSelection(function(text, so) {
+                    var lines = data.split('\n', Math.min(100, Math.max(prefs.linrparagraphs.value >> 0))),
+                        wrap = prefs.lihtmlparawrap.value.trim(),
+                        wrapst = '<' + wrap + '>',
+                        wrapend = '</' + wrap.replace(/\s.+$/, '') + '>',
+                        maxchars = prefs.limaxcharsperline.value >> 0;
 
-              lines.forEach(function (line, index) {
-                if (maxchars) {
-                  line = execBreakLineAt(line, maxchars, false);
-                }
-                if (wrap) {
-                  line =  wrapst + line + wrapend;
-                }
-                lines[index] = line;
-              });
-              return lines.join('\n');
-              }, SP_NONE);
+                    lines.forEach(function(line, index) {
+                        if (maxchars) {
+                            line = execBreakLineAt(line, maxchars, false);
+                        }
+                        if (wrap) {
+                            line = wrapst + line + wrapend;
+                        }
+                        lines[index] = line;
+                    });
+                    return lines.join('\n');
+                }, SP_NONE);
+            });
         });
-      });
     }
-/** ------------------------------------------------------------------------
- *                               Commands: Clipboard
- ** ------------------------------------------------------------------------ */
+    /** ------------------------------------------------------------------------
+     *                               Commands: Clipboard
+     ** ------------------------------------------------------------------------ */
     function fileToClipboard() {
-        copyToClipboard(function (curfile) {
+        copyToClipboard(function(curfile) {
             return curfile._name || curfile.name;
         });
     }
 
     function fullnameToClipboard() {
-        copyToClipboard(function (curfile) {
+        copyToClipboard(function(curfile) {
             var fullname = curfile._path || curfile.path;
             return brackets.platform === 'win' ? fullname.replace(/\//g, "\\") : fullname;
         });
     }
 
     function buidHtmlReport() {
-        getSelection(function (text) {
+        getSelection(function(text) {
             var outp = [];
-          
-            [['link rel="stylesheet" href', 'stylesheet', true], ['id'], ['class']].forEach(function(item) {
+
+            [
+                ['link rel="stylesheet" href', 'stylesheet', true],
+                ['id'],
+                ['class']
+            ].forEach(function(item) {
                 var token = item[0],
-                    list = [], i;
+                    list = [],
+                    i;
                 // although there is no text to replace, it's easier to use replace than using //.exec
-                text.replace(new RegExp(token + '=(?:(\\w+)|(?:"(.+?)"))', 'gi'), function (data, p1, p2) {
+                text.replace(new RegExp(token + '=(?:(\\w+)|(?:"(.+?)"))', 'gi'), function(data, p1, p2) {
                     list.push(p1 || p2);
                     return data;
                 });
@@ -863,12 +975,12 @@ define(function (require, exports, module) {
                 outp = outp.concat(list);
                 outp.push(''); // empty line
             });
-            nodeClipbrdCopy(outp.join('\n'));
+            clipbrdCopy(outp.join('\n'));
         }, SP_ALL);
     }
-/** ------------------------------------------------------------------------
- *                               Js6
- ** ------------------------------------------------------------------------ */
+    /** ------------------------------------------------------------------------
+     *                               Js6
+     ** ------------------------------------------------------------------------ */
     /*function showResultsPanel(err, stdout, stderr, iscompiler) { // Compiler callback isn't working
         var text = '';
         if (iscompiler) {
@@ -897,10 +1009,13 @@ define(function (require, exports, module) {
             list.push([prefix + 'relfile', relfile]);
         }
 
-        var exts = [
-            {inext: '.js6', outext: '.js'},
-            {inext: '.scss', outext: '.css'}
-            ],
+        var exts = [{
+            inext: '.js6',
+            outext: '.js'
+        }, {
+            inext: '.scss',
+            outext: '.css'
+        }],
 
             infile = getCurFileName(),
             outfile, i, ext, cmdline, pref, root,
@@ -910,17 +1025,17 @@ define(function (require, exports, module) {
             ext = exts[i];
             if (checkExt(infile, ext.inext)) {
                 pref = prefs[ext.inext.substr(1)];
-                if (pref.fields.autosave.value || !autosave) {
+                if (pref.value && (pref.fields.autosave.value || !autosave)) {
                     cmdline = pref.value;
                     outfile = infile.substr(0, infile.length - ext.inext.length) + ext.outext;
                     root = brk.ProjectManager.getProjectRoot()._path;
                     addrepl(repllist, 'in', infile, root);
                     addrepl(repllist, 'out', outfile, root);
-                    repllist.forEach(function (macro) {
+                    repllist.forEach(function(macro) {
                         cmdline = cmdline.replace('{{' + macro[0] + '}}', macro[1]);
                     });
                     console.log(cmdline);
-                    nodeExec(cmdline, root/*, showResultsPanel, true*/);
+                    nodeExec(cmdline, root /*, showResultsPanel, true*/ );
                     break;
                 }
             }
@@ -934,61 +1049,67 @@ define(function (require, exports, module) {
     /*function runGrunt() {
         nodeExec(prefs.grunt.value);
     }*/
-/** ------------------------------------------------------------------------
- *                               Recent Files
- ** ------------------------------------------------------------------------ */
-  function _onDocumentChanged(event, doc) {
-    var file, idx, recentFiles;
-    
-    if (doc && doc.file && doc.file._isFile) {
-      file = doc.file._path;      
-      if (file.indexOf('/_brackets_') === -1) { // excludes new unsaved files
-        recentFiles = prefs.recentFiles.files;
-        idx = recentFiles.indexOf(file);
-        if (idx === -1) {
-          recentFiles.splice(0, 0, file);
-          if (recentFiles.length > prefs.recentSize.value) {
-            recentFiles.length = prefs.recentSize.value;
-          }
-        } else {
-          recentFiles.splice(idx, 1);
-          recentFiles.splice(0, 0, file);
+    /** ------------------------------------------------------------------------
+     *                               Recent Files
+     ** ------------------------------------------------------------------------ */
+    function _onDocumentChanged(event, doc) {
+        var file, idx, recentFiles;
+
+        if (doc && doc.file && doc.file._isFile) {
+            file = doc.file._path;
+            if (file.indexOf('/_brackets_') === -1) { // excludes new unsaved files
+                recentFiles = prefs.recentFiles.files;
+                idx = recentFiles.indexOf(file);
+                if (idx === -1) {
+                    recentFiles.splice(0, 0, file);
+                    if (recentFiles.length > prefs.recentSize.value) {
+                        recentFiles.length = prefs.recentSize.value;
+                    }
+                } else {
+                    recentFiles.splice(idx, 1);
+                    recentFiles.splice(0, 0, file);
+                }
+                saveextprefs();
+            }
         }
-        saveextprefs();
-      }
     }
-  }
 
-  function showRecentFiles(cmd) {
-    var rf = prefs.recentFiles,
-        root, rlen;
+    function showRecentFiles(cmd) {
+        var rf = prefs.recentFiles,
+            root, rlen;
 
-    rf.value = '';
-    //rf.rows = Math.min(prefs.recentSize.value, 20);
-    rf.values = [];
+        rf.value = '';
+        //rf.rows = Math.min(prefs.recentSize.value, 20);
+        rf.values = [];
 
-    root = brk.ProjectManager.getProjectRoot();
-    root = root ? root._path : '';
-    rlen = root.length;
+        root = brk.ProjectManager.getProjectRoot();
+        root = root ? root._path : '';
+        rlen = root.length;
 
-    rf.files.forEach(function (file) {
-      if (file.substr(0, rlen) === root) {
-        file = file.substr(rlen);
-      }
-      rf.values.push(file);
-    });
+        rf.files.forEach(function(file) {
+            if (file.substr(0, rlen) === root) {
+                file = file.substr(rlen);
+            }
+            rf.values.push(file);
+        });
 
-    ask('', cmd, ['recentFiles'], function () {
-      var rf = prefs.recentFiles;
-      brk.CommandManager.execute(brk.Commands.CMD_ADD_TO_WORKINGSET_AND_OPEN,
-        {fullPath: rf.files[rf.values.indexOf(rf.value)], silent: true,
-        options: { paneId: brk.MainViewManager.ACTIVE_PANE}});
-    }, {nosaveprefs : true});
-  }
-/** ------------------------------------------------------------------------
- *                               Snippets
- ** ------------------------------------------------------------------------ */
-/* Initial implementation, not finished.
+        ask('', cmd, ['recentFiles'], function() {
+            var rf = prefs.recentFiles;
+            brk.CommandManager.execute(brk.Commands.CMD_ADD_TO_WORKINGSET_AND_OPEN, {
+                fullPath: rf.files[rf.values.indexOf(rf.value)],
+                silent: true,
+                options: {
+                    paneId: brk.MainViewManager.ACTIVE_PANE
+                }
+            });
+        }, {
+            nosaveprefs: true
+        });
+    }
+    /** ------------------------------------------------------------------------
+     *                               Snippets
+     ** ------------------------------------------------------------------------ */
+    /* Initial implementation, not finished.
 
 function getSnippets(callback) {
     if(!snippets) {
@@ -1011,9 +1132,9 @@ function execSnippets() {
     });
 }
 */
-/** ------------------------------------------------------------------------
- *                               showOptions
- ** ------------------------------------------------------------------------ */
+    /** ------------------------------------------------------------------------
+     *                               showOptions
+     ** ------------------------------------------------------------------------ */
     function showHelp() {
         nodeOpenUrl(HELPLINK);
     }
@@ -1023,22 +1144,30 @@ function execSnippets() {
     }
 
     function showOptions(cmd) {
-        ask('', cmd, prefs.OPTIONFIELDS, undefined, {header: ['Field', 'Value', 'ExecOnSave']});
+        ask('', cmd, prefs.OPTIONFIELDS, undefined, {
+            header: ['Field', 'Value', 'ExecOnSave']
+        });
     }
 
     function showCommands(cmd) {
         var cmds = getCommandList(),
-            fields = {cmd: {value: '', type: 'dropdown', values: [] }};
+            fields = {
+                cmd: {
+                    value: '',
+                    type: 'dropdown',
+                    values: []
+                }
+            };
 
         cmds.forEach(function(cmd) {
             if (cmd.name) {
-                buildCmdLabel(cmd);              
+                buildCmdLabel(cmd);
                 fields.cmd.values.push(getCmdCleanLabel(cmd));
             }
         });
         fields.cmd.values.sort();
 
-        ask('', cmd, ['cmd'], function () {
+        ask('', cmd, ['cmd'], function() {
             var selcmd = fields.cmd.value;
             cmds.every(function(cmd) {
                 if (cmd.name && (selcmd === getCmdCleanLabel(cmd))) {
@@ -1047,7 +1176,9 @@ function execSnippets() {
                 }
                 return true;
             });
-        }, {nosaveprefs : true}, fields);
+        }, {
+            nosaveprefs: true
+        }, fields);
     }
 
 
@@ -1064,53 +1195,76 @@ function execSnippets() {
             if (cmd.name) {
                 key = getCmdStoreID(cmd);
                 buildCmdLabel(cmd);
-                fields[key] = {value: hotkeys[key] || '', label: getCmdCleanLabel(cmd), size: 15, canempty: true,
-                               hint: i18n('SHORTCUT_HINT'),
-                    fields: {showinmenu: {value: showinmenu.indexOf(key) > -1, type: 'boolean', align: 'center', canempty: true},
-                            showinctxmenu: {value: showinctxmenu.indexOf(key) > -1, type: 'boolean', align: 'center', canempty: true}}};
+                fields[key] = {
+                    value: hotkeys[key] || '',
+                    label: getCmdCleanLabel(cmd),
+                    size: 15,
+                    canempty: true,
+                    hint: i18n('SHORTCUT_HINT'),
+                    fields: {
+                        showinmenu: {
+                            value: showinmenu.indexOf(key) > -1,
+                            type: 'boolean',
+                            align: 'center',
+                            canempty: true
+                        },
+                        showinctxmenu: {
+                            value: showinctxmenu.indexOf(key) > -1,
+                            type: 'boolean',
+                            align: 'center',
+                            canempty: true
+                        }
+                    }
+                };
                 fieldlist.push(key);
             }
         });
 
-        ask('', cmd, fieldlist, function () {
-            showinmenu = [];
-            showinctxmenu = [];
-            hotkeys = {};
-            cmds.forEach(function(cmd) {
-                var key, field;
-                if (cmd.name) {
-                    key = getCmdStoreID(cmd);
-                    field = fields[key];
-                    if (field.value) {
-                        hotkeys[key] = field.value.replace(/\b(Cmd|Shift|Alt|Ctrl|\w)\b/gi,
-                          function (txt, p1) { return p1[0].toUpperCase() + p1.substr(1).toLowerCase(); }).replace(/\+/g, '-');
+        ask('', cmd, fieldlist, function() {
+                showinmenu = [];
+                showinctxmenu = [];
+                hotkeys = {};
+                cmds.forEach(function(cmd) {
+                    var key, field;
+                    if (cmd.name) {
+                        key = getCmdStoreID(cmd);
+                        field = fields[key];
+                        if (field.value) {
+                            hotkeys[key] = field.value.replace(/\b(Cmd|Shift|Alt|Ctrl|\w)\b/gi,
+                                function(txt, p1) {
+                                    return p1[0].toUpperCase() + p1.substr(1).toLowerCase();
+                                }).replace(/\+/g, '-');
+                        }
+                        if (field.fields.showinmenu.value) {
+                            showinmenu.push(key);
+                        }
+                        if (field.fields.showinctxmenu.value) {
+                            showinctxmenu.push(key);
+                        }
                     }
-                    if (field.fields.showinmenu.value) {
-                      showinmenu.push(key);
-                    }
-                    if (field.fields.showinctxmenu.value) {
-                      showinctxmenu.push(key);
-                    }
-                }
-            });
-            prefs.commands.value.showinmenu = showinmenu;
-            prefs.commands.value.showinctxmenu = showinctxmenu;
-            prefs.commands.value.hotkeys = hotkeys;
-            saveextprefs();
+                });
+                prefs.commands.value.showinmenu = showinmenu;
+                prefs.commands.value.showinctxmenu = showinctxmenu;
+                prefs.commands.value.hotkeys = hotkeys;
+                saveextprefs();
 
-        }, {nosaveprefs : true, msg : i18n('NEED_RESTART_MSG'), header: ['Command', 'Hotkey', 'Show on Menu', 'Show on CtxMenu']},
+            }, {
+                nosaveprefs: true,
+                msg: i18n('NEED_RESTART_MSG'),
+                header: ['Command', 'Hotkey', 'Show on Menu', 'Show on CtxMenu']
+            },
             fields);
     }
-/** ------------------------------------------------------------------------
- *                               runLanguageMapper
- ** ------------------------------------------------------------------------ */
+    /** ------------------------------------------------------------------------
+     *                               runLanguageMapper
+     ** ------------------------------------------------------------------------ */
     function runLanguageMapper() {
         var lang = brk.LanguageManager.getLanguage('javascript');
         lang.addFileExtension('js6');
     }
-/** ------------------------------------------------------------------------
- *                               buildCommands
- ** ------------------------------------------------------------------------ */
+    /** ------------------------------------------------------------------------
+     *                               buildCommands
+     ** ------------------------------------------------------------------------ */
     var SHOWONMENU = 1;
 
     function getCommandList() {
@@ -1180,7 +1334,7 @@ function execSnippets() {
     }
 
     function runCommand(cmd) {
-        if(!cmd.sp) {
+        if (!cmd.sp) {
             cmd.f(cmd);
         } else {
             replaceSelection(cmd.f.pat, cmd.f.repl, cmd.sp);
@@ -1189,46 +1343,53 @@ function execSnippets() {
 
     // This function must be a top level function to mimimize the closure
     function registerCommand(cmd, id) {
-        brk.CommandManager.register(cmd.label, id,  function () { runCommand(cmd); });
+        brk.CommandManager.register(cmd.label, id, function() {
+            runCommand(cmd);
+        });
     }
 
-  
+
     function runEditCmd(cmd) {
         var so = getSelObj(SP_NONE);
+        if (cmd === 'CMD_PASTE') {
+            setSelection(so, clipbrdPaste());
+        }        
         if (so.cursel) {
-            nodeClipbrdCopy(so.cursel);
+            clipbrdCopy(so.cursel);
             if (cmd === 'CMD_CUT') {
-              setSelection(so, '');
+                setSelection(so, '');
             }
         }
     }
 
-  function registerEditCtxCommand(cmd, label, id) {
-        brk.CommandManager.register(label, id,  function () { runEditCmd(cmd); });
+    function registerEditCtxCommand(cmd, label, id) {
+        brk.CommandManager.register(label, id, function() {
+            runEditCmd(cmd);
+        });
     }
-  
+
     function addEditCmdsToLocalMenu(ctxMenu) {
-       var EDIT_CMDS = ['CMD_CUT', 'CMD_COPY'/*, 'CMD_PASTE'*/],
-           i, cmd, id;
-       if (!prefs.showcxtedit.value) {
-         return;
-       }
-      
-       for (i = 0; i < EDIT_CMDS.length; i++) {
+        var EDIT_CMDS = ['CMD_CUT', 'CMD_COPY', 'CMD_PASTE' ],
+            i, cmd, id;
+        if (!prefs.showcxtedit.value) {
+            return;
+        }
+
+        for (i = 0; i < EDIT_CMDS.length; i++) {
             cmd = EDIT_CMDS[i];
-            id = MODULENAME + "." + textToID(cmd);          
+            id = MODULENAME + "." + textToID(cmd);
             registerEditCtxCommand(cmd, brk.CoreStrings[cmd], id);
             ctxMenu.addMenuItem(id, []);
-       }
+        }
     }
- 
+
 
     function buildCommands() {
 
         function addToMenu(cmd, menu, lastid, nm, hotkeys) {
             var opts, platform, hotkey,
                 id = MODULENAME + "." + getCmdStoreID(cmd);
-          
+
             // Register Command
             if (id !== lastid) {
                 registerCommand(cmd, id);
@@ -1237,7 +1398,10 @@ function execSnippets() {
             opts = [];
             hotkey = hotkeys[nm];
             if (hotkey) {
-                opts.push({key: hotkey, platform: brackets.platform});
+                opts.push({
+                    key: hotkey,
+                    platform: brackets.platform
+                });
             }
             menu.addMenuItem(id, opts);
             return id;
@@ -1260,11 +1424,11 @@ function execSnippets() {
             cmd = cmdlist[i];
             if (!cmd.name) {
                 if (cmd.menu) {
-                  menuidx = cmd.menu;
+                    menuidx = cmd.menu;
                 } else {
-                  if (!hasdiv) {
-                      menulist[menuidx].addMenuDivider();
-                  }
+                    if (!hasdiv) {
+                        menulist[menuidx].addMenuDivider();
+                    }
                 }
                 hasdiv = true;
                 continue;
@@ -1280,11 +1444,11 @@ function execSnippets() {
                 lastid = addToMenu(cmd, ctxmenu, lastid, nm, hotkeys);
             }
         }
-      addEditCmdsToLocalMenu(ctxmenu);  
+        addEditCmdsToLocalMenu(ctxmenu);
     }
 
     function fillshowonmenu() {
-        getCommandList().forEach(function (cmd) {
+        getCommandList().forEach(function(cmd) {
             if (cmd.priority === SHOWONMENU) {
                 prefs.commands.value.showinmenu.push(getCmdStoreID(cmd));
             }
@@ -1292,21 +1456,27 @@ function execSnippets() {
     }
 
     function initprefbuttons() {
-        prefs.find.buttons[0].f = function(text) { return getregnize(text, true); };
+        prefs.find.buttons[0].f = function(text) {
+            return getregnize(text, true);
+        };
         prefs.findre.buttons[0].f = prefs.find.buttons[0].f;
-        prefs.scss.buttons[0].f = function(text) { return prefs.scss.buttons[0].setvalue; };
-        prefs.scss.buttons[1].f = function(text) { return prefs.scss.buttons[1].setvalue; };
+        prefs.scss.buttons[0].f = function(text) {
+            return prefs.scss.buttons[0].setvalue;
+        };
+        prefs.scss.buttons[1].f = function(text) {
+            return prefs.scss.buttons[1].setvalue;
+        };
     }
-/** ------------------------------------------------------------------------
- *                               checkForVersion2
- ** ------------------------------------------------------------------------ */
+    /** ------------------------------------------------------------------------
+     *                               checkForVersion2
+     ** ------------------------------------------------------------------------ */
     function _verReq(prevver, checkver, list) {
         if (prevver < checkver) {
-          list.forEach(function (item) {
-            if (prefs.commands.value.showinmenu.indexOf(item) === -1) {
-              prefs.commands.value.showinmenu.push(item);
-            }
-          });
+            list.forEach(function(item) {
+                if (prefs.commands.value.showinmenu.indexOf(item) === -1) {
+                    prefs.commands.value.showinmenu.push(item);
+                }
+            });
         }
     }
 
@@ -1316,34 +1486,34 @@ function execSnippets() {
 
         if (prevver !== VERSION) {
             if (!prevver) {
-              prevver = 0;
+                prevver = 0;
             } else {
-              prevver = prevver.split('.');
-              prevver = ((prevver[0] >> 0) * 1000) + (prevver[1] >> 0);
+                prevver = prevver.split('.');
+                prevver = ((prevver[0] >> 0) * 1000) + (prevver[1] >> 0);
             }
 
             if (prevver < 2000) {
-              prefs.version.showwelcome = true;
-              prefs.commands.value.showinmenu = prefs.commands.svshowinmenu;
+                prefs.version.showwelcome = true;
+                prefs.commands.value.showinmenu = prefs.commands.svshowinmenu;
             } else {
-              _verReq(prevver, 2001, ['recentfiles']);
+                _verReq(prevver, 2001, ['recentfiles']);
             }
             prefs.version.value = VERSION;
             saveextprefs();
         }
     }
 
-   function posVersionCheck() {
-       if (prefs.version.showwelcome) {
-          showMessage('Information', '<h2>Welcome to Brackets<sub>to</sub>IX ' + VERSION + '</h2>' +
-             'The menus were reorganized so you can to have a quicker access to all the commands.<br>' +
-             'Now there two top menus with all the commands<br>' +
-             'You can still remove commands from the Commands Mapper dialog');
-       }
-   }
-/** ------------------------------------------------------------------------
- *                               Init
- ** ------------------------------------------------------------------------ */
+    function posVersionCheck() {
+        if (prefs.version.showwelcome) {
+            showMessage('Information', '<h2>Welcome to Brackets<sub>to</sub>IX ' + VERSION + '</h2>' +
+                'The menus were reorganized so you can to have a quicker access to all the commands.<br>' +
+                'Now there two top menus with all the commands<br>' +
+                'You can still remove commands from the Commands Mapper dialog');
+        }
+    }
+    /** ------------------------------------------------------------------------
+     *                               Init
+     ** ------------------------------------------------------------------------ */
     var $DocumentManager = $(brk.DocumentManager);
     //console.log(window.navigator.userAgent);
     fillshowonmenu(); // must be before loadextprefs
@@ -1356,9 +1526,9 @@ function execSnippets() {
     initprefbuttons();
     posVersionCheck();
     $DocumentManager.on('currentDocumentChange', _onDocumentChanged);
-/** ------------------------------------------------------------------------
- *                               Save Commands
- ** ------------------------------------------------------------------------ */
+    /** ------------------------------------------------------------------------
+     *                               Save Commands
+     ** ------------------------------------------------------------------------ */
     function runSaveCommands() {
         //trimTrailing(true);  //@TODO: Implement trim on save
         runCompilerEx(true);

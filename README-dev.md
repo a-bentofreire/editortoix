@@ -151,8 +151,12 @@ Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros
   * **Options** - Configuration dialog
 
 ## Version History
+* 2.7       [http://www.apptoix.com/blog/?p=51]
+    Added Paste to the Editor Context Menu    
+    Declare JSLint Global has improved support for global statement across multiple lines
+    
 * 2.6       [http://www.apptoix.com/blog/?p=37]
-    Added Cut/Copy on the Editor Context Menu (it can be disactivated on IX->Options)
+    Added Cut/Copy to the Editor Context Menu (it can be disactivated on IX->Options)
     German translation improved: Contribution of Christian Knappke [https://github.com/k5e] 
     
 * 2.5       [http://www.apptoix.com/blog/?p=28]

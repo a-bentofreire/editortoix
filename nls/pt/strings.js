@@ -58,7 +58,7 @@ define({
   'FLD_tabSize_label' : 'Tamanho da Tab',
   'FLD_find_label' : 'Procurar',
   'FLD_replace_label' : 'Substituir',
-  'FLD_replace_hint' : 'Use $NUM$ para a numeração macro',
+  'FLD_replace_hint' : 'Use #{d}#, #{x}#, #{X}#, #{<valor>d}#, #{0<valor>d}# para a numeração macro',
   'FLD_startValue_label' : 'Inicio',
   'FLD_startValue_hint' : 'Deixe em branco para não numerar, uma vez que atrasa o processo e suporta apenas um pequeno subconjunto de substituição de expressões regulares. Deve ter expressão regular verificado',
   'FLD_stepValue_label' : 'Passo',

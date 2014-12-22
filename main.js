@@ -39,7 +39,7 @@ define(function(require, exports, module) {
     /** ------------------------------------------------------------------------
      *                               i18n
      ** ------------------------------------------------------------------------ */
-    var /** @const */ VERSION = '2.7',
+    var /** @const */ VERSION = '2.8',
         /** @const */ IXMENU = "IX",
         /** @const */ IXMENUTT = "IX TT",
         /** @const */ MODULENAME = 'bracketstoix',
@@ -828,13 +828,40 @@ define(function(require, exports, module) {
             }
             replaceSelection(new RegExp(findtext, (prefs.isall.value ? 'g' : '') +
                     (prefs.isignorecase.value ? 'i' : '') + (prefs.isimultiline.value ? 'm' : '')), (startValue !== undefined) && (stepValue !== undefined) ?
+				// format mode	(Start, Step)		 
                 function(data) {
                     var i, out = repltext;
 
                     for (i = 1; i < arguments.length - 2; i++) {
                         out = out.replace(new RegExp('\\$' + i, 'g'), arguments[i]);
                     }
-                    out = out.replace(/\$NUM\$/, startValue);
+					
+                    out = out.replace(/(\#\{(0*)(\d*)(\w+)\}\#)/, 
+						function (str, pall, pzero, pdigit, pmacro) {
+						
+						    function formatvalue(pzero, pdigit, value) {
+								var prefix = [];
+
+								value = value + '';
+								if (!pdigit) {
+									return value;
+								}
+								pdigit = pdigit >> 0;
+								if (value.length > pdigit) {
+									return value;
+								} 
+								prefix.length = pdigit + 1 - value.length;
+								return prefix.join(pzero ? '0' : ' ') + value;
+							}
+
+							switch(pmacro) {
+								case 'd' : return formatvalue(pzero, pdigit, startValue);
+								case 'X' : return formatvalue(pzero, pdigit, startValue.toString(16).toUpperCase());
+								case 'x' : return formatvalue(pzero, pdigit, startValue.toString(16));				  
+								default:   return pall;
+							}
+						}									  
+					);
                     startValue += stepValue;
                     return out;
                 } : repltext, prefs.isselonly.value ? SP_ALL : SP_FORCEALL);

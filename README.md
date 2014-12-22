@@ -151,6 +151,10 @@ Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros
   * **Options** - Configuration dialog  
   
 ## Version History  
+* 2.8       [http://www.apptoix.com/blog/?p=82]  
+	Logo updated  
+	ReplacetoIX improved support for enumerated lists: #{d}#, #{nd}#, #{0nd}#, #{X}#  
+  
 * 2.7       [http://www.apptoix.com/blog/?p=51]  
     Added Paste to the Editor Context Menu      
     Declare JSLint Global has improved support for global statement across multiple lines  

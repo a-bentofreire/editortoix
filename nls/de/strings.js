@@ -60,7 +60,7 @@ define({
   'FLD_tabSize_label': 'Tab-Größe',
   'FLD_find_label': 'Suche',
   'FLD_replace_label': 'Ersetze',
-  'FLD_replace_hint': '$NUM$ als Macro zum Nummerieren',
+  'FLD_replace_hint': '#{d}#, #{x}#, #{X}#, #{<value>d}#, #{0<value>d}# als Macro zum Nummerieren',
   'FLD_startValue_label': 'Start',
   'FLD_startValue_hint': 'Leer lassen, um Nummerierung abzuschalten. Es verlangsamt den Prozess und wird auch nur von wenigen regulären Ausdrücken für die Textersetzung unterstützt. Reguläre Ausdrücke müssen aktiviert sein.',
   'FLD_stepValue_label': 'Schrittweite',

@@ -61,7 +61,7 @@ define({
   'FLD_tabSize_label': 'Tab Size',
   'FLD_find_label': 'Find',
   'FLD_replace_label': 'Replace',
-  'FLD_replace_hint': 'Use $NUM$ for numbering macro',
+  'FLD_replace_hint': 'Use #{d}#, #{x}#, #{X}#, #{<value>d}#, #{0<value>d}# for numbering macro',
   'FLD_startValue_label': 'Start',
   'FLD_startValue_hint': 'Leave empty for no numbering, since it slows down the process and only supports a small regular expression subset replacement. Must have Regular Expression checked',
   'FLD_stepValue_label': 'Step',

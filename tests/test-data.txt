@@ -6,6 +6,7 @@
     ST_LAST;
 
 [JsDoc]
+	d#r
 
         function _retransparency(qObj, transparency) {
         }

@@ -39,7 +39,7 @@ define(function(require, exports, module) {
     /** ------------------------------------------------------------------------
      *                               i18n
      ** ------------------------------------------------------------------------ */
-    var /** @const */ VERSION = '2.8',
+    var /** @const */ VERSION = '2.9',
         /** @const */ IXMENU = "IX",
         /** @const */ IXMENUTT = "IX TT",
         /** @const */ MODULENAME = 'bracketstoix',
@@ -119,6 +119,10 @@ define(function(require, exports, module) {
         return res.join('');
     }
 
+    function processSplit(text) {
+      return text.replace(/\\t/g, "\t").replace(/\\\t/g, "\\t").replace(/\\n/g, "\n").replace(/\\\n/g, "\\n");
+    }
+  
     function textToID(text) {
         return text.toLowerCase().replace(/\./g, '').replace(/ /g, '');
     }
@@ -459,7 +463,7 @@ define(function(require, exports, module) {
 
     function splitText(cmd) {
         ask('', cmd, ['splitMarker'], function() {
-            replaceSelection(new RegExp(prefs.splitMarker.value, 'g'), '\n', SP_ALL);
+            replaceSelection(new RegExp(processSplit(prefs.splitMarker.value), 'g'), '\n', SP_ALL);
         });
     }
 
@@ -601,7 +605,7 @@ define(function(require, exports, module) {
 
     function tag() {
         changeSelection(function(text, so) {
-            var tagname = text.split(' ', 1)[0];
+            var tagname;
 
             function getAttr(ch, prefix) {
                 var attr = tagname.split(ch);
@@ -614,8 +618,13 @@ define(function(require, exports, module) {
                 return attr;
             }
 
-            var id, cls, at, base, removelen;
-
+            var id, cls, at, base, removelen, tokens;
+			
+			tokens = text.match(/^(\s*)(\b.*\b)(\s*)$/);
+			if (!tokens) {
+				return;
+			}
+			tagname = tokens[2].split(' ', 1)[0];
             removelen = tagname.length + 1; // assumes a single space separator
             text = text.substr(removelen).trim();
 
@@ -635,7 +644,7 @@ define(function(require, exports, module) {
                 };
             }
 
-            return base + text + '</' + tagname + '>';
+            return tokens[1] + base + text + '</' + tagname + '>' + tokens[3];
 
         }, SP_SENTENCE);
     }
@@ -795,14 +804,31 @@ define(function(require, exports, module) {
 
     function browseFile() {
         nodeOpenUrl('file:///' + getCurFileName());
-    }
+    } 
     /** ------------------------------------------------------------------------
      *                               Commands: toIX
      ** ------------------------------------------------------------------------ */
-    function extractortoix(cmd) {
-        ask('', cmd, ['findre', 'isignorecase'], function() {
-            getSelection(function(text) {
-                var foundtext = text.match(new RegExp(prefs.findre.value, 'g' + (prefs.isignorecase.value ? 'i' : '')));
+    function extractortoix(cmd) {              
+        ask('', cmd, ['findre', 'splitMarkerExtr', 'isignorecase'], function() {
+            getSelection(function(text) {              
+                var foundtext = [],
+                    spliter = processSplit(prefs.splitMarkerExtr.value);
+                text.replace(new RegExp(prefs.findre.value, 'g' + (prefs.isignorecase.value ? 'i' : '')), function () {
+                  var record = [],
+                      i = 1;
+                  if (arguments && arguments.length) {
+                        if (typeof arguments[1] === 'number') {
+                          foundtext.push(arguments[0]);        
+                        } else {
+                          while (typeof arguments[i] !== 'number') {
+                            record.push(arguments[i]);
+                            i++;
+                          }
+                          foundtext.push(record.join(spliter));
+                        }
+                  }
+                  return arguments ? arguments[0] : '';
+                });
                 clipbrdCopy(foundtext.join('\n'));
             }, SP_ALL);
         }, {
@@ -932,7 +958,7 @@ define(function(require, exports, module) {
         });
     }
 
-    function LoremIpsum(cmd) {
+    function loremIpsum(cmd) {
         $.get(brk.FileUtils.getNativeModuleDirectoryPath(module) + '/lorem.txt', function(data) {
             ask('', cmd, ['linrparagraphs', 'limaxcharsperline', 'lihtmlparawrap'], function() {
                 changeSelection(function(text, so) {
@@ -1330,7 +1356,7 @@ function execSnippets() {
             {menu: 1},
 
             {name: 'Break Line At...', f: breakLineAt, priority: SHOWONMENU},
-            {name: 'Lorem ipsum...', f: LoremIpsum, priority: SHOWONMENU},
+            {name: 'Lorem ipsum...', f: loremIpsum, priority: SHOWONMENU},
             {name: 'Function JSDoc', f: buildFuncJSDoc, priority: SHOWONMENU},
             {name: 'Declare JSLint Global', f: declJSLintGlobal, priority: SHOWONMENU},
             {},

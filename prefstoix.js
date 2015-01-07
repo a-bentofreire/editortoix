@@ -36,7 +36,7 @@ define(function() {
      *                               UI
      ** ------------------------------------------------------------------------ */
     function selectAndClose(inf) {
-      inf.closedlg(true);
+        inf.closedlg(true);
     }
     /** ------------------------------------------------------------------------
      *                               Closure
@@ -125,6 +125,11 @@ define(function() {
             value: ','
         },
 
+        splitMarkerExtr: {
+            value: '\\t',
+            samelabelas: 'splitMarker',
+            samehintas: 'splitMarker'
+        },
         // Used in dialogs
         historySize: {
             value: 20,
@@ -148,7 +153,10 @@ define(function() {
             storeprop: 'files',
             files: [],
             values: [],
-            events: [{name: 'dblclick', f: selectAndClose}]
+            events: [{
+                name: 'dblclick',
+                f: selectAndClose
+            }]
         },
 
         // numberText command options
@@ -170,7 +178,7 @@ define(function() {
         // extractortoix command options
         findre: {
             value: '',
-            
+            samelabelas: 'find',
             history: [],
             buttons: [{
                 label: 'Regnize'
@@ -260,8 +268,8 @@ define(function() {
                 }
             }
         },
-      
-      // scss command options
+
+        // scss command options
         scss: {
             value: 'sass --sourcemap "{{in}}" "{{out}}"',
             fields: {
@@ -288,7 +296,7 @@ define(function() {
         limaxcharsperline: {
             value: '0'
         },
-      
+
         lihtmlparawrap: {
             value: '',
             canempty: true
@@ -296,10 +304,10 @@ define(function() {
 
         maxcharsperline: {
             value: '80'
-            
-        },      
+
+        },
         tobreakwords: {
-            value: false,            
+            value: false,
             type: 'boolean',
             canempty: true
         }

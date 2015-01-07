@@ -151,6 +151,11 @@ Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros
   * **Options** - Configuration dialog
 
 ## Version History
+* 2.9       [http://www.apptoix.com/blog/?p=91]
+    ExtractortoIX improved with multiple parameter matching, and split marker
+    Split function improved with support for \t and \n
+	Tag bug fixed
+
 * 2.8       [http://www.apptoix.com/blog/?p=82]
 	Logo updated
 	ReplacetoIX improved support for enumerated lists: #{d}#, #{nd}#, #{0nd}#, #{X}#

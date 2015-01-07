@@ -55,12 +55,11 @@ define(function() {
     }
          
     function _getFieldLabel(i18n, field, fieldname, suffix) {
-      return field.label || i18n('FLD_' + fieldname + (suffix ? '_' : '') + suffix + '_label', '');
+      return field.label || i18n('FLD_' + (field.samelabelas || fieldname) + (suffix ? '_' : '') + suffix + '_label', '');
     }
 
     function _getFieldHint(i18n, field, fieldname, suffix) {
-      console.log('FLD_' + fieldname + (suffix ? '_' : '') + suffix + '_hint');
-      return field.hint || i18n('FLD_' + fieldname + (suffix ? '_' : '') + '_hint', '');
+      return field.hint || i18n('FLD_' + (field.samehintas || fieldname) + (suffix ? '_' : '') + '_hint', '');
     }
     /** ------------------------------------------------------------------------
      *                               Exported

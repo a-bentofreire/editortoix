@@ -829,7 +829,12 @@ define(function(require, exports, module) {
                   }
                   return arguments ? arguments[0] : '';
                 });
-                clipbrdCopy(foundtext.join('\n'));
+              
+                if (foundtext.length) {
+                  clipbrdCopy(foundtext.join('\n'));
+                } else {
+                  showMessage('', brk.CoreStrings.FIND_NO_RESULTS);
+                }
             }, SP_ALL);
         }, {
             msg: i18n('EXTRACTOR_MSG')

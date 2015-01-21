@@ -1,5 +1,5 @@
 /**
- * @preserve Copyright (c) 2014 ApptoIX. All rights reserved.
+ * @preserve Copyright (c) 2015 ApptoIX. All rights reserved.
  * @author Alexandre Bento Freire
  * @translator Christian Knappke
  *
@@ -52,6 +52,8 @@ define({
   'FLD_js6_label': 'js6 Compiler',
   'FLD_js6_hint': 'Zuerst nodejs installieren und dann "npm install -g traceur"',
   'FLD_js6_autosave_hint': 'Automatisch sichern',
+  'FLD_js_label': 'js Compiler',
+  'FLD_js_hint': 'Zuerst nodejs installieren und dann "npm install -g uglify-js"',
   'FLD_splitMarker_label': 'Teilungsmarkierung',
   'FLD_historySize_label': 'Größe der History',
   'FLD_recentSize_label': 'Letzte Größe',

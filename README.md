@@ -37,7 +37,7 @@ The list of commands are:
 7. **tag**[sentence] - Uses the 1st word of the selected text as html tag, and surrounds the remaining the text with nearest text.  
 The most common tags have shortcuts: bu=button  d=div   sp=span  te=textarea   in=input  
 ```  
-Ex: d -> <div></div>       h3#hello.active text -> <h3 id="hello" class="active">text</h3>  
+Ex: d -> <div></div>       h3#hello.active.other text -> <h3 id="hello" class="active other">text</h3>  
 ```  
   
 8. ** untag**[function] - Removes the nearest tag  
@@ -127,11 +127,13 @@ Displays of the all recent opened files. This list is independent of the project
   
 * .js6 Compiles a ECMAScript 6 into a .js file using traceur compiler.  
 * .scss Compiles a .scss into a .css file using sass compiler.  
+* .js Minifies a .js file into a .min.js file using minifier  
   
 To prevent from creating an oversize plug-in, the compilers must be installed manually:  
   
 * To install sass compiler, follow the instructions on this link: [sass compiler][1]  
 * To install traceur, first install [nodejs][2], and then from the shell, execute "npm install -g traceur"  
+* To install traceur, first install [nodejs][2], and then from the shell, execute "npm install -g uglify-js"  
   
 By default, the compile on save is not active. You can use the **Options** to activate it  
   
@@ -151,6 +153,11 @@ Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros
   * **Options** - Configuration dialog  
   
 ## Version History  
+* 2.10      [http://www.apptoix.com/blog/?p=113]  
+    Tag command supports multiple classes. ex: d#idvalue.class1.class2  
+    Compiler command supports .js minification. Must install uglify-js. Configurable using the IX  Options dialog  
+    Several internal changes  
+  
 * 2.9       [http://www.apptoix.com/blog/?p=91]  
     ExtractortoIX improved with multiple parameter matching, and split marker  
     Split function improved with support for \t and \n  
@@ -290,7 +297,7 @@ feedback of bugs on this and other platforms are welcome.
   
 ## Copyrights  
   
-Copyright (c) 2014 ApptoIX  
+Copyright (c) 2015 ApptoIX  
 Author Alexandre Bento Freire  
   
 ## License  

@@ -1,5 +1,5 @@
 /**
- * @preserve Copyright (c) 2014 ApptoIX. All rights reserved.
+ * @preserve Copyright (c) 2015 ApptoIX. All rights reserved.
  * @author Alexandre Bento Freire
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
@@ -51,6 +51,8 @@ define({
   'FLD_js6_label': 'js6 Compiler',
   'FLD_js6_hint': 'You must install nodejs, and then "npm install -g traceur"',
   'FLD_js6_autosave_hint': 'AutoSave',
+  'FLD_js_label': 'js Compiler',
+  'FLD_js_hint': 'You must install nodejs, and then "npm install -g uglify-js"',
   'FLD_splitMarker_label': 'Split Marker',
   'FLD_historySize_label': 'History Size',
   'FLD_recentSize_label': 'Recent Size',

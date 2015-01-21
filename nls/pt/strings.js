@@ -1,5 +1,5 @@
 /**
- * @preserve Copyright (c) 2014 ApptoIX. All rights reserved.
+ * @preserve Copyright (c) 2015 ApptoIX. All rights reserved.
  * @author Alexandre Bento Freire
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
@@ -42,14 +42,16 @@ define({
   'FLD_lihtmlparawrap_hint' : 'Quebra cada parágrafo com esta tag. Ex: p',
   'FLD_linrparagraphs_label' : 'Nr parágrafos',
   'FLD_linrparagraphs_hint' : 'Máximo é 100',
-  'FLD_scss_label' : 'SCSS Compiler',
+  'FLD_scss_label' : 'Compilador SCSS',
   'FLD_scss_hint' : 'Você deve instalar sass 1. Ir a http://sass-lang.com/',
   'FLD_scss_compass_label' : 'Compass',
   'FLD_scss_sass_label' : 'SCSS',
   'FLD_scss_autosave_hint' : 'Gravação automática',
-  'FLD_js6_label' : 'js6 Compiler',
+  'FLD_js6_label' : 'Compilador js6',
   'FLD_js6_hint' : 'É necessário instalar o NodeJS, e depois "instalar npm -g traceur"',
   'FLD_js6_autosave_hint' : 'Gravação automático',
+  'FLD_js_label' : 'Compilador js',
+  'FLD_js_hint' : 'É necessário instalar o NodeJS, e depois "instalar npm -g uglify-js"',
   'FLD_splitMarker_label' : 'Marcador de Separação',
   'FLD_historySize_label' : 'Tamanho do Histórico',
   'FLD_recentSize_label' : 'Tamanho dos Ficheiros Recentes',

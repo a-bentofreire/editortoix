@@ -1,5 +1,5 @@
 /**
- * @preserve Copyright (c) 2015 ApptoIX. All rights reserved.
+ * @preserve Copyright (c) 2015 ApptoIX Limited. All rights reserved.
  * @author Alexandre Bento Freire
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
@@ -69,12 +69,20 @@ define({
   'FLD_isregexpr_label' : 'Expressão Regular',
   'FLD_isignorecase_label' : 'Ignorar Maiúsculas',
   'FLD_isimultiline_label' : 'Multi linha',
-  'FLD_isall_label': 'Substituir tudo',  
+  'FLD_isall_label': 'Substituir tudo',
   'FLD_isselonly_label' : 'Seleção apenas',
   'FLD_isselonly_hint' : 'Se houver um texto selecionado apenas substitui o texto selecionado',
   'HDR_options_Field_label': 'Campo',
   'HDR_options_Value_label': 'Valor',
-  'HDR_options_ExecOnSave_label': 'Exec qdo Guarda',
+  'HDR_options_ExecOnSave_label': 'Executar quando Guarda',
+
+  'CAT_General': 'Geral',
+  'CAT_Compilers': 'Compiladores',
+  'CAT_Shortcuts': 'Atalhos',
+  'CAT_BeforeSave': 'Antes de guardar',
+  'Extensions': 'Extensões',
+  'FLD_webSearch_label': 'Url do Engenho de procura',
+  'FLD_showcxtedit_label': 'Mostra os comandos de edição no menu de contextual',
 
   'UpperCase' : 'Converter para Maiúsculas',
   'LowerCase' : 'Converter para Minúsculas',
@@ -86,9 +94,9 @@ define({
   'Split' : 'Separar',
   'Number' : 'Numerar',
   'Reverse' : 'Inverso',
-  'Trim Leading' : 'Apagar os espaços finais',
-  'Trim Trailing' : 'Apagar os espaços iniciais',
-  'Markdown Trim Trailing' : 'Apagar os espaços iniciais (Markdown)',
+  'Trim Leading' : 'Apagar os espaços iniciais',
+  'Trim Trailing' : 'Apagar os espaços finais',
+  'Markdown Trim Trailing' : 'Apagar os espaços finais (Markdown)',
   'Sort Ascending' : 'Ordenar por ordem crescente',
   'Sort Descending' : 'Ordenar por ordem decrescente',
   'Remove Duplicates' : 'Remover duplicados',

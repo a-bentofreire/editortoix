@@ -1,5 +1,5 @@
 /**
- * @preserve Copyright (c) 2015 ApptoIX. All rights reserved.
+ * @preserve Copyright (c) 2015 ApptoIX Limited. All rights reserved.
  * @author Alexandre Bento Freire
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
@@ -31,13 +31,13 @@ define({
   'SHORTCUT_HINT' : 'Ex: Ctrl-Shift-U (win).  Cmd-Shift-U (mac)',
   'NEED_RESTART_MSG': 'Only takes effect after restart!',
   'DEVBY_MSG': 'Developed by {0}',
-  'EXTRACTOR_MSG' : 'Write a regular expression<br>All matches will be copy to the clipboard<br>',  
-    
+  'EXTRACTOR_MSG' : 'Write a regular expression<br>All matches will be copy to the clipboard<br>',
+
   'FLD_limaxcharsperline_label': 'Max Chars per line',
   'FLD_limaxcharsperline_hint': 'Set 0 to no word wrap',
-  'FLD_maxcharsperline_label': 'Max Chars per line',      
+  'FLD_maxcharsperline_label': 'Max Chars per line',
   'FLD_maxcharsperline_hint': 'Min is 1',
-  'FLD_tobreakwords_label': 'Break words',      
+  'FLD_tobreakwords_label': 'Break words',
   'FLD_tobreakwords_hint': 'Set to true, if it can break words',
   'FLD_lihtmlparawrap_label': 'html tag wrap',
   'FLD_lihtmlparawrap_hint': 'Wraps each paragraph with this tag. Ex: p',
@@ -56,7 +56,7 @@ define({
   'FLD_splitMarker_label': 'Split Marker',
   'FLD_historySize_label': 'History Size',
   'FLD_recentSize_label': 'Recent Size',
-  'FLD_showcxtedit_label': 'Show Cut/Copy on Ctx Menu',
+  'FLD_showcxtedit_label': 'Show Edit commands on Context Menu',
   'FLD_showcxtedit_hint': 'Requires a reload to take effect',
   'FLD_startNum_label': 'Initial Value',
   'FLD_numSep_label': 'Separator after Number',
@@ -72,14 +72,24 @@ define({
   'FLD_isregexpr_label': 'Regular Expression',
   'FLD_isignorecase_label': 'Ignore Case',
   'FLD_isimultiline_label': 'Multiline',
-  'FLD_isall_label': 'Replace All',  
+  'FLD_isall_label': 'Replace All',
   'FLD_isselonly_label': 'Only Selection',
   'FLD_isselonly_hint': 'If there is a selected text only replaces the selected text',
   'FLD_webSearch_label': 'Search Engine url',
   'HDR_options_Field_label': 'Field',
   'HDR_options_Value_label': 'Value',
-  'HDR_options_ExecOnSave_label': 'Exec On Save',
-  
+  'HDR_options_ExecOnSave_label': 'Execute On Save',
+  'HDR_commandsmapper_Command_label': 'Command',
+  'HDR_commandsmapper_Hotkey_label': 'Hotkey',
+  'HDR_commandsmapper_Show on Menu_label': 'Show on Menu',
+  'HDR_commandsmapper_Show on CtxMenu_label': 'Show on CtxMenu',
+
+  'CAT_General': 'General',
+  'CAT_Compilers': 'Compilers',
+  'CAT_Shortcuts': 'Shortcuts',
+  'CAT_BeforeSave': 'Before Save',
+  'Extensions': 'Extensions',
+
   'UpperCase': 'UpperCase',
   'LowerCase': 'LowerCase',
   'Capitalize': 'Capitalize',

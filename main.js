@@ -1,5 +1,5 @@
 /**
- * @preserve Copyright (c) 2015 ApptoIX. All rights reserved.
+ * @preserve Copyright (c) 2015 ApptoIX Limited. All rights reserved.
  * @author Alexandre Bento Freire
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
@@ -39,7 +39,7 @@ define(function(require, exports, module) {
   // ------------------------------------------------------------------------
   //                               i18n
   // ------------------------------------------------------------------------
-  var /** @const */ VERSION = '2.10',
+  var /** @const */ VERSION = '2.11',
       /** @const */ IXMENU = "IX",
       /** @const */ IXMENUTT = "IX TT",
       /** @const */ MODULENAME = 'bracketstoix',
@@ -82,11 +82,16 @@ define(function(require, exports, module) {
 
   var ui = require('uitoix'),
       tt = require('texttransformstoix'),
+      optstoix = require('optionstoix'),
+      optshtml = require('text!options.html'),
       prefs = require('prefstoix'), // WARNING: these field names are used in prefsinfo
       ixDomains = new brk.NodeDomain('IXDomains', brk.ExtensionUtils.getModulePath(module, 'node/IXDomains')),
       // Snippets are only loaded after the 1st usage
       snippets,
-      styix;
+      styix,
+      namedcmdlist = [], cmdlist, // list of commands
+      storeidmap = {},
+      globalDoc = null; // this var is set to override the current document. If set the runCommand will stop working.
 
   // ------------------------------------------------------------------------
   //                               Tools
@@ -108,12 +113,7 @@ define(function(require, exports, module) {
   }
 
   function strrepeat(ch, size) {
-    var i,
-        res = new Array(size);
-    for (i = 0; i < size; i++) { // Tip: forEach doesn't work with array of undefined
-      res[i] = ch;
-    }
-    return res.join('');
+    return size > 0 ? new Array(size + 1).join(ch) : '';
   }
 
   function processSplit(text) {
@@ -122,38 +122,6 @@ define(function(require, exports, module) {
 
   function textToID(text) {
     return text.toLowerCase().replace(/\./g, '').replace(/ /g, '');
-  }
-
-  function getCmdStoreID(cmd) {
-    return textToID(cmd.name);
-  }
-
-  function buildCmdLabel(cmd) {
-    var txt = cmd.name,
-        fullen = txt.length,
-        len = fullen,
-        lab;
-    if (cmd.corelabel) {
-      lab = brk.CoreStrings[cmd.corelabel];
-    } else {
-      // remove the trailing dots for the locatization matching
-      while (txt[len - 1] === '.') {
-        len--;
-      }
-      if (txt.substr(len - 4, 4) === 'toIX') {
-        len -= 4;
-      }
-      lab = brk.Strings[txt.substr(0, len)];
-      if (lab) {
-        lab += txt.substr(len);
-      }
-    }
-    cmd.label = lab || txt;
-  }
-
-
-  function getCmdCleanLabel(cmd) {
-    return cmd.label.replace(/\./g, '');
   }
 
   var REGNIZEFIND = /([\\.()\[\]*+\^$])/g,
@@ -202,7 +170,7 @@ define(function(require, exports, module) {
   }
 
   function clipbrdPaste() {
-    var text, 
+    var text,
         d = document.createElement('textarea');
     d.contentEditable = true;
     document.body.appendChild(d);
@@ -222,11 +190,11 @@ define(function(require, exports, module) {
     return  Mustache.render(styix.DLGTITLE, {root: brk.moduleroot}) + title;
   }
 
-
   function ask(title, cmd, fieldlist, callback, opts, fields) {
-    return ui.ask(buildDlgTitle(title || getCmdCleanLabel(cmd)), cmd ? getCmdStoreID(cmd) : '',
+    return ui.ask(buildDlgTitle(title || cmd.cleanlabel), cmd ? cmd.storeid : '',
                   fieldlist, callback, opts, fields || prefs,
-                  opts && opts.nosaveprefs ? undefined : saveextprefs, prefs.historySize.value, i18n, brk);
+                  opts && opts.nosaveprefs ? undefined : saveextprefs,
+                  prefs.historySize.value, i18n, brk);
   }
 
 
@@ -242,18 +210,41 @@ define(function(require, exports, module) {
   //                               Controlers
   // ------------------------------------------------------------------------
   function getSelObj(selpolicy) {
-    var so = {
+    var so,
+        len, inf;
+    if (globalDoc) {
+      globalDoc._ensureMasterEditor();
+      so = {
+        cm: globalDoc._masterEditor._codeMirror,
+        selfunc: selpolicy,
+        selpolicy: SP_FORCEALL,
+        start: {
+          ch: 0,
+          line: 0
+        },
+        selected: false
+      };
+      so.end = {
+        ch: 0,
+        line: so.cm.lineCount()
+      };
+      so.cursor = so.cm.getCursor();
+      so.cursel = so.cm.getRange(so.start, so.end);
+      return so;
+    }
+
+    so = {
       cm: brk.EditorManager.getActiveEditor()._codeMirror,
       selfunc: selpolicy,
       selpolicy: typeof selpolicy !== 'function' ? selpolicy : __SP_FUNC
-    },
-        len, inf;
+    };
     so.cursor = so.cm.getCursor();
     so.selected = (so.selpolicy >= 0) && so.cm.somethingSelected();
     if (so.selected) {
       so.cursel = so.cm.getSelection();
     } else {
       so.cursel = '';
+
 
       switch (so.selpolicy) {
         case SP_FORCELINE:
@@ -318,7 +309,7 @@ define(function(require, exports, module) {
 
         case __SP_FUNC:
           //TODO: Support multiple lines
-          // It executes a selfunc twice(left, right direction) for each caracter. 
+          // It executes a selfunc twice(left, right direction) for each caracter.
           // It stops eating chars if it selfunc returns false
           so.cursel = so.cm.getLine(so.cursor.line);
           so.start = {
@@ -333,7 +324,7 @@ define(function(require, exports, module) {
             so: so,
             dir: -1
           };
-          // the selfunc can reverse the direction to implement multiple passes, 
+          // the selfunc can reverse the direction to implement multiple passes,
           // but careful since it cause an infinite loop
           while (so.start.ch > 0) {
             if (!so.selfunc(inf, so.cursel[so.start.ch])) {
@@ -343,7 +334,7 @@ define(function(require, exports, module) {
             so.start.ch += inf.dir;
           }
           inf.dir = 1;
-          // the selfunc can add text to the so.cursel, so it's better to not place 
+          // the selfunc can add text to the so.cursel, so it's better to not place
           // the end test in a var such as len = so.cursel.length
           while (so.end.ch < so.cursel.length) {
             if (!so.selfunc(inf, so.cursel[so.end.ch - 1])) {
@@ -807,13 +798,13 @@ define(function(require, exports, module) {
 
   function browseFile() {
     nodeOpenUrl('file:///' + getCurFileName());
-  } 
+  }
   // ------------------------------------------------------------------------
   //                               Commands: toIX
   // ------------------------------------------------------------------------
-  function extractortoix(cmd) {              
+  function extractortoix(cmd) {
     ask('', cmd, ['findre', 'splitMarkerExtr', 'isignorecase'], function() {
-      getSelection(function(text) {              
+      getSelection(function(text) {
         var foundtext = [],
             spliter = processSplit(prefs.splitMarkerExtr.value);
         text.replace(new RegExp(prefs.findre.value, 'g' + (prefs.isignorecase.value ? 'i' : '')), function () {
@@ -821,7 +812,7 @@ define(function(require, exports, module) {
               i = 1;
           if (arguments && arguments.length) {
             if (typeof arguments[1] === 'number') {
-              foundtext.push(arguments[0]);        
+              foundtext.push(arguments[0]);
             } else {
               while (typeof arguments[i] !== 'number') {
                 record.push(arguments[i]);
@@ -861,10 +852,10 @@ define(function(require, exports, module) {
         findtext = '\\b' + findtext + '\\b';
       }
       replaceSelection(new RegExp(findtext, (prefs.isall.value ? 'g' : '') +
-                                  (prefs.isignorecase.value ? 'i' : '') + 
-                                  (prefs.isimultiline.value ? 'm' : '')), 
+                                  (prefs.isignorecase.value ? 'i' : '') +
+                                  (prefs.isimultiline.value ? 'm' : '')),
                        (startValue !== undefined) && (stepValue !== undefined) ?
-                       // format mode	(Start, Step)		 
+                       // format mode	(Start, Step)
                        function(data) {
         var i, out = repltext;
 
@@ -872,7 +863,7 @@ define(function(require, exports, module) {
           out = out.replace(new RegExp('\\$' + i, 'g'), arguments[i]);
         }
 
-        out = out.replace(/(\#\{(0*)(\d*)(\w+)\}\#)/, 
+        out = out.replace(/(\#\{(0*)(\d*)(\w+)\}\#)/,
                           function (str, pall, pzero, pdigit, pmacro) {
 
           function formatvalue(pzero, pdigit, value) {
@@ -885,7 +876,7 @@ define(function(require, exports, module) {
             pdigit = pdigit >> 0;
             if (value.length > pdigit) {
               return value;
-            } 
+            }
             prefix.length = pdigit + 1 - value.length;
             return prefix.join(pzero ? '0' : ' ') + value;
           }
@@ -893,10 +884,10 @@ define(function(require, exports, module) {
           switch(pmacro) {
             case 'd' : return formatvalue(pzero, pdigit, startValue);
             case 'X' : return formatvalue(pzero, pdigit, startValue.toString(16).toUpperCase());
-            case 'x' : return formatvalue(pzero, pdigit, startValue.toString(16));				  
+            case 'x' : return formatvalue(pzero, pdigit, startValue.toString(16));
             default:   return pall;
           }
-        }									  
+        }
                          );
         startValue += stepValue;
         return out;
@@ -1076,11 +1067,11 @@ define(function(require, exports, module) {
       {
         inext: '.js6',
         outext: '.js'
-      },                 
+      },
       {
         inext: '.scss',
         outext: '.css'
-      }, 
+      },
       {
         inext: '.js',
         outext: '.min.js'
@@ -1209,39 +1200,38 @@ function execSnippets() {
   }
 
   function showAbout(cmd) {
-    showMessage(getCmdCleanLabel(cmd), Mustache.render(styix.ABOUTTEXT, 
-                                                       {helplink: HELPLINK, 
-                                                        devby: brk.StringUtils.format(brk.Strings.DEVBY_MSG, AUTHOR)}));
+    showMessage(cmd.cleanlabel,
+                Mustache.render(styix.ABOUTTEXT,
+                                {helplink: HELPLINK,
+                                 devby: brk.StringUtils.format(brk.Strings.DEVBY_MSG, AUTHOR)}));
   }
 
   function showOptions(cmd) {
+    optstoix.prepare(prefs, namedcmdlist);
     ask('', cmd, prefs.OPTIONFIELDS, undefined, {
-      header: ['Field', 'Value', 'ExecOnSave']
+      dlgtemplate: optshtml,
+      handler: optstoix
     });
   }
 
   function showCommands(cmd) {
-    var cmds = getCommandList(),
-        fields = {
-          cmd: {
-            value: '',
-            type: 'dropdown',
-            values: []
-          }
-        };
-
-    cmds.forEach(function(cmd) {
-      if (cmd.name) {
-        buildCmdLabel(cmd);
-        fields.cmd.values.push(getCmdCleanLabel(cmd));
+    var fields = {
+      cmd: {
+        value: '',
+        type: 'dropdown',
+        values: []
       }
+    };
+
+    namedcmdlist.forEach(function(cmd) {
+      fields.cmd.values.push(cmd.cleanlabel);
     });
     fields.cmd.values.sort();
 
     ask('', cmd, ['cmd'], function() {
       var selcmd = fields.cmd.value;
-      cmds.every(function(cmd) {
-        if (cmd.name && (selcmd === getCmdCleanLabel(cmd))) {
+      namedcmdlist.every(function(cmd) {
+        if (selcmd === cmd.cleanlabel) {
           runCommand(cmd);
           return false;
         }
@@ -1254,64 +1244,56 @@ function execSnippets() {
 
 
   function showCommandMapper(cmd) {
-    var cmds = getCommandList(),
-        fields = {},
+    var fields = {},
         fieldlist = [],
         showinmenu = prefs.commands.value.showinmenu,
         showinctxmenu = prefs.commands.value.showinctxmenu,
         hotkeys = prefs.commands.value.hotkeys;
 
-    cmds.forEach(function(cmd) {
-      var key;
-      if (cmd.name) {
-        key = getCmdStoreID(cmd);
-        buildCmdLabel(cmd);
-        fields[key] = {
-          value: hotkeys[key] || '',
-          label: getCmdCleanLabel(cmd),
-          size: 15,
-          canempty: true,
-          hint: i18n('SHORTCUT_HINT'),
-          fields: {
-            showinmenu: {
-              value: showinmenu.indexOf(key) > -1,
-              type: 'boolean',
-              align: 'center',
-              canempty: true
-            },
-            showinctxmenu: {
-              value: showinctxmenu.indexOf(key) > -1,
-              type: 'boolean',
-              align: 'center',
-              canempty: true
-            }
+    namedcmdlist.forEach(function(cmd) {
+      var key = cmd.storeid;
+      fields[key] = {
+        value: hotkeys[key] || '',
+        label: cmd.cleanlabel,
+        size: 15,
+        canempty: true,
+        hint: i18n('SHORTCUT_HINT'),
+        fields: {
+          showinmenu: {
+            value: showinmenu.indexOf(key) > -1,
+            type: 'boolean',
+            align: 'center',
+            canempty: true
+          },
+          showinctxmenu: {
+            value: showinctxmenu.indexOf(key) > -1,
+            type: 'boolean',
+            align: 'center',
+            canempty: true
           }
-        };
-        fieldlist.push(key);
-      }
+        }
+      };
+      fieldlist.push(key);
     });
 
     ask('', cmd, fieldlist, function() {
       showinmenu = [];
       showinctxmenu = [];
       hotkeys = {};
-      cmds.forEach(function(cmd) {
-        var key, field;
-        if (cmd.name) {
-          key = getCmdStoreID(cmd);
-          field = fields[key];
-          if (field.value) {
-            hotkeys[key] = field.value.replace(/\b(Cmd|Shift|Alt|Ctrl|\w)\b/gi,
-                                               function(txt, p1) {
-              return p1[0].toUpperCase() + p1.substr(1).toLowerCase();
-            }).replace(/\+/g, '-');
-          }
-          if (field.fields.showinmenu.value) {
-            showinmenu.push(key);
-          }
-          if (field.fields.showinctxmenu.value) {
-            showinctxmenu.push(key);
-          }
+      namedcmdlist.forEach(function(cmd) {
+        var key = cmd.storeid,
+            field = fields[key];
+        if (field.value) {
+          hotkeys[key] = field.value.replace(/\b(Cmd|Shift|Alt|Ctrl|\w)\b/gi,
+                                             function(txt, p1) {
+            return p1[0].toUpperCase() + p1.substr(1).toLowerCase();
+          }).replace(/\+/g, '-');
+        }
+        if (field.fields.showinmenu.value) {
+          showinmenu.push(key);
+        }
+        if (field.fields.showinctxmenu.value) {
+          showinctxmenu.push(key);
         }
       });
       prefs.commands.value.showinmenu = showinmenu;
@@ -1338,11 +1320,12 @@ function execSnippets() {
   // ------------------------------------------------------------------------
   var SHOWONMENU = 1;
 
-  function getCommandList() {
-    return [
-      {name: 'UpperCase', f: upperCaseText, priority: SHOWONMENU},
-      {name: 'LowerCase', f: lowerCaseText, priority: SHOWONMENU},
-      {name: 'Capitalize', f: tt.capitalizeText, sp: SP_WORD, priority: SHOWONMENU},
+  function initCommandList() {
+
+    cmdlist = [
+      {name: 'UpperCase', f: upperCaseText, priority: SHOWONMENU, canonsave: true},
+      {name: 'LowerCase', f: lowerCaseText, priority: SHOWONMENU, canonsave: true},
+      {name: 'Capitalize', f: tt.capitalizeText, sp: SP_WORD, priority: SHOWONMENU, canonsave: true},
       {name: 'CamelCase', f: tt.camelCaseText, sp: SP_WORD, priority: SHOWONMENU},
       {name: 'HtmlEncode', f: htmlEncode, priority: SHOWONMENU},
       {name: 'HtmlDecode', f: htmlDecode, priority: SHOWONMENU},
@@ -1351,23 +1334,23 @@ function execSnippets() {
       {name: 'Split...', f: splitText, priority: SHOWONMENU},
       {name: 'Number...', f: numberText, priority: SHOWONMENU},
       {name: 'Reverse', f: tt.reverse, sp: SP_SENTENCE, priority: SHOWONMENU},
-      {name: 'Trim Leading', f: trimLeading, priority: SHOWONMENU},
-      {name: 'Trim Trailing', f: trimTrailing, priority: SHOWONMENU},
-      {name: 'Markdown Trim Trailing', f: markdownTrimTrailing, priority: SHOWONMENU},
-      {name: 'Sort Ascending', f: sortAscending, priority: SHOWONMENU},
-      {name: 'Sort Descending', f: sortDescending, priority: SHOWONMENU},
-      {name: 'Remove Duplicates', f: removeDuplicates, priority: SHOWONMENU},
-      {name: 'Remove Empty Lines', f: removeEmptyLines, priority: SHOWONMENU},
+      {name: 'Trim Leading', f: trimLeading, priority: SHOWONMENU, canonsave: true},
+      {name: 'Trim Trailing', f: trimTrailing, priority: SHOWONMENU, canonsave: true},
+      {name: 'Markdown Trim Trailing', f: markdownTrimTrailing, priority: SHOWONMENU, canonsave: true},
+      {name: 'Sort Ascending', f: sortAscending, priority: SHOWONMENU, canonsave: true},
+      {name: 'Sort Descending', f: sortDescending, priority: SHOWONMENU, canonsave: true},
+      {name: 'Remove Duplicates', f: removeDuplicates, priority: SHOWONMENU, canonsave: true},
+      {name: 'Remove Empty Lines', f: removeEmptyLines, priority: SHOWONMENU, canonsave: true},
       {},
-      {name: 'Unix To Win', f: tt.unixToWin, sp: SP_LINE, priority: SHOWONMENU},
-      {name: 'Win To Unix', f: tt.winToUnix, sp: SP_LINE, priority: SHOWONMENU},
+      {name: 'Unix To Win', f: tt.unixToWin, sp: SP_LINE, priority: SHOWONMENU, canonsave: true},
+      {name: 'Win To Unix', f: tt.winToUnix, sp: SP_LINE, priority: SHOWONMENU, canonsave: true},
       {name: 'Single Slash To Double', f: tt.singleToDoubleSlash, sp: SP_LINE, priority: SHOWONMENU},
       {name: 'Double To Single Slash', f: tt.doubleToSingleSlash, sp: SP_LINE, priority: SHOWONMENU},
       {name: 'Single Quote To Double', f: singleToDoubleQuote, priority: SHOWONMENU},
       {name: 'Double To Single Quote', f: doubleToSingleQuote, priority: SHOWONMENU},
       {name: 'Toggle Quote', f: toggleQuote, priority: SHOWONMENU},
-      {name: 'Tab To Space', f: tabToSpace, priority: SHOWONMENU},
-      {name: 'Space To Tab', f: spaceToTab, priority: SHOWONMENU},
+      {name: 'Tab To Space', f: tabToSpace, priority: SHOWONMENU, canonsave: true},
+      {name: 'Space To Tab', f: spaceToTab, priority: SHOWONMENU, canonsave: true},
       {name: 'rgb-hex', f: rgbHex, priority: SHOWONMENU},
       {name: 'Untag', f: untag, priority: SHOWONMENU},
       {name: 'Tag', f: tag, priority: SHOWONMENU},
@@ -1402,13 +1385,50 @@ function execSnippets() {
       {name: 'Help', f: showHelp, corelabel: 'HELP_MENU', priority: SHOWONMENU},
       {name: 'About', f: showAbout, corelabel: 'ABOUT', showalways: true, priority: SHOWONMENU}
     ];
+
+    cmdlist.forEach(function(cmd) {
+      if (cmd.name) {
+        namedcmdlist.push(cmd);
+      }
+    });
+
+    namedcmdlist.forEach(function(cmd) {
+      var txt = cmd.name,
+          fullen = txt.length,
+          len = fullen,
+          lab;
+
+      if (cmd.corelabel) {
+        lab = brk.CoreStrings[cmd.corelabel];
+      } else {
+        // remove the trailing dots for the locatization matching
+        while (txt[len - 1] === '.') {
+          len--;
+        }
+        if (txt.substr(len - 4, 4) === 'toIX') {
+          len -= 4;
+        }
+        lab = brk.Strings[txt.substr(0, len)];
+        if (lab) {
+          lab += txt.substr(len);
+        }
+      }
+
+
+      cmd.label = lab || txt;
+      cmd.cleanlabel = cmd.label.replace(/\./g, '');
+      cmd.storeid = textToID(cmd.name);
+      storeidmap[cmd.storeid] = cmd;
+    });
   }
 
-  function runCommand(cmd) {
-    if (!cmd.sp) {
-      cmd.f(cmd);
-    } else {
-      replaceSelection(cmd.f.pat, cmd.f.repl, cmd.sp);
+  function runCommand(cmd, isglobal) {
+    if ((isglobal !== undefined) === (globalDoc !== null)) {
+      if (!cmd.sp) {
+        cmd.f(cmd);
+      } else {
+        replaceSelection(cmd.f.pat, cmd.f.repl, cmd.sp);
+      }
     }
   }
 
@@ -1424,7 +1444,7 @@ function execSnippets() {
     var so = getSelObj(SP_NONE);
     if (cmd === 'CMD_PASTE') {
       setSelection(so, clipbrdPaste());
-    }        
+    }
     if (so.cursel) {
       clipbrdCopy(so.cursel);
       if (cmd === 'CMD_CUT') {
@@ -1454,12 +1474,11 @@ function execSnippets() {
     }
   }
 
-
   function buildCommands() {
 
     function addToMenu(cmd, menu, lastid, nm, hotkeys) {
       var opts, platform, hotkey,
-          id = MODULENAME + "." + getCmdStoreID(cmd);
+          id = MODULENAME + "." + cmd.storeid;
 
       // Register Command
       if (id !== lastid) {
@@ -1478,8 +1497,7 @@ function execSnippets() {
       return id;
     }
     // main body
-    var cmdlist = getCommandList(),
-        menuidx = 0,
+    var menuidx = 0,
         Menus = brackets.getModule('command/Menus'),
         //menu = Menus.getMenu(Menus.AppMenuBar.VIEW_MENU),
         // Since Brackets has no submenu support it"s better to create a top menu
@@ -1504,8 +1522,7 @@ function execSnippets() {
         hasdiv = true;
         continue;
       }
-      nm = getCmdStoreID(cmd);
-      buildCmdLabel(cmd);
+      nm = cmd.storeid;
       if (cmd.showalways || (showinmenu.indexOf(nm) > -1)) {
         hasdiv = false;
         lastid = addToMenu(cmd, menulist[menuidx], lastid, nm, hotkeys);
@@ -1519,9 +1536,9 @@ function execSnippets() {
   }
 
   function fillshowonmenu() {
-    getCommandList().forEach(function(cmd) {
+    cmdlist.forEach(function(cmd) {
       if (cmd.priority === SHOWONMENU) {
-        prefs.commands.value.showinmenu.push(getCmdStoreID(cmd));
+        prefs.commands.value.showinmenu.push(cmd.storeid);
       }
     });
   }
@@ -1586,12 +1603,55 @@ function execSnippets() {
     //trimTrailing(true);  //@TODO: Implement trim on save
     runCompilerEx(true);
   }
+
+  // ------------------------------------------------------------------------
+  //                               Before Save
+  // ------------------------------------------------------------------------
+  function runBeforeSaveCommands(doc, ext) {
+    prefs.beforesave.value.forEach(function (st) {
+      if (st.exts.indexOf(ext) > -1) {
+        st.cmds.forEach(function (storeid) {
+          var cmd = storeidmap[storeid];
+          if (cmd) { // in case a command gets deprecated
+            globalDoc = doc;
+            try {
+              runCommand(cmd, true);
+            } finally {
+              globalDoc = null;
+            }
+          }
+        });
+      }
+    });
+  }
+
+  function runBeforeSave(isAll) {
+    function exec(doc) {
+      var ext;
+      if (doc && doc.isDirty && doc.file && doc.file.isFile && !doc.isUntitled()) {
+        ext = doc.file.name.replace(/^.*(\.[^\.]+)$/, '$1');
+        if (ext.length) {
+          runBeforeSaveCommands(doc, ext);
+        }
+      }
+    }
+
+    if (isAll) {
+      brk.DocumentManager.getAllOpenDocuments().forEach(function (doc) {
+        exec(doc);
+      });
+    } else {
+      exec(brk.DocumentManager.getCurrentDocument());
+    }
+  }
   // ------------------------------------------------------------------------
   //                               Init
   // ------------------------------------------------------------------------
   function init() {
-    var $DocumentManager = $(brk.DocumentManager);
+    var $DocumentManager = $(brk.DocumentManager),
+        $CommandManager = $(brk.CommandManager);
     //console.log(window.navigator.userAgent);
+    initCommandList();
     fillshowonmenu(); // must be before loadextprefs
     initprefbuttons();
     prefs.commands.svshowinmenu = prefs.commands.value.showinmenu;
@@ -1603,11 +1663,16 @@ function execSnippets() {
     posVersionCheck();
     $DocumentManager.on('currentDocumentChange', _onDocumentChanged);
     $DocumentManager.on('documentSaved', runSaveCommands);
+    $CommandManager.on('beforeExecuteCommand', function(event, type) {
+      if (!type.indexOf("file.save")) {
+        runBeforeSave(type === "file.saveAll");
+      }
+    });
   }
 
   $.getJSON(brk.moduleroot + 'style_text.json', function(data) {
     styix = data;
     init();
-  });    
+  });
 
 });

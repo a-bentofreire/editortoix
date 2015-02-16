@@ -1,0 +1,187 @@
+<style> 
+  .modal {
+    min-width: 800px;
+  }
+  .modal-body {
+    min-height: 300px;
+  }
+
+  #toixcats {
+    display: inline-block;
+    height: 100%;
+    padding-right: 2em;
+  }
+
+  #toixcats ul {
+    list-style: none;
+    margin: 0px;
+  }
+
+  #toixcats li {
+    color: gray;
+    cursor: pointer;
+    font: smaller;
+  }
+
+  .toixselcat {
+    color: black !important;
+  }
+
+  .toixtab {
+    display: none;
+    vertical-align: top;
+    height: 100%;    
+  }
+
+  .toixtablab {
+    border-bottom: 1px solid #c3c6c5;
+    padding-bottom: 0.2em;
+    font-size: larger;
+    margin-top: -1em;
+    margin-bottom: 1em;
+  }
+
+  .toixseclab {
+    font-size: 1.05em; 
+  }
+
+  .toixseltab {
+    display: inline-block;
+  }
+
+  .toixtab label {
+    display: inline-block;
+    padding-right: 0.5em;
+  }
+
+  input[type="number"] {
+    width: 3.5em;
+  }
+
+  .toixvertpanel {
+    display: inline-block;
+    vertical-align: top;
+    padding-right: 0.5em;
+  }
+  
+  #beforesavetargetexts, #beforesavetargetcmds, #beforesavecmds {
+    margin-left: 0px;
+  }
+
+  .beforesavetoolbar {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+  }
+  
+  .beforesavetoppanel {
+    height: 4em;
+  }
+</style> 
+<div id=toixcats>
+  <ul>
+    <li id=general>{{str.CAT_General}}</li>
+    <li id=compilers>{{str.CAT_Compilers}}</li>
+    <!--li id=shortcuts>{{str.CAT_Shortcuts}}</li-->
+    <li id=beforesave>{{str.CAT_BeforeSave}}</li>
+  </ul>
+</div>
+
+
+<div id=toixgeneral class=toixtab>
+  <div class=toixtablab>{{str.CAT_General}}</div>{{&field.toixshowcxtedit}}
+  <label for="toixshowcxtedit">{{str.FLD_showcxtedit_label}}</label>        
+  <div><label for="toixwebSearch">{{str.FLD_webSearch_label}}:</label>{{&field.toixwebSearch}}</div>
+
+  <!--div class=toixseclab>Sizes</div-->
+  <table>
+    <tr>
+      <td>
+        <label for="toixtabSize">{{str.FLD_tabSize_label}}:</label>
+      </td>
+      <td align="left">{{&field.toixtabSize}}</td>
+    </tr>
+    <tr>
+      <td>
+        <label for="toixhistorySize">{{str.FLD_historySize_label}}:</label>
+      </td>
+      <td align="left">{{&field.toixhistorySize}}</td>
+    </tr>
+    <tr>
+      <td>
+        <label for="toixrecentSize">{{str.FLD_recentSize_label}}:</label>
+      </td>
+      <td align="left">{{&field.toixrecentSize}}</td>
+    </tr>
+  </table>  
+</div>
+
+
+<div id=toixcompilers class=toixtab> 
+  <div class=toixtablab>{{str.CAT_Compilers}}</div>
+  <table>
+    <tr>
+      <td><label for="toixjs6">js6:</label></td><td align="left">{{&field.toixjs6}}</td>
+    </tr>
+    <tr>
+      <td><label for="toixscss">scss:</label></td><td align="left">{{&field.toixscss}}</td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td>
+        <button class="field-button" data-info="toixscss,scss,0">Compass</button>
+        <button class="field-button" data-info="toixscss,scss,1">SCSS</button>
+      </td>
+    </tr>
+
+    <tr>
+      <td><label for="toixjs">js:</label></td><td align="left">{{&field.toixjs}}</td>
+    </tr>
+  </table>
+  <br/><div class=toixseclab>{{str.HDR_options_ExecOnSave_label}}</div>
+  {{&field.toixjs6autosave}}js6<br/>
+  {{&field.toixscssautosave}}scss
+</div>
+
+
+<div id=toixbeforesave class=toixtab> 
+  <div class=toixtablab>{{str.CAT_BeforeSave}}</div>
+  <div class=toixvertpanel >
+    <div class=beforesavetoppanel>
+      <label for="beforesaveexts">{{str.Extensions}}:</label><br/>
+      <input id="beforesaveexts" title="ex:.js6;.js;.css" value="" type="text">
+    </div>
+
+    <div class=beforesavetoolbar>
+      <button id="beforesaveextadd">+</button>
+      <button id="beforesaveextremove">-</button>
+      <button id="beforesaveextup">&uarr;</button>
+      <button id="beforesaveextdown">&darr;</button>
+      <button id="beforesaveextupdate">{{corestr.UPDATE}}</button>
+    </div>
+
+    <select id="beforesavetargetexts" size=6>
+    </select>
+  </div>
+
+
+  <div class=toixvertpanel >
+    <div class=beforesavetoppanel>
+      <label for="beforesavecmds">{{str.Commands}}:</label><br/>
+      <select id="beforesavecmds">
+      </select>
+    </div>
+
+    <div class=beforesavetoolbar>
+      <button id="beforesavecmdadd">+</button>
+      <button id="beforesavecmdremove">-</button>
+      <button id="beforesavecmdup">&uarr;</button>
+      <button id="beforesavecmddown">&darr;</button>
+    </div>
+
+    <select id="beforesavetargetcmds" size=6>
+    </select>
+  </div>
+
+</div>

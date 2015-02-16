@@ -1,5 +1,5 @@
 /**
- * @preserve Copyright (c) 2015 ApptoIX. All rights reserved.
+ * @preserve Copyright (c) 2015 ApptoIX Limited. All rights reserved.
  * @author Alexandre Bento Freire
  * @translator Christian Knappke
  *

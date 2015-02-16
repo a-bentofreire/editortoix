@@ -1,5 +1,5 @@
 /**
- * @preserve Copyright (c) 2015 ApptoIX. All rights reserved.
+ * @preserve Copyright (c) 2015 ApptoIX Limited. All rights reserved.
  * @author Alexandre Bento Freire
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
@@ -314,6 +314,10 @@ define(function() {
       value: false,
       type: 'boolean',
       canempty: true
-    }
+    },
+    
+    beforesave: {
+      value: [{name: 'def', exts: ['.txt'], cmds: ['uppercase', 'trimleading']}]
+    }    
   };
 });

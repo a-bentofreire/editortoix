@@ -153,6 +153,12 @@ Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros
   * **Options** - Configuration dialog  
   
 ## Version History  
+* 2.11    [http://www.apptoix.com/blog/?p=120]  
+    Added Before Save events  
+    UI of Options dialog revamped       
+    Fixed Portuguese translation of Trim Leading/Trailing  
+    Fixed header of Command Mapper      
+      
 * 2.10      [http://www.apptoix.com/blog/?p=113]  
     Tag command supports multiple classes. ex: d#idvalue.class1.class2  
     Compiler command supports .js minification. Must install uglify-js. Configurable using the IX  Options dialog  
@@ -278,14 +284,12 @@ Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros
 These are the plans for the next versions:  
 * Default shortcuts  
 * Go back to the previous edit cursor positions  
-* Trim Trailing on save  
 * Display the compilation error on a bottom panel  
 * File Extension mapper. Ex: inc->php  
 * Code snippets  
 * Run grunt  
 * Run node scripts  
 * Run python scripts  
-* Support localization  
 * Clean up the code  
 * Improve the User Interface  
 * Improve the code documentation  

@@ -39,7 +39,7 @@ define(function(require, exports, module) {
   // ------------------------------------------------------------------------
   //                               i18n
   // ------------------------------------------------------------------------
-  var /** @const */ VERSION = '2.11',
+  var /** @const */ VERSION = '2.12',
       /** @const */ IXMENU = "IX",
       /** @const */ IXMENUTT = "IX TT",
       /** @const */ MODULENAME = 'bracketstoix',
@@ -1579,7 +1579,11 @@ function execSnippets() {
         prevver = prevver.split('.');
         prevver = ((prevver[0] >> 0) * 1000) + (prevver[1] >> 0);
       }
-
+      // Fixed bug in version 2.11. It be removed after a short period of time. 
+      if (prevver === 2011 && prefs.beforesave && prefs.beforesave.value && prefs.beforesave.value.length === 1 && 
+          prefs.beforesave.value[0].name === 'def') {
+        prefs.beforesave.value = [];
+      }
       if (prevver < 2000) {
         prefs.version.showwelcome = true;
         prefs.commands.value.showinmenu = prefs.commands.svshowinmenu;

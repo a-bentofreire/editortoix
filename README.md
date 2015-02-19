@@ -153,6 +153,9 @@ Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros
   * **Options** - Configuration dialog  
   
 ## Version History  
+* 2.12    [http://www.apptoix.com/blog/?p=126]  
+    Fixed a critical bug in version 2.11, where .txt files became uppercase on save.  
+      
 * 2.11    [http://www.apptoix.com/blog/?p=120]  
     Added Before Save events  
     UI of Options dialog revamped       
@@ -301,7 +304,7 @@ feedback of bugs on this and other platforms are welcome.
   
 ## Copyrights  
   
-Copyright (c) 2015 ApptoIX  
+Copyright (c) 2015 ApptoIX Limited  
 Author Alexandre Bento Freire  
   
 ## License  

@@ -317,7 +317,7 @@ define(function() {
     },
     
     beforesave: {
-      value: [{name: 'def', exts: ['.txt'], cmds: ['uppercase', 'trimleading']}]
+      value: []
     }    
   };
 });

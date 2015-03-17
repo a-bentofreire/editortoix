@@ -34,7 +34,7 @@ define(function() {
   "use strict";
   // ------------------------------------------------------------------------
   //                               UI
-  // ------------------------------------------------------------------------ 
+  // ------------------------------------------------------------------------
   function selectAndClose(inf) {
     inf.closedlg(true);
   }
@@ -88,7 +88,7 @@ define(function() {
   return {
     // ------------------------------------------------------------------------
     //                               Functions
-    // ------------------------------------------------------------------------ 
+    // ------------------------------------------------------------------------
     checkForHttp: function(text) {
       return _checkForHttp(text);
     },
@@ -104,7 +104,7 @@ define(function() {
     },
     // ------------------------------------------------------------------------
     //                               Fields
-    // ------------------------------------------------------------------------ 
+    // ------------------------------------------------------------------------
     OPTIONFIELDS: ['tabSize', 'historySize', 'recentSize', 'showcxtedit', 'webSearch', /*'grunt',*/ 'js6', 'scss', 'js'],
 
     version: {
@@ -201,13 +201,13 @@ define(function() {
     },
     startValue: {
       value: '',
-      historty: [],
+      history: [],
       canempty: true
     },
 
     stepValue: {
       value: '',
-      historty: []
+      history: []
     },
     iswordsonly: {
       value: false,
@@ -315,9 +315,13 @@ define(function() {
       type: 'boolean',
       canempty: true
     },
-    
+
     beforesave: {
       value: []
-    }    
+    },
+
+    tools: {
+      value: []
+    }
   };
 });

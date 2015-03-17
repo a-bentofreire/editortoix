@@ -1,0 +1,37 @@
+@font-face {
+	font-family: 'icomoontoix';
+	url('{{root}}icomoontoix.ttf?6f58a0') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icontoix-"], [class*=" icontoix-"] {
+	font-family: 'icomoontoix';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icontoix-home:before {
+	content: "\e900";
+}
+
+.icontoix-facebook2:before {
+	content: "\ea8d";
+}
+
+.icontoix-twitter:before {
+	content: "\ea91";
+}
+
+.icontoix-github:before {
+	content: "\eab1";
+}
+

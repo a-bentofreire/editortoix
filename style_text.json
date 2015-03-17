@@ -1,7 +1,0 @@
-{
-  "DLGTITLE": "<img src='{{root}}bracketstoix64x64.png' style='vertical-align: top;width: 32px;padding-right: 0.4em;height: auto;'>",
-  
-  "ABOUTTEXT": "<div style='font-size: 1.5em; padding-bottom: 20px'>Brackets<sub>to</sub>IX</div><div style='font-size: 1.2em;'>(c) 2015 App<sub>to</sub>IX</div><div>{{devby}}</div><a href='{{helplink}}'>Official Webpage</a>",
-  
-  "WELLCOME": "<h2>Welcome to Brackets<sub>to</sub>IX {{version}}</h2>The menus were reorganized so you can to have a quicker access to all the commands.<br>Now there two top menus with all the commands<br>You can still remove commands from the Commands Mapper dialog"
-}

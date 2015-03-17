@@ -22,7 +22,7 @@
  *
  */
 
-/*jslint vars: true, plusplus: true, devel: true, white: true, nomen: true, indent: 4, maxerr: 50 */
+/*jslint vars: true, plusplus: true, devel: true, white: true, nomen: true, bitwise: true, indent: 4, maxerr: 50 */
 /*global define, brackets, $, escape, document */
 
 define(function() {
@@ -34,12 +34,20 @@ define(function() {
       usablecmds,
       storeidmap = {},
       prefs,
-      bs = {}; // beforesave
+      ix,
+      tools,
+      bs = {},
+      ts = {}; // beforesave
+
+
+  function buildOptionHtml(val, text) {
+    return '<option value="' + val + '">' + tools.htmlEscape(text) + '</option>';
+  }
 
   function _fillBeforeSaveTargetExts() {
     var html = '';
     bs.value.forEach(function (st, index) {
-      html += '<option value="' + index + '">' + st.exts + '</option>';
+      html += buildOptionHtml(index, st.exts);
     });
     bs.$targetexts.html(html);
   }
@@ -49,11 +57,20 @@ define(function() {
     var html = '';
     if (bs.curextidx >= 0) {
       bs.value[bs.curextidx].cmds.forEach(function(storeid) {
-        html += '<option value="' + storeid + '">' + storeidmap[storeid].label + '</option>';
+        html += buildOptionHtml(storeid, storeidmap[storeid].label);
       });
     }
     bs.$targetcmds.html(html);
   }
+
+  function _fillTools() {
+    var html = '';
+    ts.value.forEach(function(tool, index) {
+      html += buildOptionHtml(index, tool.name);
+    });
+    ts.$toollist.html(html);
+  }
+
 
   function _listOp(delta, index, array, fillfunc, $list) {
     var svitem;
@@ -72,24 +89,51 @@ define(function() {
     }
   }
 
-  function _BeforeSaveTargetCmdsListOp(delta) {
+  function _beforeSaveTargetCmdsListOp(delta) {
     if (bs.curextidx >= 0) {
       _listOp(delta, bs.curcmdidx, bs.value[bs.curextidx].cmds, _fillBeforeSaveTargetCmds, bs.$targetcmds);
     }
   }
 
+  function _toolsListOp(delta) {
+    _listOp(delta, ts.curidx, ts.value, _fillTools, ts.$toollist);
+  } 
+
+  function toolUItoValue() {
+    var name = ts.$toolname.val().trim(),
+        cmdline = ts.$toolcmdline.val().trim(),
+        idx = ts.value.length,
+        showonmenu = ts.$toolshowonmenu.get(0).checked,
+        showoutput = ts.$toolshowoutput.get(0).checked;
+
+    if(name && cmdline) {
+      return {idx: idx, tool: {name: name, cmdline: cmdline, showonmenu: showonmenu, showoutput: showoutput}};
+    } else {
+      return null;
+    }
+  }
+
+  function toolValtoUI(tool) {
+    ts.$toolname.val(tool ? tool.name : '');
+    ts.$toolcmdline.val(tool ? tool.cmdline : '');
+    ts.$toolshowonmenu.get(0).checked = tool.showonmenu;
+    ts.$toolshowoutput.get(0).checked = tool.showoutput;
+  }
 
   return {
     dlgtemplate: 'options.html',
     // ------------------------------------------------------------------------
     //                               prepare
     // ------------------------------------------------------------------------
-    prepare: function (aprefs, cmdlist) {
+    prepare: function (aprefs, cmdlist, aix, atools) {
+      var html;
       prefs = aprefs;
+      tools = atools;
       bs.value = [];
       prefs.beforesave.value.forEach(function (st, index) {
         bs.value.push({exts: st.exts.join(';'), cmds: st.cmds});
       });
+
       if (!usablecmds) {
         usablecmds = [];
         cmdlist.forEach(function (cmd) {
@@ -99,6 +143,13 @@ define(function() {
           }
         });
       }
+
+      ts.value = [];
+      prefs.tools.value.forEach(function (tool) {
+        ts.value.push(tool);
+      });
+
+      ix = aix;
     },
     // ------------------------------------------------------------------------
     //                               buildBeforeSave
@@ -114,7 +165,7 @@ define(function() {
 
       _fillBeforeSaveTargetExts();
       usablecmds.forEach(function(cmd) {
-        html += '<option value="' + cmd.storeid + '">' + cmd.label + '</option>';
+        html += buildOptionHtml(cmd.storeid, cmd.label);
       });
       bs.$cmds.html(html);
 
@@ -125,7 +176,7 @@ define(function() {
 
         if(exts.length) {
           bs.value.push({exts: exts, cmds: []});
-          bs.$targetexts.append('<option value=' + idx + '>' + exts + '</option>');
+          bs.$targetexts.append(buildOptionHtml(idx, exts));
         }
       });
 
@@ -156,19 +207,19 @@ define(function() {
           return;
         }
         bs.value[bs.curextidx].cmds.push(storeid);
-        bs.$targetcmds.append('<option value=' + storeid+ '>' + storeidmap[storeid].label + '</option>');
+        bs.$targetcmds.append(buildOptionHtml(storeid, storeidmap[storeid].label));
       });
 
       $("#beforesavecmdremove").click(function () {
-        _BeforeSaveTargetCmdsListOp(0);
+        _beforeSaveTargetCmdsListOp(0);
       });
 
       $("#beforesavecmdup").click(function () {
-        _BeforeSaveTargetCmdsListOp(-1);
+        _beforeSaveTargetCmdsListOp(-1);
       });
 
       $("#beforesavecmddown").click(function () {
-        _BeforeSaveTargetCmdsListOp(1);
+        _beforeSaveTargetCmdsListOp(1);
       });
 
       bs.$targetexts.click(function () {
@@ -193,6 +244,8 @@ define(function() {
       }
 
     },
+
+
     // ------------------------------------------------------------------------
     //                               afterBuild
     // ------------------------------------------------------------------------
@@ -222,6 +275,74 @@ define(function() {
 
       $dlg.find('#general').click();
       this.buildBeforeSave();
+      this.buildTools();
+    },
+
+    // ------------------------------------------------------------------------
+    //                               buildtools
+    // ------------------------------------------------------------------------
+    buildTools: function () {
+      var html = '';
+      ts.$toollist = $dlg.find('#toollist');
+      ts.$toolname = $dlg.find('#toolname');
+      ts.$toolcmdline = $dlg.find('#toolcmdline');
+      ts.$toolshowonmenu = $dlg.find('#toolshowonmenu');
+      ts.$toolshowoutput = $dlg.find('#toolshowoutput');
+
+      ts.$pdtools = $dlg.find('#pdtools');
+      ts.curidx = -1;
+      _fillTools();
+
+      $("#toolsadd").click(function () {
+        var val = toolUItoValue();
+        if(val) {
+          ts.value.push(val.tool);
+          ts.$toollist.append(buildOptionHtml(val.idx, val.tool.name));
+        }
+      });
+
+      $("#toolsupdate").click(function () {
+        var val = toolUItoValue();
+        if (val && ts.curidx >= 0) {
+          ts.value[ts.curidx] = val.tool;
+          ts.$toollist[0][ts.curidx].label = val.tool.name;
+        }
+      });
+      $("#toolsremove").click(function () {
+        _toolsListOp(0);
+      });
+
+      $("#toolsup").click(function () {
+        _toolsListOp(-1);
+      });
+
+      $("#toolsdown").click(function () {
+        _toolsListOp(1);
+      });
+
+      ts.$toollist.click(function () {
+        var tool;
+        ts.curidx = ts.$toollist[0].selectedIndex >> 0;
+        toolValtoUI(ts.curidx >= 0 ? ts.value[ts.curidx] : null);
+      });
+
+      if(ts.value.length) {
+        ts.$toollist[0].selectedIndex = 0;
+        ts.$toollist.click();
+      }
+
+      html = '';
+      ix.pdtools.forEach(function(tool, index) {
+        html += buildOptionHtml(index, tool.name);
+      });
+      ts.$pdtools.html(html);
+
+      $("#pdtoolsadd").click(function () {
+        var idx = ts.$pdtools[0].selectedIndex >> 0;
+        toolValtoUI(ix.pdtools[idx]);
+        $("#toolsadd").click();
+      });
+
     },
     // ------------------------------------------------------------------------
     //                               afterBuild
@@ -232,6 +353,10 @@ define(function() {
         prefs.beforesave.value.push({exts: st.exts.split(/;/), cmds: st.cmds});
       });
 
+      prefs.tools.value = [];
+      ts.value.forEach(function (tool, index) {
+        prefs.tools.value.push(tool);
+      });
     }
   };
 });

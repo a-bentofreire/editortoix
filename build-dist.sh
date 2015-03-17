@@ -5,7 +5,7 @@ size=$((`find dist/bracketstoix.zip -printf %s`/1024))
 rm -f -r dist/
 mkdir dist
 cat README-dev.md | sed 's/$/  /' > README.md
-find -type d -maxdepth 1 | perl -n -e 'if(!/\.git/ && !/dist/ && !/tests/ && !/compressors/ && !/.sass-cache/) { s/^\.(.+)/cp -r .\1 dist\1/; print;}' | bash
+find -type d -maxdepth 1 | perl -n -e 'if(!/\.git/ && !/dist/ && !/icomoon/ && !/tests/ && !/compressors/ && !/.sass-cache/) { s/^\.(.+)/cp -r .\1 dist\1/; print;}' | bash
 find -type f -maxdepth 1 | perl -n -e 'if(!/\.git/ && !/\.sh/ && !/-dev/) { s/^\.(.+)/cp -r .\1 dist\1/; print;}' | bash
 
 #Brackets doesn't recognizes after names are renamed. So I use only --compilation_level WHITESPACE_ONLY

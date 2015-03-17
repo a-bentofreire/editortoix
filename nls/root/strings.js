@@ -83,11 +83,16 @@ define({
   'HDR_commandsmapper_Hotkey_label': 'Hotkey',
   'HDR_commandsmapper_Show on Menu_label': 'Show on Menu',
   'HDR_commandsmapper_Show on CtxMenu_label': 'Show on CtxMenu',
+  'FLD_Cmdline_label': 'Cmdline',
+  'FLD_Path_label': 'Path',
+  'FLD_Predefined_label': 'Predefined',
+  'FLD_ShowOutput_label': 'Show Output',
 
   'CAT_General': 'General',
   'CAT_Compilers': 'Compilers',
   'CAT_Shortcuts': 'Shortcuts',
   'CAT_BeforeSave': 'Before Save',
+  'CAT_Tools': 'Tools',
   'Extensions': 'Extensions',
 
   'UpperCase': 'UpperCase',
@@ -134,5 +139,7 @@ define({
   'Compiler': 'Compile(js6, scss)',
   'Commands': 'Commands',
   'Commands Mapper': 'Commands Mapper',
-  'Options': 'Options'
+  'Options': 'Options',
+
+  'Execute': 'Execute'
 });

@@ -75,14 +75,23 @@ define({
   'HDR_options_Field_label': 'Campo',
   'HDR_options_Value_label': 'Valor',
   'HDR_options_ExecOnSave_label': 'Executar quando Guarda',
+  'HDR_commandsmapper_Command_label': 'Commndo',
+  'HDR_commandsmapper_Hotkey_label': 'Hotkey',
+  'HDR_commandsmapper_Show on Menu_label': 'Mostrar no Menu',
+  'HDR_commandsmapper_Show on CtxMenu_label': 'Mostrar on Menu Contexto',
 
   'CAT_General': 'Geral',
   'CAT_Compilers': 'Compiladores',
   'CAT_Shortcuts': 'Atalhos',
   'CAT_BeforeSave': 'Antes de guardar',
+  'CAT_Tools': 'Ferramentas',
   'Extensions': 'Extensões',
   'FLD_webSearch_label': 'Url do Engenho de procura',
   'FLD_showcxtedit_label': 'Mostra os comandos de edição no menu de contextual',
+  'FLD_Cmdline_label': 'Linha Comando',
+  'FLD_Path_label': 'Trilha',
+  'FLD_Predefined_label': 'Predefinido',
+  'FLD_ShowOutput_label': 'Mostrar Saída',
 
   'UpperCase' : 'Converter para Maiúsculas',
   'LowerCase' : 'Converter para Minúsculas',
@@ -129,4 +138,6 @@ define({
   'Commands' : 'Comandos',
   'Commands Mapper' : 'Mapeador de Comandos',
   'Options' : 'Opções',
+
+  'Execute': 'Executar'
 });

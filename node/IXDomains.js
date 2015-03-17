@@ -23,60 +23,65 @@
  */
 
 
-/*jslint vars: true, plusplus: true, devel: true, nomen: true, indent: 4, maxerr: 50 */
+/*jslint vars: true, plusplus: true, devel: true, nomen: true, indent: 2, maxerr: 50 */
 /*global require, exports, console */
 (function () {
-    'use strict';
-/** ------------------------------------------------------------------------
- *                               Node Requires
- ** ------------------------------------------------------------------------ */
-    var nodeExec = require('child_process').exec,
-        fs = require('fs');
-/** ------------------------------------------------------------------------
- *                               Commands
- ** ------------------------------------------------------------------------ */   
-    function cmdExec(cmdline, cwd, callback, param) {
-        var opts = {cwd: cwd};
-        nodeExec(cmdline, opts, function (error, stdout, stderr) {
-            console.log('Executed:'  + cmdline);
-            if (stderr) {
-                console.log('StdErr: ' + stderr);
-            }
-            if (callback) {
-                callback(error, stdout, stderr, param);                
-            }
-        });
-    }
-/** ------------------------------------------------------------------------
- *                               Init
- ** ------------------------------------------------------------------------ */
-    function init(DomainManager) {
-        var i, cmd,
-          cmds = [
-          {name: 'exec', f: cmdExec, desc: 'Executes as a child process', 
-                params: [{name: 'cmdline', type: 'string', description: 'cmdline'},
-                         {name: 'cwd', type: 'string', description: 'curpath'}/*, //@TODO Implement a callback system to print the stderr and stdout
-                         {name: 'callback', type: 'function', description: 'callback'},
-                         {name: 'param', type: 'boolean', description: 'param'}*/]}
+  'use strict';
+  // ------------------------------------------------------------------------
+  //                               Node Requires
+  // ------------------------------------------------------------------------
+  var nodeExec = require('child_process').exec,
+      fs = require('fs'),
+      DOMAINNAME = 'IXDomains';
+
+  // ------------------------------------------------------------------------
+  //                               Commands
+  // ------------------------------------------------------------------------
+  function cmdExec(cmdline, cwd, callback) {
+    var opts = {cwd: cwd};
+    nodeExec(cmdline, opts, function (error, stdout, stderr) {
+      if (callback) {
+        stderr = stderr || '';
+        stdout = stdout || '';
+      // All the output is packed into a single string separated by \n
+      // Attempted to send the multiple parameters in separate but it failed to work
+        callback('', [error === null ? '' : ('' + error.code),
+                 '' + stdout.split('\n').length,
+                 stdout,
+                 stderr].join('\n'));
+      }
+    });
+  }
+  // ------------------------------------------------------------------------
+  //                               Init
+  // ------------------------------------------------------------------------
+  function init(DomainManager) {
+    var i, cmd,
+        cmds = [
+          {name: 'exec', f: cmdExec, desc: 'Executes as a child process',
+           params: [{name: 'cmdline', type: 'string', description: 'node command'},
+                    {name: 'cwd', type: 'string', description: 'path'}],
+
+           returns: [{name: 'out', type: 'string'}]}
         ];
 
-        if (!DomainManager.hasDomain('IXDomains')) {
-            DomainManager.registerDomain('IXDomains', {major: 0, minor: 1});
-        }
+    if (!DomainManager.hasDomain(DOMAINNAME)) {
+      DomainManager.registerDomain(DOMAINNAME, {major: 0, minor: 1});
+    }
 
-        for (i = 0; i < cmds.length; i++) {
-            cmd = cmds[i];
-            DomainManager.registerCommand(
-              'IXDomains',  // domain name
-              cmd.name, // command name
-              cmd.f, // command handler function
-              false, // this command is not synchronous
-              cmd.desc,
-              cmd.params,
-              cmd.returns || []
-            );
-        }
-    }  
+    for (i = 0; i < cmds.length; i++) {
+      cmd = cmds[i];
+      DomainManager.registerCommand(
+        DOMAINNAME,  // domain name
+        cmd.name, // command name
+        cmd.f, // command handler function
+        true, // synchronous
+        cmd.desc,
+        cmd.params,
+        cmd.returns || []
+      );
+    }
+  }
   exports.init = init;
-  
+
 }());

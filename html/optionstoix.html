@@ -63,17 +63,21 @@
     vertical-align: top;
     padding-right: 0.5em;
   }
-  
-  #beforesavetargetexts, #beforesavetargetcmds, #beforesavecmds {
+
+  #beforesavetargetexts, #beforesavetargetcmds, #beforesavecmds, #pdtools {
     margin-left: 0px;
   }
 
-  .beforesavetoolbar {
+  #pdtoolsadd {
+    vertical-align: top;
+  }
+
+  .beforesavetoolbar, .toolstoolbar {
     padding-top: 5px;
     padding-bottom: 5px;
     text-align: center;
   }
-  
+
   .beforesavetoppanel {
     height: 4em;
   }
@@ -82,7 +86,7 @@
   <ul>
     <li id=general>{{str.CAT_General}}</li>
     <li id=compilers>{{str.CAT_Compilers}}</li>
-    <!--li id=shortcuts>{{str.CAT_Shortcuts}}</li-->
+    <li id=tools>{{str.CAT_Tools}}<li><!--li id=shortcuts>{{str.CAT_Shortcuts}}</li-->
     <li id=beforesave>{{str.CAT_BeforeSave}}</li>
   </ul>
 </div>
@@ -117,6 +121,8 @@
 </div>
 
 
+
+
 <div id=toixcompilers class=toixtab> 
   <div class=toixtablab>{{str.CAT_Compilers}}</div>
   <table>
@@ -130,8 +136,8 @@
     <tr>
       <td></td>
       <td>
-        <button class="field-button" data-info="toixscss,scss,0">Compass</button>
-        <button class="field-button" data-info="toixscss,scss,1">SCSS</button>
+        <button class="dialog-button btn" class="field-button" data-info="toixscss,scss,0">Compass</button>
+        <button class="dialog-button btn" class="field-button" data-info="toixscss,scss,1">SCSS</button>
       </td>
     </tr>
 
@@ -145,6 +151,56 @@
 </div>
 
 
+
+
+
+<div id=toixtools class=toixtab> 
+  <div class=toixtablab>{{str.CAT_Tools}}</div>
+  <div class=toixvertpanel >
+    <div class=toolstoolbar>
+      <button class="dialog-button btn" id="toolsadd">+</button>
+      <button class="dialog-button btn" id="toolsremove">-</button>
+      <button class="dialog-button btn" id="toolsup">&uarr;</button>
+      <button class="dialog-button btn" id="toolsdown">&darr;</button>
+      <button class="dialog-button btn" id="toolsupdate">{{corestr.UPDATE}}</button>
+    </div>
+
+    <select id="toollist" size=10>
+    </select>
+  </div>
+
+  <div class=toixvertpanel >
+    <div>
+      <label for="pdtools">{{str.FLD_Predefined_label}}:</label><br/>
+      <select id="pdtools">
+      </select>
+      <button class="dialog-button btn" id="pdtoolsadd">+</button>
+    </div>
+    <div>
+      <label for="toolname">Name:</label><br/>
+      <input id="toolname" value="" type="text">
+    </div>
+    <div>
+      <label for="toolcmdline">{{str.FLD_Cmdline_label}}:</label><br/>
+      <input id="toolcmdline" value="" type="text">
+    </div>
+    <div>
+      <input id="toolshowonmenu" value="" type="checkbox">
+      <label for="toolshowonmenu" title="{{str.FLD_showcxtedit_hint}}">{{str.HDR_commandsmapper_Show on Menu_label}}</label>
+    </div>
+    <div>
+      <input id="toolshowoutput" value="" type="checkbox">
+      <label for="toolshowoutput">{{str.FLD_ShowOutput_label}}</label>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
 <div id=toixbeforesave class=toixtab> 
   <div class=toixtablab>{{str.CAT_BeforeSave}}</div>
   <div class=toixvertpanel >
@@ -154,11 +210,11 @@
     </div>
 
     <div class=beforesavetoolbar>
-      <button id="beforesaveextadd">+</button>
-      <button id="beforesaveextremove">-</button>
-      <button id="beforesaveextup">&uarr;</button>
-      <button id="beforesaveextdown">&darr;</button>
-      <button id="beforesaveextupdate">{{corestr.UPDATE}}</button>
+      <button class="dialog-button btn" id="beforesaveextadd">+</button>
+      <button class="dialog-button btn" id="beforesaveextremove">-</button>
+      <button class="dialog-button btn" id="beforesaveextup">&uarr;</button>
+      <button class="dialog-button btn" id="beforesaveextdown">&darr;</button>
+      <button class="dialog-button btn" id="beforesaveextupdate">{{corestr.UPDATE}}</button>
     </div>
 
     <select id="beforesavetargetexts" size=6>
@@ -174,10 +230,10 @@
     </div>
 
     <div class=beforesavetoolbar>
-      <button id="beforesavecmdadd">+</button>
-      <button id="beforesavecmdremove">-</button>
-      <button id="beforesavecmdup">&uarr;</button>
-      <button id="beforesavecmddown">&darr;</button>
+      <button class="dialog-button btn" id="beforesavecmdadd">+</button>
+      <button class="dialog-button btn" id="beforesavecmdremove">-</button>
+      <button class="dialog-button btn" id="beforesavecmdup">&uarr;</button>
+      <button class="dialog-button btn" id="beforesavecmddown">&darr;</button>
     </div>
 
     <select id="beforesavetargetcmds" size=6>

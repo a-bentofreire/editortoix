@@ -1,4 +1,4 @@
-![Logo](bracketstoix64x64.png)  
+![Logo](assets/bracketstoix64x64.png)  
   
 # BracketstoIX extension  
   
@@ -153,6 +153,13 @@ Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros
   * **Options** - Configuration dialog  
   
 ## Version History  
+* 3.0     [http://www.apptoix.com/blog/?p=132]   
+    Added Execute command  
+    IX Menu supports execution of external Tools  
+    Added Tools tab to te Options dialog   
+    Dialogs' header include social icons  
+    Internal improvements  
+      
 * 2.12    [http://www.apptoix.com/blog/?p=126]  
     Fixed a critical bug in version 2.11, where .txt files became uppercase on save.  
       

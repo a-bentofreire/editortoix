@@ -69,7 +69,8 @@ define(function() {
       return _htmlencode(text);
     },
 
-    ask: function(title, storeid, fieldnames, callback, opts, allfields, saveextprefs, historysize, i18n, brk) {
+    ask: function(title, storeid, fieldnames, callback, opts, allfields,
+                   saveextprefs, historysize, i18n, brk, handleSocial) {
       var PREFIX = 'toix',
           DEFSIZE = 25,
           BRACKETSTOIX_DIALOG_ID = "bracketstoix-dialog";
@@ -217,8 +218,8 @@ define(function() {
             html = '<style>table.toix { width: 100%; box-sizing: border-box; padding-right: 20px;} ' +
             ' table.toix td { vertical-align: middle }</style>';
         /*html += '<input name="frameworks" list="frameworks" type="text" /><datalist id="frameworks">	<option value="MooTools"><option value="jQuery">	<option value="YUI"></datalist>';*/ // datalist test
-        html += '<input id=dlgtransparency title="Transparency" type=range min=20 max=100 value=100 ' +
-          'style="position:absolute;right:+10px;top:0px;border:dotted #8c8c8c 1px"><div style="margin-bottom:5px">&nbsp;</div>';
+        html += '<input id=dlgtransparencytoix title="Transparency" type=range min=20 max=100 value=100 ' +
+          '><div style="margin-bottom:5px">&nbsp;</div>';
 
         if (opts && opts.msg) {
           html += '<div style="margin-bottom:5px">' + opts.msg + '</div>';
@@ -373,6 +374,9 @@ define(function() {
       if (opts && opts.handler) {
         opts.handler.afterBuild($dlg);
       }
+      // Social icons
+     handleSocial($dlg);
+
       // By default, Brackets will focus the primary button, this code will override that action
       if (firstfieldid) {
         $dlg.find('#' + firstfieldid).focus();
@@ -383,7 +387,7 @@ define(function() {
 
       // Transparency support
 
-      $dlg.find("#dlgtransparency").change(function(e) {
+      $dlg.find("#dlgtransparencytoix").change(function(e) {
         var qMBody = $dlg.find('.modal-body'),
             val = $(this).val() / 100;
 
@@ -410,7 +414,7 @@ define(function() {
 
       // Cancel and OK button
 
-      $dlg.one("click", ".dialog-button", function(e) {
+      $dlg.one("click", ".modal-footer .dialog-button", function(e) {
 
         function storeField(field, fieldname, suffix) {
           var msg, res, index,

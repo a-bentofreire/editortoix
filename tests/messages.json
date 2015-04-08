@@ -7,11 +7,11 @@
   },
   "capitalize": {
     "message": "Capitalize"
-  },
-  "sortascending": {
+  }, 
+  "sortascending": {  
     "message": "Sort Ascending"
   },
-  "sortdescending": {
-    "message": "Sort Descending"
+  "sortdescending": { 
+    "message": "Sort Descending"  
   }
-}
+}  

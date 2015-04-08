@@ -64,7 +64,8 @@
     padding-right: 0.5em;
   }
 
-  #beforesavetargetexts, #beforesavetargetcmds, #beforesavecmds, #pdtools {
+  #beforesavetargetexts, #beforesavetargetcmds, #beforesavecmds, 
+  #aftersavetargetexts, #aftersavetargetcmds, #aftersavecmds, #pdtools {
     margin-left: 0px;
   }
 
@@ -72,13 +73,13 @@
     vertical-align: top;
   }
 
-  .beforesavetoolbar, .toolstoolbar {
+  .beforesavetoolbar, .aftersavetoolbar, .toolstoolbar {
     padding-top: 5px;
     padding-bottom: 5px;
     text-align: center;
   }
 
-  .beforesavetoppanel {
+  .beforesavetoppanel, .aftersavetoppanel {
     height: 4em;
   }
 </style> 
@@ -88,6 +89,7 @@
     <li id=compilers>{{str.CAT_Compilers}}</li>
     <li id=tools>{{str.CAT_Tools}}<li><!--li id=shortcuts>{{str.CAT_Shortcuts}}</li-->
     <li id=beforesave>{{str.CAT_BeforeSave}}</li>
+    <li id=aftersave>{{str.CAT_AfterSave}}</li>
   </ul>
 </div>
 
@@ -237,6 +239,47 @@
     </div>
 
     <select id="beforesavetargetcmds" size=6>
+    </select>
+  </div>
+
+</div>
+
+<div id=toixaftersave class=toixtab> 
+  <div class=toixtablab>{{str.CAT_AfterSave}}</div>
+  <div class=toixvertpanel >
+    <div class=aftersavetoppanel>
+      <label for="aftersaveexts">{{str.Extensions}}:</label><br/>
+      <input id="aftersaveexts" title="ex:.js6;.js;.css" value="" type="text">
+    </div>
+
+    <div class=aftersavetoolbar>
+      <button class="dialog-button btn" id="aftersaveextadd">+</button>
+      <button class="dialog-button btn" id="aftersaveextremove">-</button>
+      <button class="dialog-button btn" id="aftersaveextup">&uarr;</button>
+      <button class="dialog-button btn" id="aftersaveextdown">&darr;</button>
+      <button class="dialog-button btn" id="aftersaveextupdate">{{corestr.UPDATE}}</button>
+    </div>
+
+    <select id="aftersavetargetexts" size=6>
+    </select>
+  </div>
+
+
+  <div class=toixvertpanel >
+    <div class=aftersavetoppanel>
+      <label for="aftersavecmds">{{str.CAT_Tools}}:</label><br/>
+      <select id="aftersavecmds">
+      </select>
+    </div>
+
+    <div class=aftersavetoolbar>
+      <button class="dialog-button btn" id="aftersavecmdadd">+</button>
+      <button class="dialog-button btn" id="aftersavecmdremove">-</button>
+      <button class="dialog-button btn" id="aftersavecmdup">&uarr;</button>
+      <button class="dialog-button btn" id="aftersavecmddown">&darr;</button>
+    </div>
+
+    <select id="aftersavetargetcmds" size=6>
     </select>
   </div>
 

@@ -39,7 +39,7 @@ define(function(require, exports, module) {
   // ------------------------------------------------------------------------
   //                               i18n
   // ------------------------------------------------------------------------
-  var /** @const */ VERSION = '3.0',
+  var /** @const */ VERSION = '3.1',
       /** @const */ IXMENU = "IX",
       /** @const */ IXMENUTT = "IX TT",
       /** @const */ MODULENAME = 'bracketstoix',
@@ -95,6 +95,8 @@ define(function(require, exports, module) {
       snippets,
       namedcmdlist = [], cmdlist, // list of commands
       storeidmap = {},
+      queueExternalSave = [],
+      externalQueueIsBusy = false,
       globalDoc = null; // this var is set to override the current document. If set the runCommand will stop working.
 
   // ------------------------------------------------------------------------
@@ -1246,7 +1248,7 @@ define(function(require, exports, module) {
             PanelManager.createBottomPanel(MODULENAME, text);
         }
     }*/
-  function runCompilerEx(autosave) {
+  function runCompilerEx(autosave, filename) {
 
     var exts = [
       {
@@ -1262,7 +1264,7 @@ define(function(require, exports, module) {
         outext: '.min.js'
       }],
 
-        infile = getCurFileName(),
+        infile = filename || getCurFileName(),
         outfile, i, ext, pref;
 
     for (i = 0; i < exts.length; i++) {
@@ -1798,26 +1800,51 @@ function execSnippets() {
     }
   }
   // ------------------------------------------------------------------------
-  //                               Save Commands
+  //                               Before & After Save
   // ------------------------------------------------------------------------
-  function runSaveCommands() {
-    runCompilerEx(true);
+  function execExternalQueue() {
+    var tool;
+    if (externalQueueIsBusy || !queueExternalSave.length) {
+      return;
+    }
+    externalQueueIsBusy = true;
+    //@TODO: Execute next node command only after it returned from the previous request
+    while (queueExternalSave.length) {
+      tool = queueExternalSave.shift();
+      nodeExec(tool.cmdline, getProjectRoot(), tool.cmdline, false, false, {'in': tool.infile, 'out': tool.outfile});
+    }
+    externalQueueIsBusy = false;
   }
 
-  // ------------------------------------------------------------------------
-  //                               Before Save
-  // ------------------------------------------------------------------------
-  function runBeforeSaveCommands(doc, ext) {
-    prefs.beforesave.value.forEach(function (st) {
+  function runEventSaveCommands(doc, ext, prefvar) {
+    var toolmap;
+    prefvar.value.forEach(function (st) {
       if (st.exts.indexOf(ext) > -1) {
         st.cmds.forEach(function (storeid) {
-          var cmd = storeidmap[storeid];
-          if (cmd) { // in case a command gets deprecated
-            globalDoc = doc;
-            try {
-              runCommand(cmd, true);
-            } finally {
-              globalDoc = null;
+          var cmd, tool;
+          if (storeid[0] === '@') {
+            // tool
+            if(!toolmap) {
+              toolmap = {};
+              prefs.tools.value.forEach(function (tool) {
+                toolmap['@' + tool.name] = tool;
+              });
+            }
+            tool = toolmap[storeid];
+            if (tool) {
+              queueExternalSave.push({cmdline: tool.cmdline, infile: doc.file._path, outfile: ''});
+            }
+
+          } else {
+            // cmd
+            cmd = storeidmap[storeid];
+            if (cmd) { // in case a command gets deprecated
+              globalDoc = doc;
+              try {
+                runCommand(cmd, true);
+              } finally {
+                globalDoc = null;
+              }
             }
           }
         });
@@ -1825,13 +1852,13 @@ function execSnippets() {
     });
   }
 
-  function runBeforeSave(isAll) {
+  function runEventSave(isAll, execSaveCommand, prefvar) {
     function exec(doc) {
       var ext;
       if (doc && doc.isDirty && doc.file && doc.file.isFile && !doc.isUntitled()) {
         ext = doc.file.name.replace(/^.*(\.[^\.]+)$/, '$1');
         if (ext.length) {
-          runBeforeSaveCommands(doc, ext);
+          execSaveCommand(doc, ext, prefvar);
         }
       }
     }
@@ -1843,6 +1870,16 @@ function execSnippets() {
     } else {
       exec(brk.DocumentManager.getCurrentDocument());
     }
+    execExternalQueue();
+  }
+
+  // ------------------------------------------------------------------------
+  //                               Save Commands
+  // ------------------------------------------------------------------------
+  function runAfterSaveCommands(event, doc) {
+    runEventSaveCommands(doc, doc.file.name.replace(/^.*(\.[^\.]+)$/, '$1'), prefs.aftersave);
+    runCompilerEx(true, doc.file._path);
+    execExternalQueue();
   }
   // ------------------------------------------------------------------------
   //                               Init
@@ -1860,10 +1897,10 @@ function execSnippets() {
     initprefbuttons();
     posVersionCheck();
     brk.DocumentManager.on('currentDocumentChange', _onDocumentChanged);
-    brk.DocumentManager.on('documentSaved', runSaveCommands);
+    brk.DocumentManager.on('documentSaved', runAfterSaveCommands);
     brk.CommandManager.on('beforeExecuteCommand', function(event, type) {
       if (type.indexOf("file.save") === 0) {
-        runBeforeSave(type === "file.saveAll");
+        runEventSave(type === "file.saveAll", runEventSaveCommands, prefs.beforesave);
       }
     });
   }

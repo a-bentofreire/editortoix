@@ -32,11 +32,13 @@ define(function() {
       $curtab,
       curtabname,
       usablecmds,
+      usabletools,
       storeidmap = {},
       prefs,
       ix,
       tools,
-      bs = {},
+      bs = {}, // beforesave
+      as = {}, // aftersave
       ts = {}; // beforesave
 
 
@@ -44,23 +46,23 @@ define(function() {
     return '<option value="' + val + '">' + tools.htmlEscape(text) + '</option>';
   }
 
-  function _fillBeforeSaveTargetExts() {
+  function _fillEventSaveTargetExts(rec) {
     var html = '';
-    bs.value.forEach(function (st, index) {
+    rec.value.forEach(function (st, index) {
       html += buildOptionHtml(index, st.exts);
     });
-    bs.$targetexts.html(html);
+    rec.$targetexts.html(html);
   }
 
 
-  function _fillBeforeSaveTargetCmds() {
+  function _fillEventSaveTargetCmds(rec) {
     var html = '';
-    if (bs.curextidx >= 0) {
-      bs.value[bs.curextidx].cmds.forEach(function(storeid) {
+    if (rec.curextidx >= 0) {
+      rec.value[rec.curextidx].cmds.forEach(function(storeid) {
         html += buildOptionHtml(storeid, storeidmap[storeid].label);
       });
     }
-    bs.$targetcmds.html(html);
+    rec.$targetcmds.html(html);
   }
 
   function _fillTools() {
@@ -72,7 +74,7 @@ define(function() {
   }
 
 
-  function _listOp(delta, index, array, fillfunc, $list) {
+  function _listOp(delta, index, array, fillfunc, $list, rec) {
     var svitem;
     if ((index + delta) >= 0 && (index + delta) < array.length) {
       svitem = array[index];
@@ -80,7 +82,7 @@ define(function() {
       if (delta) {
         array.splice(index + delta, 0, svitem);
       }
-      fillfunc();
+      fillfunc(rec);
       if (delta) {
         $list[0].selectedIndex = index + delta;
       }
@@ -89,15 +91,15 @@ define(function() {
     }
   }
 
-  function _beforeSaveTargetCmdsListOp(delta) {
-    if (bs.curextidx >= 0) {
-      _listOp(delta, bs.curcmdidx, bs.value[bs.curextidx].cmds, _fillBeforeSaveTargetCmds, bs.$targetcmds);
+  function _eventSaveTargetCmdsListOp(delta, rec) {
+    if (rec.curextidx >= 0) {
+      _listOp(delta, rec.curcmdidx, rec.value[rec.curextidx].cmds, _fillEventSaveTargetCmds, rec.$targetcmds, rec);
     }
   }
 
   function _toolsListOp(delta) {
     _listOp(delta, ts.curidx, ts.value, _fillTools, ts.$toollist);
-  } 
+  }
 
   function toolUItoValue() {
     var name = ts.$toolname.val().trim(),
@@ -120,19 +122,115 @@ define(function() {
     ts.$toolshowoutput.get(0).checked = tool.showoutput;
   }
 
+
+  function _buildEventSave(rec, htmlprefix, fillHandler, usablelist) {
+    var html = '';
+    rec.$exts = $dlg.find(htmlprefix + 'saveexts');
+    rec.$targetexts = $dlg.find(htmlprefix + 'savetargetexts');
+    rec.$cmds = $dlg.find(htmlprefix + 'savecmds');
+    rec.$targetcmds = $dlg.find(htmlprefix + 'savetargetcmds');
+    rec.curextidx = -1;
+    rec.curcmdidx = -1;
+
+    fillHandler(rec);
+    usablelist.forEach(function(cmd) {
+      html += buildOptionHtml(cmd.storeid, cmd.label);
+    });
+    rec.$cmds.html(html);
+
+
+    $(htmlprefix + "saveextadd").click(function () {
+      var exts = rec.$exts.val().trim(),
+          idx = rec.value.length;
+
+      if(exts.length) {
+        rec.value.push({exts: exts, cmds: []});
+        rec.$targetexts.append(buildOptionHtml(idx, exts));
+      }
+    });
+
+    $(htmlprefix + "saveextremove").click(function () {
+      _listOp(0, rec.curextidx, rec.value, fillHandler, rec.$targetexts, rec);
+    });
+
+    $(htmlprefix + "saveextup").click(function () {
+      _listOp(-1, rec.curextidx, rec.value, fillHandler, rec.$targetexts, rec);
+    });
+
+    $(htmlprefix + "saveextdown").click(function () {
+      _listOp(1, rec.curextidx, rec.value, fillHandler, rec.$targetexts, rec);
+    });
+
+    $(htmlprefix + "saveextupdate").click(function () {
+      var exts = rec.$exts.val().trim();
+      if (exts.length && rec.curextidx >= 0) {
+        rec.value[rec.curextidx].exts = exts;
+        rec.$targetexts[0][rec.curextidx].label = exts;
+      }
+    });
+
+
+    $(htmlprefix + "savecmdadd").click(function () {
+      var storeid = rec.$cmds.val();
+      if (rec.curextidx < 0) {
+        return;
+      }
+      rec.value[rec.curextidx].cmds.push(storeid);
+      rec.$targetcmds.append(buildOptionHtml(storeid, storeidmap[storeid].label));
+    });
+
+    $(htmlprefix + "savecmdremove").click(function () {
+      _eventSaveTargetCmdsListOp(0, rec);
+    });
+
+    $(htmlprefix + "savecmdup").click(function () {
+      _eventSaveTargetCmdsListOp(-1, rec);
+    });
+
+    $(htmlprefix + "savecmddown").click(function () {
+      _eventSaveTargetCmdsListOp(1, rec);
+    });
+
+    rec.$targetexts.click(function () {
+      rec.curextidx = rec.$targetexts[0].selectedIndex >> 0;
+      _fillEventSaveTargetCmds(rec);
+      rec.curcmdidx = -1;
+      if (rec.curextidx >= 0) {
+        rec.$exts.val(rec.value[rec.curextidx].exts);
+      } else {
+        rec.$exts.val('');
+      }
+    });
+
+    rec.$targetcmds.click(function () {
+      var html = '';
+      rec.curcmdidx = rec.$targetcmds[0].selectedIndex >> 0;
+    });
+
+    if(rec.value.length) {
+      rec.$targetexts[0].selectedIndex = 0;
+      rec.$targetexts.click();
+    }
+  }
+
   return {
     dlgtemplate: 'options.html',
     // ------------------------------------------------------------------------
     //                               prepare
     // ------------------------------------------------------------------------
     prepare: function (aprefs, cmdlist, aix, atools) {
+      function eventPrepare(prefvar, rec) {
+        rec.value = [];
+        prefvar.value.forEach(function (st, index) {
+          rec.value.push({exts: st.exts.join(';'), cmds: st.cmds});
+        });
+      }
+
       var html;
       prefs = aprefs;
       tools = atools;
-      bs.value = [];
-      prefs.beforesave.value.forEach(function (st, index) {
-        bs.value.push({exts: st.exts.join(';'), cmds: st.cmds});
-      });
+      eventPrepare(prefs.beforesave, bs);
+      eventPrepare(prefs.aftersave, as);
 
       if (!usablecmds) {
         usablecmds = [];
@@ -143,6 +241,13 @@ define(function() {
           }
         });
       }
+      usabletools = [];
+      prefs.tools.value.forEach(function (tool) {
+        var tag = tool.name,
+            cmd = {storeid: '@' + tag, label: tag};
+        usabletools.push(cmd);
+        storeidmap['@' + tag] = cmd;
+      });
 
       ts.value = [];
       prefs.tools.value.forEach(function (tool) {
@@ -151,100 +256,6 @@ define(function() {
 
       ix = aix;
     },
-    // ------------------------------------------------------------------------
-    //                               buildBeforeSave
-    // ------------------------------------------------------------------------
-    buildBeforeSave: function () {
-      var html = '';
-      bs.$exts = $dlg.find('#beforesaveexts');
-      bs.$targetexts = $dlg.find('#beforesavetargetexts');
-      bs.$cmds = $dlg.find('#beforesavecmds');
-      bs.$targetcmds = $dlg.find('#beforesavetargetcmds');
-      bs.curextidx = -1;
-      bs.curcmdidx = -1;
-
-      _fillBeforeSaveTargetExts();
-      usablecmds.forEach(function(cmd) {
-        html += buildOptionHtml(cmd.storeid, cmd.label);
-      });
-      bs.$cmds.html(html);
-
-
-      $("#beforesaveextadd").click(function () {
-        var exts = bs.$exts.val().trim(),
-            idx = bs.value.length;
-
-        if(exts.length) {
-          bs.value.push({exts: exts, cmds: []});
-          bs.$targetexts.append(buildOptionHtml(idx, exts));
-        }
-      });
-
-      $("#beforesaveextremove").click(function () {
-        _listOp(0, bs.curextidx, bs.value, _fillBeforeSaveTargetExts, bs.$targetexts);
-      });
-
-      $("#beforesaveextup").click(function () {
-        _listOp(-1, bs.curextidx, bs.value, _fillBeforeSaveTargetExts, bs.$targetexts);
-      });
-
-      $("#beforesaveextdown").click(function () {
-        _listOp(1, bs.curextidx, bs.value, _fillBeforeSaveTargetExts, bs.$targetexts);
-      });
-
-      $("#beforesaveextupdate").click(function () {
-        var exts = bs.$exts.val().trim();
-        if (exts.length && bs.curextidx >= 0) {
-          bs.value[bs.curextidx].exts = exts;
-          bs.$targetexts[0][bs.curextidx].label = exts;
-        }
-      });
-
-
-      $("#beforesavecmdadd").click(function () {
-        var storeid = bs.$cmds.val();
-        if (bs.curextidx < 0) {
-          return;
-        }
-        bs.value[bs.curextidx].cmds.push(storeid);
-        bs.$targetcmds.append(buildOptionHtml(storeid, storeidmap[storeid].label));
-      });
-
-      $("#beforesavecmdremove").click(function () {
-        _beforeSaveTargetCmdsListOp(0);
-      });
-
-      $("#beforesavecmdup").click(function () {
-        _beforeSaveTargetCmdsListOp(-1);
-      });
-
-      $("#beforesavecmddown").click(function () {
-        _beforeSaveTargetCmdsListOp(1);
-      });
-
-      bs.$targetexts.click(function () {
-        bs.curextidx = bs.$targetexts[0].selectedIndex >> 0;
-        _fillBeforeSaveTargetCmds();
-        bs.curcmdidx = -1;
-        if (bs.curextidx >= 0) {
-          bs.$exts.val(bs.value[bs.curextidx].exts);
-        } else {
-          bs.$exts.val('');
-        }
-      });
-
-      bs.$targetcmds.click(function () {
-        var html = '';
-        bs.curcmdidx = bs.$targetcmds[0].selectedIndex >> 0;
-      });
-
-      if(bs.value.length) {
-        bs.$targetexts[0].selectedIndex = 0;
-        bs.$targetexts.click();
-      }
-
-    },
-
 
     // ------------------------------------------------------------------------
     //                               afterBuild
@@ -274,7 +285,8 @@ define(function() {
       });
 
       $dlg.find('#general').click();
-      this.buildBeforeSave();
+      _buildEventSave(bs, '#before', _fillEventSaveTargetExts, usablecmds);
+      _buildEventSave(as, '#after', _fillEventSaveTargetExts, usabletools);
       this.buildTools();
     },
 
@@ -348,10 +360,14 @@ define(function() {
     //                               afterBuild
     // ------------------------------------------------------------------------
     onSave: function () {
-      prefs.beforesave.value = [];
-      bs.value.forEach(function (st, index) {
-        prefs.beforesave.value.push({exts: st.exts.split(/;/), cmds: st.cmds});
-      });
+      function eventSave(prefvar, rec) {
+        prefvar.value = [];
+        rec.value.forEach(function (st, index) {
+          prefvar.value.push({exts: st.exts.split(/;/), cmds: st.cmds});
+        });
+      }
+      eventSave(prefs.beforesave, bs);
+      eventSave(prefs.aftersave, as);
 
       prefs.tools.value = [];
       ts.value.forEach(function (tool, index) {

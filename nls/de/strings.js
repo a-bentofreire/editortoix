@@ -1,3 +1,5 @@
+// this is automatic generated file. Edit i18n-dev.tsv and run node txt2nls.js
+// this is automatic generated file. Edit i18n-dev.tsv and run node txt2nls.js
 /**
  * @preserve Copyright (c) 2015 ApptoIX Limited. All rights reserved.
  * @author Alexandre Bento Freire
@@ -29,11 +31,10 @@
 define({
   'HISTORY_HINT': ' Mit Strg+UP/DOWN durch die History blättern',
   'SPACETEXT_HINT': ' \\$ für führende und nachfolgende Leerzeichen',
-  'SHORTCUT_HINT' : 'z.B.: Strg-Umsch-U (Win).  Cmd-Shift-U (Mac)',
+  'SHORTCUT_HINT': 'z.B.: Strg-Umsch-U (Win).  Cmd-Shift-U (Mac)',
   'NEED_RESTART_MSG': 'Wird erst nach Neustart wirksam!',
   'DEVBY_MSG': 'Entwickelt von {0}',
-  'EXTRACTOR_MSG' : 'Schreibe einen regulären Ausdruck<br>Alles was darauf passt wird in die Zwischenablage kopiert.<br>',
-
+  'EXTRACTOR_MSG': 'Schreibe einen regulären Ausdruck<br>Alles was darauf passt wird in die Zwischenablage kopiert.<br>',
   'FLD_limaxcharsperline_label': 'Max. Anzahl Zeichen pro Zeile',
   'FLD_limaxcharsperline_hint': 'Auf 0 setzen, um den Zeilenumbruch zu verhindern',
   'FLD_maxcharsperline_label': 'Max. Anzahl Zeichen pro Zeile',
@@ -78,7 +79,6 @@ define({
   'HDR_options_Field_label': 'Feld',
   'HDR_options_Value_label': 'Wert',
   'HDR_options_ExecOnSave_label': 'Beim Speichern ausführen',
-
   'UpperCase': 'Großbuchstaben',
   'LowerCase': 'Kleinbuchstaben',
   'Capitalize': 'Wortanfang groß',

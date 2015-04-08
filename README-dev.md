@@ -153,6 +153,11 @@ Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros
   * **Options** - Configuration dialog
 
 ## Version History
+* 3.1     [http://www.apptoix.com/blog/?p=138] 
+    Added After Save Events
+    Compile on Save fixed for Save All
+    Translations moved to a single file: nls/i18n-dev.tsv. Use node tools/txt2nls.js to build nls/[lang]/strings.js
+    
 * 3.0     [http://www.apptoix.com/blog/?p=132] 
     Added Execute command
     IX Menu supports execution of external Tools

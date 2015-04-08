@@ -1,3 +1,5 @@
+// this is automatic generated file. Edit i18n-dev.tsv and run node txt2nls.js
+// this is automatic generated file. Edit i18n-dev.tsv and run node txt2nls.js
 /**
  * @preserve Copyright (c) 2015 ApptoIX Limited. All rights reserved.
  * @author Alexandre Bento Freire
@@ -28,11 +30,10 @@
 define({
   'HISTORY_HINT': ' Use Ctrl+UP/DOWN to fetch the history',
   'SPACETEXT_HINT': ' use \\$ for leading and trimming spaces',
-  'SHORTCUT_HINT' : 'Ex: Ctrl-Shift-U (win).  Cmd-Shift-U (mac)',
+  'SHORTCUT_HINT': 'Ex: Ctrl-Shift-U (win).  Cmd-Shift-U (mac)',
   'NEED_RESTART_MSG': 'Only takes effect after restart!',
   'DEVBY_MSG': 'Developed by {0}',
-  'EXTRACTOR_MSG' : 'Write a regular expression<br>All matches will be copy to the clipboard<br>',
-
+  'EXTRACTOR_MSG': 'Write a regular expression<br>All matches will be copy to the clipboard<br>',
   'FLD_limaxcharsperline_label': 'Max Chars per line',
   'FLD_limaxcharsperline_hint': 'Set 0 to no word wrap',
   'FLD_maxcharsperline_label': 'Max Chars per line',
@@ -87,14 +88,13 @@ define({
   'FLD_Path_label': 'Path',
   'FLD_Predefined_label': 'Predefined',
   'FLD_ShowOutput_label': 'Show Output',
-
   'CAT_General': 'General',
   'CAT_Compilers': 'Compilers',
   'CAT_Shortcuts': 'Shortcuts',
   'CAT_BeforeSave': 'Before Save',
+  'CAT_AfterSave': 'After Save',
   'CAT_Tools': 'Tools',
   'Extensions': 'Extensions',
-
   'UpperCase': 'UpperCase',
   'LowerCase': 'LowerCase',
   'Capitalize': 'Capitalize',
@@ -140,6 +140,5 @@ define({
   'Commands': 'Commands',
   'Commands Mapper': 'Commands Mapper',
   'Options': 'Options',
-
   'Execute': 'Execute'
 });

@@ -320,6 +320,10 @@ define(function() {
       value: []
     },
 
+    aftersave: {
+      value: []
+    },
+
     tools: {
       value: []
     }

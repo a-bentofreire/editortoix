@@ -190,7 +190,7 @@ define(function() {
 
         if (field.buttons) {
           field.buttons.forEach(function(button, index) {
-            html += '<button class="field-button" data-info="' + id + ',' + fieldname + ',' + index + '">' +
+            html += '<button data-info="' + id + ',' + fieldname + ',' + index + '">' +
               _htmlencode(_getFieldLabel(i18n, button, fieldname, suffix + button.id)) + '</button>';
           });
         }
@@ -399,7 +399,7 @@ define(function() {
 
       // Field buttons. ex: Regnize
 
-      $dlg.find(".field-button").click(function(e) {
+      $dlg.find("button[data-info]").click(function(e) {
         var qfld, fld,
             info, idx, id;
 
@@ -476,7 +476,7 @@ define(function() {
             return isOK;
           });
           if (opts && opts.handler && opts.handler.onSave) {
-            opts.handler.onSave();
+            opts.handler.onSave(opts);
           }
         }
         dlg.close();

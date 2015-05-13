@@ -153,6 +153,10 @@ Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros
   * **Options** - Configuration dialog
 
 ## Version History
+* 3.2     [http://www.apptoix.com/blog/?p=141] 
+    Added Project Tab on Options Dialog
+    Fixed button action on Options Dialog
+
 * 3.1     [http://www.apptoix.com/blog/?p=138] 
     Added After Save Events
     Compile on Save fixed for Save All

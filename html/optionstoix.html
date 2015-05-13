@@ -87,9 +87,11 @@
   <ul>
     <li id=general>{{str.CAT_General}}</li>
     <li id=compilers>{{str.CAT_Compilers}}</li>
-    <li id=tools>{{str.CAT_Tools}}<li><!--li id=shortcuts>{{str.CAT_Shortcuts}}</li-->
+    <li id=tools>{{str.CAT_Tools}}<li>
     <li id=beforesave>{{str.CAT_BeforeSave}}</li>
     <li id=aftersave>{{str.CAT_AfterSave}}</li>
+    <li id=project>{{str.CAT_Project}}</li>
+    <!--li id=shortcuts>{{str.CAT_Shortcuts}}</li-->
   </ul>
 </div>
 
@@ -171,7 +173,7 @@
     </select>
   </div>
 
-  <div class=toixvertpanel >
+  <div class=toixvertpanel>
     <div>
       <label for="pdtools">{{str.FLD_Predefined_label}}:</label><br/>
       <select id="pdtools">
@@ -265,7 +267,7 @@
   </div>
 
 
-  <div class=toixvertpanel >
+  <div class=toixvertpanel>
     <div class=aftersavetoppanel>
       <label for="aftersavecmds">{{str.CAT_Tools}}:</label><br/>
       <select id="aftersavecmds">
@@ -283,4 +285,12 @@
     </select>
   </div>
 
+</div>
+
+<div id=toixproject class=toixtab>
+  <div class=toixtablab>{{str.CAT_Project}}</div>
+  <input id="projspaceUnits" value="" type="checkbox"><label for="projspaceUnits">Spacing</label><br/>
+  <input id="projjs6" value="" type="checkbox"><label for="projjs6">js6</label><br/>
+  <input id="projscss" value="" type="checkbox"><label for="projscss">scss</label><br/>
+  <input id="projjs" value="" type="checkbox"><label for="projjs">js</label><br/>
 </div>

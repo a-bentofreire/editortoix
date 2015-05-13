@@ -39,13 +39,16 @@ define(function(require, exports, module) {
   // ------------------------------------------------------------------------
   //                               i18n
   // ------------------------------------------------------------------------
-  var /** @const */ VERSION = '3.1',
+  var /** @const */ VERSION = '3.2',
+      /** @const */ AUTHOR = 'Alexandre Bento Freire',
+      /** @const */ COPYRIGHTS = 'ApptoIX Limited',
+
       /** @const */ IXMENU = "IX",
       /** @const */ IXMENUTT = "IX TT",
       /** @const */ MODULENAME = 'bracketstoix',
       /** @const */ HELPLINK = 'http://www.apptoix.com/get_bracketstoix.html',
       /** @const */ EXPANDTAGS = ';bu=button;d=div;sp=span;te=textarea;in=input',
-      /** @const */ AUTHOR = 'Alexandre Bento Freire',
+      /** @const */ PROJSETTINGSFILE = '.projecttoix.json',
       // FORCE policy must be the negative of the regular policy
       /** @const */ SP_FORCEALL = -1,
       /** @const */ SP_ALL = 1,
@@ -81,9 +84,12 @@ define(function(require, exports, module) {
   brk.KeyEvent = brackets.getModule('utils/KeyEvent');
   brk.NodeDomain = brackets.getModule('utils/NodeDomain');
   brk.FileUtils = brackets.getModule('file/FileUtils');
+  brk.FileSystem = brackets.getModule('filesystem/FileSystem');
+  //  brk.AppshellFileSystem = brackets.getModule('filesystem/impls/appshell/AppshellFileSystem');
   brk.WorkspaceManager = brackets.getModule('view/WorkspaceManager');
   brk.extprefs = brk.PreferencesManager.getExtensionPrefs(MODULENAME);
   brk.moduleroot = brk.FileUtils.getNativeModuleDirectoryPath(module) + '/';
+  brk.Editor = brackets.getModule("editor/Editor").Editor;
 
   var ui = require('uitoix'),
       tt = require('texttransformstoix'),
@@ -97,6 +103,10 @@ define(function(require, exports, module) {
       storeidmap = {},
       queueExternalSave = [],
       externalQueueIsBusy = false,
+      projSettings = {
+        data: {},
+        applied: false // if no editor is opened, settings is apllied after document open
+      },
       globalDoc = null; // this var is set to override the current document. If set the runCommand will stop working.
 
   // ------------------------------------------------------------------------
@@ -160,137 +170,6 @@ define(function(require, exports, module) {
     prefs.save(prefs, brk.extprefs);
   }
   // ------------------------------------------------------------------------
-  //                               BottomPanel
-  // ------------------------------------------------------------------------
-  function sendToBottomPanel(header, msgarray) {
-    function gettablefromevent(event) {
-      var node = event.target;
-      while (node.tagName.toUpperCase() !== 'TABLE') {
-        node = node.parentElement;
-      }
-      return $(node);
-    }
-
-
-    var html = '',
-        ppanel,
-        $item,
-        headerid;
-    if (!ix.panel) {
-      ix.panel = {headers: {}, lastid: 1};
-      ix.panel.panel = brk.WorkspaceManager.createBottomPanel('', $(ix.htmltempl.BOTTOMPANEL));
-      ppanel = ix.panel.panel;
-      ix.panel.$msg = ppanel.$panel.find('#msg');
-      ppanel.$panel.find('.close').click(function () {
-        ix.panel.panel.hide();
-      });
-      ppanel.$panel.find('#cleartoix').click(function () {
-        ix.panel.$msg.html('');
-        ix.panel.headers = {};
-      });
-
-    }
-    // avoids duplicates, fundamental for compilation errors
-    headerid = ix.panel.headers[header];
-    if (headerid) {
-      ix.panel.$msg.find('#' + headerid).remove();
-    }
-    headerid = ix.panel.lastid;
-    ix.panel.headers[header] = headerid;
-    ix.panel.lastid++;
-
-
-
-    html = Mustache.render(ix.htmltempl.BOTTOMPANELITEMHEAD, {id: headerid, header: header});
-    msgarray.forEach(function (msg) {
-      html += '<tr><td>' + tools.htmlEscape(msg) + '</td></tr>';
-    });
-    html += '</table>';
-    ix.panel.$msg.html(html + ix.panel.$msg.html());
-
-    // add item events
-    ix.panel.$msg.find('#cleartoix').click(function (event) {
-      var $table = gettablefromevent(event);
-      $table.remove();
-    });
-    ix.panel.$msg.find('#copytoix').click(function (event) {
-      var $table = gettablefromevent(event),
-          output = [];
-      $table.find('td').each(function (index, el) {
-        output.push($(el).text());
-      });
-      clipbrdCopy(output.join(''));
-    });
-
-
-    if(!ix.panel.panel.isVisible()) {
-      ix.panel.panel.show();
-    }
-  }
-  // ------------------------------------------------------------------------
-  //                               Node Commads
-  // ------------------------------------------------------------------------
-  function nodeOpenUrl(url) {
-    appshell.app.openURLInDefaultBrowser(url);
-  }
-
-  function displayNodeResult(callsuccess, out, name) {
-
-    function send(tag, start, end) {
-      var arr = out.slice(start, end);
-      // removes the last empty lines. also works for empty single lines results
-      if (arr.length && !arr[arr.length - 1].trim()) {
-        arr.splice(arr.length - 1, 1);
-      }
-      if (arr.length) {
-        sendToBottomPanel(tag + name, arr);
-      }
-    }
-
-    var errcode, stdoutlen;
-    out = out.split(/\n/);
-    errcode = out[0];
-    stdoutlen = out[1] >> 0;
-    out.splice(0, 2);
-    send('', 0, stdoutlen - 1);
-    send('[stderr] ', stdoutlen, out.length);
-  }
-
-  function nodeExec(cmdline, cwd, name, showoutput, showstderr, fileparams) {
-    var root,
-        repllist = [];
-
-    function addrepl(list, prefix, filename, root) {
-      var parts = filename.match(/^(.*)\/([^\/]*)$/),
-          relfile = filename.indexOf(root) === 0 ? filename.substr(root.length) : filename;
-      list.push([prefix, filename]);
-      list.push([prefix + 'file', parts ? parts[2] : '']);
-      list.push([prefix + 'path', parts ? parts[1] : '']);
-      list.push([prefix + 'relfile', relfile]);
-    }
-
-    if (fileparams) {
-      root = getProjectRoot();
-      Object.keys(fileparams).forEach(function (key) {
-        addrepl(repllist, key, fileparams[key], root);
-      });
-
-      repllist.forEach(function(macro) {
-        cmdline = cmdline.replace('{{' + macro[0] + '}}', macro[1]);
-      });
-    }
-
-    ixDomains.exec('exec', cmdline, cwd).fail(function(out) {
-      if (showstderr) {
-        displayNodeResult(false, out, name);
-      }
-    }).done(function(out) {
-      if (showoutput) {
-        displayNodeResult(true, out, name);
-      }
-    });
-  }
-  // ------------------------------------------------------------------------
   //                               Clipboard
   // ------------------------------------------------------------------------
   function clipbrdCopy(text) {
@@ -321,34 +200,7 @@ define(function(require, exports, module) {
     document.body.removeChild(d);
     return text;
   }
-  // ------------------------------------------------------------------------
-  //                               UI
-  // ------------------------------------------------------------------------
-  function buildDlgTitle(title) {
-    return Mustache.render(ix.htmltempl.DLGTITLE, {root: brk.moduleroot, title: title,
-                                                   social: Mustache.render(ix.htmltempl.SOCIAL, SOCIAL)});
-  }
 
-  function handleSocial($dlg) {
-  }
-
-  function ask(title, cmd, fieldlist, callback, opts, fields) {
-    return ui.ask(buildDlgTitle(title || cmd.cleanlabel),
-                  cmd ? cmd.storeid : '',
-                  fieldlist, callback, opts, fields || prefs,
-                  opts && opts.nosaveprefs ? undefined : saveextprefs,
-                  prefs.historySize.value, i18n, brk, handleSocial);
-  }
-
-
-  function showMessage(title, message) {
-    brk.Dialogs.showModalDialog(
-      'bracketstoix-dialog', buildDlgTitle(i18n(title)), message, [{
-        className: brk.Dialogs.DIALOG_BTN_CLASS_PRIMARY,
-        id: brk.Dialogs.DIALOG_BTN_OK,
-        text: brk.CoreStrings.CLOSE
-      }], true);
-  }
   // ------------------------------------------------------------------------
   //                               Controlers
   // ------------------------------------------------------------------------
@@ -575,11 +427,173 @@ define(function(require, exports, module) {
   }
 
   function getProjectRoot() {
-    return brk.ProjectManager.getProjectRoot()._path;
+    var root = brk.ProjectManager.getProjectRoot();
+    return root ? root._path : '';
   }
 
   function copyToClipboard(callback) {
     clipbrdCopy(callback(brk.ProjectManager.getSelectedItem()));
+  }
+
+  // ------------------------------------------------------------------------
+  //                               BottomPanel
+  // ------------------------------------------------------------------------
+  function sendToBottomPanel(header, msgarray) {
+    function gettablefromevent(event) {
+      var node = event.target;
+      while (node.tagName.toUpperCase() !== 'TABLE') {
+        node = node.parentElement;
+      }
+      return $(node);
+    }
+
+
+    var html = '',
+        ppanel,
+        $item,
+        headerid;
+    if (!ix.panel) {
+      ix.panel = {headers: {}, lastid: 1};
+      ix.panel.panel = brk.WorkspaceManager.createBottomPanel('', $(ix.htmltempl.BOTTOMPANEL));
+      ppanel = ix.panel.panel;
+      ix.panel.$msg = ppanel.$panel.find('#msg');
+      ppanel.$panel.find('.close').click(function () {
+        ix.panel.panel.hide();
+      });
+      ppanel.$panel.find('#cleartoix').click(function () {
+        ix.panel.$msg.html('');
+        ix.panel.headers = {};
+      });
+
+    }
+    // avoids duplicates, fundamental for compilation errors
+    headerid = ix.panel.headers[header];
+    if (headerid) {
+      ix.panel.$msg.find('#' + headerid).remove();
+    }
+    headerid = ix.panel.lastid;
+    ix.panel.headers[header] = headerid;
+    ix.panel.lastid++;
+
+
+
+    html = Mustache.render(ix.htmltempl.BOTTOMPANELITEMHEAD, {id: headerid, header: header});
+    msgarray.forEach(function (msg) {
+      html += '<tr><td>' + tools.htmlEscape(msg) + '</td></tr>';
+    });
+    html += '</table>';
+    ix.panel.$msg.html(html + ix.panel.$msg.html());
+
+    // add item events
+    ix.panel.$msg.find('#cleartoix').click(function (event) {
+      var $table = gettablefromevent(event);
+      $table.remove();
+    });
+    ix.panel.$msg.find('#copytoix').click(function (event) {
+      var $table = gettablefromevent(event),
+          output = [];
+      $table.find('td').each(function (index, el) {
+        output.push($(el).text());
+      });
+      clipbrdCopy(output.join(''));
+    });
+
+
+    if(!ix.panel.panel.isVisible()) {
+      ix.panel.panel.show();
+    }
+  }
+
+  // ------------------------------------------------------------------------
+  //                               Node Commads
+  // ------------------------------------------------------------------------
+  function nodeOpenUrl(url) {
+    appshell.app.openURLInDefaultBrowser(url);
+  }
+
+  function displayNodeResult(callsuccess, out, name) {
+
+    function send(tag, start, end) {
+      var arr = out.slice(start, end);
+      // removes the last empty lines. also works for empty single lines results
+      if (arr.length && !arr[arr.length - 1].trim()) {
+        arr.splice(arr.length - 1, 1);
+      }
+      if (arr.length) {
+        sendToBottomPanel(tag + name, arr);
+      }
+    }
+
+    var errcode, stdoutlen;
+    out = out.split(/\n/);
+    errcode = out[0];
+    stdoutlen = out[1] >> 0;
+    out.splice(0, 2);
+    send('', 0, stdoutlen - 1);
+    send('[stderr] ', stdoutlen, out.length);
+  }
+
+  function nodeExec(cmdline, cwd, name, showoutput, showstderr, fileparams) {
+    var root,
+        repllist = [];
+
+    function addrepl(list, prefix, filename, root) {
+      var parts = filename.match(/^(.*)\/([^\/]*)$/),
+          relfile = filename.indexOf(root) === 0 ? filename.substr(root.length) : filename;
+      list.push([prefix, filename]);
+      list.push([prefix + 'file', parts ? parts[2] : '']);
+      list.push([prefix + 'path', parts ? parts[1] : '']);
+      list.push([prefix + 'relfile', relfile]);
+    }
+
+    if (fileparams) {
+      root = getProjectRoot();
+      Object.keys(fileparams).forEach(function (key) {
+        addrepl(repllist, key, fileparams[key], root);
+      });
+
+      repllist.forEach(function(macro) {
+        cmdline = cmdline.replace('{{' + macro[0] + '}}', macro[1]);
+      });
+    }
+
+    ixDomains.exec('exec', cmdline, cwd).fail(function(out) {
+      if (showstderr) {
+        displayNodeResult(false, out, name);
+      }
+    }).done(function(out) {
+      if (showoutput) {
+        displayNodeResult(true, out, name);
+      }
+    });
+  }
+  // ------------------------------------------------------------------------
+  //                               UI
+  // ------------------------------------------------------------------------
+  function buildDlgTitle(title) {
+    return Mustache.render(ix.htmltempl.DLGTITLE, {root: brk.moduleroot, title: title,
+                                                   social: Mustache.render(ix.htmltempl.SOCIAL, SOCIAL)});
+  }
+
+  function handleSocial($dlg) {
+  }
+
+  function ask(title, cmd, fieldlist, callback, opts, fields) {
+    return ui.ask(buildDlgTitle(title || cmd.cleanlabel),
+                  cmd ? cmd.storeid : '',
+                  fieldlist, callback, opts, fields || prefs,
+                  opts && opts.nosaveprefs ? undefined : saveextprefs,
+                  prefs.historySize.value, i18n, brk, handleSocial);
+  }
+
+
+  function showMessage(title, message) {
+    brk.Dialogs.showModalDialog(
+      'bracketstoix-dialog', buildDlgTitle(i18n(title)), message, [{
+        className: brk.Dialogs.DIALOG_BTN_CLASS_PRIMARY,
+        id: brk.Dialogs.DIALOG_BTN_OK,
+        text: brk.CoreStrings.CLOSE
+      }], true);
   }
   // ------------------------------------------------------------------------
   //                               Commands: Transforms
@@ -1286,8 +1300,9 @@ define(function(require, exports, module) {
   // ------------------------------------------------------------------------
   //                               Recent Files
   // ------------------------------------------------------------------------
-  function _onDocumentChanged(event, doc) {
+  function handleDocumentChanged(event, doc) {
     var file, idx, recentFiles;
+    applyEditorProjSettings(projSettings.data);
 
     if (doc && doc.file && doc.file._isFile) {
       file = doc.file._path;
@@ -1316,8 +1331,7 @@ define(function(require, exports, module) {
     //rf.rows = Math.min(prefs.recentSize.value, 20);
     rf.values = [];
 
-    root = brk.ProjectManager.getProjectRoot();
-    root = root ? root._path : '';
+    root = getProjectRoot();
     rlen = root.length;
 
     rf.files.forEach(function(file) {
@@ -1347,7 +1361,7 @@ define(function(require, exports, module) {
 
 function getSnippets(callback) {
     if(!snippets) {
-        $.getJSON(FileUtils.getNativeModuleDirectoryPath(module) + '/snippets.json', function(data) {
+        $.getJSON(brk.FileUtils.getNativeModuleDirectoryPath(module) + '/snippets.json', function(data) {
             snippets = data;
             callback();
         });
@@ -1380,11 +1394,30 @@ function execSnippets() {
                                  devby: brk.StringUtils.format(brk.Strings.DEVBY_MSG, AUTHOR)}));
   }
 
+
   function showOptions(cmd) {
-    optstoix.prepare(prefs, namedcmdlist, ix, tools);
+
+    optstoix.prepare(prefs, namedcmdlist, ix, tools, projSettings);
     ask('', cmd, prefs.OPTIONFIELDS, undefined, {
       dlgtemplate: optshtml,
-      handler: optstoix
+      handler: optstoix,
+
+      setSpaceUnits: function(aProjSetsData, enabled) {
+        if(enabled) {
+          aProjSetsData.useTabChar = brk.Editor.getUseTabChar();
+          aProjSetsData.spaceUnits = brk.Editor.getSpaceUnits();
+          aProjSetsData.tabSize = brk.Editor.getTabSize();
+        } else {
+          delete aProjSetsData['useTabChar'];
+          delete aProjSetsData['spaceUnits'];
+          delete aProjSetsData['tabSize'];
+        }
+      },
+
+      saveProjSettings: function (aProjSetsData) {
+        brk.FileUtils.writeText(brk.FileSystem.getFileForPath(getProjectRoot() + PROJSETTINGSFILE),
+                                JSON.stringify(aProjSetsData, null, ' '));
+      }
     });
   }
 
@@ -1641,7 +1674,7 @@ function execSnippets() {
   }
 
   function addEditCmdsToLocalMenu(ctxMenu) {
-    var EDIT_CMDS = ['CMD_CUT', 'CMD_COPY', 'CMD_PASTE' ],
+    var EDIT_CMDS = ['CMD_CUT', 'CMD_COPY', 'CMD_PASTE'],
         i, cmd, id;
     if (!prefs.showcxtedit.value) {
       return;
@@ -1786,7 +1819,7 @@ function execSnippets() {
       } else {
         _verReq(prevver, 2001, ['recentfiles']);
       }
-      if (prevver < 3000) {
+      if (prevver < 3002) {
         prefs.version.showwelcome = true;
       }
       prefs.version.value = VERSION;
@@ -1874,9 +1907,49 @@ function execSnippets() {
   }
 
   // ------------------------------------------------------------------------
+  //                               Load project settings
+  // ------------------------------------------------------------------------
+  function applyEditorProjSettings(ps) {
+    var editor, value;
+    projSettings.applied = true;
+    if (ps.spaceUnits) {
+      if (brk.Editor.getUseTabChar() !== ps.useTabChar) {
+        $('#indent-type').click();
+        value = ps.useTabChar ? ps.tabSize : ps.spaceUnits;
+        $('#indent-width-label').text(value);
+        $('#indent-width-input').val(value);
+
+        brk.Editor.setSpaceUnits(ps.spaceUnits >> 0);
+        brk.Editor.setTabSize(ps.tabSize >> 0);
+
+      } else {
+        projSettings.applied = false;
+      }
+    }
+  }
+
+  function applyProjSettings(ps) {
+    applyEditorProjSettings(ps);
+  }
+
+  function handleAfterProjectOpen() {
+    var projFile = getProjectRoot() + PROJSETTINGSFILE;
+    projSettings.applied = false;
+    projSettings.data = {};
+    $.getJSON(projFile, function (data) {
+      applyProjSettings(data);
+      projSettings.data = data;
+      optstoix.setPrefsFromProject(prefs, projSettings);
+    }).error(function () {
+      if (projSettings.data) {
+        applyProjSettings(projSettings.data);
+      }
+    });
+  }
+  // ------------------------------------------------------------------------
   //                               Save Commands
   // ------------------------------------------------------------------------
-  function runAfterSaveCommands(event, doc) {
+  function handleDocumentSaved(event, doc) {
     runEventSaveCommands(doc, doc.file.name.replace(/^.*(\.[^\.]+)$/, '$1'), prefs.aftersave);
     runCompilerEx(true, doc.file._path);
     execExternalQueue();
@@ -1896,8 +1969,10 @@ function execSnippets() {
     runLanguageMapper();
     initprefbuttons();
     posVersionCheck();
-    brk.DocumentManager.on('currentDocumentChange', _onDocumentChanged);
-    brk.DocumentManager.on('documentSaved', runAfterSaveCommands);
+    //brk.DocumentManager.on('currentDocumentChange', handleDocumentChanged);
+    brk.EditorManager.on('activeEditorChange', handleDocumentChanged);
+    brk.DocumentManager.on('documentSaved', handleDocumentSaved);
+    brk.ProjectManager.on('projectOpen', handleAfterProjectOpen);
     brk.CommandManager.on('beforeExecuteCommand', function(event, type) {
       if (type.indexOf("file.save") === 0) {
         runEventSave(type === "file.saveAll", runEventSaveCommands, prefs.beforesave);

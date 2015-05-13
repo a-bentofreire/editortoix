@@ -34,6 +34,9 @@ define(function() {
       usablecmds,
       usabletools,
       storeidmap = {},
+      projSettings,
+      projCompilersFlds = ['js6', 'scss', 'js'],
+      projSetsFlds = ['spaceUnits'].concat(projCompilersFlds),
       prefs,
       ix,
       tools,
@@ -218,7 +221,7 @@ define(function() {
     // ------------------------------------------------------------------------
     //                               prepare
     // ------------------------------------------------------------------------
-    prepare: function (aprefs, cmdlist, aix, atools) {
+    prepare: function (aprefs, cmdlist, aix, atools, aprojSettings) {
       function eventPrepare(prefvar, rec) {
         rec.value = [];
         prefvar.value.forEach(function (st, index) {
@@ -229,6 +232,7 @@ define(function() {
       var html;
       prefs = aprefs;
       tools = atools;
+      projSettings = aprojSettings;
       eventPrepare(prefs.beforesave, bs);
       eventPrepare(prefs.aftersave, as);
 
@@ -255,6 +259,50 @@ define(function() {
       });
 
       ix = aix;
+    },
+    // ------------------------------------------------------------------------
+    //                               ProjSettings
+    // ------------------------------------------------------------------------
+    _buildProjSettings: function () {
+      projSetsFlds.forEach(function (field) {
+        if (projSettings.data[field]) {
+          $("#proj" + field).get(0).checked = true;
+        }
+      });
+    },
+
+    setPrefsFromProject: function (aPrefs, aProjSettings) {
+      projCompilersFlds.forEach(function (field) {
+        if (aProjSettings.data[field]) {
+          aPrefs[field].value = aProjSettings.data[field];
+        }
+      });
+    },
+
+    _saveProjSettings: function (dlgopts) {
+      var projSetsData = projSettings.data,
+          isPrevNotEmpty = Object.keys(projSetsData).length;
+
+      projSetsFlds.forEach(function (field) {
+        var isSpaceUnits = field === 'spaceUnits';
+        if ($("#proj" + field).get(0).checked) {
+          if (isSpaceUnits) {
+            dlgopts.setSpaceUnits(projSetsData, true);
+          } else {
+            projSetsData[field] = prefs[field].value;
+          }
+        } else {
+          delete projSetsData[field];
+          if (isSpaceUnits) {
+            dlgopts.setSpaceUnits(projSetsData, false);
+          }
+        }
+      });
+
+      // Save settings
+      if (isPrevNotEmpty || Object.keys(projSetsData).length) {
+        dlgopts.saveProjSettings(projSetsData);
+      }
     },
 
     // ------------------------------------------------------------------------
@@ -287,13 +335,14 @@ define(function() {
       $dlg.find('#general').click();
       _buildEventSave(bs, '#before', _fillEventSaveTargetExts, usablecmds);
       _buildEventSave(as, '#after', _fillEventSaveTargetExts, usabletools);
-      this.buildTools();
+      this._buildTools();
+      this._buildProjSettings();
     },
 
     // ------------------------------------------------------------------------
-    //                               buildtools
+    //                               Tools
     // ------------------------------------------------------------------------
-    buildTools: function () {
+    _buildTools: function () {
       var html = '';
       ts.$toollist = $dlg.find('#toollist');
       ts.$toolname = $dlg.find('#toolname');
@@ -357,9 +406,9 @@ define(function() {
 
     },
     // ------------------------------------------------------------------------
-    //                               afterBuild
+    //                               On Save
     // ------------------------------------------------------------------------
-    onSave: function () {
+    onSave: function (dlgopts) {
       function eventSave(prefvar, rec) {
         prefvar.value = [];
         rec.value.forEach(function (st, index) {
@@ -373,6 +422,7 @@ define(function() {
       ts.value.forEach(function (tool, index) {
         prefs.tools.value.push(tool);
       });
+      this._saveProjSettings(dlgopts);
     }
   };
 });

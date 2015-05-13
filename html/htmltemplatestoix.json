@@ -5,7 +5,7 @@
 
   "ABOUTTEXT": "<div class=abouttexttoix>Brackets<sub>to</sub>IX</div><div style='font-size: 1.2em;'>(c) 2015 App<sub>to</sub>IX</div><div>{{devby}}</div><a href='{{&helplink}}'>Official Webpage</a>",
   
-  "WELLCOME": "<h2>Brackets<sub>to</sub>IX {{version}}</h2>Brackets<sub>to</sub>IX 3 supports the execution of external scripts,<p>including run node commands, compile python scripts.<p>Take a few minutes to watch <a href='http://www.apptoix.com/en/bracketstoix.html#video'>the video</a> describing how to unleash its power.<p><p><p>",
+  "WELLCOME": "<h2>Brackets<sub>to</sub>IX {{version}}</h2>Brackets<sub>to</sub>IX 3.2 allows to save project settings,<p>including spacing and compiler settings.<p>Take a few minutes to watch <a href='http://www.apptoix.com/en/bracketstoix.html#video'>the video</a> describing how to unleash its power.<p><p><p>",
     
   "BOTTOMPANEL": "<div class='bottom-panel vert-resizable top-resizer' id='IXPanel'><div class='toolbar simple-toolbar-layout'><span class='title'>IX</span><div class=bottompaneltoolbartoix><button id='cleartoix' class='btn btn-mini pull-right'>Clear</button></div><a href='#' class='close'>&times;</a></div><div class='table-container resizable-content' id='msg'></div></div>",
   

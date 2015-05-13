@@ -1,5 +1,6 @@
 // this is automatic generated file. Edit i18n-dev.tsv and run node txt2nls.js
 // this is automatic generated file. Edit i18n-dev.tsv and run node txt2nls.js
+// this is automatic generated file. Edit i18n-dev.tsv and run node txt2nls.js
 /**
  * @preserve Copyright (c) 2015 ApptoIX Limited. All rights reserved.
  * @author Alexandre Bento Freire
@@ -93,6 +94,7 @@ define({
   'CAT_BeforeSave': 'Antes de guardar',
   'CAT_AfterSave': 'Após guardar',
   'CAT_Tools': 'Ferramentas',
+  'CAT_Project': 'Projeto',
   'Extensions': 'Extensões',
   'UpperCase': 'Converter para Maiúsculas',
   'LowerCase': 'Converter para Minúsculas',

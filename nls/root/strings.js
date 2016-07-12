@@ -1,6 +1,5 @@
 // this is automatic generated file. Edit i18n-dev.tsv and run node txt2nls.js
 // this is automatic generated file. Edit i18n-dev.tsv and run node txt2nls.js
-// this is automatic generated file. Edit i18n-dev.tsv and run node txt2nls.js
 /**
  * @preserve Copyright (c) 2015 ApptoIX Limited. All rights reserved.
  * @author Alexandre Bento Freire
@@ -76,7 +75,7 @@ define({
   'FLD_isimultiline_label': 'Multiline',
   'FLD_isall_label': 'Replace All',
   'FLD_isselonly_label': 'Only Selection',
-  'FLD_isselonly_hint': 'If there is a selected text only replaces the selected text',
+  'FLD_isselonly_hint': 'If there is a selected text, only replaces the selected text',
   'FLD_webSearch_label': 'Search Engine url',
   'HDR_options_Field_label': 'Field',
   'HDR_options_Value_label': 'Value',
@@ -100,9 +99,11 @@ define({
   'UpperCase': 'UpperCase',
   'LowerCase': 'LowerCase',
   'Capitalize': 'Capitalize',
+  'CamelCase': 'CamelCase',
   'HtmlEncode': 'HtmlEncode',
   'HtmlDecode': 'HtmlDecode',
   'UrlEncode': 'UrlEncode',
+  'UrlDecode': 'UrlDecode',
   'Join': 'Join',
   'Split': 'Split',
   'Number': 'Number',

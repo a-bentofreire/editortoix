@@ -1,5 +1,5 @@
 /**
- * @preserve Copyright (c) 2015 ApptoIX Limited. All rights reserved.
+ * @preserve Copyright (c) 2016 ApptoIX Limited. All rights reserved.
  * @author Alexandre Bento Freire
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
@@ -25,11 +25,13 @@
 /*jslint vars: true, plusplus: true, devel: true, white: true, nomen: true, indent: 4, maxerr: 50 */
 /*global define */
 
-define(function (require, exports, module) {    
-    'use strict';
-    module.exports = {
-        root: true,
-        "pt": true,
-	"de": true
-    };
+define(function (require, exports, module) {
+  'use strict';
+  module.exports = {
+    root: true,
+    "pt": true,
+    "de": true,
+    "zh-tw": true,
+    "zh": true
+  };
 });

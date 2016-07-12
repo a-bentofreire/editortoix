@@ -1,5 +1,5 @@
 /**
- * @preserve Copyright (c) 2015 ApptoIX Limited. All rights reserved.
+ * @preserve Copyright (c) 2016 ApptoIX Limited. All rights reserved.
  * @author Alexandre Bento Freire
  *
  * Permission is hereby granted, free of charge, to any person obtaining a

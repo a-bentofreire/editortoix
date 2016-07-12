@@ -26,7 +26,7 @@
 /*jslint vars: true, plusplus: true, devel: true, white: true, nomen: true, indent: 4, maxerr: 50 */
 /*global require, exports, console */
 
-var LANGS = ['root', 'pt', 'de'],
+var LANGS = ['root', 'zh', 'zh-TW', 'pt', 'de'],
     SRCFILE = '../nls/i18n-dev.tsv',
     TEMPLATEFILE = '../nls/root/strings.js',
     AUTOWARN = '// this is automatic generated file. Edit i18n-dev.tsv and run node txt2nls.js\n',

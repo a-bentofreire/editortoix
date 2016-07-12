@@ -1,8 +1,7 @@
 // this is automatic generated file. Edit i18n-dev.tsv and run node txt2nls.js
 // this is automatic generated file. Edit i18n-dev.tsv and run node txt2nls.js
-// this is automatic generated file. Edit i18n-dev.tsv and run node txt2nls.js
 /**
- * @preserve Copyright (c) 2015 ApptoIX Limited. All rights reserved.
+ * @preserve Copyright (c) 2016 ApptoIX Limited. All rights reserved.
  * @author Alexandre Bento Freire
  * @translator Christian Knappke
  *
@@ -47,7 +46,7 @@ define({
   'FLD_linrparagraphs_label': 'Anzahl Absätze',
   'FLD_linrparagraphs_hint': 'Maximal 100 Absätze',
   'FLD_scss_label': 'scss Compiler',
-  'FLD_scss_hint': '"sass" muss zuerst installier werden. Siehe http://sass-lang.com/',
+  'FLD_scss_hint': 'sass muss zuerst installier werden. Siehe http://sass-lang.com/',
   'FLD_scss_compass_label': 'Compass',
   'FLD_scss_sass_label': 'SCSS',
   'FLD_scss_autosave_hint': 'Automatisch sichern',
@@ -86,6 +85,7 @@ define({
   'HtmlEncode': 'HTML codieren',
   'HtmlDecode': 'HTML decodieren',
   'UrlEncode': 'URL encodieren',
+  'UrlDecode': 'URL decodieren',
   'Join': 'Zusammenfügen',
   'Split': 'Teilen',
   'Number': 'Nummer',

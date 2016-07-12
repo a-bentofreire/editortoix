@@ -153,6 +153,13 @@ Use {{in}}, {{inpath}}, {{infile}}, {{out}}, {{outpath}}, {{outfile}} macros
   * **Options** - Configuration dialog  
   
 ## Version History  
+* 3.3         
+    Updated icon  
+    Updated links  
+    Added UrlDecode  
+    Added Traditional and Simplified Chinese  
+      
+  
 * 3.2     [http://www.apptoix.com/blog/?p=141]   
     Added Project Tab on Options Dialog  
     Fixed button action on Options Dialog  
@@ -315,12 +322,12 @@ These are the plans for the next versions:
   
 ## Feedback  
   
-This extension was created and tested on Windows 8.1,  
+This extension was created and tested on Windows 8.1, Mac OS, Linus Mint,  
 feedback of bugs on this and other platforms are welcome.  
   
 ## Copyrights  
   
-Copyright (c) 2015 ApptoIX Limited  
+Copyright (c) 2016 ApptoIX Limited  
 Author Alexandre Bento Freire  
   
 ## License  

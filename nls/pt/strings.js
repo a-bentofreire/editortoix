@@ -1,9 +1,9 @@
 // this is automatic generated file. Edit i18n-dev.tsv and run node txt2nls.js
 // this is automatic generated file. Edit i18n-dev.tsv and run node txt2nls.js
-// this is automatic generated file. Edit i18n-dev.tsv and run node txt2nls.js
 /**
- * @preserve Copyright (c) 2015 ApptoIX Limited. All rights reserved.
+ * @preserve Copyright (c) 2016 ApptoIX Limited. All rights reserved.
  * @author Alexandre Bento Freire
+ * @translator Alexandre Bento Freire
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the 'Software'),
@@ -59,6 +59,7 @@ define({
   'FLD_historySize_label': 'Tamanho do Histórico',
   'FLD_recentSize_label': 'Tamanho dos Ficheiros Recentes',
   'FLD_showcxtedit_label': 'Mostra os comandos de edição no menu de contextual',
+  'FLD_showcxtedit_hint': 'Requere o reiniciar para ter efeito',
   'FLD_startNum_label': 'Valor Inicial',
   'FLD_numSep_label': 'Separador após Número',
   'FLD_tabSize_label': 'Tamanho da Tab',
@@ -79,12 +80,12 @@ define({
   'FLD_webSearch_label': 'Url do Engenho de procura',
   'HDR_options_Field_label': 'Campo',
   'HDR_options_Value_label': 'Valor',
-  'HDR_options_ExecOnSave_label': 'Executar quando Guarda',
-  'HDR_commandsmapper_Command_label': 'Commndo',
+  'HDR_options_ExecOnSave_label': 'Executar após guardar',
+  'HDR_commandsmapper_Command_label': 'Comando',
   'HDR_commandsmapper_Hotkey_label': 'Hotkey',
   'HDR_commandsmapper_Show on Menu_label': 'Mostrar no Menu',
   'HDR_commandsmapper_Show on CtxMenu_label': 'Mostrar on Menu Contexto',
-  'FLD_Cmdline_label': 'Linha Comando',
+  'FLD_Cmdline_label': 'Linha de Comando',
   'FLD_Path_label': 'Trilha',
   'FLD_Predefined_label': 'Predefinido',
   'FLD_ShowOutput_label': 'Mostrar Saída',
@@ -102,6 +103,7 @@ define({
   'HtmlEncode': 'Codificar Html',
   'HtmlDecode': 'Decodificar Html',
   'UrlEncode': 'Codificar Url',
+  'UrlDecode': 'Descodificar Url',
   'Join': 'Juntar',
   'Split': 'Separar',
   'Number': 'Numerar',

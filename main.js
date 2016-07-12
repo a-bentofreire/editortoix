@@ -39,7 +39,7 @@ define(function(require, exports, module) {
   // ------------------------------------------------------------------------
   //                               i18n
   // ------------------------------------------------------------------------
-  var /** @const */ VERSION = '3.2',
+  var /** @const */ VERSION = '3.3',
       /** @const */ AUTHOR = 'Alexandre Bento Freire',
       /** @const */ COPYRIGHTS = 'ApptoIX Limited',
 
@@ -60,8 +60,8 @@ define(function(require, exports, module) {
       /** @const */ SP_FORCELINE = -4,
 
       SOCIAL = {home: HELPLINK,
-                facebook: 'https://www.facebook.com/pages/BracketstoIX/1525181274430281',
-                twitter: 'https://www.twitter.com/apptoix',
+                facebook: 'https://www.facebook.com/devtoix',
+                twitter: 'https://www.twitter.com/devtoix',
                 github: 'http://www.github.com/apptoix/bracketstoix'},
 
       brk = {}, ix = {};
@@ -680,6 +680,13 @@ define(function(require, exports, module) {
       return window.encodeURIComponent(text);
     }, SP_LINE);
   }
+    
+  function urlDecode() {
+    changeSelection(function(text) {
+      return window.decodeURIComponent(text);
+    }, SP_LINE);
+  }
+    
 
   function removeDuplicates() {
     changeSelection(function(arr) {
@@ -1537,6 +1544,7 @@ function execSnippets() {
       {name: 'HtmlEncode', f: htmlEncode, priority: SHOWONMENU},
       {name: 'HtmlDecode', f: htmlDecode, priority: SHOWONMENU},
       {name: 'UrlEncode', f: urlEncode, priority: SHOWONMENU},
+      {name: 'UrlDecode', f: urlDecode, priority: SHOWONMENU},
       {name: 'Join', f: joinText, priority: SHOWONMENU},
       {name: 'Split...', f: splitText, priority: SHOWONMENU},
       {name: 'Number...', f: numberText, priority: SHOWONMENU},
@@ -1828,9 +1836,10 @@ function execSnippets() {
   }
 
   function posVersionCheck() {
-    if (prefs.version.showwelcome) {
+    // No longer shows a welcome message.
+    /*if (prefs.version.showwelcome) {
       showMessage('Information', Mustache.render(ix.htmltempl.WELLCOME, {version:VERSION}));
-    }
+    }*/
   }
   // ------------------------------------------------------------------------
   //                               Before & After Save

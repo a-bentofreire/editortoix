@@ -1,3 +1,4 @@
 dist/
 .sass-cache/*
 nls/*-dev1.tsv
+tests/*

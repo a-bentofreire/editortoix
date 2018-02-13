@@ -1,5 +1,7 @@
+'use strict';
+// uuid: 293309ca-80b4-465a-8afe-358dec410e86
 /*
- * @preserve Copyright (c) 2016 ApptoIX Limited. All rights reserved.
+ * @preserve Copyright (c) 2016-2018 Alexandre Bento Freire. All rights reserved.
  * @author Alexandre Bento Freire
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
@@ -21,67 +23,51 @@
  * DEALINGS IN THE SOFTWARE.
  *
  */
-
-
-/*jslint vars: true, plusplus: true, continue: true, devel: true, white: true, regexp: true, bitwise: true, nomen: true, indent: 2, maxerr: 50 */
-/*global require, exports, console */
 (function () {
-  'use strict';
-  // ------------------------------------------------------------------------
-  //                               Node Requires
-  // ------------------------------------------------------------------------
-  var nodeExec = require('child_process').exec,
-      fs = require('fs'),
-      DOMAINNAME = 'IXDomains';
-
-  // ------------------------------------------------------------------------
-  //                               Commands
-  // ------------------------------------------------------------------------
-  function cmdExec(cmdline, cwd, callback) {
-    var opts = {cwd: cwd};
-    nodeExec(cmdline, opts, function (error, stdout, stderr) {
-      if (callback) {
-        stderr = stderr || '';
-        stdout = stdout || '';
-      // All the output is packed into a single string separated by \n
-      // Attempted to send the multiple parameters in separate but it failed to work
-        callback('', [error === null ? '' : ('' + error.code),
-                 '' + stdout.split('\n').length,
-                 stdout,
-                 stderr].join('\n'));
-      }
-    });
-  }
-  // ------------------------------------------------------------------------
-  //                               Init
-  // ------------------------------------------------------------------------
-  function init(DomainManager) {
-    var i, cmd,
-        cmds = [
-          {name: 'exec', f: cmdExec, desc: 'Executes as a child process',
-           params: [{name: 'cmdline', type: 'string', description: 'node command'},
-                    {name: 'cwd', type: 'string', description: 'path'}],
-
-           returns: [{name: 'out', type: 'string'}]}
+    // ------------------------------------------------------------------------
+    //                               Node Requires
+    // ------------------------------------------------------------------------
+    var nodeExec = require('child_process').exec, fs = require('fs'), DOMAINNAME = 'IXDomains';
+    // ------------------------------------------------------------------------
+    //                               Commands
+    // ------------------------------------------------------------------------
+    function cmdExec(cmdline, cwd, callback) {
+        var opts = { cwd: cwd };
+        nodeExec(cmdline, opts, function (error, stdout, stderr) {
+            if (callback) {
+                stderr = stderr || '';
+                stdout = stdout || '';
+                // All the output is packed into a single string separated by \n
+                // Attempted to send the multiple parameters in separate but it failed to work
+                callback('', [error === null ? '' : ('' + error.code),
+                    '' + stdout.split('\n').length,
+                    stdout,
+                    stderr].join('\n'));
+            }
+        });
+    }
+    // ------------------------------------------------------------------------
+    //                               Init
+    // ------------------------------------------------------------------------
+    function init(DomainManager) {
+        var i, cmd, cmds = [
+            { name: 'exec', f: cmdExec, desc: 'Executes as a child process',
+                params: [{ name: 'cmdline', type: 'string', description: 'node command' },
+                    { name: 'cwd', type: 'string', description: 'path' }],
+                returns: [{ name: 'out', type: 'string' }] }
         ];
-
-    if (!DomainManager.hasDomain(DOMAINNAME)) {
-      DomainManager.registerDomain(DOMAINNAME, {major: 0, minor: 1});
+        if (!DomainManager.hasDomain(DOMAINNAME)) {
+            DomainManager.registerDomain(DOMAINNAME, { major: 0, minor: 1 });
+        }
+        for (i = 0; i < cmds.length; i++) {
+            cmd = cmds[i];
+            DomainManager.registerCommand(DOMAINNAME, // domain name
+            cmd.name, // command name
+            cmd.f, // command handler function
+            true, // synchronous
+            cmd.desc, cmd.params, cmd.returns || []);
+        }
     }
-
-    for (i = 0; i < cmds.length; i++) {
-      cmd = cmds[i];
-      DomainManager.registerCommand(
-        DOMAINNAME,  // domain name
-        cmd.name, // command name
-        cmd.f, // command handler function
-        true, // synchronous
-        cmd.desc,
-        cmd.params,
-        cmd.returns || []
-      );
-    }
-  }
-  exports.init = init;
-
+    exports.init = init;
 }());
+//# sourceMappingURL=IXDomains.js.map

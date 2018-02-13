@@ -1,13 +1,13 @@
 {
   "DLGTITLE": "<style>@font-face{font-family:'icomoontoix';src:url('{{&root}}assets/icomoontoix.ttf?6f58a0')format('truetype');font-weight:normal;font-style:normal;}</style><img src='{{&root}}assets/bracketstoix64x64.png' class=aboutimgtoix>{{title}}{{&social}}",
-  
-  "SOCIAL": "<span class='pull-right'><a class='icontoix-home' href='{{&home}}'></a><a class='icontoix-facebook2' href='{{&facebook}}'></a><a class='icontoix-twitter' href='{{&twitter}}'></a><a class='icontoix-github' href='{{&github}}'></a></span>", 
+
+  "SOCIAL": "<span class='pull-right'><!-- a class='icontoix-home' href='{{&home}}'></a><a class='icontoix-facebook2' href='{{&facebook}}'></a><a class='icontoix-twitter' href='{{&twitter}}'></a --><a class='icontoix-github' href='{{&github}}'></a></span>",
 
   "ABOUTTEXT": "<div class=abouttexttoix>Brackets<sub>to</sub>IX</div><div style='font-size: 1.2em;'>(c) 2016 App<sub>to</sub>IX</div><div>{{devby}}</div><a href='{{&helplink}}'>Official Webpage</a>",
-  
-  "WELLCOME": "<h2>Brackets<sub>to</sub>IX {{version}}</h2>Brackets<sub>to</sub>IX 3.2 allows to save project settings,<p>including spacing and compiler settings.<p>Take a few minutes to watch <a href='http://www.apptoix.com/en/bracketstoix.html#video'>the video</a> describing how to unleash its power.<p><p><p>",
-    
+
+  "WELLCOME-deprecated": "<h2>Brackets<sub>to</sub>IX {{version}}</h2>Brackets<sub>to</sub>IX 3.2 allows to save project settings,<p>including spacing and compiler settings.<p>Take a few minutes to watch <a href=''>the video</a> describing how to unleash its power.<p><p><p>",
+
   "BOTTOMPANEL": "<div class='bottom-panel vert-resizable top-resizer' id='IXPanel'><div class='toolbar simple-toolbar-layout'><span class='title'>IX</span><div class=bottompaneltoolbartoix><button id='cleartoix' class='btn btn-mini pull-right'>Clear</button></div><a href='#' class='close'>&times;</a></div><div class='table-container resizable-content' id='msg'></div></div>",
-  
+
   "BOTTOMPANELITEMHEAD": "<table id={{&id}} class='bottom-panel-table table table-striped table-condensed row-highlight'><tr class='inspector-section'><th style='background-color: #0f0f0f;color: #e6e9e9;'>{{header}}<div class=bottompanelitemtoolbartoix><button id='cleartoix' class='btn btn-mini pull-right' data-id='{{&id}}'>Clear</button><button id='copytoix' class='btn btn-mini pull-right bottompanelbutmargtoix' data-id='{{&id}}'>Copy</button></div></th></tr>"
 }

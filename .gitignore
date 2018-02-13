@@ -1,4 +1,7 @@
 dist/
+**.js.map
 .sass-cache/*
 nls/*-dev1.tsv
-tests/*
+tests/
+private/
+node_modules/

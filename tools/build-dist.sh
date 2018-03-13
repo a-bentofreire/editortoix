@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # If you are running Windows, install GitHub for Windows, add it to the search path, and install a zip.exe for windows
-cd ..
+
+cd `dirname $0`/..
 size=$((`find dist/bracketstoix.zip -printf %s`/1024))
 rm -f -r dist/
 mkdir dist

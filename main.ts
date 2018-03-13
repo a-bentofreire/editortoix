@@ -1,10 +1,10 @@
 'use strict';
 // uuid: 11078410-3d9f-46b7-ba13-c7e93a109283
 
-// --------------------------------------------------------------------
+// ------------------------------------------------------------------------
 // Copyright (c) 2016-2018 Alexandre Bento Freire. All rights reserved.
 // Licensed under the MIT License+uuid License. See License.txt for details
-// --------------------------------------------------------------------
+// ------------------------------------------------------------------------
 
 
 require.config({
@@ -19,7 +19,7 @@ define(function (require, exports, module) {
   // ------------------------------------------------------------------------
   //                               i18n
   // ------------------------------------------------------------------------
-  const VERSION = '3.4',
+  const VERSION = '3.4.1',
     AUTHOR = 'Alexandre Bento Freire',
     COPYRIGHTS = 'Alexandre Bento Freire',
 

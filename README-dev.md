@@ -6,7 +6,7 @@ This extension adds a bundle of features to Adobe Brackets.
 
 ## Interface
 
-BracketstoIX adds a top-menu called 'IX'.
+BracketstoIX adds a top-menu called `IX`.  
 To prevent from cluttering the menu with all the commands, only a few commands were added to the menu.
 Use Command mapper to add which ones you prefer, and setup the shortcuts.
 No default shortcuts were define to prevent collision with other plugins.
@@ -40,7 +40,7 @@ The most common tags have shortcuts: bu=button  d=div   sp=span  te=textarea   i
 Ex: d -> <div></div>       h3#hello.active.other text -> <h3 id="hello" class="active other">text</h3>
 ```
 
-8. ** untag**[function] - Removes the nearest tag
+8. **untag**[function] - Removes the nearest tag
 9. **Reverse**[function] - Reverses the terms in a assignment or comparison.
 10. **Declare JSLint Global**[word] - Adds the selected id to the /*global ... */ list
 
@@ -125,20 +125,20 @@ Displays of the all recent opened files. This list is independent of the project
 
 **Compiler** command with execute an external compiler. Supported file formats:
 
-* .js6 Compiles a ECMAScript 6 into a .js file using traceur compiler.
-* .scss Compiles a .scss into a .css file using sass compiler.
-* .js Minifies a .js file into a .min.js file using minifier
+* .js6 Compiles a ECMAScript 6 into a `.js` file using traceur compiler.  
+* .scss Compiles a `.scss` into a `.css` file using sass compiler.  
+* .js Minifies a `.js` file into a `.min.js` file using minifier  
 
 To prevent from creating an oversize plug-in, the compilers must be installed manually:
 
 * To install sass compiler, follow the instructions on this link: [sass compiler][1]
-* To install traceur, first install [nodejs][2], and then from the shell, execute "npm install -g traceur"
-* To install traceur, first install [nodejs][2], and then from the shell, execute "npm install -g uglify-js"
+* To install traceur, first install [nodejs][2], and then from the shell, execute `npm install -g traceur`  
+* To install traceur, first install [nodejs][2], and then from the shell, execute `npm install -g uglify-js`  
 
 By default, the compile on save is not active. You can use the **Options** to activate it
 
-[1]: http://sass-lang.com/
-[2]: http://nodejs.org/
+[1]: https://sass-lang.com/  
+[2]: https://nodejs.org/  
 
 ## Lorem Ipsum
 

@@ -1,9 +1,9 @@
 'use strict';
 // uuid: f6c0f838-6bd3-4f79-a5a9-301a48684af7
-// --------------------------------------------------------------------
+// ------------------------------------------------------------------------
 // Copyright (c) 2016-2018 Alexandre Bento Freire. All rights reserved.
 // Licensed under the MIT License+uuid License. See License.txt for details
-// --------------------------------------------------------------------
+// ------------------------------------------------------------------------
 define(function () {
     var $dlg, $curcat, $curtab, curtabname, usablecmds, usabletools, storeidmap = {}, projSettings, projCompilersFlds = ['js6', 'scss', 'js'], projSetsFlds = ['spaceUnits'].concat(projCompilersFlds), prefs, ix, tools, bs = {}, // beforesave
     as = {}, // aftersave

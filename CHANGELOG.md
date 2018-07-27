@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [3.4.1] - 2018-07-27
 ### Added
 - Add badges to README
+- Add UrlDecode to README
 ### Changed
 - (DEV) Clean and modernize the code and add typescript types
 

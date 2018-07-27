@@ -33,7 +33,7 @@ Input fields on the dialogs support history (CTRL+UP/DOWN).
   
 The list of commands are:  
 1. Case Change[word]: **UpperCase**, **LowerCase**, **Capitalize**, **CamelCase**  
-2. Encoders/Decoders[line]: **HtmlEncode**, **HtmlDecode**, **UrlEncode**  
+2. Encoders/Decoders[line]: **HtmlEncode**, **HtmlDecode**, **UrlEncode**, **UrlDecode**  
 3. Quote Change [function]: **Single Quote To Double**, **Double To Single Quote**, **Toggle Quote**  
 4. Slash Change [line]: **Unix To Win**, **Win To Unix**, **Single Slash To Double**, **Double To Single Slash**  
 5. Spacing[all]: **Tab To Space**, **Space To Tab**  -   Space to Tab only works with leading spaces  

@@ -11,53 +11,58 @@
 */
 
 define(() => {
+
   // ------------------------------------------------------------------------
   //                               UI
   // ------------------------------------------------------------------------
+
   function selectAndClose(inf) {
     inf.closedlg(true);
   }
+
   // ------------------------------------------------------------------------
   //                               Closure
   // ------------------------------------------------------------------------
-  var PREFKEY = 'prefs';
+  const PREFKEY = 'prefs';
 
   function _checkForHttp(text) {
     return (text.indexOf('http://') === 0) || (text.indexOf('https://') === 0);
   }
 
   // Copies from prefs to prefsio, and vice-versa. Used for load & save
-  function _buildIo(prefs, prefsio, preftoio) {
-    Object.keys(prefs).forEach((key) => {
-      var pref = prefs[key],
-        storeprop = pref.storeprop || 'value',
-        prefio;
+  function _buildIo(prefs, prefsio,
+    isPrefToIo: boolean): void {
 
-      if (pref[storeprop] !== undefined) {
-        prefio = prefsio[key];
-        if (prefio === undefined) {
+    Object.keys(prefs).forEach((key) => {
+      const pref = prefs[key];
+      const storeProp = pref.storeprop || 'value';
+      let prefIo;
+
+      if (pref[storeProp] !== undefined) {
+        prefIo = prefsio[key];
+        if (prefIo === undefined) {
           prefsio[key] = {};
-          prefio = prefsio[key];
+          prefIo = prefsio[key];
         }
 
-        if (preftoio) {
-          prefio[storeprop] = pref[storeprop];
+        if (isPrefToIo) {
+          prefIo[storeProp] = pref[storeProp];
           if (pref.history) {
-            prefio.history = pref.history;
+            prefIo.history = pref.history;
           }
         } else {
-          if (prefio !== undefined && prefio[storeprop] !== undefined) {
-            pref[storeprop] = prefio[storeprop];
-            if (pref.history && prefio.history) {
-              pref.history = prefio.history;
+          if (prefIo !== undefined && prefIo[storeProp] !== undefined) {
+            pref[storeProp] = prefIo[storeProp];
+            if (pref.history && prefIo.history) {
+              pref.history = prefIo.history;
             }
           }
         }
         if (pref.fields) {
-          if (!prefio.fields) {
-            prefio.fields = {};
+          if (!prefIo.fields) {
+            prefIo.fields = {};
           }
-          _buildIo(pref.fields, prefio.fields, preftoio);
+          _buildIo(pref.fields, prefIo.fields, isPrefToIo);
         }
       }
     });
@@ -68,6 +73,7 @@ define(() => {
     // ------------------------------------------------------------------------
     //                               Functions
     // ------------------------------------------------------------------------
+
     checkForHttp: (text) => _checkForHttp(text),
 
     load: (prefs, extprefs) => {
@@ -79,13 +85,16 @@ define(() => {
       extprefs.set(PREFKEY, _buildIo(prefs, {}, true));
       extprefs.save();
     },
+
     // ------------------------------------------------------------------------
     //                               Fields
     // ------------------------------------------------------------------------
-    OPTIONFIELDS: ['tabSize', 'historySize', 'recentSize', 'showcxtedit', 'webSearch', /*'grunt',*/ 'js6', 'scss', 'js'],
+
+    OPTIONFIELDS: ['tabSize', 'historySize', 'recentSize', 'showcxtedit',
+      'webSearch', /*'grunt',*/ 'js6', 'scss', 'js'],
 
     version: {
-      value: ''
+      value: '',
     },
 
     // commands options (showinmenu, showinctxmenu, hotkey)
@@ -93,33 +102,33 @@ define(() => {
       value: {
         showinmenu: [],
         showinctxmenu: [],
-        hotkeys: {}
-      }
+        hotkeys: {},
+      },
     },
 
     // splitText command options
     splitMarker: {
-      value: ','
+      value: ',',
     },
 
     splitMarkerExtr: {
       value: '\\t',
       samelabelas: 'splitMarker',
-      samehintas: 'splitMarker'
+      samehintas: 'splitMarker',
     },
     // Used in dialogs
     historySize: {
       value: 20,
-      type: 'number'
+      type: 'number',
     },
     recentSize: {
       value: 20,
-      type: 'number'
+      type: 'number',
     },
     showcxtedit: {
       value: true,
       type: 'boolean',
-      canempty: true
+      canempty: true,
     },
     // recentFiles command options
     recentFiles: {
@@ -132,25 +141,25 @@ define(() => {
       values: [],
       events: [{
         name: 'dblclick',
-        f: selectAndClose
-      }]
+        f: selectAndClose,
+      }],
     },
 
     // numberText command options
     startNum: {
       value: 1,
-      type: 'number'
+      type: 'number',
     },
     numSep: {
       value: ".\\$",
       history: [],
       canempty: true,
-      type: 'spacetext'
+      type: 'spacetext',
     },
     // Tab To Space, Space To Tab command options
     tabSize: {
       value: 2,
-      type: 'number'
+      type: 'number',
     },
     // extractortoix command options
     findre: {
@@ -158,8 +167,8 @@ define(() => {
       samelabelas: 'find',
       history: [],
       buttons: [{
-        label: 'Regnize'
-      }]
+        label: 'Regnize',
+      }],
     },
     findlabel: 'Find',
 
@@ -168,63 +177,63 @@ define(() => {
       value: '',
       history: [],
       buttons: [{
-        label: 'Regnize'
-      }]
+        label: 'Regnize',
+      }],
     },
     replace: {
       value: '',
       history: [],
-      canempty: true
+      canempty: true,
     },
     startValue: {
       value: '',
       history: [],
-      canempty: true
+      canempty: true,
     },
 
     stepValue: {
       value: '',
-      history: []
+      history: [],
     },
     iswordsonly: {
       value: false,
       type: 'boolean',
       canempty: true,
-      groupcols: 3
+      groupcols: 3,
     },
     isregexpr: {
       value: true,
       type: 'boolean',
-      canempty: true
+      canempty: true,
     },
     isignorecase: {
       value: false,
       type: 'boolean',
       canempty: true,
-      groupcols: 1
+      groupcols: 1,
     },
     isimultiline: {
       value: false,
       type: 'boolean',
-      canempty: true
+      canempty: true,
     },
     isall: {
       value: true,
       type: 'boolean',
-      canempty: true
+      canempty: true,
     },
     isselonly: {
       value: true,
       type: 'boolean',
-      canempty: true
+      canempty: true,
     },
 
     // webSearch command options
     webSearch: {
       value: 'https://www.google.com/search?q=',
-      checkfunc: function (text) {
+      checkfunc(text: string): string {
         return _checkForHttp(text) ? '' : 'It must start with http(s)://';
-      }
+      },
     },
     // Run grunt command options
     /* //TODO: Implement grunt
@@ -241,9 +250,9 @@ define(() => {
           value: false,
           type: 'boolean',
           align: 'center',
-          canempty: true
-        }
-      }
+          canempty: true,
+        },
+      },
     },
 
     // scss command options
@@ -254,16 +263,16 @@ define(() => {
           value: false,
           type: 'boolean',
           align: 'center',
-          canempty: true
-        }
+          canempty: true,
+        },
       },
       buttons: [{
         id: 'compass',
-        setvalue: 'compass compile "{{inrelfile}}"'
+        setvalue: 'compass compile "{{inrelfile}}"',
       }, {
         id: 'sass',
-        setvalue: 'sass --sourcemap "{{in}}" "{{out}}"'
-      }]
+        setvalue: 'sass --sourcemap "{{in}}" "{{out}}"',
+      }],
     },
 
     // js command options
@@ -272,37 +281,37 @@ define(() => {
     },
     // Lorem Ipsum
     linrparagraphs: {
-      value: '1'
+      value: '1',
     },
     limaxcharsperline: {
-      value: '0'
+      value: '0',
     },
 
     lihtmlparawrap: {
       value: '',
-      canempty: true
+      canempty: true,
     },
 
     maxcharsperline: {
-      value: '80'
+      value: '80',
 
     },
     tobreakwords: {
       value: false,
       type: 'boolean',
-      canempty: true
+      canempty: true,
     },
 
     beforesave: {
-      value: []
+      value: [],
     },
 
     aftersave: {
-      value: []
+      value: [],
     },
 
     tools: {
-      value: []
-    }
+      value: [],
+    },
   };
 });

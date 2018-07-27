@@ -11,42 +11,46 @@
 */
 // @TODO: Move the isolated functions from main.js to this file
 
-define(function () {
-    /** ------------------------------------------------------------------------
-     *                               Functions
-     ** ------------------------------------------------------------------------ */
-    return {
-        capitalizeText: {
-            pat: /\b(_*\w)/g,
-            repl: (match, p1, offset, string) => p1.toUpperCase()
-        },
+define(() => {
 
-        camelCaseText: {
-            pat: /\b(_*\w)/g,
-            repl: (match, p1, offset, string) => p1.toLowerCase()
-        },
+  // ------------------------------------------------------------------------
+  //                               Functions
+  // ------------------------------------------------------------------------
 
-        reverse: {
-            pat: /\b(.+)(\s+)([=<>]=*|[!:]=+)(\s+)([^;]+)/,
-            repl: "$5$2$3$4$1"
-        },
-        /** ------------------------------------------------------------------------
-         *                               Commands: Slash
-         ** ------------------------------------------------------------------------ */
-        unixToWin: {
-            pat: /\//g, repl: '\\'
-        },
+  return {
+    capitalizeText: {
+      pat: /\b(_*\w)/g,
+      repl: (match, p1) => p1.toUpperCase(),
+    },
 
-        winToUnix: {
-            pat: /\\/g, repl: '/'
-        },
+    camelCaseText: {
+      pat: /\b(_*\w)/g,
+      repl: (match, p1) => p1.toLowerCase(),
+    },
 
-        singleToDoubleSlash: {
-            pat: /\\/g, repl: '\\\\'
-        },
+    reverse: {
+      pat: /\b(.+)(\s+)([=<>]=*|[!:]=+)(\s+)([^;]+)/,
+      repl: "$5$2$3$4$1",
+    },
 
-        doubleToSingleSlash: {
-            pat: /\\\\/g, repl: '\\'
-        }
-    };
+    // ------------------------------------------------------------------------
+    //                               Commands: Slash
+    // ------------------------------------------------------------------------
+
+    unixToWin: {
+      pat: /\//g, repl: '\\',
+    },
+
+    winToUnix: {
+      pat: /\\/g, repl: '/',
+    },
+
+    singleToDoubleSlash: {
+      pat: /\\/g, repl: '\\\\',
+    },
+
+    doubleToSingleSlash: {
+      pat: /\\\\/g, repl: '\\',
+    },
+  };
 });

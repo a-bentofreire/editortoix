@@ -7,52 +7,52 @@
 // --------------------------------------------------------------------
 
 define(() => {
-  let $dlg,
-    $curcat,
-    $curtab,
-    curtabname,
-    usablecmds,
-    usabletools,
-    storeidmap = {},
-    projSettings,
-    projCompilersFlds = ['js6', 'scss', 'js'],
-    projSetsFlds = ['spaceUnits'].concat(projCompilersFlds),
-    prefs,
-    ix,
-    tools,
-    bs = {}, // beforesave
-    as = {}, // aftersave
-    ts = {} as any; // beforesave
+  let $dlg;
+  let $curCat;
+  let $curTab;
+  let curTabName;
+  let usableCmds;
+  let usableTools;
+  const storeIdMap = {};
+  let projSettings;
+  const projCompilersFlds = ['js6', 'scss', 'js'];
+  const projSetsFlds = ['spaceUnits'].concat(projCompilersFlds);
+  let prefs;
+  let ix;
+  let tools;
+  const bs = {}; // beforesave
+  const as = {}; // aftersave
+  const ts = {} as any; // beforesave
 
-  let buildOptionHtml = (val, text) => '<option value="' + val + '">' + tools.htmlEscape(text) + '</option>';
+  const buildOptionHtml = (val, text) => '<option value="' + val + '">' + tools.htmlEscape(text) + '</option>';
 
-  function _fillEventSaveTargetExts(rec) {
+  function _fillEventSaveTargetExts(rec): void {
     let html = '';
-    rec.value.forEach(function (st, index) {
+    rec.value.forEach((st, index) => {
       html += buildOptionHtml(index, st.exts);
     });
     rec.$targetexts.html(html);
   }
 
-  function _fillEventSaveTargetCmds(rec) {
+  function _fillEventSaveTargetCmds(rec): void {
     let html = '';
     if (rec.curextidx >= 0) {
-      rec.value[rec.curextidx].cmds.forEach(function (storeid) {
-        html += buildOptionHtml(storeid, storeidmap[storeid].label);
+      rec.value[rec.curextidx].cmds.forEach((storeid) => {
+        html += buildOptionHtml(storeid, storeIdMap[storeid].label);
       });
     }
     rec.$targetcmds.html(html);
   }
 
-  function _fillTools() {
+  function _fillTools(): void {
     let html = '';
-    ts.value.forEach(function (tool, index) {
+    ts.value.forEach((tool, index) => {
       html += buildOptionHtml(index, tool.name);
     });
     ts.$toollist.html(html);
   }
 
-  function _listOp(delta, index, array, fillfunc, $list, rec?) {
+  function _listOp(delta, index, array, fillfunc, $list, rec?): void {
     let svitem;
     if ((index + delta) >= 0 && (index + delta) < array.length) {
       svitem = array[index];
@@ -69,39 +69,39 @@ define(() => {
     }
   }
 
-  function _eventSaveTargetCmdsListOp(delta, rec) {
+  function _eventSaveTargetCmdsListOp(delta: number, rec): void {
     if (rec.curextidx >= 0) {
       _listOp(delta, rec.curcmdidx, rec.value[rec.curextidx].cmds,
         _fillEventSaveTargetCmds, rec.$targetcmds, rec);
     }
   }
 
-  function _toolsListOp(delta) {
+  function _toolsListOp(delta: number): void {
     _listOp(delta, ts.curidx, ts.value, _fillTools, ts.$toollist);
   }
 
   function toolUItoValue() {
-    let name = ts.$toolname.val().trim(),
-      cmdline = ts.$toolcmdline.val().trim(),
-      idx = ts.value.length,
-      showonmenu = ts.$toolshowonmenu.get(0).checked,
-      showoutput = ts.$toolshowoutput.get(0).checked;
+    const name = ts.$toolname.val().trim();
+    const cmdline = ts.$toolcmdline.val().trim();
+    const idx = ts.value.length;
+    const showonmenu = ts.$toolshowonmenu.get(0).checked;
+    const showoutput = ts.$toolshowoutput.get(0).checked;
 
     if (name && cmdline) {
-      return { idx: idx, tool: { name: name, cmdline: cmdline, showonmenu: showonmenu, showoutput: showoutput } };
+      return { idx, tool: { name, cmdline, showonmenu, showoutput } };
     } else {
       return null;
     }
   }
 
-  function toolValtoUI(tool) {
+  function toolValtoUI(tool): void {
     ts.$toolname.val(tool ? tool.name : '');
     ts.$toolcmdline.val(tool ? tool.cmdline : '');
     ts.$toolshowonmenu.get(0).checked = tool.showonmenu;
     ts.$toolshowoutput.get(0).checked = tool.showoutput;
   }
 
-  function _buildEventSave(rec, htmlprefix, fillHandler, usablelist) {
+  function _buildEventSave(rec, htmlprefix, fillHandler, usableList): void {
     let html = '';
     rec.$exts = $dlg.find(htmlprefix + 'saveexts');
     rec.$targetexts = $dlg.find(htmlprefix + 'savetargetexts');
@@ -111,17 +111,17 @@ define(() => {
     rec.curcmdidx = -1;
 
     fillHandler(rec);
-    usablelist.forEach((cmd) => {
+    usableList.forEach((cmd) => {
       html += buildOptionHtml(cmd.storeid, cmd.label);
     });
     rec.$cmds.html(html);
 
     $(htmlprefix + 'saveextadd').click(() => {
-      let exts = rec.$exts.val().trim(),
-        idx = rec.value.length;
+      const exts = rec.$exts.val().trim();
+      const idx = rec.value.length;
 
       if (exts.length) {
-        rec.value.push({ exts: exts, cmds: [] });
+        rec.value.push({ exts, cmds: [] });
         rec.$targetexts.append(buildOptionHtml(idx, exts));
       }
     });
@@ -139,7 +139,7 @@ define(() => {
     });
 
     $(htmlprefix + 'saveextupdate').click(() => {
-      let exts = rec.$exts.val().trim();
+      const exts = rec.$exts.val().trim();
       if (exts.length && rec.curextidx >= 0) {
         rec.value[rec.curextidx].exts = exts;
         rec.$targetexts[0][rec.curextidx].label = exts;
@@ -148,12 +148,12 @@ define(() => {
 
 
     $(htmlprefix + 'savecmdadd').click(() => {
-      let storeid = rec.$cmds.val();
+      const storeid = rec.$cmds.val();
       if (rec.curextidx < 0) {
         return;
       }
       rec.value[rec.curextidx].cmds.push(storeid);
-      rec.$targetcmds.append(buildOptionHtml(storeid, storeidmap[storeid].label));
+      rec.$targetcmds.append(buildOptionHtml(storeid, storeIdMap[storeid].label));
     });
 
     $(htmlprefix + 'savecmdremove').click(() => {
@@ -180,7 +180,6 @@ define(() => {
     });
 
     rec.$targetcmds.click(() => {
-      let html = '';
       rec.curcmdidx = rec.$targetcmds[0].selectedIndex >> 0;
     });
 
@@ -192,60 +191,64 @@ define(() => {
 
   return {
     dlgtemplate: 'options.html',
+
     // ------------------------------------------------------------------------
     //                               prepare
     // ------------------------------------------------------------------------
-    prepare: (aprefs, cmdlist, aix, atools, aprojSettings) => {
+
+    prepare: (aprefs, cmdlist, aix, atools, aprojSettings): void => {
+
       function eventPrepare(prefvar, rec) {
         rec.value = [];
-        prefvar.value.forEach(function (st, index) {
+        prefvar.value.forEach((st, index) => {
           rec.value.push({ exts: st.exts.join(';'), cmds: st.cmds });
         });
       }
 
-      let html;
       prefs = aprefs;
       tools = atools;
       projSettings = aprojSettings;
       eventPrepare(prefs.beforesave, bs);
       eventPrepare(prefs.aftersave, as);
 
-      if (!usablecmds) {
-        usablecmds = [];
-        cmdlist.forEach(function (cmd) {
+      if (!usableCmds) {
+        usableCmds = [];
+        cmdlist.forEach((cmd) => {
           if (cmd.canonsave) {
-            usablecmds.push(cmd);
-            storeidmap[cmd.storeid] = cmd;
+            usableCmds.push(cmd);
+            storeIdMap[cmd.storeid] = cmd;
           }
         });
       }
-      usabletools = [];
+      usableTools = [];
       prefs.tools.value.forEach((tool) => {
-        let tag = tool.name,
-          cmd = { storeid: '@' + tag, label: tag };
-        usabletools.push(cmd);
-        storeidmap['@' + tag] = cmd;
+        const tag = tool.name;
+        const cmd = { storeid: '@' + tag, label: tag };
+        usableTools.push(cmd);
+        storeIdMap['@' + tag] = cmd;
       });
 
       ts.value = [];
-      prefs.tools.value.forEach(function (tool) {
+      prefs.tools.value.forEach((tool) => {
         ts.value.push(tool);
       });
 
       ix = aix;
     },
+
     // ------------------------------------------------------------------------
     //                               ProjSettings
     // ------------------------------------------------------------------------
+
     _buildProjSettings: () => {
-      projSetsFlds.forEach((field) => {
+      projSetsFlds.forEach((field): void => {
         if (projSettings.data[field]) {
-          $('#proj' + field).get(0).checked = true;
+          ($('#proj' + field).get(0) as HTMLInputElement).checked = true;
         }
       });
     },
 
-    setPrefsFromProject: (aPrefs, aProjSettings) => {
+    setPrefsFromProject: (aPrefs, aProjSettings): void => {
       projCompilersFlds.forEach((field) => {
         if (aProjSettings.data[field]) {
           aPrefs[field].value = aProjSettings.data[field];
@@ -253,13 +256,13 @@ define(() => {
       });
     },
 
-    _saveProjSettings: (dlgopts) => {
-      let projSetsData = projSettings.data,
-        isPrevNotEmpty = Object.keys(projSetsData).length;
+    _saveProjSettings: (dlgopts): void => {
+      const projSetsData = projSettings.data;
+      const isPrevNotEmpty = Object.keys(projSetsData).length;
 
-      projSetsFlds.forEach(function (field) {
-        let isSpaceUnits = field === 'spaceUnits';
-        if ($('#proj' + field).get(0).checked) {
+      projSetsFlds.forEach((field) => {
+        const isSpaceUnits = field === 'spaceUnits';
+        if (($('#proj' + field).get(0) as HTMLInputElement).checked) {
           if (isSpaceUnits) {
             dlgopts.setSpaceUnits(projSetsData, true);
           } else {
@@ -282,33 +285,34 @@ define(() => {
     // ------------------------------------------------------------------------
     //                               afterBuild
     // ------------------------------------------------------------------------
-    afterBuild: (self: any, $adlg: JQuery) => {
+
+    afterBuild: (self: any, $adlg: JQuery): void => {
       $dlg = $adlg;
-      $curcat = null;
-      $curtab = null;
-      curtabname = '';
+      $curCat = null;
+      $curTab = null;
+      curTabName = '';
 
       $dlg.find('#toixcats li').click((ev: Event) => {
-        let $newcat = $(ev.target);
-        if ($curcat) {
-          if ($newcat.get(0).id === curtabname) {
+        const $newcat = $(ev.target);
+        if ($curCat) {
+          if ($newcat.get(0).id === curTabName) {
             return;
           }
-          $curcat.removeClass('toixselcat');
-          $curtab.removeClass('toixseltab');
+          $curCat.removeClass('toixselcat');
+          $curTab.removeClass('toixseltab');
         }
 
-        $curcat = $newcat;
-        curtabname = $newcat.get(0).id;
-        $curtab = $dlg.find('#toix' + curtabname);
+        $curCat = $newcat;
+        curTabName = $newcat.get(0).id;
+        $curTab = $dlg.find('#toix' + curTabName);
 
-        $curcat.addClass('toixselcat');
-        $curtab.addClass('toixseltab');
+        $curCat.addClass('toixselcat');
+        $curTab.addClass('toixseltab');
       });
 
       $dlg.find('#general').click();
-      _buildEventSave(bs, '#before', _fillEventSaveTargetExts, usablecmds);
-      _buildEventSave(as, '#after', _fillEventSaveTargetExts, usabletools);
+      _buildEventSave(bs, '#before', _fillEventSaveTargetExts, usableCmds);
+      _buildEventSave(as, '#after', _fillEventSaveTargetExts, usableTools);
       self._buildTools();
       self._buildProjSettings();
     },
@@ -316,7 +320,8 @@ define(() => {
     // ------------------------------------------------------------------------
     //                               Tools
     // ------------------------------------------------------------------------
-    _buildTools: () => {
+
+    _buildTools: (): void => {
       let html = '';
       ts.$toollist = $dlg.find('#toollist');
       ts.$toolname = $dlg.find('#toolname');
@@ -329,7 +334,7 @@ define(() => {
       _fillTools();
 
       $('#toolsadd').click(() => {
-        let val = toolUItoValue();
+        const val = toolUItoValue();
         if (val) {
           ts.value.push(val.tool);
           ts.$toollist.append(buildOptionHtml(val.idx, val.tool.name));
@@ -337,7 +342,7 @@ define(() => {
       });
 
       $("#toolsupdate").click(() => {
-        let val = toolUItoValue();
+        const val = toolUItoValue();
         if (val && ts.curidx >= 0) {
           ts.value[ts.curidx] = val.tool;
           ts.$toollist[0][ts.curidx].label = val.tool.name;
@@ -356,7 +361,6 @@ define(() => {
       });
 
       ts.$toollist.click(() => {
-        let tool;
         ts.curidx = ts.$toollist[0].selectedIndex >> 0;
         toolValtoUI(ts.curidx >= 0 ? ts.value[ts.curidx] : null);
       });
@@ -373,7 +377,7 @@ define(() => {
       ts.$pdtools.html(html);
 
       $("#pdtoolsadd").click(() => {
-        let idx = ts.$pdtools[0].selectedIndex >> 0;
+        const idx = ts.$pdtools[0].selectedIndex >> 0;
         toolValtoUI(ix.pdtools[idx]);
         $("#toolsadd").click();
       });
@@ -382,9 +386,10 @@ define(() => {
     // ------------------------------------------------------------------------
     //                               On Save
     // ------------------------------------------------------------------------
-    onSave: function (self: any, dlgopts) {
+
+    onSave(self: any, dlgopts): void {
       function eventSave(prefvar, rec) {
-        prefvar.value = rec.value.map((st, index) => { return { exts: st.exts.split(/;/), cmds: st.cmds } });
+        prefvar.value = rec.value.map((st, index) => ({ exts: st.exts.split(/;/), cmds: st.cmds }));
       }
       eventSave(prefs.beforesave, bs);
       eventSave(prefs.aftersave, as);
@@ -392,6 +397,6 @@ define(() => {
       prefs.tools.value = ts.value.map(tool => tool);
 
       self._saveProjSettings(dlgopts);
-    }
+    },
   };
 });

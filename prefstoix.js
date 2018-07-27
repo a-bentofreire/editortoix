@@ -170,6 +170,7 @@ define(function () {
         stepValue: {
             value: '',
             history: [],
+            canempty: true,
         },
         iswordsonly: {
             value: false,

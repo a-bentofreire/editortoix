@@ -194,6 +194,7 @@ define(() => {
     stepValue: {
       value: '',
       history: [],
+      canempty: true,
     },
     iswordsonly: {
       value: false,

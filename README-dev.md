@@ -32,7 +32,7 @@ Input fields on the dialogs support history (CTRL+UP/DOWN).
 ## Text Transformations
 
 The list of commands are:
-1. Case Change[word]: **UpperCase**, **LowerCase**, **Capitalize**, **CamelCase**
+1. Case Change[word]: **UpperCase**, **LowerCase**, **Capitalize**, **CamelCase**, **DashCase**
 2. Encoders/Decoders[line]: **HtmlEncode**, **HtmlDecode**, **UrlEncode**, **UrlDecode**
 3. Quote Change [function]: **Single Quote To Double**, **Double To Single Quote**, **Toggle Quote**
 4. Slash Change [line]: **Unix To Win**, **Win To Unix**, **Single Slash To Double**, **Double To Single Slash**
@@ -141,8 +141,8 @@ To prevent from creating an oversize plug-in, the compilers must be installed ma
 
 By default, the compile on save is not active. You can use the **Options** to activate it
 
-[1]: https://sass-lang.com/  
-[2]: https://nodejs.org/  
+[1]: https://sass-lang.com/
+[2]: https://nodejs.org/
 
 ## Lorem Ipsum
 

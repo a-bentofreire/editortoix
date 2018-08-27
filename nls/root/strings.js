@@ -78,6 +78,7 @@ define({
   'LowerCase': 'LowerCase',
   'Capitalize': 'Capitalize',
   'CamelCase': 'CamelCase',
+  'DashCase': 'DashCase',
   'HtmlEncode': 'HtmlEncode',
   'HtmlDecode': 'HtmlDecode',
   'UrlEncode': 'UrlEncode',

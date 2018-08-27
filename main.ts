@@ -1564,6 +1564,7 @@ function execSnippets() {
       { name: 'LowerCase', f: lowerCaseText, priority: SHOWONMENU, canonsave: true },
       { name: 'Capitalize', f: tt.capitalizeText, sp: SP_WORD, priority: SHOWONMENU, canonsave: true },
       { name: 'CamelCase', f: tt.camelCaseText, sp: SP_WORD, priority: SHOWONMENU },
+      { name: 'DashCase', f: tt.dashCaseText, sp: SP_WORD, priority: SHOWONMENU },
       { name: 'HtmlEncode', f: htmlEncode, priority: SHOWONMENU },
       { name: 'HtmlDecode', f: htmlDecode, priority: SHOWONMENU },
       { name: 'UrlEncode', f: urlEncode, priority: SHOWONMENU },

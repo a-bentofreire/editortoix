@@ -72,6 +72,7 @@ UpperCase	UpperCase	大寫	大写	Converter para Maiúsculas	Großbuchstaben
 LowerCase	LowerCase	小寫	小写	Converter para Minúsculas	Kleinbuchstaben
 Capitalize	Capitalize	首字大寫	首字大写	Capitalizar	Wortanfang groß
 CamelCase	CamelCase	駝峰式大小寫	驼峰式大小写		
+DashCase	DashCase	DashCase	DashCase  DashCase
 HtmlEncode	HtmlEncode	HtmlEncode	HtmlEncode	Codificar Html	HTML codieren
 HtmlDecode	HtmlDecode	HtmlDecode	HtmlDecode	Decodificar Html	HTML decodieren
 UrlEncode	UrlEncode	UrlEncode	UrlEncode	Codificar Url	URL encodieren

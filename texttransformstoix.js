@@ -21,6 +21,13 @@ define(function () {
             pat: /\b(_*\w)/g,
             repl: function (match, p1) { return p1.toLowerCase(); },
         },
+        dashCaseText: {
+            pat: /\b(\w+)\b/g,
+            repl: function (_match, p1) { return p1
+                .replace(/([a-z])([A-Z])/g, '$1-$2')
+                .toLowerCase()
+                .replace(/_/g, '-'); },
+        },
         reverse: {
             pat: /\b(.+)(\s+)([=<>]=*|[!:]=+)(\s+)([^;]+)/,
             repl: "$5$2$3$4$1",

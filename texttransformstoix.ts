@@ -28,6 +28,14 @@ define(() => {
       repl: (match, p1) => p1.toLowerCase(),
     },
 
+    dashCaseText: {
+      pat: /\b(\w+)\b/g,
+      repl: (_match, p1) => p1
+        .replace(/([a-z])([A-Z])/g, '$1-$2')
+        .toLowerCase()
+        .replace(/_/g, '-'),
+    },
+
     reverse: {
       pat: /\b(.+)(\s+)([=<>]=*|[!:]=+)(\s+)([^;]+)/,
       repl: "$5$2$3$4$1",

@@ -79,6 +79,7 @@ define({
   'LowerCase': '小寫',
   'Capitalize': '首字大寫',
   'CamelCase': '駝峰式大小寫',
+  'DashCase': 'DashCase',
   'HtmlEncode': 'HtmlEncode',
   'HtmlDecode': 'HtmlDecode',
   'UrlEncode': 'UrlEncode',

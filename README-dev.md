@@ -1,7 +1,6 @@
 [![Downloads](https://badges.ml/bracketstoix/total.svg)](https://brackets-extension-badges.github.io#bracketstoix)  [![Downloads](https://badges.ml/bracketstoix/last-version.svg)](https://brackets-extension-badges.github.io#bracketstoix)  [![Downloads](https://badges.ml/bracketstoix/week.svg)](https://brackets-extension-badges.github.io#bracketstoix)  [![Downloads](https://badges.ml/bracketstoix/day.svg)](https://brackets-extension-badges.github.io#bracketstoix)  [![Version](https://badges.ml/bracketstoix/version.svg)](https://brackets-extension-badges.github.io#bracketstoix)
 
 
-
 ![Logo](assets/bracketstoix64x64.png)
 
 # BracketstoIX extension
@@ -180,7 +179,7 @@ but don't forget the golden rule: Be Polite!
 
 ## Copyrights
 
-(c) 2016-2018 Alexandre Bento Freire
+(c) 2016-2018 [Alexandre Bento Freire](https://www.a-bentofreire.com)
 
 
 ## License

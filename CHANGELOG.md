@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add DashCase utility.
 ### Fixed
 - Partial CHANGELOG cleanup.
+### Changed
+- Update social links and copyrights.
 
 
 ## [3.4.2] - 2018-07-27.

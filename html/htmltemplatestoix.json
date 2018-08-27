@@ -1,9 +1,9 @@
 {
   "DLGTITLE": "<style>@font-face{font-family:'icomoontoix';src:url('{{&root}}assets/icomoontoix.ttf?6f58a0')format('truetype');font-weight:normal;font-style:normal;}</style><img src='{{&root}}assets/bracketstoix64x64.png' class=aboutimgtoix>{{title}}{{&social}}",
 
-  "SOCIAL": "<span class='pull-right'><!-- a class='icontoix-home' href='{{&home}}'></a><a class='icontoix-facebook2' href='{{&facebook}}'></a><a class='icontoix-twitter' href='{{&twitter}}'></a --><a class='icontoix-github' href='{{&github}}'></a></span>",
+  "SOCIAL": "<span class='pull-right'><!-- a class='icontoix-home' href='{{&home}}'></a><a class='icontoix-facebook2' href='{{&facebook}}'></a></a --><a class='icontoix-twitter' href='{{&twitter}}'></a><a class='icontoix-github' href='{{&github}}'></a></span>",
 
-  "ABOUTTEXT": "<div class=abouttexttoix>Brackets<sub>to</sub>IX</div><div style='font-size: 1.2em;'>(c) 2016 App<sub>to</sub>IX</div><div>{{devby}}</div><a href='{{&helplink}}'>Official Webpage</a>",
+  "ABOUTTEXT": "<div class=abouttexttoix>Brackets<sub>to</sub>IX</div><div style='font-size: 1.2em;'>© 2016-2018 <a href='https://www.a-bentofreire.com'>Alexandre Bento Freire</a></div>",
 
   "WELLCOME-deprecated": "<h2>Brackets<sub>to</sub>IX {{version}}</h2>Brackets<sub>to</sub>IX 3.2 allows to save project settings,<p>including spacing and compiler settings.<p>Take a few minutes to watch <a href=''>the video</a> describing how to unleash its power.<p><p><p>",
 

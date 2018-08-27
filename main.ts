@@ -41,9 +41,9 @@ define((require, exports, module) => {
 
   const SOCIAL = {
     home: HELP_LINK,
-    facebook: 'https://www.facebook.com/devtoix',
-    twitter: 'https://www.twitter.com/devtoix',
-    github: 'http://www.github.com/a-bentofreire/bracketstoix',
+    // facebook: 'https://www.facebook.com/devtoix',
+    twitter: 'https://twitter.com/programmer1983',
+    github: 'http://github.com/a-bentofreire/bracketstoix',
   };
 
   const brk = {} as any;

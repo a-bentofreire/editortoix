@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
+        "module": "amd",
         "noImplicitAny": false,
         "noUnusedLocals": false,
         "strictNullChecks": false,

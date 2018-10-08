@@ -179,7 +179,7 @@ but don't forget the golden rule: Be Polite!
 
 ## Copyrights
 
-(c) 2016-2018 [Alexandre Bento Freire](https://www.a-bentofreire.com)
+© 2016-2018 [Alexandre Bento Freire](https://www.a-bentofreire.com)
 
 
 ## License

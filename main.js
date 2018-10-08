@@ -68,7 +68,27 @@ define(function (require, exports, module) {
     brk.Editor = brackets.getModule("editor/Editor").Editor;
     brk.Mustache = brackets.getModule("thirdparty/mustache/mustache");
     var ui = require('uitoix');
-    var tt = require('texttransformstoix');
+    var transformutilities = require('common/transformutilities').transformutilities;
+    var lineutilities = require('common/lineutilities').lineutilities;
+    var um = require('common/utilitymanager').um;
+    um.utilityManager = utilityManager_;
+    function utilityManager_(params, f) {
+        switch (params.utilType) {
+            case um.TIXUtilityType.utInTransform:
+                replaceSelection(params.pat, params.repl, params.sp);
+                break;
+            case um.TIXUtilityType.utTransform:
+                changeSelection(function (text) {
+                    return f({ intext: text });
+                }, params.sp);
+                break;
+            case um.TIXUtilityType.utLinesUtility:
+                changeSelection(function (arr) {
+                    return f({ inlines: arr });
+                }, SP_ALL, true);
+                break;
+        }
+    }
     var optstoix = require('optionstoix');
     var optshtml = require('text!html/optionstoix.html');
     var prefs = require('prefstoix'); // WARNING: these field names are used in prefsinfo
@@ -558,32 +578,6 @@ define(function (require, exports, module) {
             d.innerHTML = text;
             return d.textContent;
         }, SP_LINE);
-    }
-    function urlEncode() {
-        changeSelection(function (text) { return window.encodeURIComponent(text); }, SP_LINE);
-    }
-    function urlDecode() {
-        changeSelection(function (text) { return window.decodeURIComponent(text); }, SP_LINE);
-    }
-    function removeDuplicates() {
-        changeSelection(function (arr) {
-            for (var i = arr.length - 1; i >= 0; i--) {
-                if (arr[i + 1] === arr[i]) {
-                    arr.splice(i + 1, 1);
-                }
-            }
-            return arr;
-        }, SP_ALL, true);
-    }
-    function removeEmptyLines() {
-        changeSelection(function (arr) {
-            for (var i = arr.length - 1; i >= 0; i--) {
-                if (!arr[i].trim()) {
-                    arr.splice(i, 1);
-                }
-            }
-            return arr;
-        }, SP_ALL, true);
     }
     function tabToSpace() {
         replaceSelection(/\t/gm, tools.strRepeat(' ', prefs.tabSize.value), SP_ALL);
@@ -1346,29 +1340,29 @@ define(function (require, exports, module) {
         cmdlist = [
             { name: 'UpperCase', f: upperCaseText, priority: SHOWONMENU, canonsave: true },
             { name: 'LowerCase', f: lowerCaseText, priority: SHOWONMENU, canonsave: true },
-            { name: 'Capitalize', f: tt.capitalizeText, sp: SP_WORD, priority: SHOWONMENU, canonsave: true },
-            { name: 'CamelCase', f: tt.camelCaseText, sp: SP_WORD, priority: SHOWONMENU },
-            { name: 'DashCase', f: tt.dashCaseText, sp: SP_WORD, priority: SHOWONMENU },
+            { name: 'Capitalize', f: transformutilities.capitalize, priority: SHOWONMENU, canonsave: true },
+            { name: 'CamelCase', f: transformutilities.camelCase, priority: SHOWONMENU },
+            { name: 'DashCase', f: transformutilities.dashCase, priority: SHOWONMENU },
             { name: 'HtmlEncode', f: htmlEncode, priority: SHOWONMENU },
             { name: 'HtmlDecode', f: htmlDecode, priority: SHOWONMENU },
-            { name: 'UrlEncode', f: urlEncode, priority: SHOWONMENU },
-            { name: 'UrlDecode', f: urlDecode, priority: SHOWONMENU },
+            { name: 'UrlEncode', f: transformutilities.urlEncode, priority: SHOWONMENU },
+            { name: 'UrlDecode', f: transformutilities.urlDecode, priority: SHOWONMENU },
             { name: 'Join', f: joinText, priority: SHOWONMENU },
             { name: 'Split...', f: splitText, priority: SHOWONMENU },
             { name: 'Number...', f: numberText, priority: SHOWONMENU },
-            { name: 'Reverse', f: tt.reverse, sp: SP_SENTENCE, priority: SHOWONMENU },
+            { name: 'Reverse', f: transformutilities.reverseAssignment, priority: SHOWONMENU },
             { name: 'Trim Leading', f: trimLeading, priority: SHOWONMENU, canonsave: true },
             { name: 'Trim Trailing', f: trimTrailing, priority: SHOWONMENU, canonsave: true },
             { name: 'Markdown Trim Trailing', f: markdownTrimTrailing, priority: SHOWONMENU, canonsave: true },
             { name: 'Sort Ascending', f: sortAscending, priority: SHOWONMENU, canonsave: true },
             { name: 'Sort Descending', f: sortDescending, priority: SHOWONMENU, canonsave: true },
-            { name: 'Remove Duplicates', f: removeDuplicates, priority: SHOWONMENU, canonsave: true },
-            { name: 'Remove Empty Lines', f: removeEmptyLines, priority: SHOWONMENU, canonsave: true },
+            { name: 'Remove Duplicates', f: lineutilities.removeDuplicatedLines, priority: SHOWONMENU, canonsave: true },
+            { name: 'Remove Empty Lines', f: lineutilities.removeEmptyLines, priority: SHOWONMENU, canonsave: true },
             {},
-            { name: 'Unix To Win', f: tt.unixToWin, sp: SP_LINE, priority: SHOWONMENU, canonsave: true },
-            { name: 'Win To Unix', f: tt.winToUnix, sp: SP_LINE, priority: SHOWONMENU, canonsave: true },
-            { name: 'Single Slash To Double', f: tt.singleToDoubleSlash, sp: SP_LINE, priority: SHOWONMENU },
-            { name: 'Double To Single Slash', f: tt.doubleToSingleSlash, sp: SP_LINE, priority: SHOWONMENU },
+            { name: 'Unix To Win', f: transformutilities.unixToWinSlash, priority: SHOWONMENU, canonsave: true },
+            { name: 'Win To Unix', f: transformutilities.winToUnix, priority: SHOWONMENU, canonsave: true },
+            { name: 'Single Slash To Double', f: transformutilities.singleToDoubleSlash, priority: SHOWONMENU },
+            { name: 'Double To Single Slash', f: transformutilities.doubleToSingleSlash, priority: SHOWONMENU },
             { name: 'Single Quote To Double', f: singleToDoubleQuote, priority: SHOWONMENU },
             { name: 'Double To Single Quote', f: doubleToSingleQuote, priority: SHOWONMENU },
             { name: 'Toggle Quote', f: toggleQuote, priority: SHOWONMENU },
@@ -1443,7 +1437,7 @@ define(function (require, exports, module) {
     }
     function runCommand(cmd, isglobal) {
         if ((isglobal !== undefined) === (globalDoc !== null)) {
-            if (!cmd.sp) {
+            if (cmd.ported || !cmd.sp) {
                 cmd.f(cmd);
             }
             else {

@@ -17,7 +17,7 @@ FLD_lihtmlparawrap_hint	Wraps each paragraph with this tag. Ex: p	以此標籤�
 FLD_linrparagraphs_label	Nr Paragraphs	段落號碼	段落号码	Nr parágrafos	Anzahl Absätze
 FLD_linrparagraphs_hint	Maximum is 100	最大值為100	最大值为100	Máximo é 100	Maximal 100 Absätze
 FLD_scss_label	scss Compiler	scss編譯器	scss编译器	Compilador SCSS	scss Compiler
-FLD_scss_hint	You Must install sass 1st. Goto http://sass-lang.com/	您必須先安裝sass。轉到http://sass-lang.com/	您必须先安装sass。转到http://sass-lang.com/	Você deve instalar sass 1. Ir a http://sass-lang.com/	sass muss zuerst installier werden. Siehe http://sass-lang.com/
+FLD_scss_hint	You Must install sass 1st. Goto http://sass-lang.com/. WARN: Some sass implementations use --source-map instead of  --sourcemap	您必須先安裝sass。轉到http://sass-lang.com/	您必须先安装sass。转到http://sass-lang.com/	Você deve instalar sass 1. Ir a http://sass-lang.com/	sass muss zuerst installier werden. Siehe http://sass-lang.com/
 FLD_scss_compass_label	Compass	Compass	Compass	Compass	Compass
 FLD_scss_sass_label	SCSS	SCSS	SCSS	SCSS	SCSS
 FLD_scss_autosave_hint	AutoSave	自動保存	自动保存	Gravação automática	Automatisch sichern

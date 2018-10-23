@@ -1,8 +1,16 @@
 define(["require", "exports"], function (require, exports) {
-    "use strict";
+    'use strict';
     Object.defineProperty(exports, "__esModule", { value: true });
+    // uuid: 6f9a7dc4-34ed-4001-88c6-4c7bd7f9ab31
+    // ------------------------------------------------------------------------
+    // Copyright (c) 2016-2018 Alexandre Bento Freire. All rights reserved.
+    // Licensed under the MIT License+uuid License. See License.txt for details
+    // ------------------------------------------------------------------------
     var um;
     (function (um) {
+        // ------------------------------------------------------------------------
+        //                               Types
+        // ------------------------------------------------------------------------
         var TIXUtilityType;
         (function (TIXUtilityType) {
             /// preforms inline transforms replacing pat with repl. doesn't calls ActionFunc
@@ -18,15 +26,18 @@ define(["require", "exports"], function (require, exports) {
             /// inserts text at the end of the selection or at cursor point if no text is selected
             TIXUtilityType[TIXUtilityType["utInsertAtEndUtility"] = 5] = "utInsertAtEndUtility";
         })(TIXUtilityType = um.TIXUtilityType || (um.TIXUtilityType = {}));
-        // FORCE policy must be the negative of the regular policy
-        um.SP_FORCE_ALL = -1;
-        um.SP_ALL = 1;
-        um.SP_WORD = 2;
-        um.SP_SENTENCE = 3;
-        um.SP_LINE = 4;
-        um.SP_NONE = 5;
-        um.__SP_FUNC = 6;
-        um.SP_FORCE_LINE = -4;
+        var TIXSelPolicy;
+        (function (TIXSelPolicy) {
+            // FORCE policy must be the negative of the regular policy
+            TIXSelPolicy[TIXSelPolicy["ForceAll"] = -1] = "ForceAll";
+            TIXSelPolicy[TIXSelPolicy["All"] = 1] = "All";
+            TIXSelPolicy[TIXSelPolicy["Word"] = 2] = "Word";
+            TIXSelPolicy[TIXSelPolicy["Sentence"] = 3] = "Sentence";
+            TIXSelPolicy[TIXSelPolicy["Line"] = 4] = "Line";
+            TIXSelPolicy[TIXSelPolicy["None"] = 5] = "None";
+            TIXSelPolicy[TIXSelPolicy["__Func"] = 6] = "__Func";
+            TIXSelPolicy[TIXSelPolicy["ForceLine"] = -4] = "ForceLine";
+        })(TIXSelPolicy = um.TIXSelPolicy || (um.TIXSelPolicy = {}));
     })(um = exports.um || (exports.um = {}));
 });
 //# sourceMappingURL=utilitymanager.js.map

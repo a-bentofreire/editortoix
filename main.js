@@ -1,9 +1,4 @@
 'use strict';
-// uuid: 11078410-3d9f-46b7-ba13-c7e93a109283
-// ------------------------------------------------------------------------
-// Copyright (c) 2016-2018 Alexandre Bento Freire. All rights reserved.
-// Licensed under the MIT License+uuid License. See License.txt for details
-// ------------------------------------------------------------------------
 require.config({
     paths: {
         text: "lib/text",
@@ -36,7 +31,7 @@ define(function (require, exports, module) {
     var SOCIAL = {
         home: HELP_LINK,
         // facebook: 'https://www.facebook.com/devtoix',
-        twitter: 'https://twitter.com/programmer1983',
+        twitter: 'https://twitter.com/devpieces',
         github: 'http://github.com/a-bentofreire/bracketstoix',
     };
     var brk = {};
@@ -75,7 +70,7 @@ define(function (require, exports, module) {
     function utilityManager_(params, f) {
         switch (params.utilType) {
             case um.TIXUtilityType.utInTransform:
-                replaceSelection(params.pat, params.repl, params.sp);
+                changeSelectionRegEx(params.pat, params.repl, params.sp);
                 break;
             case um.TIXUtilityType.utTransform:
                 changeSelection(function (text) {
@@ -85,7 +80,15 @@ define(function (require, exports, module) {
             case um.TIXUtilityType.utLinesUtility:
                 changeSelection(function (arr) {
                     return f({ inlines: arr });
-                }, SP_ALL, true);
+                }, params.sp, true);
+                break;
+            case um.TIXUtilityType.utLineUtility:
+                changeSelection(function (arr) {
+                    arr.forEach(function (value, index) {
+                        arr[index] = f({ intext: value });
+                    });
+                    return arr;
+                }, params.sp, true);
                 break;
         }
     }
@@ -349,7 +352,7 @@ define(function (require, exports, module) {
         }
         callback(so.cursel, so);
     }
-    function replaceSelection(regex, repl, selPolicy) {
+    function changeSelectionRegEx(regex, repl, selPolicy) {
         changeSelection(function (text) { return text.replace(regex, repl); }, selPolicy, false);
     }
     function sortSelection(sortFunc, selPolicy) {
@@ -453,7 +456,7 @@ define(function (require, exports, module) {
     function nodeOpenUrl(url) {
         appshell.app.openURLInDefaultBrowser(url);
     }
-    function displayNodeResult(callSuccess, out, name) {
+    function displayNodeResult(_callSuccess, out, name) {
         function send(tag_, start, end) {
             var arr = out.slice(start, end);
             // removes the last empty lines. also works for empty single lines results
@@ -509,7 +512,7 @@ define(function (require, exports, module) {
             social: brk.Mustache.render(ix.htmltempl.SOCIAL, SOCIAL),
         });
     }
-    function handleSocial($dlg) {
+    function handleSocial(_$dlg) {
     }
     function ask(title, cmd, fieldList, callback, opts, fields) {
         return ui.ask(buildDlgTitle(title || cmd.cleanlabel), cmd ? cmd.storeid : '', fieldList, callback, opts, fields || prefs, opts && opts.nosaveprefs ? undefined : saveExtPrefs, prefs.historySize.value, i18n, brk, handleSocial);
@@ -524,40 +527,29 @@ define(function (require, exports, module) {
     // ------------------------------------------------------------------------
     //                               Commands: Transforms
     // ------------------------------------------------------------------------
-    function upperCaseText() {
-        changeSelection(function (text) { return text.toUpperCase(); }, SP_WORD);
-    }
-    function lowerCaseText() {
-        changeSelection(function (text) { return text.toLowerCase(); }, SP_WORD);
-    }
-    function joinText() {
-        replaceSelection(/\n/g, '', SP_ALL);
-    }
     function splitText(cmd) {
         ask('', cmd, ['splitMarker'], function () {
-            replaceSelection(new RegExp(tools.processSplit(prefs.splitMarker.value), 'g'), '\n', SP_ALL);
+            changeSelectionRegEx(new RegExp(tools.processSplit(prefs.splitMarker.value), 'g'), '\n', SP_ALL);
         });
     }
     function numberText(cmd) {
         ask('', cmd, ['startNum', 'numSep'], function () {
             var num = prefs.startNum.value;
             var numSep = tools.getSpaceText(prefs.numSep.value);
-            replaceSelection(/^(.*)$/gm, function replacer(match, p1) {
-                return (num++) + numSep + p1;
-            }, SP_ALL);
+            changeSelectionRegEx(/^(.*)$/gm, function (_match, p1) { return (num++) + numSep + p1; }, SP_ALL);
         });
     }
     function trimLeading() {
-        replaceSelection(/^[ \t]+/gm, '', SP_ALL);
+        changeSelectionRegEx(/^[ \t]+/gm, '', SP_ALL);
     }
     function trimTrailingex(selPolicy) {
-        replaceSelection(/[ \t]+$/gm, '', selPolicy);
+        changeSelectionRegEx(/[ \t]+$/gm, '', selPolicy);
     }
     function trimTrailing() {
         trimTrailingex(SP_ALL);
     }
     function markdownTrimTrailing() {
-        replaceSelection(/[ \t]+$/gm, '  ', SP_ALL);
+        changeSelectionRegEx(/[ \t]+$/gm, '  ', SP_ALL);
     }
     function sortAscending() {
         sortSelection(function (a, b) { return a > b ? 1 : (a < b ? -1 : 0); }, SP_ALL);
@@ -565,25 +557,11 @@ define(function (require, exports, module) {
     function sortDescending() {
         sortSelection(function (a, b) { return a < b ? 1 : (a > b ? -1 : 0); }, SP_ALL);
     }
-    function htmlEncode() {
-        changeSelection(function (text) {
-            var d = document.createElement('div');
-            d.textContent = text;
-            return d.innerHTML;
-        }, SP_LINE);
-    }
-    function htmlDecode() {
-        changeSelection(function (text) {
-            var d = document.createElement('div');
-            d.innerHTML = text;
-            return d.textContent;
-        }, SP_LINE);
-    }
     function tabToSpace() {
-        replaceSelection(/\t/gm, tools.strRepeat(' ', prefs.tabSize.value), SP_ALL);
+        changeSelectionRegEx(/\t/gm, tools.strRepeat(' ', prefs.tabSize.value), SP_ALL);
     }
     function spaceToTab() {
-        replaceSelection(/^(\s+)/gm, function (spaces) {
+        changeSelectionRegEx(/^(\s+)/gm, function (spaces) {
             var len = spaces.length;
             var tabs = Math.floor(len / prefs.tabSize.value);
             return !tabs ? spaces : tools.strRepeat("\t", tabs) +
@@ -596,7 +574,7 @@ define(function (require, exports, module) {
         }, SP_SENTENCE);
     }
     function rgbHex() {
-        replaceSelection(/(?:#([a-f0-9]{2,2})([a-f0-9]{2,2})([a-f0-9]{2,2}))|(?:rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\))/ig, function (text, h1, h2, h3, r1, r2, r3) {
+        changeSelectionRegEx(/(?:#([a-f0-9]{2,2})([a-f0-9]{2,2})([a-f0-9]{2,2}))|(?:rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\))/ig, function (text, h1, h2, h3, r1, r2, r3) {
             function toHex2(v) {
                 var res = parseInt(v, 10).toString(16);
                 return res.length < 2 ? '0' + res : res;
@@ -610,7 +588,7 @@ define(function (require, exports, module) {
         }, SP_SENTENCE);
     }
     function untag() {
-        replaceSelection(/<(\w+)(?:.*?)>(.*?)<\/(\1)\s*>/, "$2", 
+        changeSelectionRegEx(/<(\w+)(?:.*?)>(.*?)<\/(\1)\s*>/, "$2", 
         // function policy.
         function (inf, ch) {
             if (inf.stop) {
@@ -867,7 +845,7 @@ define(function (require, exports, module) {
             if (prefs.iswordsonly.value && !prefs.isregexpr.value) {
                 findtext = '\\b' + findtext + '\\b';
             }
-            replaceSelection(new RegExp(findtext, (prefs.isall.value ? 'g' : '') +
+            changeSelectionRegEx(new RegExp(findtext, (prefs.isall.value ? 'g' : '') +
                 (prefs.isignorecase.value ? 'i' : '') +
                 (prefs.isimultiline.value ? 'm' : '')), (startValue !== undefined) && (stepValue !== undefined) ?
                 // format mode	(Start, Step)
@@ -1338,16 +1316,17 @@ define(function (require, exports, module) {
     var SHOWONMENU = 1;
     function initCommandList() {
         cmdlist = [
-            { name: 'UpperCase', f: upperCaseText, priority: SHOWONMENU, canonsave: true },
-            { name: 'LowerCase', f: lowerCaseText, priority: SHOWONMENU, canonsave: true },
+            { name: 'UpperCase', f: transformutilities.upperCase, priority: SHOWONMENU, canonsave: true },
+            { name: 'LowerCase', f: transformutilities.lowerCase, priority: SHOWONMENU, canonsave: true },
             { name: 'Capitalize', f: transformutilities.capitalize, priority: SHOWONMENU, canonsave: true },
             { name: 'CamelCase', f: transformutilities.camelCase, priority: SHOWONMENU },
             { name: 'DashCase', f: transformutilities.dashCase, priority: SHOWONMENU },
-            { name: 'HtmlEncode', f: htmlEncode, priority: SHOWONMENU },
-            { name: 'HtmlDecode', f: htmlDecode, priority: SHOWONMENU },
+            { name: 'spaceByUpper', f: transformutilities.spaceByUpper },
+            { name: 'HtmlEncode', f: transformutilities.htmlEncode, priority: SHOWONMENU },
+            { name: 'HtmlDecode', f: transformutilities.htmlDecode, priority: SHOWONMENU },
             { name: 'UrlEncode', f: transformutilities.urlEncode, priority: SHOWONMENU },
             { name: 'UrlDecode', f: transformutilities.urlDecode, priority: SHOWONMENU },
-            { name: 'Join', f: joinText, priority: SHOWONMENU },
+            { name: 'Join', f: transformutilities.joinText, priority: SHOWONMENU },
             { name: 'Split...', f: splitText, priority: SHOWONMENU },
             { name: 'Number...', f: numberText, priority: SHOWONMENU },
             { name: 'Reverse', f: transformutilities.reverseAssignment, priority: SHOWONMENU },
@@ -1358,9 +1337,11 @@ define(function (require, exports, module) {
             { name: 'Sort Descending', f: sortDescending, priority: SHOWONMENU, canonsave: true },
             { name: 'Remove Duplicates', f: lineutilities.removeDuplicatedLines, priority: SHOWONMENU, canonsave: true },
             { name: 'Remove Empty Lines', f: lineutilities.removeEmptyLines, priority: SHOWONMENU, canonsave: true },
+            { name: 'Indent One Space', f: lineutilities.indentOneSpace, canonsave: true },
+            { name: 'Outdent One Space', f: lineutilities.outdentOneSpace, canonsave: true },
             {},
             { name: 'Unix To Win', f: transformutilities.unixToWinSlash, priority: SHOWONMENU, canonsave: true },
-            { name: 'Win To Unix', f: transformutilities.winToUnix, priority: SHOWONMENU, canonsave: true },
+            { name: 'Win To Unix', f: transformutilities.winToUnixSlash, priority: SHOWONMENU, canonsave: true },
             { name: 'Single Slash To Double', f: transformutilities.singleToDoubleSlash, priority: SHOWONMENU },
             { name: 'Double To Single Slash', f: transformutilities.doubleToSingleSlash, priority: SHOWONMENU },
             { name: 'Single Quote To Double', f: singleToDoubleQuote, priority: SHOWONMENU },
@@ -1437,12 +1418,7 @@ define(function (require, exports, module) {
     }
     function runCommand(cmd, isglobal) {
         if ((isglobal !== undefined) === (globalDoc !== null)) {
-            if (cmd.ported || !cmd.sp) {
-                cmd.f(cmd);
-            }
-            else {
-                replaceSelection(cmd.f.pat, cmd.f.repl, cmd.sp);
-            }
+            cmd.f(cmd);
         }
     }
     // This function must be a top level function to mimimize the closure

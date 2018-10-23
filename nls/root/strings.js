@@ -23,7 +23,7 @@ define({
   'FLD_linrparagraphs_label': 'Nr Paragraphs',
   'FLD_linrparagraphs_hint': 'Maximum is 100',
   'FLD_scss_label': 'scss Compiler',
-  'FLD_scss_hint': 'You Must install sass 1st. Goto http://sass-lang.com/',
+  'FLD_scss_hint': 'You Must install sass 1st. Goto http://sass-lang.com/. WARN: Some sass implementations use --source-map instead of  --sourcemap',
   'FLD_scss_compass_label': 'Compass',
   'FLD_scss_sass_label': 'SCSS',
   'FLD_scss_autosave_hint': 'AutoSave',

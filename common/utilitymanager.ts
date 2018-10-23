@@ -1,4 +1,15 @@
+'use strict';
+// uuid: 6f9a7dc4-34ed-4001-88c6-4c7bd7f9ab31
+
+// ------------------------------------------------------------------------
+// Copyright (c) 2016-2018 Alexandre Bento Freire. All rights reserved.
+// Licensed under the MIT License+uuid License. See License.txt for details
+// ------------------------------------------------------------------------
 export namespace um {
+
+  // ------------------------------------------------------------------------
+  //                               Types
+  // ------------------------------------------------------------------------
 
   export enum TIXUtilityType {
     /// preforms inline transforms replacing pat with repl. doesn't calls ActionFunc
@@ -15,16 +26,17 @@ export namespace um {
     utInsertAtEndUtility,
   }
 
+  export enum TIXSelPolicy {
+    // FORCE policy must be the negative of the regular policy
+    ForceAll = -1,
+    All = 1,
+    Word,
+    Sentence,
+    Line,
+    None,
+    __Func,
+    ForceLine = -4,
+  }
+
   export let utilityManager;
-
-  // FORCE policy must be the negative of the regular policy
-  export const SP_FORCE_ALL = -1;
-  export const SP_ALL = 1;
-  export const SP_WORD = 2;
-  export const SP_SENTENCE = 3;
-  export const SP_LINE = 4;
-  export const SP_NONE = 5;
-  export const __SP_FUNC = 6;
-  export const SP_FORCE_LINE = -4;
-
 }

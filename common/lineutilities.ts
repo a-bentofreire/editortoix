@@ -2,7 +2,7 @@
 // uuid: d477c481-d965-4afa-baac-56343a395d74
 
 // ------------------------------------------------------------------------
-// Copyright (c) 2018 Alexandre Bento Freire. All rights reserved.
+// Copyright (c) 2016-2018 Alexandre Bento Freire. All rights reserved.
 // Licensed under the MIT License+uuid License. See License.txt for details
 // ------------------------------------------------------------------------
 
@@ -26,7 +26,7 @@ export namespace lineutilities {
   export function removeDuplicatedLines(): void {
     um.utilityManager({
       utilType: um.TIXUtilityType.utLinesUtility,
-      sp: um.SP_ALL,
+      sp: um.TIXSelPolicy.All,
     }, (up): string[] => {
       const arr = up.inlines;
       for (let i = arr.length - 1; i >= 0; i--) {
@@ -48,7 +48,7 @@ export namespace lineutilities {
   export function removeEmptyLines(): void {
     um.utilityManager({
       utilType: um.TIXUtilityType.utLinesUtility,
-      sp: um.SP_ALL,
+      sp: um.TIXSelPolicy.All,
     }, (up): string[] => {
       const arr = up.inlines;
       for (let i = arr.length - 1; i >= 0; i--) {
@@ -61,4 +61,36 @@ export namespace lineutilities {
   }
 
 
+  // ------------------------------------------------------------------------
+  // $utility: indentOneSpace
+  //
+  // $keywords: indent
+  // $eg: __NONE__
+  // $desc: Adds one space to the beginning of each line
+  // ------------------------------------------------------------------------
+
+  export function indentOneSpace(): void {
+    um.utilityManager({
+      utilType: um.TIXUtilityType.utLineUtility,
+      sp: um.TIXSelPolicy.All,
+    },
+      (up): string => ' ' + up.intext);
+  }
+
+  // ------------------------------------------------------------------------
+  // $utility: outdentOneSpace
+  //
+  // $keywords: indent
+  // $eg: __NONE__
+  // $desc: Removes one space to the beginning of each line
+  // ------------------------------------------------------------------------
+
+  export function outdentOneSpace(): void {
+    um.utilityManager({
+      utilType: um.TIXUtilityType.utLineUtility,
+      sp: um.TIXSelPolicy.All,
+    },
+      (up): string => up.intext !== '' && up.intext[0] === ' ' ?
+        up.intext.substr(1) : up.intext);
+  }
 }

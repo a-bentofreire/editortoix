@@ -5,6 +5,7 @@
 // Copyright (c) 2016-2018 Alexandre Bento Freire. All rights reserved.
 // Licensed under the MIT License+uuid License. See License.txt for details
 // ------------------------------------------------------------------------
+declare var appshell;
 
 require.config({
   paths: {
@@ -42,7 +43,7 @@ define((require, exports, module) => {
   const SOCIAL = {
     home: HELP_LINK,
     // facebook: 'https://www.facebook.com/devtoix',
-    twitter: 'https://twitter.com/programmer1983',
+    twitter: 'https://twitter.com/devpieces',
     github: 'http://github.com/a-bentofreire/bracketstoix',
   };
 
@@ -87,7 +88,7 @@ define((require, exports, module) => {
 
     switch (params.utilType) {
       case um.TIXUtilityType.utInTransform:
-        replaceSelection(params.pat, params.repl, params.sp);
+        changeSelectionRegEx(params.pat, params.repl, params.sp);
         break;
 
       case um.TIXUtilityType.utTransform:
@@ -99,7 +100,16 @@ define((require, exports, module) => {
       case um.TIXUtilityType.utLinesUtility:
         changeSelection((arr: string[]): string[] => {
           return f({ inlines: arr });
-        }, SP_ALL, true);
+        }, params.sp, true);
+        break;
+
+      case um.TIXUtilityType.utLineUtility:
+        changeSelection((arr: string[]): string[] => {
+          arr.forEach((value, index) => {
+            arr[index] = f({ intext: value });
+          });
+          return arr;
+        }, params.sp, true);
         break;
     }
   }
@@ -415,7 +425,7 @@ define((require, exports, module) => {
     callback(so.cursel, so);
   }
 
-  function replaceSelection(regex, repl, selPolicy): void {
+  function changeSelectionRegEx(regex, repl, selPolicy): void {
     changeSelection((text) => text.replace(regex, repl), selPolicy, false);
   }
 
@@ -540,7 +550,7 @@ define((require, exports, module) => {
     appshell.app.openURLInDefaultBrowser(url);
   }
 
-  function displayNodeResult(callSuccess, out, name): void {
+  function displayNodeResult(_callSuccess, out, name): void {
 
     function send(tag_, start, end) {
       const arr = out.slice(start, end);
@@ -607,7 +617,7 @@ define((require, exports, module) => {
     });
   }
 
-  function handleSocial($dlg) {
+  function handleSocial(_$dlg) {
   }
 
   function ask(title, cmd, fieldList, callback, opts?, fields?) {
@@ -632,21 +642,9 @@ define((require, exports, module) => {
   //                               Commands: Transforms
   // ------------------------------------------------------------------------
 
-  function upperCaseText(): void {
-    changeSelection((text: string) => text.toUpperCase(), SP_WORD);
-  }
-
-  function lowerCaseText(): void {
-    changeSelection((text: string) => text.toLowerCase(), SP_WORD);
-  }
-
-  function joinText(): void {
-    replaceSelection(/\n/g, '', SP_ALL);
-  }
-
   function splitText(cmd): void {
     ask('', cmd, ['splitMarker'], () => {
-      replaceSelection(new RegExp(tools.processSplit(prefs.splitMarker.value), 'g'), '\n', SP_ALL);
+      changeSelectionRegEx(new RegExp(tools.processSplit(prefs.splitMarker.value), 'g'), '\n', SP_ALL);
     });
   }
 
@@ -654,18 +652,16 @@ define((require, exports, module) => {
     ask('', cmd, ['startNum', 'numSep'], () => {
       let num = prefs.startNum.value;
       const numSep = tools.getSpaceText(prefs.numSep.value);
-      replaceSelection(/^(.*)$/gm, function replacer(match, p1: string) {
-        return (num++) + numSep + p1;
-      }, SP_ALL);
+      changeSelectionRegEx(/^(.*)$/gm, (_match, p1: string) => (num++) + numSep + p1, SP_ALL);
     });
   }
 
   function trimLeading(): void {
-    replaceSelection(/^[ \t]+/gm, '', SP_ALL);
+    changeSelectionRegEx(/^[ \t]+/gm, '', SP_ALL);
   }
 
   function trimTrailingex(selPolicy): void {
-    replaceSelection(/[ \t]+$/gm, '', selPolicy);
+    changeSelectionRegEx(/[ \t]+$/gm, '', selPolicy);
   }
 
   function trimTrailing(): void {
@@ -673,7 +669,7 @@ define((require, exports, module) => {
   }
 
   function markdownTrimTrailing(): void {
-    replaceSelection(/[ \t]+$/gm, '  ', SP_ALL);
+    changeSelectionRegEx(/[ \t]+$/gm, '  ', SP_ALL);
   }
 
   function sortAscending(): void {
@@ -684,28 +680,13 @@ define((require, exports, module) => {
     sortSelection((a, b) => a < b ? 1 : (a > b ? -1 : 0), SP_ALL);
   }
 
-  function htmlEncode(): void {
-    changeSelection((text: string): string => {
-      const d = document.createElement('div');
-      d.textContent = text;
-      return d.innerHTML;
-    }, SP_LINE);
-  }
-
-  function htmlDecode(): void {
-    changeSelection((text: string): string => {
-      const d = document.createElement('div');
-      d.innerHTML = text;
-      return d.textContent;
-    }, SP_LINE);
-  }
 
   function tabToSpace(): void {
-    replaceSelection(/\t/gm, tools.strRepeat(' ', prefs.tabSize.value), SP_ALL);
+    changeSelectionRegEx(/\t/gm, tools.strRepeat(' ', prefs.tabSize.value), SP_ALL);
   }
 
   function spaceToTab(): void {
-    replaceSelection(/^(\s+)/gm, (spaces: string): string => {
+    changeSelectionRegEx(/^(\s+)/gm, (spaces: string): string => {
       const len = spaces.length;
       const tabs = Math.floor(len / prefs.tabSize.value);
       return !tabs ? spaces : tools.strRepeat("\t", tabs) +
@@ -720,7 +701,7 @@ define((require, exports, module) => {
   }
 
   function rgbHex(): void {
-    replaceSelection(
+    changeSelectionRegEx(
       /(?:#([a-f0-9]{2,2})([a-f0-9]{2,2})([a-f0-9]{2,2}))|(?:rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\))/ig,
       (text, h1, h2, h3, r1, r2, r3) => {
         function toHex2(v) {
@@ -737,7 +718,7 @@ define((require, exports, module) => {
   }
 
   function untag(): void {
-    replaceSelection(/<(\w+)(?:.*?)>(.*?)<\/(\1)\s*>/, "$2",
+    changeSelectionRegEx(/<(\w+)(?:.*?)>(.*?)<\/(\1)\s*>/, "$2",
       // function policy.
       (inf, ch) => {
         if (inf.stop) {
@@ -1023,7 +1004,7 @@ define((require, exports, module) => {
       if (prefs.iswordsonly.value && !prefs.isregexpr.value) {
         findtext = '\\b' + findtext + '\\b';
       }
-      replaceSelection(new RegExp(findtext, (prefs.isall.value ? 'g' : '') +
+      changeSelectionRegEx(new RegExp(findtext, (prefs.isall.value ? 'g' : '') +
         (prefs.isignorecase.value ? 'i' : '') +
         (prefs.isimultiline.value ? 'm' : '')),
         (startValue !== undefined) && (stepValue !== undefined) ?
@@ -1557,16 +1538,17 @@ function execSnippets() {
   function initCommandList(): void {
 
     cmdlist = [
-      { name: 'UpperCase', f: upperCaseText, priority: SHOWONMENU, canonsave: true },
-      { name: 'LowerCase', f: lowerCaseText, priority: SHOWONMENU, canonsave: true },
+      { name: 'UpperCase', f: transformutilities.upperCase, priority: SHOWONMENU, canonsave: true },
+      { name: 'LowerCase', f: transformutilities.lowerCase, priority: SHOWONMENU, canonsave: true },
       { name: 'Capitalize', f: transformutilities.capitalize, priority: SHOWONMENU, canonsave: true },
       { name: 'CamelCase', f: transformutilities.camelCase, priority: SHOWONMENU },
       { name: 'DashCase', f: transformutilities.dashCase, priority: SHOWONMENU },
-      { name: 'HtmlEncode', f: htmlEncode, priority: SHOWONMENU },
-      { name: 'HtmlDecode', f: htmlDecode, priority: SHOWONMENU },
+      { name: 'spaceByUpper', f: transformutilities.spaceByUpper },
+      { name: 'HtmlEncode', f: transformutilities.htmlEncode, priority: SHOWONMENU },
+      { name: 'HtmlDecode', f: transformutilities.htmlDecode, priority: SHOWONMENU },
       { name: 'UrlEncode', f: transformutilities.urlEncode, priority: SHOWONMENU },
       { name: 'UrlDecode', f: transformutilities.urlDecode, priority: SHOWONMENU },
-      { name: 'Join', f: joinText, priority: SHOWONMENU },
+      { name: 'Join', f: transformutilities.joinText, priority: SHOWONMENU },
       { name: 'Split...', f: splitText, priority: SHOWONMENU },
       { name: 'Number...', f: numberText, priority: SHOWONMENU },
       { name: 'Reverse', f: transformutilities.reverseAssignment, priority: SHOWONMENU },
@@ -1577,9 +1559,11 @@ function execSnippets() {
       { name: 'Sort Descending', f: sortDescending, priority: SHOWONMENU, canonsave: true },
       { name: 'Remove Duplicates', f: lineutilities.removeDuplicatedLines, priority: SHOWONMENU, canonsave: true },
       { name: 'Remove Empty Lines', f: lineutilities.removeEmptyLines, priority: SHOWONMENU, canonsave: true },
+      { name: 'Indent One Space', f: lineutilities.indentOneSpace, canonsave: true },
+      { name: 'Outdent One Space', f: lineutilities.outdentOneSpace, canonsave: true },
       {},
       { name: 'Unix To Win', f: transformutilities.unixToWinSlash, priority: SHOWONMENU, canonsave: true },
-      { name: 'Win To Unix', f: transformutilities.winToUnix, priority: SHOWONMENU, canonsave: true },
+      { name: 'Win To Unix', f: transformutilities.winToUnixSlash, priority: SHOWONMENU, canonsave: true },
       { name: 'Single Slash To Double', f: transformutilities.singleToDoubleSlash, priority: SHOWONMENU },
       { name: 'Double To Single Slash', f: transformutilities.doubleToSingleSlash, priority: SHOWONMENU },
       { name: 'Single Quote To Double', f: singleToDoubleQuote, priority: SHOWONMENU },
@@ -1661,11 +1645,7 @@ function execSnippets() {
 
   function runCommand(cmd, isglobal?): void {
     if ((isglobal !== undefined) === (globalDoc !== null)) {
-      if (cmd.ported || !cmd.sp) {
-        cmd.f(cmd);
-      } else {
-        replaceSelection(cmd.f.pat, cmd.f.repl, cmd.sp);
-      }
+      cmd.f(cmd);
     }
   }
 

@@ -22,70 +22,71 @@ No default shortcuts were define to prevent collision with other plugins.
 ### Case Change  
   
 [Selection Policy](#selection-policy) is word  
-| Utility  | Example |  
-| ------------- | ------------- |  
-|UpperCase|**before**:`classNameFunc`<br>**after**:`CLASSNAMEFUNC`|  
-|LowerCase|**before**:`classNameFunc`<br>**after**:`classnamefunc`|  
-|Capitalize|**before**:`classNameFunc`<br>**after**:`ClassNameFunc`|  
-|Camel Case|**before**:`ClassNameFunc`<br>**after**:`classNameFunc`|  
-|Dash Case|**before**:`ClassNameFunc`<br>**after**:`class-name-func`|  
-|Add Space before Uppercase<br>**Useful to transform functions names into documentation**|**before**:`doActionBefore`<br>**after**:`do Action Before`|  
+  
+| Utility  | Example |
+| ------------- | ------------- |
+|UpperCase|**before**:`classNameFunc`<br>**after**:`CLASSNAMEFUNC`|
+|LowerCase|**before**:`classNameFunc`<br>**after**:`classnamefunc`|
+|Capitalize|**before**:`classNameFunc`<br>**after**:`ClassNameFunc`|
+|Camel Case|**before**:`ClassNameFunc`<br>**after**:`classNameFunc`|
+|Dash Case|**before**:`ClassNameFunc`<br>**after**:`class-name-func`|
+|Add Space before Uppercase<br>**Useful to transform functions names into documentation**|**before**:`doActionBefore`<br>**after**:`do Action Before`|
   
 ### Encoders/Decoders  
   
 [Selection Policy](#selection-policy) is line  
-| Utility  | Example |  
-| ------------- | ------------- |  
-|Html Encode|**before**:`<h1>Title</h1>`<br>**after**:`&lt;h1&gt;Title&lt;/h1&gt`|  
-|Html Decode|**before**:`&lt;h1&gt;Title&lt;/h1&gt`<br>**after**:`<h1>Title</h1>`|  
-|Url Encode|**before**:`https://github.com`<br>**after**:`https%3A%2F%2Fgithub.com`|  
-|Url Decode|**before**:`https%3A%2F%2Fgithub.com`<br>**after**:`https://github.com`|  
+| Utility  | Example |
+| ------------- | ------------- |
+|Html Encode|**before**:`<h1>Title</h1>`<br>**after**:`&lt;h1&gt;Title&lt;/h1&gt`|
+|Html Decode|**before**:`&lt;h1&gt;Title&lt;/h1&gt`<br>**after**:`<h1>Title</h1>`|
+|Url Encode|**before**:`https://github.com`<br>**after**:`https%3A%2F%2Fgithub.com`|
+|Url Decode|**before**:`https%3A%2F%2Fgithub.com`<br>**after**:`https://github.com`|
   
 ### Quote Change  
   
 [Selection Policy](#selection-policy) is line  
-| Utility  | Example |  
-| ------------- | ------------- |  
-|Single To Double Quote|**before**:`find'again`<br>**after**:`find"again`|  
-|Double To Single Quote|**before**:`find"again`<br>**after**:`find'again`|  
-|Toggle Quote|**before**:`find"again'`<br>**after**:`find'again"`|  
+| Utility  | Example |
+| ------------- | ------------- |
+|Single To Double Quote|**before**:`find'again`<br>**after**:`find"again`|
+|Double To Single Quote|**before**:`find"again`<br>**after**:`find'again`|
+|Toggle Quote|**before**:`find"again'`<br>**after**:`find'again"`|
   
 ### Slash Change  
   
 [Selection Policy](#selection-policy) is line  
-| Utility  | Example |  
-| ------------- | ------------- |  
-|Unix To Win Slash<br>**Converts slashes to backslashes**|**before**:`chocolate/candy`<br>**after**:`chocolate\candy`|  
-|Win To Unix Slash<br>**Converts backslashes to slashes**|**before**:`chocolate\candy`<br>**after**:`chocolate/candy`|  
-|Single To Double Slash|**before**:`find\nagain`<br>**after**:`find\\\nagain`|  
-|Double To Single Slash|**before**:`find\\\nagain`<br>**after**:`find\nagain`|  
+| Utility  | Example |
+| ------------- | ------------- |
+|Unix To Win Slash<br>**Converts slashes to backslashes**|**before**:`chocolate/candy`<br>**after**:`chocolate\candy`|
+|Win To Unix Slash<br>**Converts backslashes to slashes**|**before**:`chocolate\candy`<br>**after**:`chocolate/candy`|
+|Single To Double Slash|**before**:`find\nagain`<br>**after**:`find\\\nagain`|
+|Double To Single Slash|**before**:`find\\\nagain`<br>**after**:`find\nagain`|
   
 ### Spacing  
   
 [Selection Policy](#selection-policy) is all  
-| Utility  | Example |  
-| ------------- | ------------- |  
-|Tab To Space<br>**Space to Tab only works with leading spaces**||  
-|Space To Tab<br>**Space to Tab only works with leading spaces**||  
+| Utility  | Example |
+| ------------- | ------------- |
+|Tab To Space<br>**Space to Tab only works with leading spaces**||
+|Space To Tab<br>**Space to Tab only works with leading spaces**||
   
 ### Line Commands  
   
 [Selection Policy](#selection-policy) is all  
-| Utility  | Example |  
-| ------------- | ------------- |  
-|Join Lines<br>**Joins lines adding the computed expression at the end of every line**|**before**:<br>`red`<br>`green`<br><br>**after**:<br>`expr:(x\c{X0A}),`<br>`red(x0A),green(x0B)`|  
-|Split Lines<br>**Split lines by an expression. Dynamic values aren't supported**|**before**:<br>`red,green`<br><br>**after**:<br>`expr: = \c{1}`<br>`red = 1`<br>`green = 2`|  
-|Indent One Space<br>**Adds one space to the beginning of each line**||  
-|Outdent One Space<br>**Removes one space to the beginning of each line**||  
-|Remove Duplicated Lines<br>**Removes consecutive duplicated lines**<br>**Only works with already sorted lines**|**before**:<br>`first`<br>`second`<br>`second`<br><br>**after**:<br><br>`first`<br>`second`|  
-|Remove Empty Lines|**before**:<br>`first`<br><br>`second`<br><br>**after**:<br><br>`first`<br>`second`|  
-|Number<br>**It adds a number prefix to every selected line**||  
-|Trim Leading||  
-|Trim Trailing||  
-|Sort Ascending||  
-|Sort Descending||  
-|Markdown Trim Trailing<br>**Trims trailing spaces and adds 2 trailing spaces**||  
-|Break line at<br>**Breaks lines to have a maximum of N chars, with word break option**||  
+| Utility  | Example |
+| ------------- | ------------- |
+|Join Lines<br>**Joins lines adding the computed expression at the end of every line**|**before**:<br>`red`<br>`green`<br><br>**after**:<br>`expr:(x\c{X0A}),`<br>`red(x0A),green(x0B)`|
+|Split Lines<br>**Split lines by an expression. Dynamic values aren't supported**|**before**:<br>`red,green`<br><br>**after**:<br>`expr: = \c{1}`<br>`red = 1`<br>`green = 2`|
+|Indent One Space<br>**Adds one space to the beginning of each line**||
+|Outdent One Space<br>**Removes one space to the beginning of each line**||
+|Remove Duplicated Lines<br>**Removes consecutive duplicated lines**<br>**Only works with already sorted lines**|**before**:<br>`first`<br>`second`<br>`second`<br><br>**after**:<br><br>`first`<br>`second`|
+|Remove Empty Lines|**before**:<br>`first`<br><br>`second`<br><br>**after**:<br><br>`first`<br>`second`|
+|Number<br>**It adds a number prefix to every selected line**||
+|Trim Leading||
+|Trim Trailing||
+|Sort Ascending||
+|Sort Descending||
+|Markdown Trim Trailing<br>**Trims trailing spaces and adds 2 trailing spaces**||
+|Break line at<br>**Breaks lines to have a maximum of N chars, with word break option**||
   
 ## More Text Transformations  
   

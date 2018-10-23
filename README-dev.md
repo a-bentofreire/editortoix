@@ -22,6 +22,8 @@ No default shortcuts were define to prevent collision with other plugins.
 ### Case Change
 
 [Selection Policy](#selection-policy) is word
+
+
 | Utility  | Example |
 | ------------- | ------------- |
 |UpperCase|**before**:`classNameFunc`<br>**after**:`CLASSNAMEFUNC`|
@@ -34,6 +36,8 @@ No default shortcuts were define to prevent collision with other plugins.
 ### Encoders/Decoders
 
 [Selection Policy](#selection-policy) is line
+
+
 | Utility  | Example |
 | ------------- | ------------- |
 |Html Encode|**before**:`<h1>Title</h1>`<br>**after**:`&lt;h1&gt;Title&lt;/h1&gt`|
@@ -44,6 +48,8 @@ No default shortcuts were define to prevent collision with other plugins.
 ### Quote Change
 
 [Selection Policy](#selection-policy) is line
+
+
 | Utility  | Example |
 | ------------- | ------------- |
 |Single To Double Quote|**before**:`find'again`<br>**after**:`find"again`|
@@ -53,6 +59,8 @@ No default shortcuts were define to prevent collision with other plugins.
 ### Slash Change
 
 [Selection Policy](#selection-policy) is line
+
+
 | Utility  | Example |
 | ------------- | ------------- |
 |Unix To Win Slash<br>**Converts slashes to backslashes**|**before**:`chocolate/candy`<br>**after**:`chocolate\candy`|
@@ -63,6 +71,8 @@ No default shortcuts were define to prevent collision with other plugins.
 ### Spacing
 
 [Selection Policy](#selection-policy) is all
+
+
 | Utility  | Example |
 | ------------- | ------------- |
 |Tab To Space<br>**Space to Tab only works with leading spaces**||
@@ -71,6 +81,8 @@ No default shortcuts were define to prevent collision with other plugins.
 ### Line Commands
 
 [Selection Policy](#selection-policy) is all
+
+
 | Utility  | Example |
 | ------------- | ------------- |
 |Join Lines<br>**Joins lines adding the computed expression at the end of every line**|**before**:<br>`red`<br>`green`<br><br>**after**:<br>`expr:(x\c{X0A}),`<br>`red(x0A),green(x0B)`|

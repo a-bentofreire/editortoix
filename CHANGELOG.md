@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - (DEV) Move the common code with atomtoxi to folder `common`.
 > This is a major port, where the moved code was ported to typescript namespaces  
 > and the way it was executed had to be ported to be as similar as possible as atomtoix.
+### Added
 - Add indentOneSpace, outdentOneSpace utilities.
 
 

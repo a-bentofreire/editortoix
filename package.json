@@ -1,8 +1,8 @@
 {
   "name": "bracketstoix",
   "title": "BracketstoIX",
-  "description": "[3.5]DashCase,Execute,Lorem ipsum,Break Line,Recent Files.Change(Case, Quote, Slash, Tab, Encoding), Sort, (Un)Tag, Clipboard, Internet, (Minify, traceur, sass, compass), Text Replace, Extrators, JSLint Global, JsDoc. Text Transforms(Reverse, UpperCase, LowerCase, Capitalize, CamelCase, HtmlEncode, HtmlDecode, UrlEncode, UrlDecode, Join, Split, Number, Trim Leading, Trim Trailing, Sort Ascending, Sort Descending, Remove Duplicates, Remove Empty Lines, Unix To Win, Win To Unix, Single Quote To Double, Double To Single Quote, Toggle Quote, Single Slash To Double, Double To Single Slash, rgb-hex, Markdown Trim Trailing, Function JSDoc, Tag, Untag, Numbering).Clipboard(Copy Filename, Copy Fullname, Regnize, ExtratortoIX, Html Report).ReplacetoIX(Replace including Words only, Selection only, Multiline, Regnize, History).Internet Search(Open Url, Web Search, Browse File).Compiler(scss, js6 [ECMAScript 6], compass)",
-  "version": "3.5.0",
+  "description": "Indent,DashCase,Execute,Lorem ipsum,Break Line,Recent Files.Change(Case, Quote, Slash, Tab, Encoding), Sort, (Un)Tag, Clipboard, Internet, (Minify, traceur, sass, compass), Text Replace, Extrators, JSLint Global, JsDoc. Text Transforms(Reverse, UpperCase, LowerCase, Capitalize, CamelCase, HtmlEncode, HtmlDecode, UrlEncode, UrlDecode, Join, Split, Number, Trim Leading, Trim Trailing, Sort Ascending, Sort Descending, Remove Duplicates, Remove Empty Lines, Unix To Win, Win To Unix, Single Quote To Double, Double To Single Quote, Toggle Quote, Single Slash To Double, Double To Single Slash, rgb-hex, Markdown Trim Trailing, Function JSDoc, Tag, Untag, Numbering).Clipboard(Copy Filename, Copy Fullname, Regnize, ExtratortoIX, Html Report).ReplacetoIX(Replace including Words only, Selection only, Multiline, Regnize, History).Internet Search(Open Url, Web Search, Browse File).Compiler(scss, js6 [ECMAScript 6], compass)",
+  "version": "3.6.0",
   "publisher": "a-bentofreire",
   "keywords": [
     "scripts",
@@ -67,7 +67,7 @@
   "readmeFilename": "README.md",
   "author": {
     "name": "Alexandre Bento Freire",
-    "email": "dev@a-bentofreire.com",
+    "email": "devpieces@a-bentofreire.com",
     "url": "https://github.com/a-bentofreire"
   },
   "license": "SEE LICENSE IN LICENSE.txt",
@@ -88,11 +88,11 @@
   "package-i18n": {
     "pt": {
       "title": "BracketstoIX",
-      "description": "[3.5]Executar, Lorem ipsum, Quebrar Linhas, Ficheiros Recentes.Mudar(Case, Aspas, Barra, Tab, Codificação), Ordenar, (Un)Etiquetar, Clipboard, Internet, (traceur, sass, compass), Substituir Textos, Extratores, JSLint Global, JsDoc. Transformações de Texto(Inverso, Maiúsculas, Minúsculas, Capitalizar, CamelCase, Codificar/Decodificar Html/Url, Juntar, Separar, Numerar, Apagar Espaços fim/inicio, Ordenar, Remover Duplicados, Remover Linhas vazias, Unix para Win, Win para Unix, Aspas Simples para Duplas, Aspas Duplas para simples, Alternar Aspas, Barra Simples para Dupla, Barra Dupla para simples, rgb-hex, Markdown Trim Trailing, Function JSDoc, Etiquetar, Numerar).Clipboard(Copiar nome do Ficheiro, Copiar nome do Ficheiro completo, Regnize, SubstituirtoIX, Relatório Html).SubstituirtoIX(Substituir incluindo Palavras completas, Apenas Selecção, Multi linha, Regnize, Historico).Pesquisar na Web(Abrir Url, Web Search, Explorar ficheiro).Compiler(scss, js6 [ECMAScript 6], compass)"
+      "description": "[3.6]Executar, Lorem ipsum, Quebrar Linhas, Ficheiros Recentes.Mudar(Case, Aspas, Barra, Tab, Codificação), Ordenar, (Un)Etiquetar, Clipboard, Internet, (traceur, sass, compass), Substituir Textos, Extratores, JSLint Global, JsDoc. Transformações de Texto(Inverso, Maiúsculas, Minúsculas, Capitalizar, CamelCase, Codificar/Decodificar Html/Url, Juntar, Separar, Numerar, Apagar Espaços fim/inicio, Ordenar, Remover Duplicados, Remover Linhas vazias, Unix para Win, Win para Unix, Aspas Simples para Duplas, Aspas Duplas para simples, Alternar Aspas, Barra Simples para Dupla, Barra Dupla para simples, rgb-hex, Markdown Trim Trailing, Function JSDoc, Etiquetar, Numerar).Clipboard(Copiar nome do Ficheiro, Copiar nome do Ficheiro completo, Regnize, SubstituirtoIX, Relatório Html).SubstituirtoIX(Substituir incluindo Palavras completas, Apenas Selecção, Multi linha, Regnize, Historico).Pesquisar na Web(Abrir Url, Web Search, Explorar ficheiro).Compiler(scss, js6 [ECMAScript 6], compass)"
     },
     "de": {
       "title": "BracketstoIX",
-      "description": "[3.5]Ausführen, Lorem ipsum, Zeilenumbruch, kürzlich geöffnete Dateien. Ändern (Groß-/kleinschreibung, Anführungszeichen, Schrägstriche, Tabulator, Encoding), Sortieren, (Un)Tag, Clipboard, Internet, (traceur, sass, compass), Textersetzung, Extraktoren, JSLint Global, JsDoc . Texttransformation (Umkehren, Großbuchstaben, Kleinbuchstaben, Wortanfang großschreiben, \"CamelCase\", HtmlEncode, HtmlDecode, UrlEncode, UrlDecode, Zusammenführen, Trennen, Nummmerieren, Leerraum trimmen, Sortieren (auf- und absteigend), Doppelte Zeilen entfernen, Leerzeilen entfernen, Unix nach Windows, Windows nach Unix, Einfache Anführunszeichen zu doppelten und umgekehrt, Anführungszeichen umschalten, einfache Schrägstriche verdoppeln, doppelte Schrägstriche zu einfachen, RGB farben zu Hex, Markdown Leerraum trimmen, JSDoc-Kommentare einfügen, Tag einfügen, Tag entfernen, Nummerieren).Zwischenablage (Dateiname, vollständiger Dateiname, Regnize, ExtratortoIX, Html Report).ReplacetoIX (Ersetzen incl. nur ganzer Wörter, Auf Auswahl eingeschränkt, mehrzeilig, Regnize, History).Internetsuche(URL öffnen, Web-Suche, Dateibrowser).Compiler(scss, js6 [ECMAScript 6], compass)"
+      "description": "[3.6]Ausführen, Lorem ipsum, Zeilenumbruch, kürzlich geöffnete Dateien. Ändern (Groß-/kleinschreibung, Anführungszeichen, Schrägstriche, Tabulator, Encoding), Sortieren, (Un)Tag, Clipboard, Internet, (traceur, sass, compass), Textersetzung, Extraktoren, JSLint Global, JsDoc . Texttransformation (Umkehren, Großbuchstaben, Kleinbuchstaben, Wortanfang großschreiben, \"CamelCase\", HtmlEncode, HtmlDecode, UrlEncode, UrlDecode, Zusammenführen, Trennen, Nummmerieren, Leerraum trimmen, Sortieren (auf- und absteigend), Doppelte Zeilen entfernen, Leerzeilen entfernen, Unix nach Windows, Windows nach Unix, Einfache Anführunszeichen zu doppelten und umgekehrt, Anführungszeichen umschalten, einfache Schrägstriche verdoppeln, doppelte Schrägstriche zu einfachen, RGB farben zu Hex, Markdown Leerraum trimmen, JSDoc-Kommentare einfügen, Tag einfügen, Tag entfernen, Nummerieren).Zwischenablage (Dateiname, vollständiger Dateiname, Regnize, ExtratortoIX, Html Report).ReplacetoIX (Ersetzen incl. nur ganzer Wörter, Auf Auswahl eingeschränkt, mehrzeilig, Regnize, History).Internetsuche(URL öffnen, Web-Suche, Dateibrowser).Compiler(scss, js6 [ECMAScript 6], compass)"
     }
   },
   "scripts": {
@@ -104,8 +104,8 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@types/jquery": "^3.3.0",
-    "@types/mustache": "^0.8.30",
-    "@types/node": "^9.4.5"
+    "@types/jquery": "^3.3.22",
+    "@types/mustache": "^0.8.32",
+    "@types/node": "^9.6.35"
   }
 }

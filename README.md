@@ -21,7 +21,7 @@ No default shortcuts were define to prevent collision with other plugins.
 ## Utilities  
 ### Case Change  
   
-[Selection Policy](#selection-policy) is word  
+[Selection Policy](#selection-policy) is **word**.  
   
   
 | Utility  | Example |  
@@ -35,7 +35,7 @@ No default shortcuts were define to prevent collision with other plugins.
   
 ### Encoders/Decoders  
   
-[Selection Policy](#selection-policy) is line  
+[Selection Policy](#selection-policy) is **line**.  
   
   
 | Utility  | Example |  
@@ -47,7 +47,7 @@ No default shortcuts were define to prevent collision with other plugins.
   
 ### Quote Change  
   
-[Selection Policy](#selection-policy) is line  
+[Selection Policy](#selection-policy) is **line**.  
   
   
 | Utility  | Example |  
@@ -58,7 +58,7 @@ No default shortcuts were define to prevent collision with other plugins.
   
 ### Slash Change  
   
-[Selection Policy](#selection-policy) is line  
+[Selection Policy](#selection-policy) is **line**.  
   
   
 | Utility  | Example |  
@@ -70,7 +70,7 @@ No default shortcuts were define to prevent collision with other plugins.
   
 ### Spacing  
   
-[Selection Policy](#selection-policy) is all  
+[Selection Policy](#selection-policy) is **all**.  
   
   
 | Utility  | Example |  
@@ -80,7 +80,7 @@ No default shortcuts were define to prevent collision with other plugins.
   
 ### Line Commands  
   
-[Selection Policy](#selection-policy) is all  
+[Selection Policy](#selection-policy) is **all**.  
   
   
 | Utility  | Example |  
@@ -117,11 +117,11 @@ Ex: d -> <div></div>       h3#hello.active.other text -> <h3 id="hello" class="a
   
 Most of the commands operate on selected text.  
 If no text is selected, a command will use:  
-[word] - The nearest word (before and after the cursor)  
-[sentence] - The nearest text until a whitespace or newline  
-[line] - The text line where the cursor is located  
-[all] - All the editor text  
-[function] - A function determines the text to use. Ex: Quote functions will use all the text between quotes that surrounds the cursor.  
+**word** - The nearest word (before and after the cursor)  
+**sentence** - The nearest text until a whitespace or newline  
+**line** - The text line where the cursor is **located**.  
+**all** - All the editor text  
+**function** - A function determines the text to use. Ex: Quote functions will use all the text between quotes that surrounds the cursor.  
   
 ##  Dialogs  
   

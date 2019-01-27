@@ -205,8 +205,8 @@ export namespace transformutilities {
     um.utilityManager({
       utilType: um.TIXUtilityType.utInTransform,
       sp: um.TIXSelPolicy.Sentence,
-      pat: /\b(.+)(\s+)([=<>]=*|[!:]=+)(\s+)([^;]+)/,
-      repl: "$5$2$3$4$1",
+      pat: /(\${0,1})\b(.+)(\s+)([=<>]=*|[!:]=+)(\s+)([^;]+)/,
+      repl: "$6$3$4$5$1$2",
     });
   }
 

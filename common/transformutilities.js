@@ -181,8 +181,8 @@ define(["require", "exports", "./utilitymanager"], function (require, exports, u
             utilitymanager_1.um.utilityManager({
                 utilType: utilitymanager_1.um.TIXUtilityType.utInTransform,
                 sp: utilitymanager_1.um.TIXSelPolicy.Sentence,
-                pat: /\b(.+)(\s+)([=<>]=*|[!:]=+)(\s+)([^;]+)/,
-                repl: "$5$2$3$4$1",
+                pat: /(\${0,1})\b(.+)(\s+)([=<>]=*|[!:]=+)(\s+)([^;]+)/,
+                repl: "$6$3$4$5$1$2",
             });
         }
         transformutilities.reverseAssignment = reverseAssignment;

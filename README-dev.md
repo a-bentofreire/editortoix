@@ -1,6 +1,3 @@
-[![Downloads](https://badges.ml/bracketstoix/total.svg)](https://brackets-extension-badges.github.io#bracketstoix)  [![Downloads](https://badges.ml/bracketstoix/last-version.svg)](https://brackets-extension-badges.github.io#bracketstoix)  [![Downloads](https://badges.ml/bracketstoix/week.svg)](https://brackets-extension-badges.github.io#bracketstoix)  [![Downloads](https://badges.ml/bracketstoix/day.svg)](https://brackets-extension-badges.github.io#bracketstoix)  [![Version](https://badges.ml/bracketstoix/version.svg)](https://brackets-extension-badges.github.io#bracketstoix)
-
-
 ![Logo](assets/bracketstoix64x64.png)
 
 
@@ -8,7 +5,7 @@
 
 Strap on the belt and become a Ninja Developer with these utilities.
 
-this extension is also available for Visual Studio Code ([vsctoix](https://marketplace.visualstudio.com/items?itemName=a-bentofreire.vsctoix)) and
+This extension is also available for Visual Studio Code ([vsctoix](https://marketplace.visualstudio.com/items?itemName=a-bentofreire.vsctoix)) and
 Atom Editor([atomtoix](https://atom.io/packages/atomtoix)).
 
 ## Interface
@@ -248,7 +245,7 @@ but don't forget the golden rule: Be Polite!
 
 ## Copyrights
 
-© 2016-2018 [Alexandre Bento Freire](https://www.a-bentofreire.com)
+© 2016-2019 [Alexandre Bento Freire](https://www.a-bentofreire.com)
 
 
 ## License

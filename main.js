@@ -10,7 +10,7 @@ define(function (require, exports, module) {
     // ------------------------------------------------------------------------
     //                               i18n
     // ------------------------------------------------------------------------
-    var VERSION = '3.4.1';
+    var VERSION = '3.6.1';
     var AUTHOR = 'Alexandre Bento Freire';
     var COPYRIGHTS = 'Alexandre Bento Freire';
     var IX_MENU = "IX";
@@ -1198,6 +1198,7 @@ define(function (require, exports, module) {
     function showAbout(cmd) {
         showMessage(cmd.cleanlabel, brk.Mustache.render(ix.htmltempl.ABOUTTEXT, {
             helplink: HELP_LINK,
+            version: VERSION,
             devby: brk.StringUtils.format(brk.Strings.DEVBY_MSG, AUTHOR),
         }));
     }

@@ -20,7 +20,7 @@ define((require, exports, module) => {
   // ------------------------------------------------------------------------
   //                               i18n
   // ------------------------------------------------------------------------
-  const VERSION = '3.4.1';
+  const VERSION = '3.6.1';
   const AUTHOR = 'Alexandre Bento Freire';
   const COPYRIGHTS = 'Alexandre Bento Freire';
 
@@ -1398,6 +1398,7 @@ function execSnippets() {
       brk.Mustache.render(ix.htmltempl.ABOUTTEXT,
         {
           helplink: HELP_LINK,
+          version: VERSION,
           devby: brk.StringUtils.format(brk.Strings.DEVBY_MSG, AUTHOR),
         }));
   }

@@ -10,7 +10,7 @@ define(function (require, exports, module) {
     // ------------------------------------------------------------------------
     //                               i18n
     // ------------------------------------------------------------------------
-    var VERSION = '3.6.1';
+    var VERSION = '3.7.0';
     var AUTHOR = 'Alexandre Bento Freire';
     var COPYRIGHTS = 'Alexandre Bento Freire';
     var IX_MENU = "IX";
@@ -1322,6 +1322,7 @@ define(function (require, exports, module) {
             { name: 'Capitalize', f: transformutilities.capitalize, priority: SHOWONMENU, canonsave: true },
             { name: 'CamelCase', f: transformutilities.camelCase, priority: SHOWONMENU },
             { name: 'DashCase', f: transformutilities.dashCase, priority: SHOWONMENU },
+            { name: 'CycleCase', f: transformutilities.cycleCase, priority: SHOWONMENU },
             { name: 'spaceByUpper', f: transformutilities.spaceByUpper },
             { name: 'HtmlEncode', f: transformutilities.htmlEncode, priority: SHOWONMENU },
             { name: 'HtmlDecode', f: transformutilities.htmlDecode, priority: SHOWONMENU },

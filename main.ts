@@ -20,7 +20,7 @@ define((require, exports, module) => {
   // ------------------------------------------------------------------------
   //                               i18n
   // ------------------------------------------------------------------------
-  const VERSION = '3.6.1';
+  const VERSION = '3.7.0';
   const AUTHOR = 'Alexandre Bento Freire';
   const COPYRIGHTS = 'Alexandre Bento Freire';
 
@@ -1544,6 +1544,7 @@ function execSnippets() {
       { name: 'Capitalize', f: transformutilities.capitalize, priority: SHOWONMENU, canonsave: true },
       { name: 'CamelCase', f: transformutilities.camelCase, priority: SHOWONMENU },
       { name: 'DashCase', f: transformutilities.dashCase, priority: SHOWONMENU },
+      { name: 'CycleCase', f: transformutilities.cycleCase, priority: SHOWONMENU },
       { name: 'spaceByUpper', f: transformutilities.spaceByUpper },
       { name: 'HtmlEncode', f: transformutilities.htmlEncode, priority: SHOWONMENU },
       { name: 'HtmlDecode', f: transformutilities.htmlDecode, priority: SHOWONMENU },

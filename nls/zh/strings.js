@@ -80,6 +80,7 @@ define({
   'Capitalize': '首字大写',
   'CamelCase': '驼峰式大小写',
   'DashCase': 'DashCase  DashCase',
+  'CycleCase': 'CycleCase',
   'HtmlEncode': 'HtmlEncode',
   'HtmlDecode': 'HtmlDecode',
   'UrlEncode': 'UrlEncode',

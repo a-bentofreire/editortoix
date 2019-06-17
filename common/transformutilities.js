@@ -81,6 +81,63 @@ define(["require", "exports", "./utilitymanager"], function (require, exports, u
         }
         transformutilities.dashCase = dashCase;
         // ------------------------------------------------------------------------
+        // $utility: cycleCase
+        //
+        // $title: Cycle Case
+        // $keywords: case
+        // $eg: _ClassNameFunc  ->  _classNameFunc -> _CLASS_NAME_FUNC -> _class_name_func -> _class-name-func -> _class name func ->_ClassNameFunc
+        // ------------------------------------------------------------------------
+        function cycleCase() {
+            utilitymanager_1.um.utilityManager({
+                utilType: utilitymanager_1.um.TIXUtilityType.utInTransform,
+                sp: utilitymanager_1.um.TIXSelPolicy.Word,
+                pat: /\b([\w\- ]+)\b/g,
+                repl: function (_match, p1) {
+                    if (p1 === '') {
+                        return '';
+                    }
+                    // test for space case
+                    // space testing should be the fist test
+                    var m6 = p1.match(/^(_*)([^ ])(.* .*)$/);
+                    if (m6 !== null) {
+                        // => cycle to capitalize
+                        return m6[1] + m6[2].toUpperCase() + m6[3].toLowerCase().replace(/ +([a-z])/g, function (_match, p2) { return p2.toUpperCase(); });
+                    }
+                    // test for upperscore case
+                    if (p1.match(/^_*[A-Z].*_/) !== null) {
+                        // => cycle to underscore
+                        return p1.toLowerCase();
+                    }
+                    // test for underscore case
+                    var m4 = p1.match(/^(_*)([^_]+_.*)$/);
+                    if (m4 !== null) {
+                        // => cycle to dash
+                        return m4[1] + m4[2].replace(/_/g, '-');
+                    }
+                    // test for dash case
+                    var m5 = p1.match(/^(_*)([^\-].*-.*)$/);
+                    if (m5 !== null) {
+                        // => cycle to space case
+                        return m5[1] + m5[2].replace(/-/g, ' ');
+                    }
+                    // test for capitalize (should be after symbol cases)
+                    var m1 = p1.match(/^(_*)([A-Z])([^A-Z].*)$/);
+                    if (m1 !== null) {
+                        // => cycle to camel
+                        return m1[1] + m1[2].toLowerCase() + m1[3];
+                    }
+                    // test for camel case (should be after symbol cases)
+                    var m2 = p1.match(/^(_*)([^A-Z_]+[A-Z].*)$/);
+                    if (m2 !== null) {
+                        // => cycle to upperscore
+                        return m2[1] + m2[2].replace(/([A-Z]+)/g, function (_match, p2) { return '_' + p2; }).toUpperCase();
+                    }
+                    return p1;
+                },
+            });
+        }
+        transformutilities.cycleCase = cycleCase;
+        // ------------------------------------------------------------------------
         // $utility: spaceByUpper
         //
         // $title: Add Space before Uppercase

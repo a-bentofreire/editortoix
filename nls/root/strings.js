@@ -79,6 +79,7 @@ define({
   'Capitalize': 'Capitalize',
   'CamelCase': 'CamelCase',
   'DashCase': 'DashCase',
+  'CycleCase': 'CycleCase',
   'HtmlEncode': 'HtmlEncode',
   'HtmlDecode': 'HtmlDecode',
   'UrlEncode': 'UrlEncode',

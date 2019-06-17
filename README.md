@@ -7,7 +7,9 @@ Strap on the belt and become a Ninja Developer with these utilities.
   
 This extension is also available for Visual Studio Code ([vsctoix](https://marketplace.visualstudio.com/items?itemName=a-bentofreire.vsctoix)) and  
 Atom Editor([atomtoix](https://atom.io/packages/atomtoix)).  
-  
+    
+If you find this extension useful, please, add a github star to show your support.    
+    
 ## Interface  
   
 BracketstoIX adds a top-menu called `IX`.    
@@ -28,6 +30,7 @@ No default shortcuts were define to prevent collision with other plugins.
 |Capitalize|**before**:`classNameFunc`<br>**after**:`ClassNameFunc`|  
 |Camel Case|**before**:`ClassNameFunc`<br>**after**:`classNameFunc`|  
 |Dash Case|**before**:`ClassNameFunc`<br>**after**:`class-name-func`|  
+|Cycle Case|**before**: `_ClassNameFunc`<br>**after**: `_classNameFunc -> _CLASS_NAME_FUNC -> _class_name_func -> _class-name-func -> _class name func ->_ClassNameFunc`|  
 |Add Space before Uppercase<br>**Useful to transform functions names into documentation**|**before**:`doActionBefore`<br>**after**:`do Action Before`|  
   
 ### Encoders/Decoders  

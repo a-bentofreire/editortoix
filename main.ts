@@ -2,7 +2,7 @@
 // uuid: 11078410-3d9f-46b7-ba13-c7e93a109283
 
 // ------------------------------------------------------------------------
-// Copyright (c) 2016-2018 Alexandre Bento Freire. All rights reserved.
+// Copyright (c) 2016-2019 Alexandre Bento Freire. All rights reserved.
 // Licensed under the MIT License+uuid License. See License.txt for details
 // ------------------------------------------------------------------------
 declare var appshell;

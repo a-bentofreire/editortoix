@@ -21,7 +21,7 @@ define((require, exports, module) => {
   // ------------------------------------------------------------------------
   //                               i18n
   // ------------------------------------------------------------------------
-  const VERSION = '3.7.0';
+  const VERSION = '3.7.1';
   const AUTHOR = 'Alexandre Bento Freire';
   const COPYRIGHTS = 'Alexandre Bento Freire';
 

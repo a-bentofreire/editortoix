@@ -1086,8 +1086,8 @@ define((require, exports, module) => {
     toBreakWords: boolean): string {
 
     let start = 0;
-    let at;
-    let stest;
+    let at: number;
+    let stest: string;
 
     while (start + maxChars < line.length) {
       at = start + maxChars;

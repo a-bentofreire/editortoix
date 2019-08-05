@@ -104,8 +104,8 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@types/jquery": "^3.3.29",
+    "@types/jquery": "^3.3.30",
     "@types/mustache": "^0.8.32",
-    "@types/node": "^9.6.49"
+    "@types/node": "^9.6.50"
   }
 }

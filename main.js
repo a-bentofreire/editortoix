@@ -1699,7 +1699,7 @@ define(function (require, exports, module) {
             applyProjSettings(data);
             projSettings.data = data;
             optstoix.setPrefsFromProject(prefs, projSettings);
-        }).error(function () {
+        }).fail(function () {
             if (projSettings.data) {
                 applyProjSettings(projSettings.data);
             }

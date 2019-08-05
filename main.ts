@@ -1951,7 +1951,7 @@ function execSnippets() {
       applyProjSettings(data);
       projSettings.data = data;
       optstoix.setPrefsFromProject(prefs, projSettings);
-    }).error(() => {
+    }).fail(() => {
       if (projSettings.data) {
         applyProjSettings(projSettings.data);
       }

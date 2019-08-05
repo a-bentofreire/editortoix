@@ -1,11 +1,12 @@
 'use strict';
-require.config({
-    paths: {
-        text: "lib/text",
-        i18n: "lib/i18n",
-    },
-    locale: brackets.getLocale(),
-});
+// Disabled due conflit with other extensions
+// require.config({
+//   paths: {
+//     text: "lib/text",
+//     i18n: "lib/i18n",
+//   },
+//   locale: brackets.getLocale(),
+// });
 define(function (require, exports, module) {
     // ------------------------------------------------------------------------
     //                               i18n

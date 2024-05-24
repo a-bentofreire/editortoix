@@ -3,7 +3,7 @@
 
   "SOCIAL": "<span class='pull-right'><!-- a class='icontoix-home' href='{{&home}}'></a><a class='icontoix-facebook2' href='{{&facebook}}'></a></a --><a class='icontoix-twitter' href='{{&twitter}}'></a><a class='icontoix-github' href='{{&github}}'></a></span>",
 
-  "ABOUTTEXT": "<div class=abouttexttoix>Brackets<sub>to</sub>IX {{version}}</div><div style='font-size: 1.2em;'>© 2016-2019 <a href='https://www.a-bentofreire.com'>Alexandre Bento Freire</a></div>",
+  "ABOUTTEXT": "<div class=abouttexttoix>Brackets<sub>to</sub>IX {{version}}</div><div style='font-size: 1.2em;'>© 2016-2024 <a href='https://www.a-bentofreire.com'>Alexandre Bento Freire</a></div>",
 
   "WELLCOME-deprecated": "<h2>Brackets<sub>to</sub>IX {{version}}</h2>Brackets<sub>to</sub>IX 3.2 allows to save project settings,<p>including spacing and compiler settings.<p>Take a few minutes to watch <a href=''>the video</a> describing how to unleash its power.<p><p><p>",
 

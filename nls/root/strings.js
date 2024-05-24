@@ -1,7 +1,7 @@
 
 // ------------------------------------------------------------------------
-// Copyright (c) 2016-2019 Alexandre Bento Freire. All rights reserved.
-// Licensed under the MIT License+uuid License. See License.txt for details
+// Copyright (c) 2016-2024 Alexandre Bento Freire. All rights reserved.
+// Licensed under the MIT License
 // ------------------------------------------------------------------------
 
 /* spell-checker: disable */

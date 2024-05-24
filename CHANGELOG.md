@@ -4,11 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [3.7.2]
+### Changed
+- Change License to MIT.
+
 ## [3.7.1]
 ### Changed
 - Fix $.getJSON.error bug.
 - Disable require.config.
-
 
 ## [3.7.0]
 ### Added
@@ -26,7 +29,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Add indentOneSpace, outdentOneSpace utilities.
 
-
 ## [3.5.0] - 2018-08-27.
 ### Added
 - Add DashCase utility.
@@ -34,7 +36,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Partial CHANGELOG cleanup.
 ### Changed
 - Update social links and copyrights.
-
 
 ## [3.4.2] - 2018-07-27.
 ### Added
@@ -46,7 +47,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 - Fix the unnecessary requirement of non-empty stepValue in ReplacetoIX.
-
 
 ## [3.4.0] - 2018-02-13.
 ### Changed
@@ -67,7 +67,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Deprecated
 - Social Media icons.
-
 
 ## [3.3.0]
 ### Added

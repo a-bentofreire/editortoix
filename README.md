@@ -248,9 +248,8 @@ but don't forget the golden rule: Be Polite!
   
 ## Copyrights  
   
-© 2016-2019 [Alexandre Bento Freire](https://www.a-bentofreire.com)  
-  
-  
+© 2016-2024 [Alexandre Bento Freire](https://www.a-bentofreire.com)  
+
 ## License  
   
-[MIT License+uuid License](https://github.com/a-bentofreire/uuid-licenses/blob/master/MIT-uuid-license.md)  
+MIT License

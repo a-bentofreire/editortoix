@@ -1,5 +1,5 @@
 'use strict';
-// Disabled due conflit with other extensions
+// Disabled due conflict with other extensions
 // require.config({
 //   paths: {
 //     text: "lib/text",
@@ -11,7 +11,7 @@ define(function (require, exports, module) {
     // ------------------------------------------------------------------------
     //                               i18n
     // ------------------------------------------------------------------------
-    var VERSION = '3.7.1';
+    var VERSION = '3.7.2';
     var AUTHOR = 'Alexandre Bento Freire';
     var COPYRIGHTS = 'Alexandre Bento Freire';
     var IX_MENU = "IX";

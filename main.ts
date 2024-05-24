@@ -1,9 +1,7 @@
 'use strict';
-// uuid: 11078410-3d9f-46b7-ba13-c7e93a109283
-
 // ------------------------------------------------------------------------
-// Copyright (c) 2016-2019 Alexandre Bento Freire. All rights reserved.
-// Licensed under the MIT License+uuid License. See License.txt for details
+// Copyright (c) 2016-2024 Alexandre Bento Freire. All rights reserved.
+// Licensed under the MIT License
 // ------------------------------------------------------------------------
 declare var appshell;
 
@@ -21,7 +19,7 @@ define((require, exports, module) => {
   // ------------------------------------------------------------------------
   //                               i18n
   // ------------------------------------------------------------------------
-  const VERSION = '3.7.1';
+  const VERSION = '3.7.2';
   const AUTHOR = 'Alexandre Bento Freire';
   const COPYRIGHTS = 'Alexandre Bento Freire';
 

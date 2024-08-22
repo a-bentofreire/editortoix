@@ -5,8 +5,8 @@
 
 Strap on the belt and become a Ninja Developer with these utilities.
 
-This extension is also available for Visual Studio Code ([vsctoix](https://marketplace.visualstudio.com/items?itemName=a-bentofreire.vsctoix)) and
-Atom Editor([atomtoix](https://atom.io/packages/atomtoix)).
+This extension is also available for Visual Studio Code ([vsctoix](https://www.devtoix.com/en/projects/vsctoix)) and
+Atom Editor([atomtoix](https://www.devtoix.com/en/projects/atomtoix)).
   
 If you find this extension useful, please, add a github star to show your support.  
   

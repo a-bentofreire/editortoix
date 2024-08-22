@@ -11,7 +11,7 @@ define(function (require, exports, module) {
     // ------------------------------------------------------------------------
     //                               i18n
     // ------------------------------------------------------------------------
-    var VERSION = '3.7.2';
+    var VERSION = '3.7.3';
     var AUTHOR = 'Alexandre Bento Freire';
     var COPYRIGHTS = 'Alexandre Bento Freire';
     var IX_MENU = "IX";
@@ -32,7 +32,7 @@ define(function (require, exports, module) {
     var SOCIAL = {
         home: HELP_LINK,
         // facebook: 'https://www.facebook.com/devtoix',
-        twitter: 'https://twitter.com/devpieces',
+        twitter: 'https://twitter.com/devtoix',
         github: 'http://github.com/a-bentofreire/bracketstoix',
     };
     var brk = {};

@@ -1,8 +1,8 @@
 {
-  "name": "bracketstoix",
+  "name": "github-a-bentofreire-bracketstoix",
   "title": "BracketstoIX",
   "description": "Indent,CycleCase(3.7),Execute,Lorem ipsum,Break Line,Recent Files.Change(Case, Quote, Slash, Tab, Encoding), Sort, (Un)Tag, Clipboard, Internet, (Minify, traceur, sass, compass), Text Replace, Extrators, JSLint Global, JsDoc. Text Transforms(Reverse, UpperCase, LowerCase, Capitalize, CamelCase, HtmlEncode, HtmlDecode, UrlEncode, UrlDecode, Join, Split, Number, Trim Leading, Trim Trailing, Sort Ascending, Sort Descending, Remove Duplicates, Remove Empty Lines, Unix To Win, Win To Unix, Single Quote To Double, Double To Single Quote, Toggle Quote, Single Slash To Double, Double To Single Slash, rgb-hex, Markdown Trim Trailing, Function JSDoc, Tag, Untag, Numbering).Clipboard(Copy Filename, Copy Fullname, Regnize, ExtratortoIX, Html Report).ReplacetoIX(Replace including Words only, Selection only, Multiline, Regnize, History).Internet Search(Open Url, Web Search, Browse File).Compiler(scss, js6 [ECMAScript 6], compass)",
-  "version": "3.7.2",
+  "version": "3.7.3",
   "publisher": "a-bentofreire",
   "keywords": [
     "scripts",
@@ -67,23 +67,26 @@
   "readmeFilename": "README.md",
   "author": {
     "name": "Alexandre Bento Freire",
-    "email": "devpieces@a-bentofreire.com",
+    "email": "devtoix@a-bentofreire.com",
     "url": "https://github.com/a-bentofreire"
   },
   "license": "SEE LICENSE IN LICENSE.txt",
-  "homepage": "https://github.com/a-bentofreire/bracketstoix",
+  "homepage": "https://www.devtoix.com/en/projects/bracketstoix",
   "bugs": "https://github.com/a-bentofreire/bracketstoix/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/a-bentofreire/bracketstoix.git"
+    "url": "git+https://github.com/a-bentofreire/bracketstoix.git"
   },
   "engines": {
-    "brackets": ">=0.44.0"
+    "brackets": ">=2.0.0"
   },
   "i18n": [
     "en",
     "pt",
     "de"
+  ],
+  "files": [
+      "main.js"
   ],
   "package-i18n": {
     "pt": {

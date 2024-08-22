@@ -19,7 +19,7 @@ define((require, exports, module) => {
   // ------------------------------------------------------------------------
   //                               i18n
   // ------------------------------------------------------------------------
-  const VERSION = '3.7.2';
+  const VERSION = '3.7.3';
   const AUTHOR = 'Alexandre Bento Freire';
   const COPYRIGHTS = 'Alexandre Bento Freire';
 
@@ -42,7 +42,7 @@ define((require, exports, module) => {
   const SOCIAL = {
     home: HELP_LINK,
     // facebook: 'https://www.facebook.com/devtoix',
-    twitter: 'https://twitter.com/devpieces',
+    twitter: 'https://twitter.com/devtoix',
     github: 'http://github.com/a-bentofreire/bracketstoix',
   };
 

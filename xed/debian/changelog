@@ -3,7 +3,7 @@ editortoix (4.0.0) noble; urgency=low
   * Integrate with same extensions of other code editors  
   * Realign versions
 
- -- Alexandre Bento Freire <dev@a-bentofreire.com>  Fri, 06 Sep 2024 22:08:42 +0000
+ -- Alexandre Bento Freire <dev@a-bentofreire.com>  Sat, 07 Sep 2024 10:32:51 +0000
 
 editortoix (2.0.0) noble; urgency=low
 

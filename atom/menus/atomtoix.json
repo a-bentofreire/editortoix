@@ -1,0 +1,111 @@
+{
+  "context-menu": {},
+  "menu": [{
+    "label": "Packages",
+    "submenu": [{
+      "label": "IX",
+      "submenu": [
+        {
+          "command": "IX:capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "command": "IX:camelCase",
+          "label": "Camel Case"
+        },
+        {
+          "command": "IX:spaceByUpper",
+          "label": "Add Space before Uppercase"
+        },
+        {
+          "command": "IX:reverseAssignment",
+          "label": "Reverse Assignment"
+        },
+        {
+          "command": "IX:unixToWinSlash",
+          "label": "Unix To Win Slash"
+        },
+        {
+          "command": "IX:winToUnixSlash",
+          "label": "Win To Unix Slash"
+        },
+        {
+          "command": "IX:singleToDoubleSlash",
+          "label": "Single To Double Slash"
+        },
+        {
+          "command": "IX:doubleToSingleSlash",
+          "label": "Double To Single Slash"
+        },
+        {
+          "command": "IX:urlEncode",
+          "label": "Url Encode"
+        },
+        {
+          "command": "IX:urlDecode",
+          "label": "Url Decode"
+        },
+        {
+          "command": "IX:regnize",
+          "label": "Regnize"
+        },
+        {
+          "command": "IX:headerToBookmark",
+          "label": "Header To Bookmark"
+        },
+        {
+          "command": "IX:mixer",
+          "label": "Mixer"
+        },
+        {
+          "command": "IX:removeDuplicatedLines",
+          "label": "Remove Duplicated Lines"
+        },
+        {
+          "command": "IX:removeEmptyLines",
+          "label": "Remove Empty Lines"
+        },
+        {
+          "command": "IX:joinLines",
+          "label": "Join Lines"
+        },
+        {
+          "command": "IX:splitLines",
+          "label": "Split Lines"
+        },
+        {
+          "command": "IX:sortNumericallyAscending",
+          "label": "Sort Numerically Ascending"
+        },
+        {
+          "command": "IX:indentOneSpace",
+          "label": "Indent One Space"
+        },
+        {
+          "command": "IX:outdentOneSpace",
+          "label": "Outdent One Space"
+        },
+        {
+          "command": "IX:insertISODate",
+          "label": "Insert ISO Date"
+        },
+        {
+          "command": "IX:insertISOTimeDate",
+          "label": "Insert ISO TimeDate"
+        },
+        {
+          "command": "IX:insertUUID",
+          "label": "Insert UUID"
+        },
+        {
+          "command": "IX:insertTextAtEnd",
+          "label": "Insert Text At End"
+        },
+        {
+          "command": "IX:insertTextAtStart",
+          "label": "Insert Text At Start"
+        }
+      ]
+    }]
+  }]
+}

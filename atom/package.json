@@ -1,0 +1,66 @@
+{
+  "name": "atomtoix",
+  "main": "./lib/atomtoix",
+  "version": "0.2.0",
+  "description": "urlencode,change slash,camel case,del duplicates, and much more...",
+  "keywords": [
+    "transform",
+    "insert",
+    "case",
+    "slash",
+    "encode",
+    "camelcase",
+    "remove duplicates"
+  ],
+  "readme": "README.md",
+  "author": {
+    "name": "Alexandre Bento Freire",
+    "email": "devpieces@a-bentofreire.com",
+    "url": "https://github.com/a-bentofreire"
+  },
+  "homepage": "https://devpieces.a-bentofreire.com/products/atomtoix/",
+  "bugs": "https://github.com/a-bentofreire/editortoix/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/a-bentofreire/editortoix"
+  },
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {},
+  "scripts": {
+    "gen-utilities-data": "cd tools && node gen-utilities-data.js"
+  },
+  "WARNING": "----- This file is generated automatically by npm run gen-utilities-data ------",
+  "activationCommands": {
+    "atom-workspace": [
+      "IX:capitalize",
+      "IX:camelCase",
+      "IX:dashCase",
+      "IX:spaceByUpper",
+      "IX:urlEncode",
+      "IX:urlDecode",
+      "IX:reverseAssignment",
+      "IX:unixToWinSlash",
+      "IX:winToUnixSlash",
+      "IX:singleToDoubleSlash",
+      "IX:doubleToSingleSlash",
+      "IX:regnize",
+      "IX:headerToBookmark",
+      "IX:mixer",
+      "IX:removeDuplicatedLines",
+      "IX:removeEmptyLines",
+      "IX:joinLines",
+      "IX:splitLines",
+      "IX:sortNumericallyAscending",
+      "IX:indentOneSpace",
+      "IX:outdentOneSpace",
+      "IX:insertISODate",
+      "IX:insertISOTimeDate",
+      "IX:insertUUID",
+      "IX:insertTextAtEnd",
+      "IX:insertTextAtStart"
+    ]
+  }
+}

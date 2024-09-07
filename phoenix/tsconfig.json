@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "module": "amd",
+        "noImplicitAny": false,
+        "noUnusedLocals": false,
+        "strictNullChecks": false,
+        "target": "es5",
+        "outDir": ".",
+        "newLine": "lf",
+        "lib": [
+            "es6"
+        ],
+        "sourceMap": true,
+        "rootDir": "."
+    },
+    "exclude": [
+        "node_modules",
+        "icomoon",
+        "dist",
+        "test",
+        "private"
+    ]
+}

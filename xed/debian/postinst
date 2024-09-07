@@ -1,0 +1,40 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+    configure)
+        echo "Running post-installation script"
+        if [ -z "$2" ]; then
+            ORIGINAL_USER=${SUDO_USER:-$(logname)}
+            if [ -z "$ORIGINAL_USER" ]; then
+                echo "Unable to determine the non-root user to execute dconf commands."
+                exit 1
+            fi
+            PLUGINS="$(sudo -u "$ORIGINAL_USER" dconf read /org/x/editor/plugins/active-plugins)"
+            echo $PLUGINS >/var/log/editortoix-postinst.log 2>&1
+            if [ -n "$PLUGINS" ]; then
+                case "$PLUGINS" in
+                    *toix_*)
+                        # Match: A contains "toix_"
+                        ;;
+                    *)
+                        PLUGINS="${PLUGINS%]}"
+                        for FOLDER in /usr/lib/x86_64-linux-gnu/xed/plugins/toix_*; do
+                            FOLDER="$(basename $FOLDER)"
+                            [ $FOLDER != "toix_proxy" ] && PLUGINS="$PLUGINS, '$FOLDER'"
+                        done
+                        PLUGINS="$PLUGINS]"
+                        sudo -u "$ORIGINAL_USER" dconf write /org/x/editor/plugins/active-plugins "$PLUGINS"
+                        echo $PLUGINS >>/var/log/editortoix-postinst.log 2>&1
+                        echo "EditorToIX plugins activated"
+                        ;;
+                esac
+            fi
+        fi
+        ;;
+    *)
+        exit 0
+        ;;
+esac
+
+exit 0

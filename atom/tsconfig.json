@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "removeComments": false,
+    "target": "es5",
+    "module": "commonjs",
+    "preserveConstEnums": false,
+    "sourceMap": true,
+    "newLine": "LF",
+    "noEmitOnError": false,
+    "lib": ["es6", "dom"],
+  },
+  "exclude": []
+}

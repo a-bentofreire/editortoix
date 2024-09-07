@@ -1,0 +1,41 @@
+editortoix (4.0.0) noble; urgency=low
+
+  * Integrate with same extensions of other code editors  
+  * Realign versions
+
+ -- Alexandre Bento Freire <dev@a-bentofreire.com>  Fri, 06 Sep 2024 22:08:42 +0000
+
+editortoix (2.0.0) noble; urgency=low
+
+  * Rename from XedToIX to EditorToIX 
+  * Migrate translatable texts to .po file
+
+ -- Alexandre Bento Freire <dev@a-bentofreire.com>  Fri, 06 Sep 2024 22:08:42 +0000
+
+editortoix (1.0.3) noble; urgency=low
+
+  * Fix postinst
+
+ -- Alexandre Bento Freire <dev@a-bentofreire.com>  Mon, 02 Sep 2024 11:59:11 +0000
+
+
+editortoix (1.0.2) noble; urgency=low
+
+  * Fix postinst
+
+ -- Alexandre Bento Freire <dev@a-bentofreire.com>  Sun, 01 Sep 2024 23:32:27 +0000
+
+
+editortoix (1.0.1) noble; urgency=low
+
+  * Change email
+
+ -- Alexandre Bento Freire <dev@a-bentofreire.com>  Sun, 01 Sep 2024 20:40:37 +0000
+
+
+editortoix (1.0.0) noble; urgency=low
+
+  * Initial release
+
+ -- Alexandre Bento Freire <dev@a-bentofreire.com>  Sun, 01 Sep 2024 20:12:01 +0000
+

@@ -1,0 +1,10 @@
+[Plugin]
+Loader=python3
+Module=toix_outdentonespace
+IAge=3
+Name=IX: Outdent One Space
+Description=Outdent One Space in the selected lines
+Icon=gnome-mime-text-x-python
+Authors=Alexandre Bento Freire <devtoix@a-bentofreire>
+Copyright=Copyright @ 2024 Alexandre Bento Freire
+Builtin=false

@@ -1,0 +1,296 @@
+<style>
+  .modal {
+    min-width: 800px;
+  }
+  .modal-body {
+    min-height: 300px;
+  }
+
+  #toixcats {
+    display: inline-block;
+    height: 100%;
+    padding-right: 2em;
+  }
+
+  #toixcats ul {
+    list-style: none;
+    margin: 0px;
+  }
+
+  #toixcats li {
+    color: gray;
+    cursor: pointer;
+    font: smaller;
+  }
+
+  .toixselcat {
+    color: black !important;
+  }
+
+  .toixtab {
+    display: none;
+    vertical-align: top;
+    height: 100%;
+  }
+
+  .toixtablab {
+    border-bottom: 1px solid #c3c6c5;
+    padding-bottom: 0.2em;
+    font-size: larger;
+    margin-top: -1em;
+    margin-bottom: 1em;
+  }
+
+  .toixseclab {
+    font-size: 1.05em;
+  }
+
+  .toixseltab {
+    display: inline-block;
+  }
+
+  .toixtab label {
+    display: inline-block;
+    padding-right: 0.5em;
+  }
+
+  input[type="number"] {
+    width: 3.5em;
+  }
+
+  .toixvertpanel {
+    display: inline-block;
+    vertical-align: top;
+    padding-right: 0.5em;
+  }
+
+  #beforesavetargetexts, #beforesavetargetcmds, #beforesavecmds,
+  #aftersavetargetexts, #aftersavetargetcmds, #aftersavecmds, #pdtools {
+    margin-left: 0px;
+  }
+
+  #pdtoolsadd {
+    vertical-align: top;
+  }
+
+  .beforesavetoolbar, .aftersavetoolbar, .toolstoolbar {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+  }
+
+  .beforesavetoppanel, .aftersavetoppanel {
+    height: 4em;
+  }
+</style>
+<div id=toixcats>
+  <ul>
+    <li id=general>{{str.CAT_General}}</li>
+    <li id=compilers>{{str.CAT_Compilers}}</li>
+    <li id=tools>{{str.CAT_Tools}}<li>
+    <li id=beforesave>{{str.CAT_BeforeSave}}</li>
+    <li id=aftersave>{{str.CAT_AfterSave}}</li>
+    <li id=project>{{str.CAT_Project}}</li>
+    <!--li id=shortcuts>{{str.CAT_Shortcuts}}</li-->
+  </ul>
+</div>
+
+
+<div id=toixgeneral class=toixtab>
+  <div class=toixtablab>{{str.CAT_General}}</div>{{&field.toixshowcxtedit}}
+  <label for="toixshowcxtedit">{{str.FLD_showcxtedit_label}}</label>
+  <div><label for="toixwebSearch">{{str.FLD_webSearch_label}}:</label>{{&field.toixwebSearch}}</div>
+
+  <!--div class=toixseclab>Sizes</div-->
+  <table>
+    <tr>
+      <td>
+        <label for="toixtabSize">{{str.FLD_tabSize_label}}:</label>
+      </td>
+      <td align="left">{{&field.toixtabSize}}</td>
+    </tr>
+    <tr>
+      <td>
+        <label for="toixhistorySize">{{str.FLD_historySize_label}}:</label>
+      </td>
+      <td align="left">{{&field.toixhistorySize}}</td>
+    </tr>
+    <tr>
+      <td>
+        <label for="toixrecentSize">{{str.FLD_recentSize_label}}:</label>
+      </td>
+      <td align="left">{{&field.toixrecentSize}}</td>
+    </tr>
+  </table>
+</div>
+
+
+
+
+<div id=toixcompilers class=toixtab>
+  <div class=toixtablab>{{str.CAT_Compilers}}</div>
+  <table>
+    <tr>
+      <td><label for="toixjs6">js6:</label></td><td align="left">{{&field.toixjs6}}</td>
+    </tr>
+    <tr>
+      <td><label for="toixscss">scss:</label></td><td align="left">{{&field.toixscss}}</td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td>
+        <button class="dialog-button btn" class="field-button" data-info="toixscss,scss,0">Compass</button>
+        <button class="dialog-button btn" class="field-button" data-info="toixscss,scss,1">SCSS</button>
+      </td>
+    </tr>
+
+    <tr>
+      <td><label for="toixjs">js:</label></td><td align="left">{{&field.toixjs}}</td>
+    </tr>
+  </table>
+  <br/><div class=toixseclab>{{str.HDR_options_ExecOnSave_label}}</div>
+  {{&field.toixjs6autosave}}js6<br/>
+  {{&field.toixscssautosave}}scss
+</div>
+
+
+
+
+
+<div id=toixtools class=toixtab>
+  <div class=toixtablab>{{str.CAT_Tools}}</div>
+  <div class=toixvertpanel >
+    <div class=toolstoolbar>
+      <button class="dialog-button btn" id="toolsadd">+</button>
+      <button class="dialog-button btn" id="toolsremove">-</button>
+      <button class="dialog-button btn" id="toolsup">&uarr;</button>
+      <button class="dialog-button btn" id="toolsdown">&darr;</button>
+      <button class="dialog-button btn" id="toolsupdate">{{corestr.UPDATE}}</button>
+    </div>
+
+    <select id="toollist" size=10>
+    </select>
+  </div>
+
+  <div class=toixvertpanel>
+    <div>
+      <label for="pdtools">{{str.FLD_Predefined_label}}:</label><br/>
+      <select id="pdtools">
+      </select>
+      <button class="dialog-button btn" id="pdtoolsadd">+</button>
+    </div>
+    <div>
+      <label for="toolname">Name:</label><br/>
+      <input id="toolname" value="" type="text">
+    </div>
+    <div>
+      <label for="toolcmdline">{{str.FLD_Cmdline_label}}:</label><br/>
+      <input id="toolcmdline" value="" type="text">
+    </div>
+    <div>
+      <input id="toolshowonmenu" value="" type="checkbox">
+      <label for="toolshowonmenu" title="{{str.FLD_showcxtedit_hint}}">{{str.HDR_commandsmapper_Show on Menu_label}}</label>
+    </div>
+    <div>
+      <input id="toolshowoutput" value="" type="checkbox">
+      <label for="toolshowoutput">{{str.FLD_ShowOutput_label}}</label>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+<div id=toixbeforesave class=toixtab>
+  <div class=toixtablab>{{str.CAT_BeforeSave}}</div>
+  <div class=toixvertpanel >
+    <div class=beforesavetoppanel>
+      <label for="beforesaveexts">{{str.Extensions}}:</label><br/>
+      <input id="beforesaveexts" title="ex:.js6;.js;.css" value="" type="text">
+    </div>
+
+    <div class=beforesavetoolbar>
+      <button class="dialog-button btn" id="beforesaveextadd">+</button>
+      <button class="dialog-button btn" id="beforesaveextremove">-</button>
+      <button class="dialog-button btn" id="beforesaveextup">&uarr;</button>
+      <button class="dialog-button btn" id="beforesaveextdown">&darr;</button>
+      <button class="dialog-button btn" id="beforesaveextupdate">{{corestr.UPDATE}}</button>
+    </div>
+
+    <select id="beforesavetargetexts" size=6>
+    </select>
+  </div>
+
+
+  <div class=toixvertpanel >
+    <div class=beforesavetoppanel>
+      <label for="beforesavecmds">{{str.Commands}}:</label><br/>
+      <select id="beforesavecmds">
+      </select>
+    </div>
+
+    <div class=beforesavetoolbar>
+      <button class="dialog-button btn" id="beforesavecmdadd">+</button>
+      <button class="dialog-button btn" id="beforesavecmdremove">-</button>
+      <button class="dialog-button btn" id="beforesavecmdup">&uarr;</button>
+      <button class="dialog-button btn" id="beforesavecmddown">&darr;</button>
+    </div>
+
+    <select id="beforesavetargetcmds" size=6>
+    </select>
+  </div>
+
+</div>
+
+<div id=toixaftersave class=toixtab>
+  <div class=toixtablab>{{str.CAT_AfterSave}}</div>
+  <div class=toixvertpanel >
+    <div class=aftersavetoppanel>
+      <label for="aftersaveexts">{{str.Extensions}}:</label><br/>
+      <input id="aftersaveexts" title="ex:.js6;.js;.css" value="" type="text">
+    </div>
+
+    <div class=aftersavetoolbar>
+      <button class="dialog-button btn" id="aftersaveextadd">+</button>
+      <button class="dialog-button btn" id="aftersaveextremove">-</button>
+      <button class="dialog-button btn" id="aftersaveextup">&uarr;</button>
+      <button class="dialog-button btn" id="aftersaveextdown">&darr;</button>
+      <button class="dialog-button btn" id="aftersaveextupdate">{{corestr.UPDATE}}</button>
+    </div>
+
+    <select id="aftersavetargetexts" size=6>
+    </select>
+  </div>
+
+
+  <div class=toixvertpanel>
+    <div class=aftersavetoppanel>
+      <label for="aftersavecmds">{{str.CAT_Tools}}:</label><br/>
+      <select id="aftersavecmds">
+      </select>
+    </div>
+
+    <div class=aftersavetoolbar>
+      <button class="dialog-button btn" id="aftersavecmdadd">+</button>
+      <button class="dialog-button btn" id="aftersavecmdremove">-</button>
+      <button class="dialog-button btn" id="aftersavecmdup">&uarr;</button>
+      <button class="dialog-button btn" id="aftersavecmddown">&darr;</button>
+    </div>
+
+    <select id="aftersavetargetcmds" size=6>
+    </select>
+  </div>
+
+</div>
+
+<div id=toixproject class=toixtab>
+  <div class=toixtablab>{{str.CAT_Project}}</div>
+  <input id="projspaceUnits" value="" type="checkbox"><label for="projspaceUnits">Spacing</label><br/>
+  <input id="projjs6" value="" type="checkbox"><label for="projjs6">js6</label><br/>
+  <input id="projscss" value="" type="checkbox"><label for="projscss">scss</label><br/>
+  <input id="projjs" value="" type="checkbox"><label for="projjs">js</label><br/>
+</div>

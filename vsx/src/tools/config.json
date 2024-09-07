@@ -1,0 +1,45 @@
+{
+  "utilityFiles": [
+    "transformutilities",
+    "lineutilities",
+    "insertutilities",
+    "clipboardutilities"
+  ],
+  "targetFiles": [
+    "common/utility-list.ts",
+    "../package.json",
+    "../README.md"
+  ],
+  "rootFolder": "../../src",
+  "macroSections": {
+    "common/utility-list.ts": [
+      {
+        "find": "^\\s*\\{ f:[\\s\\S]*\\];$",
+        "replace": "/* __UTILITYDEFS__ */\n];"
+      }
+    ],
+    "../package.json": [
+      {
+        "find": "(activationEvents\": \\[)[\\s\\S]*(\\s*\\],)$",
+        "replace": "$1\n\"__ACTIVATION_EVENTS__\"\n$2"
+      },
+      {
+        "find": "(commands\": \\[)[\\s\\S]*(\\s*\\])$",
+        "replace": "$1\n\"__COMMANDS__\"\n$2"
+      }
+    ],
+    "../README.md": [
+      {
+        "find": "(these) \\d+ (utilities)",
+        "replace": "$1 __UTILITYCOUNT__ $2"
+      },
+      {
+        "find": "(------ \\|)[\\s\\S]*\\n(\\s*\\n\\s*## Selection)",
+        "replace": "$1\n__UTILITY_LIST_TABLE__\n$2"
+      }
+    ]
+  },
+  "action": "  { f: ${funcstr}, id: 'editor.${name}' }",
+  "command": "      {\n        \"command\": \"editor.${name}\",\n        \"title\": \"IX: ${title}\"\n      }",
+  "event": "\"onCommand:editor.${name}\""
+}

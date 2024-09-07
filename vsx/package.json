@@ -1,0 +1,268 @@
+{
+    "name": "vsctoix",
+    "displayName": "EditorToIX",
+    "description": "extract,join,split,encode,mix,change case and slash,del dup,regex, and more",
+    "version": "4.0.0",
+    "publisher": "a-bentofreire",
+    "keywords": [
+        "transform",
+        "insert",
+        "case",
+        "slash",
+        "encode",
+        "split",
+        "join",
+        "sort",
+        "extract text",
+        "regular expression",
+        "replace text",
+        "urlencode",
+        "urldecode",
+        "regex",
+        "utilities",
+        "date",
+        "uuid",
+        "split line",
+        "join line",
+        "break lines",
+        "word wrap",
+        "indent",
+        "remove empty lines"
+    ],
+    "icon": "assets/icon128.png",
+    "readme": "README.md",
+    "author": {
+        "name": "Alexandre Bento Freire",
+        "email": "devtoix@a-bentofreire.com",
+        "url": "https://github.com/a-bentofreire"
+    },
+    "license": "SEE LICENSE IN LICENSE.txt",
+    "engines": {
+        "vscode": "^1.90.0"
+    },
+    "homepage": "https://www.devtoix.com/en/projects/editortoix/",
+    "bugs": "https://github.com/a-bentofreire/editortoix/issues",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/a-bentofreire/editortoix"
+    },
+    "categories": [
+        "Extension Packs",
+        "Other"
+    ],
+    "activationEvents": [],
+    "main": "./out/extension",
+    "l10n": "./l10n",
+    "contributes": {
+        "localization": [
+            {
+                "languageId": "pt",
+                "translations": [
+                    {
+                        "path": "./package.nls.pt.json"
+                    }
+                ]
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "vsctoix",
+            "properties": {
+                "vsctoix.replaceRecipes": {
+                    "type": "array",
+                    "description": "List of pre-defined recipes for Replace Recipes",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "pattern": {
+                                "type": "string"
+                            },
+                            "replaceWith": {
+                                "type": "string"
+                            },
+                            "isRegExp": {
+                                "type": "boolean",
+                                "default": true
+                            },
+                            "isExpression": {
+                                "type": "boolean",
+                                "default": true
+                            },
+                            "ignoreCase": {
+                                "type": "boolean",
+                                "default": false
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "commands": [
+            {
+                "command": "editor.capitalize",
+                "title": "%toix.capitalize%"
+            },
+            {
+                "command": "editor.camelCase",
+                "title": "%toix.camelCase%"
+            },
+            {
+                "command": "editor.dashCase",
+                "title": "%toix.dashCase%"
+            },
+            {
+                "command": "editor.cycleCase",
+                "title": "%toix.cycleCase%"
+            },
+            {
+                "command": "editor.spaceByUpper",
+                "title": "%toix.spaceByUpper%"
+            },
+            {
+                "command": "editor.urlEncode",
+                "title": "%toix.urlEncode%"
+            },
+            {
+                "command": "editor.urlDecode",
+                "title": "%toix.urlDecode%"
+            },
+            {
+                "command": "editor.reverseAssignment",
+                "title": "%toix.reverseAssignment%"
+            },
+            {
+                "command": "editor.unixToWinSlash",
+                "title": "%toix.unixToWinSlash%"
+            },
+            {
+                "command": "editor.winToUnixSlash",
+                "title": "%toix.winToUnixSlash%"
+            },
+            {
+                "command": "editor.singleToDoubleSlash",
+                "title": "%toix.singleToDoubleSlash%"
+            },
+            {
+                "command": "editor.doubleToSingleSlash",
+                "title": "%toix.doubleToSingleSlash%"
+            },
+            {
+                "command": "editor.dashToUnderscore",
+                "title": "%toix.dashToUnderscore%"
+            },
+            {
+                "command": "editor.underscoreToDash",
+                "title": "%toix.underscoreToDash%"
+            },
+            {
+                "command": "editor.regnize",
+                "title": "%toix.regnize%"
+            },
+            {
+                "command": "editor.headerToBookmark",
+                "title": "%toix.headerToBookmark%"
+            },
+            {
+                "command": "editor.mixer",
+                "title": "%toix.mixer%"
+            },
+            {
+                "command": "editor.removeDuplicatedLines",
+                "title": "%toix.removeDuplicatedLines%"
+            },
+            {
+                "command": "editor.removeEmptyLines",
+                "title": "%toix.removeEmptyLines%"
+            },
+            {
+                "command": "editor.joinLines",
+                "title": "%toix.joinLines%"
+            },
+            {
+                "command": "editor.splitLines",
+                "title": "%toix.splitLines%"
+            },
+            {
+                "command": "editor.sortNumericallyAscending",
+                "title": "%toix.sortNumericallyAscending%"
+            },
+            {
+                "command": "editor.sortNumericallyDescending",
+                "title": "%toix.sortNumericallyDescending%"
+            },
+            {
+                "command": "editor.indentOneSpace",
+                "title": "%toix.indentOneSpace%"
+            },
+            {
+                "command": "editor.outdentOneSpace",
+                "title": "%toix.outdentOneSpace%"
+            },
+            {
+                "command": "editor.breakLineAt",
+                "title": "%toix.breakLineAt%"
+            },
+            {
+                "command": "editor.replaceRecipes",
+                "title": "%toix.replaceRecipes%"
+            },
+            {
+                "command": "editor.insertISODate",
+                "title": "%toix.insertISODate%"
+            },
+            {
+                "command": "editor.insertISOTimeDate",
+                "title": "%toix.insertISOTimeDate%"
+            },
+            {
+                "command": "editor.insertUUID",
+                "title": "%toix.insertUUID%"
+            },
+            {
+                "command": "editor.insertTextAtEnd",
+                "title": "%toix.insertTextAtEnd%"
+            },
+            {
+                "command": "editor.insertTextAtStart",
+                "title": "%toix.insertTextAtStart%"
+            },
+            {
+                "command": "editor.extractText",
+                "title": "%toix.extractText%"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile; cp ../README.md README.md",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "build-l10n": "vscode-l10n-dev extract --outDir i18n",
+        "publish": "vsce publish",
+        "lint": "eslint . --ext .ts,.tsx",
+        "test": "npm run compile && node ./node_modules/vscode/bin/test",
+        "gen-utilities-data": "cd src/tools && node ../../out/tools/gen-utilities-data.js",
+        "postinstall": "node ./node_modules/vscode/bin/install"
+    },
+    "devDependencies": {
+        "@types/node": "^20.14.2",
+        "@types/vscode": "^1.90.0",
+        "@typescript-eslint/eslint-plugin": "^7.13.0",
+        "@typescript-eslint/parser": "^7.13.0",
+        "@vscode/test-electron": "^2.4.0",
+        "eslint": "^8.57.0",
+        "typescript": "^5.4.5"
+    },
+    "dependencies": {
+        "@vscode/l10n": "^0.0.18",
+        "@vscode/l10n-dev": "^0.0.35",
+        "copy-paste": "^1.3.0"
+    },
+    "__metadata": {
+        "id": "7be54cff-39ea-4a8f-bc54-aaecc06d6318",
+        "publisherDisplayName": "Alexandre Bento Freire",
+        "publisherId": "2d11840a-7f14-4779-ab8f-bf37482edd5f"
+    }
+}

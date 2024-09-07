@@ -1,0 +1,3 @@
+[{"name": "Run Node Script", "cmdline":"node \"{{in}}\"", "showoutput": true}, 
+{"name": "Run Python Script", "cmdline":"python \"{{in}}\"", "showoutput": true}, 
+ {"name": "List Global Node Packages", "cmdline":"npm list -depth=0 -g", "showoutput": true}]

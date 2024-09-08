@@ -1,3 +1,11 @@
+editortoix (4.0.1) noble; urgency=low
+
+  * Prevents install if xedtoix already exists  
+  * Rename Trim Right to Trim Trailing
+
+ -- Alexandre Bento Freire <dev@a-bentofreire.com>  Sun, 08 Sep 2024 09:56:36 +0000
+
+
 editortoix (4.0.0) noble; urgency=low
 
   * Integrate with same extensions of other code editors  

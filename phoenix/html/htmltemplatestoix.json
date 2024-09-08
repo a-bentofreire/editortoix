@@ -3,9 +3,9 @@
 
   "SOCIAL": "<span class='pull-right'><!-- a class='icontoix-home' href='{{&home}}'></a><a class='icontoix-facebook2' href='{{&facebook}}'></a></a --><a class='icontoix-twitter' href='{{&twitter}}'></a><a class='icontoix-github' href='{{&github}}'></a></span>",
 
-  "ABOUTTEXT": "<div class=abouttexttoix>Brackets<sub>to</sub>IX {{version}}</div><div style='font-size: 1.2em;'>© 2016-2024 <a href='https://www.a-bentofreire.com'>Alexandre Bento Freire</a></div>",
+  "ABOUTTEXT": "<div class=abouttexttoix>EditorToIX {{version}}</div><div style='font-size: 1.2em;'>© 2016-2024 <a href='https://www.a-bentofreire.com'>Alexandre Bento Freire</a></div>",
 
-  "WELLCOME-deprecated": "<h2>Brackets<sub>to</sub>IX {{version}}</h2>Brackets<sub>to</sub>IX 3.2 allows to save project settings,<p>including spacing and compiler settings.<p>Take a few minutes to watch <a href=''>the video</a> describing how to unleash its power.<p><p><p>",
+  "WELLCOME-deprecated": "<h2>EditorToIX {{version}}</h2>EditorToIX allows to save project settings,<p>including spacing and compiler settings.<p>Take a few minutes to watch <a href=''>the video</a> describing how to unleash its power.<p><p><p>",
 
   "BOTTOMPANEL": "<div class='bottom-panel vert-resizable top-resizer' id='IXPanel'><div class='toolbar simple-toolbar-layout'><span class='title'>IX</span><div class=bottompaneltoolbartoix><button id='cleartoix' class='btn btn-mini pull-right'>Clear</button></div><a href='#' class='close'>&times;</a></div><div class='table-container resizable-content' id='msg'></div></div>",
 

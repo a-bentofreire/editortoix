@@ -11,7 +11,7 @@ define(function (require, exports, module) {
     // ------------------------------------------------------------------------
     //                               i18n
     // ------------------------------------------------------------------------
-    var VERSION = '4.0.0';
+    var VERSION = '4.0.1';
     var AUTHOR = 'Alexandre Bento Freire';
     var COPYRIGHTS = 'Alexandre Bento Freire';
     var IX_MENU = "IX";

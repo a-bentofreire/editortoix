@@ -12,8 +12,8 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(
 from toix_proxy import ToIXProxy  # noqa
 
 
-class TrimRightPlugin(GObject.Object, Xed.WindowActivatable):
-    __gtype_name__ = "TrimRightPlugin"
+class TrimTrailingPlugin(GObject.Object, Xed.WindowActivatable):
+    __gtype_name__ = "TrimTrailingPlugin"
 
     window = GObject.property(type=Xed.Window)
 
@@ -32,8 +32,8 @@ class TrimRightPlugin(GObject.Object, Xed.WindowActivatable):
 
     def info(self):
         return {
-            "Id": "TrimRight",
-            "Caption": "Trim Right",
+            "Id": "TrimTrailing",
+            "Caption": "Trim Trailing",
             "Hint": "Removes Trailing Spaces",
             "Policy": "CompleteLines"
         }

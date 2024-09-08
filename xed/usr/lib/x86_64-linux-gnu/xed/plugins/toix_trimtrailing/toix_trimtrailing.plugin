@@ -1,8 +1,8 @@
 [Plugin]
 Loader=python3
-Module=toix_trimright
+Module=toix_trimtrailing
 IAge=3
-Name=IX: Trim Right
+Name=IX: Trim Trailing
 Description=Removes Trailing Spaces
 Icon=gnome-mime-text-x-python
 Authors=Alexandre Bento Freire <devtoix@a-bentofreire>

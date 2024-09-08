@@ -47,8 +47,8 @@ msgstr "Sort Numerically Descending"
 msgid "Sorts Numerically Descending"
 msgstr "Sorts Numerically Descending"
 
-msgid "Trim Right"
-msgstr "Trim Right"
+msgid "Trim Trailing"
+msgstr "Trim Trailing"
 
 msgid "Removes Trailing Spaces"
 msgstr "Removes Trailing Spaces"

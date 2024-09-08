@@ -3,10 +3,11 @@ Section: misc
 Priority: optional
 Maintainer: Alexandre Bento Freire <devtoix@a-bentofreire.com>
 Build-Depends: debhelper (>=10)
-Standards-Version: 4.0.0
+Standards-Version: 4.6.2
 Homepage: https://www.devtoix.com/en/projects/editortoix
 
 Package: editortoix
 Architecture: any
 Depends: python3, dconf-cli, ${misc:Depends}
 Description: Linux Mint XEd plugin collection
+Conflicts: xedtoix

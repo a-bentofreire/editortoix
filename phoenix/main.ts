@@ -19,14 +19,14 @@ define((require, exports, module) => {
   // ------------------------------------------------------------------------
   //                               i18n
   // ------------------------------------------------------------------------
-  const VERSION = '4.0.1';
+  const VERSION = '4.0.5';
   const AUTHOR = 'Alexandre Bento Freire';
   const COPYRIGHTS = 'Alexandre Bento Freire';
 
   const IX_MENU = "IX";
   const IX_MENU_TT = "IX TT";
   const MODULE_NAME = 'bracketstoix';
-  const HELP_LINK = ''; // deactivated for now until there is a new help page
+  const HELP_LINK = 'https://www.devtoix.com/en/projects/editortoix';
   const EXPAND_TAGS = ';bu=button;d=div;sp=span;te=textarea;in=input';
   const PROJ_SETTINGS_FILE = '.projecttoix.json';
   // FORCE policy must be the negative of the regular policy
@@ -42,7 +42,7 @@ define((require, exports, module) => {
   const SOCIAL = {
     home: HELP_LINK,
     // facebook: 'https://www.facebook.com/devtoix',
-    twitter: 'https://twitter.com/devtoix',
+    twitter: 'https://x.com/devtoix',
     github: 'http://github.com/a-bentofreire/editortoix',
   };
 
@@ -162,7 +162,7 @@ define((require, exports, module) => {
   }
 
   function checkExt(file: string, ext: string): boolean {
-    return file.substr(file.length - ext.length) === ext;
+    return file.substring(file.length - ext.length) === ext;
   }
 
   const REGNIZE_FIND = /([\\.()\[\]*+\^$])/g;
@@ -631,7 +631,7 @@ define((require, exports, module) => {
 
   function showMessage(title: string, message: string): void {
     brk.Dialogs.showModalDialog(
-      'bracketstoix-dialog', buildDlgTitle(i18n(title)), message, [{
+      'editortoix-dialog', buildDlgTitle(i18n(title)), message, [{
         className: brk.Dialogs.DIALOG_BTN_CLASS_PRIMARY,
         id: brk.Dialogs.DIALOG_BTN_OK,
         text: brk.CoreStrings.CLOSE,
@@ -1287,7 +1287,7 @@ define((require, exports, module) => {
       if (checkExt(infile, ext.inext)) {
         pref = prefs[ext.inext.substr(1)];
         if (pref.value && ((pref.fields && pref.fields.autosave && pref.fields.autosave.value) || !toAutoSave)) {
-          outfile = infile.substr(0, infile.length - ext.inext.length) + ext.outext;
+          outfile = infile.substring(0, infile.length - ext.inext.length) + ext.outext;
           nodeExec(pref.value, getProjectRoot(), 'Compile ' + infile, false, true, { in: infile, out: outfile });
           break;
         }
@@ -1740,7 +1740,6 @@ function execSnippets() {
     const menulist = [Menus.addMenu(IX_MENU_TT, tools.textToID(IX_MENU_TT)),
     Menus.addMenu(IX_MENU, tools.textToID(IX_MENU))];
     const ctxmenu = Menus.getContextMenu(Menus.ContextMenuIds.EDITOR_MENU);
-    let i;
     let cmd;
     let nm;
     let lastid;
@@ -1749,7 +1748,7 @@ function execSnippets() {
     const hotkeys = prefs.commands.value.hotkeys;
     let hasdiv = false;
 
-    for (i = 0; i < cmdlist.length; i++) {
+    for (let i = 0; i < cmdlist.length; i++) {
       cmd = cmdlist[i];
       if (!cmd.name) {
         if (cmd.menu) {
@@ -1971,7 +1970,7 @@ function execSnippets() {
   // ------------------------------------------------------------------------
 
   function init() {
-    brk.ExtensionUtils.loadStyleSheet(module, "styles/bracketstoix.css");
+    brk.ExtensionUtils.loadStyleSheet(module, "styles/editortoix.css");
     initCommandList();
     fillShowonMenu(); // must be before loadextprefs
     initPrefButtons();

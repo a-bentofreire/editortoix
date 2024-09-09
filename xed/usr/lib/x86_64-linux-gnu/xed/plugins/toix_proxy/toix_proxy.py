@@ -8,7 +8,7 @@ import os
 from gi.repository import Gtk  # noqa
 
 localedir = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'locale')
-lang = gettext.translation('editortoix', localedir, languages=['en'], fallback=True)
+lang = gettext.translation('editortoix', localedir, languages=['en', 'pt', 'de'], fallback=True)
 lang.install()
 _ = lang.gettext
 

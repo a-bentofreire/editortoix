@@ -8,3 +8,7 @@ Icon=gnome-mime-text-x-python
 Authors=Alexandre Bento Freire <devtoix@a-bentofreire>
 Copyright=Copyright @ 2024 Alexandre Bento Freire
 Builtin=false
+Name[pt]=IX: Remove as linhas duplicadas
+Description[pt]=Remove linhas que estão em duplicado
+Name[de]=IX: Remove Duplicated Lines
+Description[de]=Removes Duplicated Lines

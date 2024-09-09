@@ -2,7 +2,7 @@
     "name": "vsctoix",
     "displayName": "EditorToIX",
     "description": "extract,join,split,encode,mix,change case and slash,del dup,regex, and more",
-    "version": "4.0.1",
+    "version": "4.0.5",
     "publisher": "a-bentofreire",
     "keywords": [
         "transform",
@@ -60,6 +60,14 @@
                 "translations": [
                     {
                         "path": "./package.nls.pt.json"
+                    }
+                ]
+            },
+            {
+                "languageId": "de",
+                "translations": [
+                    {
+                        "path": "./package.nls.de.json"
                     }
                 ]
             }
@@ -236,7 +244,7 @@
         ]
     },
     "scripts": {
-        "vscode:prepublish": "npm run compile; cp ../README.md README.md",
+        "vscode:prepublish": "../l10n/convert-l10n.sh && cp ../README.md README.md && npm run compile",
         "compile": "tsc -p ./",
         "watch": "tsc -watch -p ./",
         "build-l10n": "vscode-l10n-dev extract --outDir i18n",

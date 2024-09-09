@@ -8,3 +8,7 @@ Icon=gnome-mime-text-x-python
 Authors=Alexandre Bento Freire <devtoix@a-bentofreire>
 Copyright=Copyright @ 2024 Alexandre Bento Freire
 Builtin=false
+Name[pt]=IX: Recuar um espaço
+Description[pt]=Remove um espaço inicial
+Name[de]=IX: Indent One Space
+Description[de]=Indents One Space

@@ -8,3 +8,7 @@ Icon=gnome-mime-text-x-python
 Authors=Alexandre Bento Freire <devtoix@a-bentofreire>
 Copyright=Copyright @ 2024 Alexandre Bento Freire
 Builtin=false
+Name[pt]=IX: Remove as linhas vazias
+Description[pt]=Remove linhas que estão vazias
+Name[de]=IX: Remove Empty Lines
+Description[de]=Removes Empty Lines

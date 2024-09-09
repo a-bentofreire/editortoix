@@ -1,7 +1,7 @@
 {
-  "DLGTITLE": "<style>@font-face{font-family:'icomoontoix';src:url('{{&root}}assets/icomoontoix.ttf?6f58a0')format('truetype');font-weight:normal;font-style:normal;}</style><img src='{{&root}}assets/bracketstoix64x64.png' class=aboutimgtoix>{{title}}{{&social}}",
+  "DLGTITLE": "<style>@font-face{font-family:'icomoontoix';src:url('{{&root}}assets/icomoontoix.ttf?6f58a0')format('truetype');font-weight:normal;font-style:normal;}</style><img src='{{&root}}assets/icon64.png' class=aboutimgtoix>{{title}}{{&social}}",
 
-  "SOCIAL": "<span class='pull-right'><!-- a class='icontoix-home' href='{{&home}}'></a><a class='icontoix-facebook2' href='{{&facebook}}'></a></a --><a class='icontoix-twitter' href='{{&twitter}}'></a><a class='icontoix-github' href='{{&github}}'></a></span>",
+  "SOCIAL": "<span class='pull-right'><a class='icontoix-home' href='{{&home}}'></a><!-- a class='icontoix-facebook2' href='{{&facebook}}'></a></a --><a class='icontoix-twitter' href='{{&twitter}}'></a><a class='icontoix-github' href='{{&github}}'></a></span>",
 
   "ABOUTTEXT": "<div class=abouttexttoix>EditorToIX {{version}}</div><div style='font-size: 1.2em;'>© 2016-2024 <a href='https://www.a-bentofreire.com'>Alexandre Bento Freire</a></div>",
 

@@ -8,9 +8,9 @@ If you find this project useful, please, read the [Support this Project](#suppor
 
 | Id  | Old Name | Code Editor |
 | ------------- | ------------- | ------------- |
-| **vsx** |  VscToIX | [Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=a-bentofreire.vsctoix)<br>Cursor AI<br>[Google Project IDX](https://idx.dev/)<br>[open-vsx.org](https://open-vsx.org/extension/a-bentofreire/vsctoix) |
+| **vsx** |  VscToIX | [Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=a-bentofreire.vsctoix)<br>[Cursor AI](https://www.cursor.com/)<br>[Google Project IDX](https://idx.dev/)<br>[open-vsx.org](https://open-vsx.org/extension/a-bentofreire/vsctoix) |
 | **xed** | XedToIX | [Linux Mint Xed Editor](https://launchpad.net/~a-bentofreire/+archive/ubuntu/toix) (as plugins) |
-| **phoenix** | BracketsToIX | Phoenix Code |
+| **phoenix** | BracketsToIX | [Phoenix Code](https://phcode.dev/) |
 
 ## Utilities
 
@@ -132,6 +132,9 @@ sudo add-apt-repository ppa:a-bentofreire/editortoix
 sudo apt-get update
 sudo apt install editortoix
 ```
+
+If you are updating from Linux Mint Software installer, you might have to activate the plugins on:  
+ Menu Edit -> Preferences -> Plugins
 
 ## Interface - [phoenix Editor](#availability)
   
@@ -287,11 +290,16 @@ If you find this project useful, consider supporting it:
 - Visit the project [homepage](https://www.devtoix.com/en/projects/editortoix)
 - Give the project a ⭐ on [Github](https://github.com/a-bentofreire/editortoix)
 
+- Translate into your language
+- Write a review:
+  - [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=a-bentofreire.vsctoix)
+  - [Open VSX Marketplace](https://open-vsx.org/extension/a-bentofreire/vsctoix)
 - Spread the word
 - Follow me:
   - [Github](https://github.com/a-bentofreire)
   - [LinkedIn](https://www.linkedin.com/in/abentofreire)
   - [Twitter/X](https://x.com/devtoix)
+
 
 ## License
 

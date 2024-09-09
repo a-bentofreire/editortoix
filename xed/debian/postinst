@@ -4,13 +4,14 @@ set -e
 case "$1" in
     configure)
         echo "Running post-installation script"
-        ORIGINAL_USER=${SUDO_USER:-$(logname)}
-        if [ -z "$ORIGINAL_USER" ]; then
-            echo "Unable to determine the non-root user to execute dconf commands."
-            exit 1
+
+        [ -n "$(logname 2>/dev/null)" ] && ORIGINAL_USER="$(logname)" || ORIGINAL_USER="$SUDO_USER"
+        echo "ORIGINAL_USER:[$ORIGINAL_USER]" >/var/log/editortoix-postinst.log 2>&1
+
+        if [ -n "$ORIGINAL_USER" ]; then
+            PLUGINS="$(sudo -u "$ORIGINAL_USER" dconf read /org/x/editor/plugins/active-plugins)"
+            echo $PLUGINS >>/var/log/editortoix-postinst.log 2>&1
         fi
-        PLUGINS="$(sudo -u "$ORIGINAL_USER" dconf read /org/x/editor/plugins/active-plugins)"
-        echo $PLUGINS >/var/log/editortoix-postinst.log 2>&1
 
         if [ -z "$2" ]; then
             if [ -n "$PLUGINS" ]; then
@@ -31,11 +32,14 @@ case "$1" in
                         ;;
                 esac
             fi
-        elif [ "$2" = "4.0.1" ]; then
+        elif [ "$2" = "4.0.5" ]; then
             rm -rf "/usr/lib/x86_64-linux-gnu/xed/plugins/toix_trimright"
-            PLUGINS="$(echo "$PLUGINS" | sed 's/trimright/trimtrailing/')"
-            echo $PLUGINS >>/var/log/editortoix-postinst.log 2>&1
-            sudo -u "$ORIGINAL_USER" dconf write /org/x/editor/plugins/active-plugins "$PLUGINS"
+            if [ -n "$ORIGINAL_USER" ]; then
+                PLUGINS="$(echo "$PLUGINS" | sed 's/trimright/trimtrailing/')"
+                echo $PLUGINS >>/var/log/editortoix-postinst.log 2>&1
+                sudo -u "$ORIGINAL_USER" dconf write /org/x/editor/plugins/active-plugins "$PLUGINS"
+                echo "EditorToIX plugins activated"
+            fi
         fi
         ;;
     *)

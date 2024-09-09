@@ -1,0 +1,150 @@
+ 	root	pt	de	zh-tw	zh
+@translator		Alexandre Bento Freire	Christian Knappke	蔡宜靜	蔡宜靜
+HISTORY_HINT	 Use Ctrl+UP/DOWN to fetch the history	Use Ctrl+UP/DOWN para usar a histórico	 Mit Strg+UP/DOWN durch die History blättern	使用Ctrl + UP / DOWN來獲取歷史紀錄	使用Ctrl + UP / DOWN来获取历史纪录
+SPACETEXT_HINT	 use \\$ for leading and trimming spaces	  usar \\ $ para espaços finais e iniciais	 \\$ für führende und nachfolgende Leerzeichen	 使用 \\$ 來獲取行初空白與行尾空白	 使用 \\$ 来获取行初空白与行尾空白
+SHORTCUT_HINT	Ex: Ctrl-Shift-U (win).  Cmd-Shift-U (mac)	Ex: Ctrl-Shift-U (vitória). Cmd-Shift-U (mac)	z.B.: Strg-Umsch-U (Win).  Cmd-Shift-U (Mac)	例如：Ctrl-Shift-U (win).  Cmd-Shift-U (mac)	例如：Ctrl-Shift-U (win). Cmd-Shift-U (mac)
+NEED_RESTART_MSG	Only takes effect after restart!	Só tem efeito após reiniciar!	Wird erst nach Neustart wirksam!	重新啟動後生效！	重新启动后生效！
+DEVBY_MSG	Developed by {0}	Desenvolvido por {0}	Entwickelt von {0}	通過{0}開發	通过{0}开发
+EXTRACTOR_MSG	Write a regular expression<br>All matches will be copy to the clipboard<br>	Escreva uma expressão regular <br> Todos os resultados serão copiados para o clipboard <br>	Schreibe einen regulären Ausdruck<br>Alles was darauf passt wird in die Zwischenablage kopiert.<br>	寫出一個正則運算法<br>所有符合的項目將會複製到剪貼板<br>	写出一个正则运算法<br>所有符合的项目将会复制到剪贴板<br>
+FLD_limaxcharsperline_label	Max Chars per line	Max caracteres por linha	Max. Anzahl Zeichen pro Zeile	每行的最大值	每行的最大值
+FLD_limaxcharsperline_hint	Set 0 to no word wrap	Defina 0 para não quebrar automaticamente	Auf 0 setzen, um den Zeilenumbruch zu verhindern	設置0無自動換行	设置0无自动换行
+FLD_maxcharsperline_label	Max Chars per line	Max carac. por linha	Max. Anzahl Zeichen pro Zeile	每行的最大值	每行的最大值
+FLD_maxcharsperline_hint	Min is 1	Min é 1	Mindestens 1	最小值為1	最小值为1
+FLD_tobreakwords_label	Break words	Quebrar palavras	Wörter umbrechen	斷詞	断词
+FLD_tobreakwords_hint	Set to true, if it can break words	Ative parar quebrar palavras	"Auf ""true"" setzen, damit Wörter umgebrochen werden können"	如果可以斷詞,設定為正確	如果可以断词,设定为正确
+FLD_lihtmlparawrap_label	html tag wrap	html tag wrap	In HTML Tag einhüllen	html tag wrap	html tag wrap
+FLD_lihtmlparawrap_hint	Wraps each paragraph with this tag. Ex: p	Quebra cada parágrafo com esta tag. Ex: p	Hüllt jeden Absatz in mit diesem Tag ein. Z.B.: p	以此標籤包裹每個段落。例如：p	以此标签包裹每个段落。例如：p
+FLD_linrparagraphs_label	Nr Paragraphs	Nr parágrafos	Anzahl Absätze	段落號碼	段落号码
+FLD_linrparagraphs_hint	Maximum is 100	Máximo é 100	Maximal 100 Absätze	最大值為100	最大值为100
+FLD_scss_label	scss Compiler	Compilador SCSS	scss Compiler	scss編譯器	scss编译器
+FLD_scss_hint	You Must install sass 1st. Goto http://sass-lang.com/. WARN: Some sass implementations use --source-map instead of  --sourcemap	Você deve instalar sass 1. Ir a http://sass-lang.com/	sass muss zuerst installier werden. Siehe http://sass-lang.com/	您必須先安裝sass。轉到http://sass-lang.com/	您必须先安装sass。转到http://sass-lang.com/
+FLD_scss_compass_label	Compass	Compass	Compass	Compass	Compass
+FLD_scss_sass_label	SCSS	SCSS	SCSS	SCSS	SCSS
+FLD_scss_autosave_hint	AutoSave	Gravação automática	Automatisch sichern	自動保存	自动保存
+FLD_js6_label	js6 Compiler	Compilador js6	js6 Compiler	js6編譯器	js6编译器
+FLD_js6_hint	"You must install nodejs, and then ""npm install -g traceur"""	"É necessário instalar o NodeJS, e depois ""instalar npm -g traceur"""	"Zuerst nodejs installieren und dann ""npm install -g traceur"""	"您必須安裝nodejs，然後""npm install -g traceur"""	"您必须安装nodejs，然后""npm install -g traceur"""
+FLD_js6_autosave_hint	AutoSave	Gravação automático	Automatisch sichern	自動保存	自动保存
+FLD_js_label	js Compiler	Compilador js	js Compiler	JS編譯器	JS编译器
+FLD_js_hint	"You must install nodejs, and then ""npm install -g uglify-js"""	"É necessário instalar o NodeJS, e depois ""instalar npm -g uglify-js"""	"Zuerst nodejs installieren und dann ""npm install -g uglify-js"""	"您必須安裝nodejs，然後""npm install -g uglify-js"""	"您必须安装nodejs，然后""npm install -g uglify-js"""
+FLD_splitMarker_label	Split Marker	Marcador de Separação	Teilungsmarkierung	分裂標記	分裂标记
+FLD_historySize_label	History Size	Tamanho do Histórico	Größe der History	歷史大小	历史大小
+FLD_recentSize_label	Recent Size	Tamanho dos Ficheiros Recentes	Letzte Größe	最近的大小	最近的大小
+FLD_showcxtedit_label	Show Edit commands on Context Menu	Mostra os comandos de edição no menu de contextual		按右鍵顯示編輯命令	按右键显示编辑命令
+FLD_showcxtedit_hint	Requires a reload to take effect	Requere o reiniciar para ter efeito		需要重新加載才能生效	需要重新加载才能生效
+FLD_startNum_label	Initial Value	Valor Inicial	Startwert	初始值	初始值
+FLD_numSep_label	Separator after Number	Separador após Número	Separator nach Nummer	號碼後分離	号码后分离
+FLD_tabSize_label	Tab Size	Tamanho da Tab	Tab-Größe	跳位字元大小	跳位字元大小
+FLD_find_label	Find	Procurar	Suche	尋找	寻找
+FLD_replace_label	Replace	Substituir	Ersetze	取代	取代
+FLD_replace_hint	Use #{d}#, #{x}#, #{X}#, #{<value>d}#, #{0<value>d}# for numbering macro	Use #{d}#, #{x}#, #{X}#, #{<valor>d}#, #{0<valor>d}# para a numeração macro	#{d}#, #{x}#, #{X}#, #{<value>d}#, #{0<value>d}# als Macro zum Nummerieren	使用＃{d}＃，＃{d}＃，＃{d}＃，＃{<value> d}＃，＃{0 <value> d}＃為巨集編號	使用＃{d}＃，＃{d}＃，＃{d}＃，＃{<value> d}＃，＃{0 <value> d}＃为巨集编号
+FLD_startValue_label	Start	Inicio	Start	開始	开始
+FLD_startValue_hint	Leave empty for no numbering, since it slows down the process and only supports a small regular expression subset replacement. Must have Regular Expression checked	Deixe em branco para não numerar, uma vez que atrasa o processo e suporta apenas um pequeno subconjunto de substituição de expressões regulares. Deve ter expressão regular verificado	Leer lassen, um Nummerierung abzuschalten. Es verlangsamt den Prozess und wird auch nur von wenigen regulären Ausdrücken für die Textersetzung unterstützt. Reguläre Ausdrücke müssen aktiviert sein.	為無編號留空，因為它減慢過程而且只支持取代小的正則表達式子集。必須檢查正則表達式	为无编号留空，因为它减慢过程而且只支持取代小的正则表达式子集。必须检查正则表达式
+FLD_stepValue_label	Step	Passo	Schrittweite	步驟	步骤
+FLD_iswordsonly_label	Words Only	Apenas palavras	Nur ganze Wörter	全字	全字
+FLD_iswordsonly_hint	Only works if is not a regular expression	Só funciona se não for uma expressão regular	Funktioniert nur, wenn es kein regulärer Ausdruck ist	只有在不是正則表達式時運作	只有在不是正则表达式时运作
+FLD_isregexpr_label	Regular Expression	Expressão Regular	Regulärer Ausdruck	正則表達式	正则表达式
+FLD_isignorecase_label	Ignore Case	Ignorar Maiúsculas	Groß-/kleinschreibung gnorieren	忽略大小寫	忽略大小写
+FLD_isimultiline_label	Multiline	Multi linha	Mehrere Zeilen	多線路	多线路
+FLD_isall_label	Replace All	Substituir tudo	Alles ersetzen	全部取代	全部取代
+FLD_isselonly_label	Only Selection	Seleção apenas	Auf Auswahl beschränken	選取範圍內	选取范围内
+FLD_isselonly_hint	If there is a selected text, only replaces the selected text	Se houver um texto selecionado apenas substitui o texto selecionado	Wenn Text ausgewählt ist, nur dort ersetzen.	如果有已選擇的文本,取代已選擇的文本	如果有已选择的文本,取代已选择的文本
+FLD_webSearch_label	Search Engine url	Url do Engenho de procura	URL der Suchmaschine	搜索引擎網址	搜索引擎网址
+HDR_options_Field_label	Field	Campo	Feld	欄位	栏位
+HDR_options_Value_label	Value	Valor	Wert	值	值
+HDR_options_ExecOnSave_label	Execute On Save	Executar após guardar	Beim Speichern ausführen	保存後執行	保存后执行
+HDR_commandsmapper_Command_label	Command	Comando		命令	命令
+HDR_commandsmapper_Hotkey_label	Hotkey	Hotkey		熱鍵	热键
+HDR_commandsmapper_Show on Menu_label	Show on Menu	Mostrar no Menu		顯示於主選單	显示于主选单
+HDR_commandsmapper_Show on CtxMenu_label	Show on CtxMenu	Mostrar on Menu Contexto		按右鍵後顯示	按右键后显示
+FLD_Cmdline_label	Cmdline	Linha de Comando		命令行	命令行
+FLD_Path_label	Path	Trilha		路徑	路径
+FLD_Predefined_label	Predefined	Predefinido		預定義	预定义
+FLD_ShowOutput_label	Show Output	Mostrar Saída		顯示輸出	显示输出
+CAT_General	General	Geral		一般	一般
+CAT_Compilers	Compilers	Compiladores		編譯器	编译器
+CAT_Shortcuts	Shortcuts	Atalhos		快捷鍵	快捷键
+CAT_BeforeSave	Before Save	Antes de guardar		保存前	保存前
+CAT_AfterSave	After Save	Após guardar		保存後	保存后
+CAT_Tools	Tools	Ferramentas		工具	工具
+CAT_Project	Project	Projeto		專案	专案
+Extensions	Extensions	Extensões		延伸	延伸
+Add Space before Uppercase	Add Space before Uppercase	Adicionar o espaço antes de superior			
+Break Line At	Break Line At	Dividir linhas em	Zeile bei ... umbrechen	斷行於	断行于
+Browse File	Browse File	Procure ficheiro	Dateibrowser	瀏覽文件	浏览文件
+Camel Case	Camel Case	Camel Case		駝峰式大小寫	驼峰式大小写
+Capitalize	Capitalize	Capitalizar	Wortanfang groß	首字大寫	首字大写
+Commands	Commands	Comandos	Kommandos	命令	命令
+Commands Mapper	Commands Mapper	Mapper de comandos	Kommandos zuordnen	命令映像程式	命令映像程式
+Compiler	Compile(js6, scss)	Compilar(js6, scss)	Compile(js6, scss)	編譯器(js6, scss)	编译器(js6, scss)
+Copy Filename	Copy Filename	Copiar nome de ficheiro	Dateiname kopieren	複製文件名	复制文件名
+Copy Fullname	Copy Fullname	Copie Name de completo	Vollstandigen Dateinamen kopieren	複製全路徑名稱	复制全路径名称
+Cycle Case	Cycle Case	Comutar o título da Letra			
+Cycles Case	Cycles Case	Comuta o título da Letra			
+Dash Case	Dash Case	Mudar o título para Traço			
+Dash To Underscore	Dash To Underscore	Dash para sublinhar			
+Dash Case	Dash Case	Notação de Traço		DashCase	DashCase  DashCase
+Declare JSLint Global	Declare JSLint Global	Declarar JSLint Global	Funktion als JSLint Global kennzeichnen	聲明JSLint Global	声明JSLint Global
+Double To Single Quote	Double To Single Quote	Aspa Dupla para Simples	Doppelte Anführungszeichen zu einfachen	雙引號到單引號	双引号到单引号
+Double To Single Slash	Double To Single Slash	Barra Dupla para Simples	Doppelten Schrägstrich zu einfachem	雙斜線到單斜線	双斜线到单斜线
+Execute	Execute	Executar		執行	执行
+Extract Text	Extract Text	Extrair texto			
+Extractor	Extractor	Extrator	Extraktor 	抽出器	抽出器
+Function JSDoc	Function JSDoc	Função JSDoc	JSDoc Kommentar einfügen	Function JSDoc	Function JSDoc
+Header To Bookmark	Header To Bookmark	Cabeceamento para marcar os favoritos			
+Html Report	Html Report	Relatório Html	HTML-Daten (id, class, style)	HTML報告	HTML报告
+Html Decode	Html Decode	Descodificação Html	HTML decodieren	HtmlDecode	HtmlDecode
+Html Encode	Html Encode	Encode Html	HTML codieren	HtmlEncode	HtmlEncode
+Indent One Space	Indent One Space	Recuar um espaço			
+Indents One Space	Indents One Space	Remove um espaço inicial			
+Insert ISO Date	Insert ISO Date	Introduz a data ISO			
+Insert ISO TimeDate	Insert ISO TimeDate	Introduz a Hora e Data ISO			
+Insert Text At End	Insert Text At End	Inserir texto no final			
+Insert Text At Start	Insert Text At Start	Insira texto no início			
+Insert UUID	Insert UUID	Inserir UUID			
+Join	Join	Juntar	Zusammenfügen	結合	结合
+Join Lines	Join Lines	Juntar linhas			
+LowerCase	LowerCase	Minusculas	Kleinbuchstaben	小寫	小写
+Markdown Trim Trailing	Markdown Trim Trailing	Remover espaços Markdown	Markdown: nachfolgenden Leerraum trimmen	Markdown 移除行尾空白	Markdown 移除行尾空白
+Mixer	Mixer	Misturador			
+Number	Number	Número	Nummer	編號	编号
+Open Url	Open Url	Abrir Url	URL öffnen	打開網址	打开网址
+Options	Options	Opções	Optionen	選項	选项
+Outdent One Space	Outdent One Space	Adicionar um espaço inicial			
+Outdents One Space	Outdents One Space	Adiciona um espaço no inicio de cada linha			
+Recent Files	Recent Files	Ficheiros recentes	Kürzlich geöffnete Dateien	最近的文件	最近的文件
+Regex Tester	Regex Tester	Testador Regex	RegEx-Tester	正則表達式測試儀	正则表达式测试仪
+Regnize	Regnize	Regnizar			
+Remove Duplicated Lines	Remove Duplicated Lines	Remove as linhas duplicadas			
+Remove Empty Lines	Remove Empty Lines	Remove as linhas vazias			
+Removes Duplicated Lines	Removes Duplicated Lines	Remove linhas que estão em duplicado			
+Removes Empty Lines	Removes Empty Lines	Remove linhas que estão vazias			
+Removes Trailing Spaces	Removes Trailing Spaces	Remove os espaços finais da cada linha			
+Replace	Replace	Substituir	Ersetzen 	取代	取代
+Replace Recipes	Replace Recipes	Receitas de Substituição			
+Reverse	Reverse	Reverter	Umgekehrt	反轉	反转
+Reverse Assignment	Reverse Assignment	Inverter a Afetação			
+Single Quote To Double	Single Quote To Double	Aspas Simples para Duplas	Einfache Anführungszeichen zu doppelten	單引號到雙引號	单引号到双引号
+Single Slash To Double	Single Slash To Double	Barra Simples para Barra Dupla	Einfachen Schrägstrich verdoppeln	單斜線到雙斜線	单斜线到双斜线
+Single To Double Slash	Single To Double Slash	Barra Dupla para Barra Simples			
+Sort Ascending	Sort Ascending	Ordenar ascendente	Aufsteigend sortieren	升序	升序
+Sort Descending	Sort Descending	Ordenar descendente	Absteigend sortieren	降序	降序
+Sort Numerically Ascending	Sort Numerically Ascending	Ordenar numericamente ascendente			
+Sort Numerically Descending	Sort Numerically Descending	Ordenar numericamente descendente			
+Sorts Numerically Ascending	Sorts Numerically Ascending	Ordena numericamente ascendente			
+Sorts Numerically Descending	Sorts Numerically Descending	Ordena numericamente descendente			
+Space To Tab	Space To Tab	Converte Espaço em Tab	Leerzeichen zu Tabulatoren	空格到跳位字元	空格到跳位字元
+Split	Split	Separar	Teilen	分裂	分裂
+Split Lines	Split Lines	Separar Linhas			
+Tab To Space	Tab To Space	Converte Tab em Espaço	Tabulatoren zu Leerzeichen	跳位字元到空格	跳位字元到空格
+Tag	Tag	Etiqueta	in Tag umwandeln	標籤	标签
+Toggle Quote	Toggle Quote	Toggle de Aspas	Anführungszeichen umschalten	切換引號	切换引号
+Trim Leading	Trim Leading	Remove espaço inicial	Führenden Leerraum trimmen	移除行初空白	移除行初空白
+Trim Trailing	Trim Trailing	Remove espaço final	Nachfolgenden Leerraum trimmen	移除行尾空白	移除行尾空白
+Underscore To Dash	Underscore To Dash	Comutar de Sublinha para Traço			
+Unix To Win Slash	Unix To Win Slash	Barra de Unix para Windows	Unix Pfadtrenner nach Windows	UNIX到Windows斜線	UNIX到Windows斜线
+Untag	Untag	Remove a Tag	Tags entfernen	Untag	Untag
+UpperCase	UpperCase	Maiusculas	Großbuchstaben	大寫	大写
+Url Decode	Url Decode	Decodificar Url	URL decodieren	UrlDecode	UrlDecode
+Url Encode	Url Encode	Codificar URL	URL encodieren	UrlEncode	UrlEncode
+Web Search	Web Search	Pesquisa Web	Web-Suche	網站搜索	网站搜索
+Win To Unix Slash	Win To Unix Slash	Barra de Windows para Linux	Windows Pfadtrenner nach Unix	Ｗindows到UNIX斜線	Ｗindows到UNIX斜线

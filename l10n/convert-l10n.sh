@@ -9,5 +9,6 @@
 # ------------------------------------------------------------------------
 
 SCRIPT_PATH="$(dirname $(realpath "$0"))"
-cd "$SCRIPT_PATH/../usr/lib/x86_64-linux-gnu/xed/plugins/toix_proxy/locale"
+python $SCRIPT_PATH/convert-l10n.py || exit 1
+cd "$SCRIPT_PATH/../xed/usr/lib/x86_64-linux-gnu/xed/plugins/toix_proxy/locale"
 find . -iname "*.po" -exec bash -c 'FILE="{}"; echo Compile $FILE; msgfmt -o "${FILE%.*}.mo" "$FILE";' \;

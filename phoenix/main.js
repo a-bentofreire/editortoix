@@ -11,13 +11,13 @@ define(function (require, exports, module) {
     // ------------------------------------------------------------------------
     //                               i18n
     // ------------------------------------------------------------------------
-    var VERSION = '4.0.1';
+    var VERSION = '4.0.5';
     var AUTHOR = 'Alexandre Bento Freire';
     var COPYRIGHTS = 'Alexandre Bento Freire';
     var IX_MENU = "IX";
     var IX_MENU_TT = "IX TT";
     var MODULE_NAME = 'bracketstoix';
-    var HELP_LINK = ''; // deactivated for now until there is a new help page
+    var HELP_LINK = 'https://www.devtoix.com/en/projects/editortoix';
     var EXPAND_TAGS = ';bu=button;d=div;sp=span;te=textarea;in=input';
     var PROJ_SETTINGS_FILE = '.projecttoix.json';
     // FORCE policy must be the negative of the regular policy
@@ -32,7 +32,7 @@ define(function (require, exports, module) {
     var SOCIAL = {
         home: HELP_LINK,
         // facebook: 'https://www.facebook.com/devtoix',
-        twitter: 'https://twitter.com/devtoix',
+        twitter: 'https://x.com/devtoix',
         github: 'http://github.com/a-bentofreire/editortoix',
     };
     var brk = {};
@@ -132,7 +132,7 @@ define(function (require, exports, module) {
         console.error('[' + MODULE_NAME + '] ' + msg);
     }
     function checkExt(file, ext) {
-        return file.substr(file.length - ext.length) === ext;
+        return file.substring(file.length - ext.length) === ext;
     }
     var REGNIZE_FIND = /([\\.()\[\]*+\^$])/g;
     var REGNIZE_REPL = '\\$1';
@@ -521,7 +521,7 @@ define(function (require, exports, module) {
         return ui.ask(buildDlgTitle(title || cmd.cleanlabel), cmd ? cmd.storeid : '', fieldList, callback, opts, fields || prefs, opts && opts.nosaveprefs ? undefined : saveExtPrefs, prefs.historySize.value, i18n, brk, handleSocial);
     }
     function showMessage(title, message) {
-        brk.Dialogs.showModalDialog('bracketstoix-dialog', buildDlgTitle(i18n(title)), message, [{
+        brk.Dialogs.showModalDialog('editortoix-dialog', buildDlgTitle(i18n(title)), message, [{
                 className: brk.Dialogs.DIALOG_BTN_CLASS_PRIMARY,
                 id: brk.Dialogs.DIALOG_BTN_OK,
                 text: brk.CoreStrings.CLOSE,
@@ -1102,7 +1102,7 @@ define(function (require, exports, module) {
             if (checkExt(infile, ext.inext)) {
                 pref = prefs[ext.inext.substr(1)];
                 if (pref.value && ((pref.fields && pref.fields.autosave && pref.fields.autosave.value) || !toAutoSave)) {
-                    outfile = infile.substr(0, infile.length - ext.inext.length) + ext.outext;
+                    outfile = infile.substring(0, infile.length - ext.inext.length) + ext.outext;
                     nodeExec(pref.value, getProjectRoot(), 'Compile ' + infile, false, true, { in: infile, out: outfile });
                     break;
                 }
@@ -1505,7 +1505,6 @@ define(function (require, exports, module) {
         var menulist = [Menus.addMenu(IX_MENU_TT, tools.textToID(IX_MENU_TT)),
             Menus.addMenu(IX_MENU, tools.textToID(IX_MENU))];
         var ctxmenu = Menus.getContextMenu(Menus.ContextMenuIds.EDITOR_MENU);
-        var i;
         var cmd;
         var nm;
         var lastid;
@@ -1513,7 +1512,7 @@ define(function (require, exports, module) {
         var showinctxmenu = prefs.commands.value.showinctxmenu;
         var hotkeys = prefs.commands.value.hotkeys;
         var hasdiv = false;
-        for (i = 0; i < cmdlist.length; i++) {
+        for (var i = 0; i < cmdlist.length; i++) {
             cmd = cmdlist[i];
             if (!cmd.name) {
                 if (cmd.menu) {
@@ -1719,7 +1718,7 @@ define(function (require, exports, module) {
     //                               Init
     // ------------------------------------------------------------------------
     function init() {
-        brk.ExtensionUtils.loadStyleSheet(module, "styles/bracketstoix.css");
+        brk.ExtensionUtils.loadStyleSheet(module, "styles/editortoix.css");
         initCommandList();
         fillShowonMenu(); // must be before loadextprefs
         initPrefButtons();

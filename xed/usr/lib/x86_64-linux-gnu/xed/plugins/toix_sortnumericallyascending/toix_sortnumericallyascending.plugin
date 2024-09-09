@@ -8,3 +8,7 @@ Icon=gnome-mime-text-x-python
 Authors=Alexandre Bento Freire <devtoix@a-bentofreire>
 Copyright=Copyright @ 2024 Alexandre Bento Freire
 Builtin=false
+Name[pt]=IX: Ordenar numericamente ascendente
+Description[pt]=Ordena numericamente ascendente
+Name[de]=IX: Sort Numerically Ascending
+Description[de]=Sorts Numerically Ascending

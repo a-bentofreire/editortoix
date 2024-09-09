@@ -1,3 +1,16 @@
+editortoix (4.0.5) noble; urgency=low
+
+  * Add translations
+  * Fix postinst
+  
+ -- Alexandre Bento Freire <dev@a-bentofreire.com>  Mon, 09 Sep 2024 16:53:32 +0000
+
+editortoix (4.0.2) noble; urgency=high
+
+  * Fix postinst
+  
+ -- Alexandre Bento Freire <dev@a-bentofreire.com>  Mon, 09 Sep 2024 10:44:47 +0000
+
 editortoix (4.0.1) noble; urgency=low
 
   * Prevents install if xedtoix already exists  

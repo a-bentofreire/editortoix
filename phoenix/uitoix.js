@@ -43,7 +43,7 @@ define(function () {
     return {
         htmlencode: function (text) { return _htmlencode(text); },
         ask: function (title, storeid, fieldnames, callback, opts, allfields, saveextprefs, historysize, i18n, brk, handleSocial) {
-            var PREFIX = 'toix', DEFSIZE = 25, BRACKETSTOIX_DIALOG_ID = "bracketstoix-dialog";
+            var PREFIX = 'toix', DEFSIZE = 25, BRACKETSTOIX_DIALOG_ID = "editortoix-dialog";
             var dlg, $dlg, firstfieldid, groupmode = false, groupcols, groupcolindex, eventQueue = [];
             var suffixSize = function (value, suffix) { return value + (value.match(/[^\d]/) ? '' : suffix); };
             // ------------------------------------------------------------------------

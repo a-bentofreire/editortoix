@@ -49,7 +49,7 @@ define(() => {
       saveextprefs, historysize, i18n, brk, handleSocial) => {
       const PREFIX = 'toix',
         DEFSIZE = 25,
-        BRACKETSTOIX_DIALOG_ID = "bracketstoix-dialog";
+        BRACKETSTOIX_DIALOG_ID = "editortoix-dialog";
 
       let dlg, $dlg, firstfieldid,
         groupmode = false,

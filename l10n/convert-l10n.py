@@ -7,6 +7,7 @@ import json
 
 langs = ['pt', 'de']
 
+
 def main():
     script_path = os.path.abspath(os.path.dirname(sys.argv[0]))
     l10n_file = os.path.join(script_path, 'l10n.csv')
@@ -37,7 +38,7 @@ def main():
                 key = match.group(1).strip()
                 return f'IX: {translations.get(key, key)}'
 
-            # vsc
+            # vsx
 
             data = dict(l10n_data)
             for key, value in data.items():
@@ -49,6 +50,19 @@ def main():
                 json.dump(data, out_f, ensure_ascii=False, indent=2)
 
             print(f'File saved as: {output_file}')
+
+            bundle_file = os.path.join(vsx_package_path, 'l10n', f'bundle.l10n.{lang}.json')
+            print(bundle_file)
+            with open(bundle_file, 'r', encoding='utf-8') as bundle_f:
+                bundle_data = json.load(bundle_f)
+
+            for key in bundle_data.keys():
+                bundle_data[key] = translations.get(key, key)
+
+            with open(bundle_file, 'w', encoding='utf-8') as bundle_out_f:
+                json.dump(bundle_data, bundle_out_f, ensure_ascii=False, indent=2)
+
+            print(f'File saved as: {bundle_file}')
 
             # xed
 

@@ -2,7 +2,7 @@
     "name": "vsctoix",
     "displayName": "EditorToIX",
     "description": "extract,join,split,encode,mix,change case and slash,del dup,regex, and more",
-    "version": "4.0.5",
+    "version": "4.0.6",
     "publisher": "a-bentofreire",
     "keywords": [
         "transform",
@@ -54,24 +54,6 @@
     "main": "./out/extension",
     "l10n": "./l10n",
     "contributes": {
-        "localization": [
-            {
-                "languageId": "pt",
-                "translations": [
-                    {
-                        "path": "./package.nls.pt.json"
-                    }
-                ]
-            },
-            {
-                "languageId": "de",
-                "translations": [
-                    {
-                        "path": "./package.nls.de.json"
-                    }
-                ]
-            }
-        ],
         "configuration": {
             "type": "object",
             "title": "vsctoix",

@@ -233,7 +233,7 @@ export namespace lineutilities {
       sp: um.TIXSelPolicy.All,
     },
       [
-        { prompt: 'Max number of Chars(add / at the end to allow word break)' },
+        { prompt: 'Max number of Chars (add / at the end to allow word break)' },
       ],
 
       (up): string[] => {

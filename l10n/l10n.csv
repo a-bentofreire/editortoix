@@ -1,5 +1,4 @@
  	root	pt	de	zh-tw	zh
-@translator		Alexandre Bento Freire	Christian Knappke	蔡宜靜	蔡宜靜
 HISTORY_HINT	 Use Ctrl+UP/DOWN to fetch the history	Use Ctrl+UP/DOWN para usar a histórico	 Mit Strg+UP/DOWN durch die History blättern	使用Ctrl + UP / DOWN來獲取歷史紀錄	使用Ctrl + UP / DOWN来获取历史纪录
 SPACETEXT_HINT	 use \\$ for leading and trimming spaces	  usar \\ $ para espaços finais e iniciais	 \\$ für führende und nachfolgende Leerzeichen	 使用 \\$ 來獲取行初空白與行尾空白	 使用 \\$ 来获取行初空白与行尾空白
 SHORTCUT_HINT	Ex: Ctrl-Shift-U (win).  Cmd-Shift-U (mac)	Ex: Ctrl-Shift-U (vitória). Cmd-Shift-U (mac)	z.B.: Strg-Umsch-U (Win).  Cmd-Shift-U (Mac)	例如：Ctrl-Shift-U (win).  Cmd-Shift-U (mac)	例如：Ctrl-Shift-U (win). Cmd-Shift-U (mac)
@@ -136,15 +135,21 @@ Space To Tab	Space To Tab	Converte Espaço em Tab	Leerzeichen zu Tabulatoren	空
 Split	Split	Separar	Teilen	分裂	分裂
 Split Lines	Split Lines	Separar Linhas			
 Tab To Space	Tab To Space	Converte Tab em Espaço	Tabulatoren zu Leerzeichen	跳位字元到空格	跳位字元到空格
-Tag	Tag	Etiqueta	in Tag umwandeln	標籤	标签
+Tag	Tag	Tag	in Tag umwandeln	標籤	标签
 Toggle Quote	Toggle Quote	Toggle de Aspas	Anführungszeichen umschalten	切換引號	切换引号
 Trim Leading	Trim Leading	Remove espaço inicial	Führenden Leerraum trimmen	移除行初空白	移除行初空白
 Trim Trailing	Trim Trailing	Remove espaço final	Nachfolgenden Leerraum trimmen	移除行尾空白	移除行尾空白
-Underscore To Dash	Underscore To Dash	Comutar de Sublinha para Traço			
+Underscore To Dash	Underscore To Dash	Mudar de Sublinhado para Traço			
 Unix To Win Slash	Unix To Win Slash	Barra de Unix para Windows	Unix Pfadtrenner nach Windows	UNIX到Windows斜線	UNIX到Windows斜线
-Untag	Untag	Remove a Tag	Tags entfernen	Untag	Untag
+Untag	Untag	Remover uma Tag	Tags entfernen	Untag	Untag
 UpperCase	UpperCase	Maiusculas	Großbuchstaben	大寫	大写
 Url Decode	Url Decode	Decodificar Url	URL decodieren	UrlDecode	UrlDecode
-Url Encode	Url Encode	Codificar URL	URL encodieren	UrlEncode	UrlEncode
-Web Search	Web Search	Pesquisa Web	Web-Suche	網站搜索	网站搜索
+Url Encode	Url Encode	Codificar Url	URL encodieren	UrlEncode	UrlEncode
+Web Search	Web Search	Pesquisa na Web	Web-Suche	網站搜索	网站搜索
 Win To Unix Slash	Win To Unix Slash	Barra de Windows para Linux	Windows Pfadtrenner nach Unix	Ｗindows到UNIX斜線	Ｗindows到UNIX斜线
+End Section Line Pattern	End Section Line Pattern	Padrão de linha final da secção			
+Expression	Expression	Expressão			
+Max number of Chars (add / at the end to allow word break)	Max number of Chars (add / at the end to allow word break)	Número máximo de caracteres (adicionar / no final para permitir a quebra da palavra)			
+Mixer	Mixer	Misturador			
+Pattern	Pattern	Padrão			
+Start Section Line Pattern	Start Section Line Pattern	Padrão de linha de secção Iniciar			

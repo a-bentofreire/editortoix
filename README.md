@@ -2,13 +2,13 @@
 
 [EditorToIX](https://www.devtoix.com/en/projects/editortoix) are open-source utilities available for multiple code editors in form of extension or plugins.
 
-If you find this project useful, please, read the [Support this Project](#support-this-project) on how to contribute.  
+If you find this project useful, please, read the [Support this Project](https://www.devtoix.com/en/projects/editortoix#support-this-project) on how to contribute.  
 
 ## Availability
 
 | Id  | Old Name | Code Editor |
 | ------------- | ------------- | ------------- |
-| **vsx** |  VscToIX | [Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=a-bentofreire.vsctoix)<br>[Cursor AI](https://www.cursor.com/)<br>[Google Project IDX](https://idx.dev/)<br>[open-vsx.org](https://open-vsx.org/extension/a-bentofreire/vsctoix) |
+| **vsx** |  VscToIX | [Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=a-bentofreire.vsctoix)<br>[Cursor AI](https://www.cursor.com/)<br>[open-vsx.org](https://open-vsx.org/extension/a-bentofreire/vsctoix) |
 | **xed** | XedToIX | [Linux Mint Xed Editor](https://launchpad.net/~a-bentofreire/+archive/ubuntu/toix) (as plugins) |
 | **phoenix** | BracketsToIX | [Phoenix Code](https://phcode.dev/) |
 
@@ -72,7 +72,7 @@ If you find this project useful, please, read the [Support this Project](#suppor
 
 | Change Quote | Selection Policy | Code Editor |
 | ------------- | ------------- | ------------- |
-| Double To Single Quote| Line | phoenix |
+| Double To Single Quote | Line | phoenix |
 | Single To Double Quote | Line | phoenix |
 | Toggle Quote | Line | phoenix |
 
@@ -149,20 +149,20 @@ No default shortcuts were define to prevent collision with other plugins.
 | ------------- | ------------- | ------------- |
 | Add Space before Uppercase | Useful to transform functions names into documentation |**before**: `doActionBefore`<br>**after**: `do Action Before`|
 | Break Line At | Break lines at a certain position |**before**:<br>`Too long line`<br>**after**:<br>`too long`<br>`line`|
-| Camel Case| | **before**: `ClassNameFunc`<br>**after**: `classNameFunc`|
+| Camel Case | | **before**: `ClassNameFunc`<br>**after**: `classNameFunc`|
 | Capitalize | | **before**: `classNameFunc`<br>**after**: `ClassNameFunc`|
-| Cycle Case| Loops between differet case types | **before**: `_ClassNameFunc`<br>**after**: `_classNameFunc -> _CLASS_NAME_FUNC -> _class_name_func -> _class-name-func -> _class name func ->_ClassNameFunc`|
-| Dash Case| | **before**: `ClassNameFunc`<br>**after**: `class-name-func`|
+| Cycle Case | Loops between differet case types | **before**: `_ClassNameFunc`<br>**after**: `_classNameFunc -> _CLASS_NAME_FUNC -> _class_name_func -> _class-name-func -> _class name func ->_ClassNameFunc`|
+| Dash Case | | **before**: `ClassNameFunc`<br>**after**: `class-name-func`|
 | Dash To Underscore| | **before**: `find-deep-first`<br>**after**: `find_deep_first`|
 | Double To Single Slash | | **before**: `find\\\nagain`<br>**after**: `find\nagain`|
 | Extract Text | Copies to the clipboard the captured group of a regular expression.<br>Each capture is separated by tabs |`(\w+) = (\w+)`|
 | Header To Bookmark | Converts markdown header text to Html Bookmark |**before**: `Is this the header 你好?`<br>**after**: `is-this-the-header-你好`|
 | Indent One Space | Adds one space to the beginning of each line | |
-| Insert ISO Date| | `2018-02-08`|
-| Insert ISO TimeDate| | `2018-02-08 10:12:15`|
-| Insert Text At End| | **before**:<br>`red`<br>`green`<br><br>**after**:<br>`expr: = \c{1}`<br>`red = 1`<br>`green = 2`|
+| Insert ISO Date | | `2018-02-08`|
+| Insert ISO TimeDate | | `2018-02-08 10:12:15`|
+| Insert Text At End | | **before**:<br>`red`<br>`green`<br><br>**after**:<br>`expr: = \c{1}`<br>`red = 1`<br>`green = 2`|
 | Insert Text At Start | | **before**:<br>`red`<br>`green`<br><br>**after**:<br>`expr: const \e{upper} =`<br>`const RED = red`<br>`const GREEN = green`|
-| Insert UUID| | `7fff60f8-91e8-40ba-9053-56b0f3a487f0`|
+| Insert UUID | | `7fff60f8-91e8-40ba-9053-56b0f3a487f0`|
 | Join Lines | Joins lines adding the computed expression at the end of every line |**before**:<br>`red`<br>`green`<br><br>**after**:<br>`expr:(x\c{X0A}),`<br>`red(x0A),green(x0B)`|
 | LowerCase | | **before**:`classNameFunc`<br>**after**:`classnamefunc`|  
 | Mixer | Mixes lines of different sections. | **before**:<br>`// section`<br>`abc`<br>`cde`<br>`// end-section`<br>`// section`<br>`123`<br>`345`<br>`// section`<br>**after**:<br>`abc`<br>`123`<br>`cde`<br>`345` |
@@ -179,17 +179,17 @@ No default shortcuts were define to prevent collision with other plugins.
 | Split Lines | Split lines by an expression. Dynamic values aren't supported |**before**:<br>`red,green`<br><br>**after**:<br>`expr: = \c{1}`<br>`red = 1`<br>`green = 2`|
 | Tab To Space | Space to Tab only works with leading spaces||
 | Trim Trailing | | Removes trailing spaces of each line |
-| Underscore To Dash| | **before**: `find_deep_first`<br>**after**: `find-deep-first`|
+| Underscore To Dash | | **before**: `find_deep_first`<br>**after**: `find-deep-first`|
 | Unix To Win Slash | Converts slashes to backslashes | **before**: `chocolate/candy`<br>**after**: `chocolate\candy`|
 | UpperCase | | **before**:`classNameFunc`<br>**after**:`CLASSNAMEFUNC`|  
-| Url Decode| | **before**: `https%3A%2F%2Fgithub.com`<br>**after**: `https://github.com`|
-| Url Encode| | **before**: `https://github.com`<br>**after**: `https%3A%2F%2Fgithub.com`|
+| Url Decode | | **before**: `https%3A%2F%2Fgithub.com`<br>**after**: `https://github.com`|
+| Url Encode | | **before**: `https://github.com`<br>**after**: `https%3A%2F%2Fgithub.com`|
 | Win To Unix Slash | Converts backslashes to slashes | **before**: `chocolate\candy`<br>**after**: `chocolate/candy`|
-|Double To Single Quote| |**before**:`find"again`<br>**after**:`find'again`|
-|Html Decode||**before**:`&lt;h1&gt;Title&lt;/h1&gt`<br>**after**:`<h1>Title</h1>`|
-|Html Encode||**before**:`<h1>Title</h1>`<br>**after**:`&lt;h1&gt;Title&lt;/h1&gt`|
-|Single To Double Quote| |**before**:`find'again`<br>**after**:`find"again`|
-|Toggle Quote| | **before**:`find"again'`<br>**after**:`find'again"`|
+| Double To Single Quote | |**before**:`find"again`<br>**after**:`find'again`|
+| Html Decode ||**before**:`&lt;h1&gt;Title&lt;/h1&gt`<br>**after**:`<h1>Title</h1>`|
+| Html Encode ||**before**:`<h1>Title</h1>`<br>**after**:`&lt;h1&gt;Title&lt;/h1&gt`|
+| Single To Double Quote | |**before**:`find'again`<br>**after**:`find"again`|
+| Toggle Quote | | **before**:`find"again'`<br>**after**:`find'again"`|
 
 ## Selection Policies
 
@@ -300,7 +300,6 @@ If you find this project useful, consider supporting it:
   - [LinkedIn](https://www.linkedin.com/in/abentofreire)
   - [Twitter/X](https://x.com/devtoix)
 
-
 ## License
 
 MIT License - [vsx and phoenix Editors](#availability)
@@ -309,4 +308,4 @@ GPLv2 License - [Linux Mint Xed Editor](#availability)
 
 ## Copyrights  
   
-© 2016-2024 [Alexandre Bento Freire](https://www.a-bentofreire.com)  
+© 2014-2024 [Alexandre Bento Freire](https://www.a-bentofreire.com)  

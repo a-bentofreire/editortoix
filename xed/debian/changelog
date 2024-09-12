@@ -1,3 +1,10 @@
+editortoix (4.0.7) noble; urgency=low
+
+  * Improve german translations
+  
+ -- Alexandre Bento Freire <dev@a-bentofreire.com>  Thu, 12 Sep 2024 17:46:51 +0000
+
+
 editortoix (4.0.5) noble; urgency=low
 
   * Add translations

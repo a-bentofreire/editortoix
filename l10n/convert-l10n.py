@@ -5,7 +5,7 @@ import re
 import os
 import json
 
-langs = ['pt', 'de']
+locales = ['pt-br', 'de']
 
 
 def main():
@@ -25,9 +25,11 @@ def main():
         reader = csv.DictReader(map_f, delimiter='\t')
         headers = reader.fieldnames
 
-        for lang in langs:
-            translations = {}
+        for locale in locales:
+            lang = locale[0:2]
 
+            translations = {}
+            map_f.seek(0)
             for row in reader:
                 key = row[headers[0]]
                 translation = row[lang].rstrip()
@@ -45,14 +47,13 @@ def main():
                 if isinstance(value, str):
                     data[key] = re.sub(r'IX: ([^"]+)', vsx_replace, value)
 
-            output_file = os.path.join(vsx_package_path, f'package.nls.{lang}.json')
+            output_file = os.path.join(vsx_package_path, f'package.nls.{locale}.json')
             with open(output_file, 'w', encoding='utf-8') as out_f:
                 json.dump(data, out_f, ensure_ascii=False, indent=2)
 
             print(f'File saved as: {output_file}')
 
-            bundle_file = os.path.join(vsx_package_path, 'l10n', f'bundle.l10n.{lang}.json')
-            print(bundle_file)
+            bundle_file = os.path.join(vsx_package_path, 'l10n', f'bundle.l10n.{locale}.json')
             with open(bundle_file, 'r', encoding='utf-8') as bundle_f:
                 bundle_data = json.load(bundle_f)
 

@@ -13,7 +13,7 @@ msgstr ""
 
 # plugin-name: cyclecase
 msgid "Cycle Case"
-msgstr "Cycle Case"
+msgstr "Großschreibung umschalten"
 
 # plugin-desc: cyclecase
 msgid "Cycles Case"
@@ -21,7 +21,7 @@ msgstr "Cycles Case"
 
 # plugin-name: indentonespace
 msgid "Indent One Space"
-msgstr "Indent One Space"
+msgstr "Um ein Leerzeichen einrücken"
 
 # plugin-desc: indentonespace
 msgid "Indents One Space"
@@ -29,7 +29,7 @@ msgstr "Indents One Space"
 
 # plugin-name: outdentonespace
 msgid "Outdent One Space"
-msgstr "Outdent One Space"
+msgstr "Um ein Leerzeichen ausrücken"
 
 # plugin-desc: outdentonespace
 msgid "Outdents One Space"
@@ -37,7 +37,7 @@ msgstr "Outdents One Space"
 
 # plugin-name: removeduplicatedlines
 msgid "Remove Duplicated Lines"
-msgstr "Remove Duplicated Lines"
+msgstr "Doppelte Zeilen entfernen"
 
 # plugin-desc: removeduplicatedlines
 msgid "Removes Duplicated Lines"
@@ -45,7 +45,7 @@ msgstr "Removes Duplicated Lines"
 
 # plugin-name: removeemptylines
 msgid "Remove Empty Lines"
-msgstr "Remove Empty Lines"
+msgstr "Leere Zeilen entfernen"
 
 # plugin-desc: removeemptylines
 msgid "Removes Empty Lines"
@@ -53,7 +53,7 @@ msgstr "Removes Empty Lines"
 
 # plugin-name: sortnumericallyascending
 msgid "Sort Numerically Ascending"
-msgstr "Sort Numerically Ascending"
+msgstr "Numerisch aufsteigend sortieren"
 
 # plugin-desc: sortnumericallyascending
 msgid "Sorts Numerically Ascending"
@@ -61,7 +61,7 @@ msgstr "Sorts Numerically Ascending"
 
 # plugin-name: sortnumericallydescending
 msgid "Sort Numerically Descending"
-msgstr "Sort Numerically Descending"
+msgstr "Numerisch absteigend sortieren"
 
 # plugin-desc: sortnumericallydescending
 msgid "Sorts Numerically Descending"
@@ -69,7 +69,7 @@ msgstr "Sorts Numerically Descending"
 
 # plugin-name: trimtrailing
 msgid "Trim Trailing"
-msgstr "Trim Trailing"
+msgstr "Nachfolgenden Leerraum trimmen"
 
 # plugin-desc: trimtrailing
 msgid "Removes Trailing Spaces"

@@ -10,5 +10,5 @@ Copyright=Copyright @ 2024 Alexandre Bento Freire
 Builtin=false
 Name[pt]=IX: Remove espaço final
 Description[pt]=Remove os espaços finais da cada linha
-Name[de]=IX: Trim Trailing
+Name[de]=IX: Nachfolgenden Leerraum trimmen
 Description[de]=Removes Trailing Spaces

@@ -67,8 +67,8 @@ CAT_AfterSave	After Save	Após guardar		保存後	保存后
 CAT_Tools	Tools	Ferramentas		工具	工具
 CAT_Project	Project	Projeto		專案	专案
 Extensions	Extensions	Extensões		延伸	延伸
-Add Space before Uppercase	Add Space before Uppercase	Adicionar o espaço antes de superior			
-Break Line At	Break Line At	Dividir linhas em	Zeile bei ... umbrechen	斷行於	断行于
+Add Space before Uppercase	Add Space before Uppercase	Adicionar o espaço antes de superior	Leerzeichen vor Großbuchstaben einfügen		
+Break Line At	Break Line At	Dividir linhas em	Zeilenumbruch bei	斷行於	断行于
 Browse File	Browse File	Procure ficheiro	Dateibrowser	瀏覽文件	浏览文件
 Camel Case	Camel Case	Camel Case		駝峰式大小寫	驼峰式大小写
 Capitalize	Capitalize	Capitalizar	Wortanfang groß	首字大寫	首字大写
@@ -77,69 +77,69 @@ Commands Mapper	Commands Mapper	Mapper de comandos	Kommandos zuordnen	命令映�
 Compiler	Compile(js6, scss)	Compilar(js6, scss)	Compile(js6, scss)	編譯器(js6, scss)	编译器(js6, scss)
 Copy Filename	Copy Filename	Copiar nome de ficheiro	Dateiname kopieren	複製文件名	复制文件名
 Copy Fullname	Copy Fullname	Copie Name de completo	Vollstandigen Dateinamen kopieren	複製全路徑名稱	复制全路径名称
-Cycle Case	Cycle Case	Comutar o título da Letra			
+Cycle Case	Cycle Case	Comutar o título da Letra	Großschreibung umschalten		
 Cycles Case	Cycles Case	Comuta o título da Letra			
-Dash Case	Dash Case	Mudar o título para Traço			
-Dash To Underscore	Dash To Underscore	Dash para sublinhar			
+Dash Case	Dash Case	Mudar o título para Traço	Bindestrich-Notation		
+Dash To Underscore	Dash To Underscore	Dash para sublinhar	Bindestrich zu Unterstrich		
 Dash Case	Dash Case	Notação de Traço		DashCase	DashCase  DashCase
 Declare JSLint Global	Declare JSLint Global	Declarar JSLint Global	Funktion als JSLint Global kennzeichnen	聲明JSLint Global	声明JSLint Global
 Double To Single Quote	Double To Single Quote	Aspa Dupla para Simples	Doppelte Anführungszeichen zu einfachen	雙引號到單引號	双引号到单引号
 Double To Single Slash	Double To Single Slash	Barra Dupla para Simples	Doppelten Schrägstrich zu einfachem	雙斜線到單斜線	双斜线到单斜线
 Execute	Execute	Executar		執行	执行
-Extract Text	Extract Text	Extrair texto			
+Extract Text	Extract Text	Extrair texto	Text extrahieren		
 Extractor	Extractor	Extrator	Extraktor 	抽出器	抽出器
 Function JSDoc	Function JSDoc	Função JSDoc	JSDoc Kommentar einfügen	Function JSDoc	Function JSDoc
-Header To Bookmark	Header To Bookmark	Cabeceamento para marcar os favoritos			
+Header To Bookmark	Header To Bookmark	Converte Cabeçalho em Marcador	Konvertiere Kopfzeile in Lesezeichen		
 Html Report	Html Report	Relatório Html	HTML-Daten (id, class, style)	HTML報告	HTML报告
 Html Decode	Html Decode	Descodificação Html	HTML decodieren	HtmlDecode	HtmlDecode
 Html Encode	Html Encode	Encode Html	HTML codieren	HtmlEncode	HtmlEncode
-Indent One Space	Indent One Space	Recuar um espaço			
+Indent One Space	Indent One Space	Recuar um espaço	Um ein Leerzeichen einrücken		
 Indents One Space	Indents One Space	Remove um espaço inicial			
-Insert ISO Date	Insert ISO Date	Introduz a data ISO			
-Insert ISO TimeDate	Insert ISO TimeDate	Introduz a Hora e Data ISO			
-Insert Text At End	Insert Text At End	Inserir texto no final			
-Insert Text At Start	Insert Text At Start	Insira texto no início			
-Insert UUID	Insert UUID	Inserir UUID			
+Insert ISO Date	Insert ISO Date	Introduz a data ISO	ISO-Datum einfügen		
+Insert ISO TimeDate	Insert ISO TimeDate	Introduz a Hora e Data ISO	ISO-Zeit und -Datum einfügen		
+Insert Text At End	Insert Text At End	Inserir texto no final	Text am Ende einfügen		
+Insert Text At Start	Insert Text At Start	Insira texto no início	Text am Anfang einfügen		
+Insert UUID	Insert UUID	Inserir UUID	UUID einfügen		
 Join	Join	Juntar	Zusammenfügen	結合	结合
-Join Lines	Join Lines	Juntar linhas			
+Join Lines	Join Lines	Juntar linhas	Zeilen verbinden		
 LowerCase	LowerCase	Minusculas	Kleinbuchstaben	小寫	小写
 Markdown Trim Trailing	Markdown Trim Trailing	Remover espaços Markdown	Markdown: nachfolgenden Leerraum trimmen	Markdown 移除行尾空白	Markdown 移除行尾空白
 Mixer	Mixer	Misturador			
 Number	Number	Número	Nummer	編號	编号
 Open Url	Open Url	Abrir Url	URL öffnen	打開網址	打开网址
 Options	Options	Opções	Optionen	選項	选项
-Outdent One Space	Outdent One Space	Adicionar um espaço inicial			
+Outdent One Space	Outdent One Space	Adicionar um espaço inicial	Um ein Leerzeichen ausrücken		
 Outdents One Space	Outdents One Space	Adiciona um espaço no inicio de cada linha			
 Recent Files	Recent Files	Ficheiros recentes	Kürzlich geöffnete Dateien	最近的文件	最近的文件
 Regex Tester	Regex Tester	Testador Regex	RegEx-Tester	正則表達式測試儀	正则表达式测试仪
-Regnize	Regnize	Regnizar			
-Remove Duplicated Lines	Remove Duplicated Lines	Remove as linhas duplicadas			
-Remove Empty Lines	Remove Empty Lines	Remove as linhas vazias			
+Regnize	Regnize	Regnizar	Regnisieren		
+Remove Duplicated Lines	Remove Duplicated Lines	Remove as linhas duplicadas	Doppelte Zeilen entfernen		
+Remove Empty Lines	Remove Empty Lines	Remove as linhas vazias	Leere Zeilen entfernen		
 Removes Duplicated Lines	Removes Duplicated Lines	Remove linhas que estão em duplicado			
 Removes Empty Lines	Removes Empty Lines	Remove linhas que estão vazias			
 Removes Trailing Spaces	Removes Trailing Spaces	Remove os espaços finais da cada linha			
 Replace	Replace	Substituir	Ersetzen 	取代	取代
-Replace Recipes	Replace Recipes	Receitas de Substituição			
+Replace Recipes	Replace Recipes	Receitas de Substituição	Ersetzungsrezepte		
 Reverse	Reverse	Reverter	Umgekehrt	反轉	反转
-Reverse Assignment	Reverse Assignment	Inverter a Afetação			
+Reverse Assignment	Reverse Assignment	Inverter a Afetação	Zuweisung umkehren		
 Single Quote To Double	Single Quote To Double	Aspas Simples para Duplas	Einfache Anführungszeichen zu doppelten	單引號到雙引號	单引号到双引号
 Single Slash To Double	Single Slash To Double	Barra Simples para Barra Dupla	Einfachen Schrägstrich verdoppeln	單斜線到雙斜線	单斜线到双斜线
-Single To Double Slash	Single To Double Slash	Barra Dupla para Barra Simples			
+Single To Double Slash	Single To Double Slash	Barra Dupla para Barra Simples	Einfacher zu doppeltem Schrägstrich		
 Sort Ascending	Sort Ascending	Ordenar ascendente	Aufsteigend sortieren	升序	升序
 Sort Descending	Sort Descending	Ordenar descendente	Absteigend sortieren	降序	降序
-Sort Numerically Ascending	Sort Numerically Ascending	Ordenar numericamente ascendente			
-Sort Numerically Descending	Sort Numerically Descending	Ordenar numericamente descendente			
+Sort Numerically Ascending	Sort Numerically Ascending	Ordenar numericamente ascendente	Numerisch aufsteigend sortieren		
+Sort Numerically Descending	Sort Numerically Descending	Ordenar numericamente descendente	Numerisch absteigend sortieren		
 Sorts Numerically Ascending	Sorts Numerically Ascending	Ordena numericamente ascendente			
 Sorts Numerically Descending	Sorts Numerically Descending	Ordena numericamente descendente			
 Space To Tab	Space To Tab	Converte Espaço em Tab	Leerzeichen zu Tabulatoren	空格到跳位字元	空格到跳位字元
 Split	Split	Separar	Teilen	分裂	分裂
-Split Lines	Split Lines	Separar Linhas			
+Split Lines	Split Lines	Separar Linhas	Zeilen trennen		
 Tab To Space	Tab To Space	Converte Tab em Espaço	Tabulatoren zu Leerzeichen	跳位字元到空格	跳位字元到空格
 Tag	Tag	Tag	in Tag umwandeln	標籤	标签
 Toggle Quote	Toggle Quote	Toggle de Aspas	Anführungszeichen umschalten	切換引號	切换引号
 Trim Leading	Trim Leading	Remove espaço inicial	Führenden Leerraum trimmen	移除行初空白	移除行初空白
 Trim Trailing	Trim Trailing	Remove espaço final	Nachfolgenden Leerraum trimmen	移除行尾空白	移除行尾空白
-Underscore To Dash	Underscore To Dash	Mudar de Sublinhado para Traço			
+Underscore To Dash	Underscore To Dash	Mudar de Sublinhado para Traço	Bindestrich zu Unterstrich		
 Unix To Win Slash	Unix To Win Slash	Barra de Unix para Windows	Unix Pfadtrenner nach Windows	UNIX到Windows斜線	UNIX到Windows斜线
 Untag	Untag	Remover uma Tag	Tags entfernen	Untag	Untag
 UpperCase	UpperCase	Maiusculas	Großbuchstaben	大寫	大写
@@ -148,8 +148,9 @@ Url Encode	Url Encode	Codificar Url	URL encodieren	UrlEncode	UrlEncode
 Web Search	Web Search	Pesquisa na Web	Web-Suche	網站搜索	网站搜索
 Win To Unix Slash	Win To Unix Slash	Barra de Windows para Linux	Windows Pfadtrenner nach Unix	Ｗindows到UNIX斜線	Ｗindows到UNIX斜线
 End Section Line Pattern	End Section Line Pattern	Padrão de linha final da secção			
-Expression	Expression	Expressão			
+Expression	Expression	Expressão	Ausdruck		
 Max number of Chars (add / at the end to allow word break)	Max number of Chars (add / at the end to allow word break)	Número máximo de caracteres (adicionar / no final para permitir a quebra da palavra)			
 Mixer	Mixer	Misturador			
-Pattern	Pattern	Padrão			
+Pattern	Pattern	Padrão	Muster		
 Start Section Line Pattern	Start Section Line Pattern	Padrão de linha de secção Iniciar			
+Text copied to clipboard!	Text copied to clipboard!	Texto copiado para a clipboard!			

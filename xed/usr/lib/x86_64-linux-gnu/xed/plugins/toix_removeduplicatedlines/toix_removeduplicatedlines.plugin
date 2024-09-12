@@ -10,5 +10,5 @@ Copyright=Copyright @ 2024 Alexandre Bento Freire
 Builtin=false
 Name[pt]=IX: Remove as linhas duplicadas
 Description[pt]=Remove linhas que estão em duplicado
-Name[de]=IX: Remove Duplicated Lines
+Name[de]=IX: Doppelte Zeilen entfernen
 Description[de]=Removes Duplicated Lines

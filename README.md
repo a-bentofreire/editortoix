@@ -12,6 +12,12 @@ If you find this project useful, please, read the [Support this Project](https:/
 | **xed** | XedToIX | [Linux Mint Xed Editor](https://launchpad.net/~a-bentofreire/+archive/ubuntu/toix) (as plugins) |
 | **phoenix** | BracketsToIX | [Phoenix Code](https://phcode.dev/) |
 
+## Available Languages
+
+- English
+- Portuguese
+- German
+
 ## Utilities
 
 | General  | Selection Policy | Code Editor |

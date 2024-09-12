@@ -5,11 +5,10 @@
 // ------------------------------------------------------------------------
 
 import { um } from './utilitymanager';
+import * as vscode from 'vscode';
 
 export namespace clipboardutilities {
-
-  const copyPaste = require("copy-paste");
-
+  
   // ------------------------------------------------------------------------
   //                               Clipboard Utilities
   //
@@ -42,7 +41,9 @@ export namespace clipboardutilities {
           foundPatterns.push(captures.join('\t'));
           return all;
         });
-        copyPaste.copy(foundPatterns.join('\n'));
+        vscode.env.clipboard.writeText(foundPatterns.join('\n')).then(() => {
+            vscode.window.showInformationMessage(vscode.l10n.t('Text copied to clipboard!'));
+        });
       });
   }
 

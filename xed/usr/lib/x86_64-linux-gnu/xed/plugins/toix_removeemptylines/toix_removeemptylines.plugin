@@ -10,5 +10,5 @@ Copyright=Copyright @ 2024 Alexandre Bento Freire
 Builtin=false
 Name[pt]=IX: Remove as linhas vazias
 Description[pt]=Remove linhas que estão vazias
-Name[de]=IX: Remove Empty Lines
+Name[de]=IX: Leere Zeilen entfernen
 Description[de]=Removes Empty Lines

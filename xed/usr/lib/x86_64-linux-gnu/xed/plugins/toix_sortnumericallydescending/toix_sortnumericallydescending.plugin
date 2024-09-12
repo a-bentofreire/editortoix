@@ -10,5 +10,5 @@ Copyright=Copyright @ 2024 Alexandre Bento Freire
 Builtin=false
 Name[pt]=IX: Ordenar numericamente descendente
 Description[pt]=Ordena numericamente descendente
-Name[de]=IX: Sort Numerically Descending
+Name[de]=IX: Numerisch absteigend sortieren
 Description[de]=Sorts Numerically Descending

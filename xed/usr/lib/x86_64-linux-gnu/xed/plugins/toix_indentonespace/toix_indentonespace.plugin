@@ -10,5 +10,5 @@ Copyright=Copyright @ 2024 Alexandre Bento Freire
 Builtin=false
 Name[pt]=IX: Recuar um espaço
 Description[pt]=Remove um espaço inicial
-Name[de]=IX: Indent One Space
+Name[de]=IX: Um ein Leerzeichen einrücken
 Description[de]=Indents One Space

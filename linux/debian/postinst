@@ -1,0 +1,17 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+    configure)
+        echo "Running post-installation script"
+        [ -z "$2" ] && ACTIVATE="activate" || ACTIVATE=""
+        /usr/bin/editortoix xed add "$ACTIVATE"
+        /usr/bin/editortoix pluma add "$ACTIVATE"
+        echo "EditorToIX plugins added"
+        ;;
+    *)
+        exit 0
+        ;;
+esac
+
+exit 0

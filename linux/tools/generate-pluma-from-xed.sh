@@ -5,10 +5,14 @@
 # --------------------------------------------------------------------
 
 # ------------------------------------------------------------------------
-# Compile Translations
+# Creates a plugin from a template. Expects [Caption and Plugin]
 # ------------------------------------------------------------------------
 
 SCRIPT_PATH="$(dirname $(realpath "$0"))"
-python $SCRIPT_PATH/convert-l10n.py || exit 1
-cd "$SCRIPT_PATH/../linux/usr/share/editortoix/xed/plugins/toix_proxy/locale"
-find . -iname "*.po" -exec bash -c 'FILE="{}"; echo Compile $FILE; msgfmt -o "${FILE%.*}.mo" "$FILE";' \;
+cd "$SCRIPT_PATH/../usr/share/editortoix"
+rm -rf pluma
+cp -ar xed pluma
+cd pluma/plugins
+rm toix_proxy/toix_proxy_xed.py
+find . -iname '*.py' -exec sed -i 's/GObject, Xed/GObject, Pluma/;s/toix_proxy_xed/toix_proxy_pluma/;s/ToIXProxyXed/ToIXProxyPluma/;s/Xed.Window/Pluma.Window/' "{}" \;
+echo "Generated Pluma Plugins from Xed"

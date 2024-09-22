@@ -1,0 +1,76 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Default Translation\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-08-31 12:00+0000\n"
+"PO-Revision-Date: 2024-08-31 12:00+0000\n"
+"Last-Translator: Alexandre Bento Freire <devtoix@a-bentofreire.com>\n"
+"Language-Team: English\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# plugin-name: cyclecase
+msgid "Cycle Case"
+msgstr "Comutar o título da Letra"
+
+# plugin-desc: cyclecase
+msgid "Cycles Case"
+msgstr "Comuta o título da Letra"
+
+# plugin-name: indentonespace
+msgid "Indent One Space"
+msgstr "Recuar um espaço"
+
+# plugin-desc: indentonespace
+msgid "Indents One Space"
+msgstr "Remove um espaço inicial"
+
+# plugin-name: outdentonespace
+msgid "Outdent One Space"
+msgstr "Adicionar um espaço inicial"
+
+# plugin-desc: outdentonespace
+msgid "Outdents One Space"
+msgstr "Adiciona um espaço no inicio de cada linha"
+
+# plugin-name: removeduplicatedlines
+msgid "Remove Duplicated Lines"
+msgstr "Remove as linhas duplicadas"
+
+# plugin-desc: removeduplicatedlines
+msgid "Removes Duplicated Lines"
+msgstr "Remove linhas que estão em duplicado"
+
+# plugin-name: removeemptylines
+msgid "Remove Empty Lines"
+msgstr "Remove as linhas vazias"
+
+# plugin-desc: removeemptylines
+msgid "Removes Empty Lines"
+msgstr "Remove linhas que estão vazias"
+
+# plugin-name: sortnumericallyascending
+msgid "Sort Numerically Ascending"
+msgstr "Ordenar numericamente ascendente"
+
+# plugin-desc: sortnumericallyascending
+msgid "Sorts Numerically Ascending"
+msgstr "Ordena numericamente ascendente"
+
+# plugin-name: sortnumericallydescending
+msgid "Sort Numerically Descending"
+msgstr "Ordenar numericamente descendente"
+
+# plugin-desc: sortnumericallydescending
+msgid "Sorts Numerically Descending"
+msgstr "Ordena numericamente descendente"
+
+# plugin-name: trimtrailing
+msgid "Trim Trailing"
+msgstr "Remove espaço final"
+
+# plugin-desc: trimtrailing
+msgid "Removes Trailing Spaces"
+msgstr "Remove os espaços finais da cada linha"

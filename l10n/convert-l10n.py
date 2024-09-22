@@ -15,7 +15,7 @@ def main():
 
     vsx_package_path = os.path.join(base_path, 'vsx')
     package_file = os.path.join(vsx_package_path, 'package.nls.json')
-    xed_plugins_path = os.path.join(base_path, 'xed/usr/lib/x86_64-linux-gnu/xed/plugins')
+    xed_plugins_path = os.path.join(base_path, 'linux/usr/share/editortoix/xed/plugins')
     xed_messages_path = os.path.join(xed_plugins_path, 'toix_proxy/locale')
 
     with open(package_file, 'r', encoding='utf-8') as json_f:

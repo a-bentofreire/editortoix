@@ -1,0 +1,11 @@
+[Plugin]
+Loader=python3
+Module=toix_template
+IAge=3
+Name=IX: TemplateCaption
+Description=TemplateHint
+Icon=gnome-mime-text-x-python
+Authors=Alexandre Bento Freire <devtoix@a-bentofreire>
+Copyright=Copyright @ 2024 Alexandre Bento Freire
+Website=https://www.devtoix.com/en/projects/editortoix
+Builtin=false

@@ -2,7 +2,7 @@
     "name": "vsctoix",
     "displayName": "EditorToIX",
     "description": "extract,join,split,encode,mix,change case and slash,del dup,regex, and more",
-    "version": "4.0.7",
+    "version": "4.0.9",
     "publisher": "a-bentofreire",
     "keywords": [
         "transform",
@@ -245,9 +245,6 @@
         "@vscode/test-electron": "^2.4.0",
         "eslint": "^8.57.0",
         "typescript": "^5.4.5"
-    },
-    "dependencies": {
-        "@vscode/l10n": "^0.0.18"
     },
     "__metadata": {
         "id": "7be54cff-39ea-4a8f-bc54-aaecc06d6318",

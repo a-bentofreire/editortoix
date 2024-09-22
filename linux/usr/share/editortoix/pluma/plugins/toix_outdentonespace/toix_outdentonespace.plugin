@@ -1,0 +1,15 @@
+[Plugin]
+Loader=python3
+Module=toix_outdentonespace
+IAge=3
+Name=IX: Outdent One Space
+Description=Outdent One Space in the selected lines
+Icon=gnome-mime-text-x-python
+Authors=Alexandre Bento Freire <devtoix@a-bentofreire>
+Copyright=Copyright @ 2024 Alexandre Bento Freire
+Website=https://www.devtoix.com/en/projects/editortoix
+Builtin=false
+Name[pt]=IX: Adicionar um espaço inicial
+Description[pt]=Adiciona um espaço no inicio de cada linha
+Name[de]=IX: Um ein Leerzeichen ausrücken
+Description[de]=Outdents One Space

@@ -1,0 +1,49 @@
+#!/bin/sh
+
+process_editor() {
+    ACTIVATE=$3
+    EDITOR=$4
+    DCONF_PATH=$5
+    [ "$1" != "$EDITOR" ] && return 1
+    [ "$2" != "add" ] && [ "$2" != "remove" ] && return 1
+
+    TARGET="/usr/lib/x86_64-linux-gnu/$EDITOR/plugins"
+    SOURCE="/usr/share/editortoix/$EDITOR/plugins"
+    [ ! -d "$TARGET" ] && return 0
+
+    cd "$TARGET"
+    rm -rf toix_*
+    [ "$2" = "remove" ] && return 0
+
+    for FOLDER in "$SOURCE"/toix_*; do
+        FOLDER="$(basename $FOLDER)"
+        ln -s $SOURCE/$FOLDER $FOLDER
+    done
+
+    if [ -n "$ORIGINAL_USER" ] && [ "$ACTIVATE" = "activate" ]; then
+        PLUGINS="$(sudo -u "$ORIGINAL_USER" dconf read "$DCONF_PATH")"
+        PLUGINS="${PLUGINS%]}"
+        for FOLDER in "$SOURCE"/toix_*; do
+            FOLDER="$(basename $FOLDER)"
+            [ "$FOLDER" != "toix_proxy" ] && PLUGINS="$PLUGINS, '$FOLDER'"
+        done
+        sudo -u "$ORIGINAL_USER" dconf write "$DCONF_PATH" "$PLUGINS]"
+    fi
+
+    return 0
+}
+
+[ -n "$(logname 2>/dev/null)" ] && ORIGINAL_USER="$(logname)" || ORIGINAL_USER="$SUDO_USER"
+
+process_editor "$1" "$2" "$3" "xed" "/org/x/editor/plugins/active-plugins"
+if [ $? -ne 0 ]; then
+    process_editor "$1" "$2" "$3" "pluma" "/org/mate/pluma/active-plugins"
+    if [ $? -ne 0 ]; then
+        cat <<EOF
+editortoix editor(xed|pluma) action(add-remove) [activate]
+    editor: "xed" or "pluma" editor 
+    action: "add" or "remove" from the editor plugin list
+    activate: activate 
+EOF
+    fi
+fi

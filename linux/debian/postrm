@@ -2,4 +2,5 @@
 set -e
 rm -rf /usr/lib/x86_64-linux-gnu/xed/plugins/toix_*
 rm -rf /usr/lib/x86_64-linux-gnu/pluma/plugins/toix_*
+rm -rf /usr/lib/x86_64-linux-gnu/gedit/plugins/toix_*
 exit 0

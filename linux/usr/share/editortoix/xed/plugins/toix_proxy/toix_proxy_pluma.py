@@ -25,7 +25,7 @@ class ToIXProxyPluma(ToIXProxy):
         self._action_group = Gtk.ActionGroup(name=f"{self.editorId()}{id}PluginActions")
         self._action_group.add_actions(
             [(f"{id}Action", None, "IX: " + self._(info["Caption"]), info.get("ShortCut") or None, self._(info["Hint"]),
-              lambda w: self.exec_action(w))])
+              lambda w: self.exec_action())])
 
         manager.insert_action_group(self._action_group)
 

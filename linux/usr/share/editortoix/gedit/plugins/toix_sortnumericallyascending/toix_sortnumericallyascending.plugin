@@ -1,0 +1,15 @@
+[Plugin]
+Loader=python3
+Module=toix_sortnumericallyascending
+IAge=3
+Name=IX: Sort Numerically Ascending
+Description=Sorts Numerically Ascending
+Icon=gnome-mime-text-x-python
+Authors=Alexandre Bento Freire <devtoix@a-bentofreire>
+Copyright=Copyright @ 2024 Alexandre Bento Freire
+Website=https://www.devtoix.com/en/projects/editortoix
+Builtin=false
+Name[pt]=IX: Ordenar numericamente ascendente
+Description[pt]=Ordena numericamente ascendente
+Name[de]=IX: Numerisch aufsteigend sortieren
+Description[de]=Sorts Numerically Ascending

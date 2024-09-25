@@ -39,11 +39,15 @@ process_editor "$1" "$2" "$3" "xed" "/org/x/editor/plugins/active-plugins"
 if [ $? -ne 0 ]; then
     process_editor "$1" "$2" "$3" "pluma" "/org/mate/pluma/active-plugins"
     if [ $? -ne 0 ]; then
-        cat <<EOF
+
+        process_editor "$1" "$2" "$3" "gedit" "/org/gnome/gedit/plugins/active-plugins"
+        if [ $? -ne 0 ]; then
+            cat <<EOF
 editortoix editor(xed|pluma) action(add-remove) [activate]
     editor: "xed" or "pluma" editor 
     action: "add" or "remove" from the editor plugin list
     activate: activate 
 EOF
+        fi
     fi
 fi

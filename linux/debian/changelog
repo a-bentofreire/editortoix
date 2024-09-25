@@ -1,3 +1,9 @@
+editortoix (4.0.9) noble; urgency=low
+
+  * Add gedit editor support
+  
+ -- Alexandre Bento Freire <dev@a-bentofreire.com>  Wed, 25 Sep 2024 20:12:31 +0000
+
 editortoix (4.0.8) noble; urgency=low
 
   * Add pluma editor support

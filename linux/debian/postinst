@@ -7,6 +7,7 @@ case "$1" in
         [ -z "$2" ] && ACTIVATE="activate" || ACTIVATE=""
         /usr/bin/editortoix xed add "$ACTIVATE"
         /usr/bin/editortoix pluma add "$ACTIVATE"
+        /usr/bin/editortoix gedit add "$ACTIVATE"
         echo "EditorToIX plugins added"
         ;;
     *)

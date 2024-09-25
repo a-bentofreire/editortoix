@@ -11,12 +11,12 @@ lang = gettext.translation('editortoix', localedir, languages=['en', 'pt', 'de']
 lang.install()
 _ = lang.gettext
 
+
 class ToIXProxy:
     def __init__(self, plugin):
         self.plugin = plugin
 
     def do_activate(self):
-        self._views = {}
         self._insert_menu()
 
     def do_deactivate(self):
@@ -25,8 +25,11 @@ class ToIXProxy:
     def _(self, text):
         return _(text)
 
-    def exec_action(self, w):
-        doc = self.plugin.window.get_active_document()
+    def get_window(self):
+        return self.plugin.window
+
+    def exec_action(self):
+        doc = self.get_window().get_active_document()
         if doc is None:
             return
 

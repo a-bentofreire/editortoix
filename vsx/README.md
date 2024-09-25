@@ -2,14 +2,14 @@
 
 [EditorToIX](https://www.devtoix.com/en/projects/editortoix) are open-source utilities available for multiple code editors in form of extension or plugins.
 
-If you find this project useful, please, read the [Support this Project](https://www.devtoix.com/en/projects/editortoix#support-this-project) on how to contribute.  
+If you find this project useful, please, read the [Support this Project](https://www.devtoix.com/en/projects/editortoix#support-this-project) on how to contribute.
 
 ## Availability
 
 | Id  | Old Name | Code Editor |
 | ------------- | ------------- | ------------- |
 | **vsx** |  VscToIX | [Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=a-bentofreire.vsctoix)<br>[Cursor AI](https://www.cursor.com/)<br>[open-vsx.org](https://open-vsx.org/extension/a-bentofreire/vsctoix) |
-| **xed** | XedToIX | [Linux Mint Xed Editor](https://launchpad.net/~a-bentofreire/+archive/ubuntu/toix) (as plugins) |
+| **linux** | XedToIX | [Linux Mint Xed Editor](https://launchpad.net/~a-bentofreire/+archive/ubuntu/toix)<br>[Pluma Code Editor](https://mate-desktop.org/)<br>[Gedit](https://gedit-technology.github.io/apps/gedit/) |
 | **phoenix** | BracketsToIX | [Phoenix Code](https://phcode.dev/) |
 
 ## Available Languages
@@ -34,7 +34,7 @@ If you find this project useful, please, read the [Support this Project](https:/
 | Add Space before Uppercase | Word | vsx, phoenix |
 | Camel Case | Word | vsx, phoenix |
 | Capitalize | Word | vsx, phoenix |
-| Cycle Case | Word | vsx, xed, phoenix |
+| Cycle Case | Word | vsx, linux, phoenix |
 | Dash Case | Word | vsx, phoenix |
 | Dash To Underscore | Word | vsx, phoenix |
 | LowerCase | Word | phoenix |
@@ -58,15 +58,15 @@ If you find this project useful, please, read the [Support this Project](https:/
 | Line | Selection Policy | Code Editor |
 | ------------- | ------------- | ------------- |
 | Break Line At | Document | vsx, phoenix |
-| Indent One Space | Document | vsx, xed, phoenix |
+| Indent One Space | Document | vsx, linux, phoenix |
 | Join Lines | Document | vsx, phoenix |
-| Outdent One Space | Document | vsx, xed, phoenix |
-| Remove Duplicated Lines | Document | vsx, xed, phoenix |
-| Remove Empty Lines | Document | vsx, xed, phoenix |
-| Sort Numerically Ascending | Document | vsx, xed, phoenix |
-| Sort Numerically Descending | Document | vsx, xed, phoenix |
+| Outdent One Space | Document | vsx, linux, phoenix |
+| Remove Duplicated Lines | Document | vsx, linux, phoenix |
+| Remove Empty Lines | Document | vsx, linux, phoenix |
+| Sort Numerically Ascending | Document | vsx, linux, phoenix |
+| Sort Numerically Descending | Document | vsx, linux, phoenix |
 | Split Lines | Document | vsx, phoenix |
-| Trim Trailing | Document | xed, phoenix |
+| Trim Trailing | Document | linux, phoenix |
 
 | Insert | Selection Policy | Code Editor |
 | ------------- | ------------- | ------------- |
@@ -94,29 +94,29 @@ Linux Mint Xed Editor has the smaller subset of extensions.
 
 ## Demos - All Editors
   
-- `IX: Cycle Case`: Add a shortcut and cycle between different case modes in a breeze.  
+- `IX: Cycle Case`: Add a shortcut and cycle between different case modes in a breeze.
   
 ![Cycle Case](https://github.com/a-bentofreire/editortoix/raw/master/vsx/assets/demo/cycle-case.gif)
   
-- `IX: Indent One Space`, `IX: Outdent One Space`: Insert or remove one space only at the start of every line regardless of indention mode.  
+- `IX: Indent One Space`, `IX: Outdent One Space`: Insert or remove one space only at the start of every line regardless of indention mode.
   
 ![Indent/Outdent](https://github.com/a-bentofreire/editortoix/raw/master/vsx/assets/demo/indent-outdent-lines.gif)
 
 ## Demos - [vsx and phoenix Editors](#availability)
 
-- `IX: Extract Text` : Copy text patterns from a document to clipboard.  
+- `IX: Extract Text` : Copy text patterns from a document to clipboard.
 
 ![Extract Text](https://github.com/a-bentofreire/editortoix/raw/master/vsx/assets/demo/extract-text.gif)
 
-- `IX: Insert Text At Start`: Insert text with macros at the start of every line.  
+- `IX: Insert Text At Start`: Insert text with macros at the start of every line.
   
 ![Insert Text at Start](https://github.com/a-bentofreire/editortoix/raw/master/vsx/assets/demo/insert-text-at-start.gif)
   
-- `IX: Insert Text At End`: Insert text with macros at the end of every line.  
+- `IX: Insert Text At End`: Insert text with macros at the end of every line.
   
 ![Insert Text at End](https://github.com/a-bentofreire/editortoix/raw/master/vsx/assets/demo/insert-text-at-end.gif)
   
-- `IX: Join Lines`: Join text with macros.  
+- `IX: Join Lines`: Join text with macros.
   
 ![Join Lines](https://github.com/a-bentofreire/editortoix/raw/master/vsx/assets/demo/join-lines.gif)
   
@@ -125,7 +125,7 @@ Linux Mint Xed Editor has the smaller subset of extensions.
   
 ![Break Line At](https://github.com/a-bentofreire/editortoix/raw/master/vsx/assets/demo/break-line-at.gif)
 
-## Installation - [Linux Mint Xed Editor](#availability)
+## Installation - [Linux Mint Xed Editor](#availability) and [Pluma Code Editor](#availability)
 
 If you have previously installed `xedtoix`, you should uninstall first:
 
@@ -139,15 +139,19 @@ sudo apt-get update
 sudo apt install editortoix
 ```
 
-If you are updating from Linux Mint Software installer, you might have to activate the plugins on:  
+If you are updating from Linux Mint Software installer, you might have to activate the plugins on:
  Menu Edit -> Preferences -> Plugins
+
+If you install `Xed` or `Pluma` later, you can add or remove the plugins with:
+
+`sudo editortoix`
 
 ## Interface - [phoenix Editor](#availability)
   
 EditorToIX adds a top-menu called `IX`.
-To prevent from cluttering the menu with all the commands, only a few commands were added to the menu.  
-Use Command mapper to add which ones you prefer, and setup the shortcuts.  
-No default shortcuts were define to prevent collision with other plugins.  
+To prevent from cluttering the menu with all the commands, only a few commands were added to the menu.
+Use Command mapper to add which ones you prefer, and setup the shortcuts.
+No default shortcuts were define to prevent collision with other plugins.
 
 ## Utility Description
 
@@ -170,7 +174,7 @@ No default shortcuts were define to prevent collision with other plugins.
 | Insert Text At Start | | **before**:<br>`red`<br>`green`<br><br>**after**:<br>`expr: const \e{upper} =`<br>`const RED = red`<br>`const GREEN = green`|
 | Insert UUID | | `7fff60f8-91e8-40ba-9053-56b0f3a487f0`|
 | Join Lines | Joins lines adding the computed expression at the end of every line |**before**:<br>`red`<br>`green`<br><br>**after**:<br>`expr:(x\c{X0A}),`<br>`red(x0A),green(x0B)`|
-| LowerCase | | **before**:`classNameFunc`<br>**after**:`classnamefunc`|  
+| LowerCase | | **before**:`classNameFunc`<br>**after**:`classnamefunc`|
 | Mixer | Mixes lines of different sections. | **before**:<br>`// section`<br>`abc`<br>`cde`<br>`// end-section`<br>`// section`<br>`123`<br>`345`<br>`// section`<br>**after**:<br>`abc`<br>`123`<br>`cde`<br>`345` |
 | Outdent One Space | Removes one space to the beginning of each line | |
 | Regnize | Adds slash to regular expression metachars | **before**: `(\w+)[A-Z]a*b+text`<br>**after**: `\(\\w\+\)\[A-Z\]a\*b\+text`|
@@ -187,7 +191,7 @@ No default shortcuts were define to prevent collision with other plugins.
 | Trim Trailing | | Removes trailing spaces of each line |
 | Underscore To Dash | | **before**: `find_deep_first`<br>**after**: `find-deep-first`|
 | Unix To Win Slash | Converts slashes to backslashes | **before**: `chocolate/candy`<br>**after**: `chocolate\candy`|
-| UpperCase | | **before**:`classNameFunc`<br>**after**:`CLASSNAMEFUNC`|  
+| UpperCase | | **before**:`classNameFunc`<br>**after**:`CLASSNAMEFUNC`|
 | Url Decode | | **before**: `https%3A%2F%2Fgithub.com`<br>**after**: `https://github.com`|
 | Url Encode | | **before**: `https://github.com`<br>**after**: `https%3A%2F%2Fgithub.com`|
 | Win To Unix Slash | Converts backslashes to slashes | **before**: `chocolate\candy`<br>**after**: `chocolate/candy`|
@@ -201,17 +205,17 @@ No default shortcuts were define to prevent collision with other plugins.
 
 ### [vsx Editors](#availability)
 
-Every utility supports multiple cursors and multiple line selections.  
-However, It differs in the way each utility category handles the selections.  
-For every cursor, each line is process individually and the counter is increased per line.  
+Every utility supports multiple cursors and multiple line selections.
+However, It differs in the way each utility category handles the selections.
+For every cursor, each line is process individually and the counter is increased per line.
 
-- Line Utilities:  
-  - If no text is selected then all the document text is used.  
-  - If part of the line is selected then all the line is used  
-- Transform Text Utilities:  
-  - If no text is selected then all the document text is used.  
+- Line Utilities:
+  - If no text is selected then all the document text is used.
+  - If part of the line is selected then all the line is used
+- Transform Text Utilities:
+  - If no text is selected then all the document text is used.
 - Insert Text Utilities:
-  - If no text is selected then the cursor is the insertion point.  
+  - If no text is selected then the cursor is the insertion point.
   - If multiple lines are selected then is inserted at start/end of every line.
 
 ### [Phoenix Code](#availability)
@@ -226,39 +230,39 @@ If no text is selected, a command will use:
 
 ### [Linux Mint Xed Editor](#availability)
 
-- Document Plugins:  
-  - If no text is selected then all the document text is used.  
-  - If part of the line is selected then all the line is used  
-- Word plugins:  
-  - If no text is selected then word surrounding cursor is used.  
+- Document Plugins:
+  - If no text is selected then all the document text is used.
+  - If part of the line is selected then all the line is used
+- Word plugins:
+  - If no text is selected then word surrounding cursor is used.
 
 ## Expressions - [vsx](#availability)
 
-Some of the utilities support expressions  
-An expression is a text supporting the following metachars:  
+Some of the utilities support expressions
+An expression is a text supporting the following metachars:
 
 - \n - newline
 - \t - tab
-- \c{start-value} - counter with optional start value  
-  - \c  0,1,2,...  
-  - \c{10} 10,11,12,...  
-  - \c{x00a} x00a,x00b,x00c,...  
-  - \c{XF} xF,x10,x11,...  
+- \c{start-value} - counter with optional start value
+  - \c  0,1,2,...
+  - \c{10} 10,11,12,...
+  - \c{x00a} x00a,x00b,x00c,...
+  - \c{XF} xF,x10,x11,...
 
-- \e{func} - transforms the selected text (line by line)  
-    function list:  
-  - upper - UpperCase  
-  - lower - LowerCase  
-  - length - Selected text length  
-  - capitalize  
-  - isodate  
-  - isotimedate  
-  - uuid  
+- \e{func} - transforms the selected text (line by line)
+    function list:
+  - upper - UpperCase
+  - lower - LowerCase
+  - length - Selected text length
+  - capitalize
+  - isodate
+  - isotimedate
+  - uuid
 
 ## Replace Recipes - [vsx](#availability)
 
-Replace Recipes must be added manually to the `settings.json`.  
-This tool is still in beta phase.  
+Replace Recipes must be added manually to the `settings.json`.
+This tool is still in beta phase.
 
 | Field  | Type | Description |
 | ------------- | ------------- | ------------- |
@@ -290,7 +294,7 @@ ex:
 
 If you find this project useful, consider supporting it:
 
-- Donate:  
+- Donate:
 [![Donate via PayPal](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/blue-rect-paypal-34px.png)](https://www.paypal.com/donate/?business=MCZDHYSK6TCKJ&no_recurring=0&item_name=Support+Open+Source&currency_code=EUR)
 
 - Visit the project [homepage](https://www.devtoix.com/en/projects/editortoix)
@@ -312,6 +316,6 @@ MIT License - [vsx and phoenix Editors](#availability)
 
 GPLv2 License - [Linux Mint Xed Editor](#availability)
 
-## Copyrights  
+## Copyrights
   
-© 2014-2024 [Alexandre Bento Freire](https://www.a-bentofreire.com)  
+© 2014-2024 [Alexandre Bento Freire](https://www.a-bentofreire.com)

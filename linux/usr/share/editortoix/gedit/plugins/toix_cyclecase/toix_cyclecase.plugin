@@ -1,0 +1,15 @@
+[Plugin]
+Loader=python3
+Module=toix_cyclecase
+IAge=3
+Name=IX: Cycle Case
+Description=Cycle Case in the selected text
+Icon=gnome-mime-text-x-python
+Authors=Alexandre Bento Freire <devtoix@a-bentofreire>
+Copyright=Copyright @ 2024 Alexandre Bento Freire
+Website=https://www.devtoix.com/en/projects/editortoix
+Builtin=false
+Name[pt]=IX: Comutar o título da Letra
+Description[pt]=Comuta o título da Letra
+Name[de]=IX: Großschreibung umschalten
+Description[de]=Cycles Case

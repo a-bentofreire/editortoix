@@ -2,7 +2,7 @@
     "name": "vsctoix",
     "displayName": "EditorToIX",
     "description": "extract,join,split,encode,mix,change case and slash,del dup,regex, and more",
-    "version": "4.0.9",
+    "version": "4.0.10",
     "publisher": "a-bentofreire",
     "keywords": [
         "transform",
@@ -38,7 +38,7 @@
     },
     "license": "SEE LICENSE IN LICENSE.txt",
     "engines": {
-        "vscode": "^1.90.0"
+        "vscode": "^1.89.0"
     },
     "homepage": "https://www.devtoix.com/en/projects/editortoix/",
     "bugs": "https://github.com/a-bentofreire/editortoix/issues",
@@ -238,7 +238,7 @@
     },
     "devDependencies": {
         "@types/node": "^20.14.2",
-        "@types/vscode": "^1.90.0",
+        "@types/vscode": "^1.89.0",
         "@typescript-eslint/eslint-plugin": "^7.13.0",
         "@typescript-eslint/parser": "^7.13.0",
         "@vscode/l10n-dev": "^0.0.35",
@@ -250,5 +250,8 @@
         "id": "7be54cff-39ea-4a8f-bc54-aaecc06d6318",
         "publisherDisplayName": "Alexandre Bento Freire",
         "publisherId": "2d11840a-7f14-4779-ab8f-bf37482edd5f"
+    },
+    "dependencies": {
+        "@vscode/l10n": "^0.0.18"
     }
 }

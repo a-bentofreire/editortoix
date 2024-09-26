@@ -8,7 +8,7 @@ If you find this project useful, please, read the [Support this Project](https:/
 
 | Id  | Old Name | Code Editor |
 | ------------- | ------------- | ------------- |
-| **vsx** |  VscToIX | [Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=a-bentofreire.vsctoix)<br>[Cursor AI](https://www.cursor.com/)<br>[open-vsx.org](https://open-vsx.org/extension/a-bentofreire/vsctoix) |
+| **vsx** |  VscToIX | [Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=a-bentofreire.vsctoix)<br>[Cursor AI](https://www.cursor.com/)<br>[Google Project IDX](https://idx.dev/)<br>[open-vsx.org](https://open-vsx.org/extension/a-bentofreire/vsctoix) |
 | **linux** | XedToIX | [Linux Mint Xed Editor](https://launchpad.net/~a-bentofreire/+archive/ubuntu/toix)<br>[Pluma Code Editor](https://mate-desktop.org/)<br>[Gedit](https://gedit-technology.github.io/apps/gedit/) |
 | **phoenix** | BracketsToIX | [Phoenix Code](https://phcode.dev/) |
 
@@ -125,7 +125,7 @@ Linux Mint Xed Editor has the smaller subset of extensions.
   
 ![Break Line At](https://github.com/a-bentofreire/editortoix/raw/master/vsx/assets/demo/break-line-at.gif)
 
-## Installation - [Linux Mint Xed Editor](#availability) and [Pluma Code Editor](#availability)
+## Installation - [Linux Mint Xed Editor](#availability), [Pluma Code Editor](#availability) and [Gedit Code Editor](#availability)
 
 If you have previously installed `xedtoix`, you should uninstall first:
 
@@ -142,7 +142,7 @@ sudo apt install editortoix
 If you are updating from Linux Mint Software installer, you might have to activate the plugins on:
  Menu Edit -> Preferences -> Plugins
 
-If you install `Xed` or `Pluma` later, you can add or remove the plugins with:
+If you install `Xed`, `Pluma` or `Gedit` later, you can add or remove the plugins with:
 
 `sudo editortoix`
 

@@ -7,7 +7,7 @@ import gettext
 import os
 
 localedir = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'locale')
-lang = gettext.translation('editortoix', localedir, languages=['en', 'pt', 'de'], fallback=True)
+lang = gettext.translation('editortoix', localedir, fallback=True)
 lang.install()
 _ = lang.gettext
 

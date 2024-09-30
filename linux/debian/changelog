@@ -1,3 +1,9 @@
+editortoix (4.0.10) noble; urgency=low
+
+  * Fix dynamic translations
+  
+ -- Alexandre Bento Freire <dev@a-bentofreire.com>  Mon, 30 Sep 2024 20:24:12 +0000
+
 editortoix (4.0.9) noble; urgency=low
 
   * Add gedit editor support

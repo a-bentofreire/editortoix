@@ -9,5 +9,5 @@ Homepage: https://www.devtoix.com/en/projects/editortoix
 Package: editortoix
 Architecture: any
 Depends: python3, dconf-cli, ${misc:Depends}
-Description: Linux Mint XEd and Pluma plugin collection
+Description: Linux Mint XEd, Pluma and Gedit plugin collection
 Conflicts: xedtoix

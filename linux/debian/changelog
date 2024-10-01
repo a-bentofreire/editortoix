@@ -1,8 +1,14 @@
+editortoix (4.0.11) noble; urgency=low
+
+  * Add Reverse Lines
+  
+ -- Alexandre Bento Freire <dev@a-bentofreire.com>  Tue, 01 Oct 2024 03:54:55 +0000
+
 editortoix (4.0.10) noble; urgency=low
 
   * Fix dynamic translations
   
- -- Alexandre Bento Freire <dev@a-bentofreire.com>  Mon, 30 Sep 2024 20:24:12 +0000
+ -- Alexandre Bento Freire <dev@a-bentofreire.com>  Tue, 01 Oct 2024 03:36:13 +0000
 
 editortoix (4.0.9) noble; urgency=low
 

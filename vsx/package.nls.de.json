@@ -18,6 +18,7 @@
   "toix.mixer": "IX: Mixer",
   "toix.removeDuplicatedLines": "IX: Doppelte Zeilen entfernen",
   "toix.removeEmptyLines": "IX: Leere Zeilen entfernen",
+  "toix.reverseLines": "IX: Umgekehrte Linien",
   "toix.joinLines": "IX: Zeilen verbinden",
   "toix.splitLines": "IX: Zeilen trennen",
   "toix.sortNumericallyAscending": "IX: Numerisch aufsteigend sortieren",

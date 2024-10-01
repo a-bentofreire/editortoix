@@ -51,6 +51,14 @@ msgstr "Remove Empty Lines"
 msgid "Removes Empty Lines"
 msgstr "Removes Empty Lines"
 
+# plugin-name: reverselines
+msgid "Reverse Lines"
+msgstr "Reverse Lines"
+
+# plugin-desc: reverselines
+msgid "Reverses Lines"
+msgstr "Reverses Lines"
+
 # plugin-name: sortnumericallyascending
 msgid "Sort Numerically Ascending"
 msgstr "Sort Numerically Ascending"

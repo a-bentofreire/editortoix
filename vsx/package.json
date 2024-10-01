@@ -2,7 +2,7 @@
     "name": "vsctoix",
     "displayName": "EditorToIX",
     "description": "extract,join,split,encode,mix,change case and slash,del dup,regex, and more",
-    "version": "4.0.10",
+    "version": "4.0.11",
     "publisher": "a-bentofreire",
     "keywords": [
         "transform",
@@ -166,6 +166,10 @@
             {
                 "command": "editor.removeEmptyLines",
                 "title": "%toix.removeEmptyLines%"
+            },
+            {
+                "command": "editor.reverseLines",
+                "title": "%toix.reverseLines%"
             },
             {
                 "command": "editor.joinLines",

@@ -70,6 +70,20 @@ export namespace lineutilities {
   }
 
   // ------------------------------------------------------------------------
+  // $utility: reverseLines
+  //
+  // $keywords: remove, empty
+  // $eg: first|second|third->third|second|first
+  // ------------------------------------------------------------------------
+
+  export function reverseLines(): void {
+    um.utilityManager({
+      utilType: um.TIXUtilityType.utLinesUtility,
+      sp: um.TIXSelPolicy.All,
+    }, (up): string[] => up.inlines.reverse());
+  }
+
+  // ------------------------------------------------------------------------
   // $utility: joinLines
   //
   // $keywords: join, lines

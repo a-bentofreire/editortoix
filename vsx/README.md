@@ -63,6 +63,7 @@ If you find this project useful, please, read the [Support this Project](https:/
 | Outdent One Space | Document | vsx, linux, phoenix |
 | Remove Duplicated Lines | Document | vsx, linux, phoenix |
 | Remove Empty Lines | Document | vsx, linux, phoenix |
+| Reverse Lines | Document | vsx, linux |
 | Sort Numerically Ascending | Document | vsx, linux, phoenix |
 | Sort Numerically Descending | Document | vsx, linux, phoenix |
 | Split Lines | Document | vsx, phoenix |
@@ -182,6 +183,7 @@ No default shortcuts were define to prevent collision with other plugins.
 | Remove Empty Lines| Removes empty lines |**before**:<br>`first`<br><br>`second`<br><br>**after**:<br><br>`first`<br>`second`|
 | Replace Recipes | Replaces text from a list of pre-defined recipes | |
 | Reverse Assignment | Reverses the terms of assignments or equal/different comparisons |**before**: `x == y[x] + 5`<br>**after**: `y[x] + 5 == x`|
+| Reverse Lines| Reverse lines |**before**:<br>`first`<br>`second`<br>`third`<br>**after**:<br>`third`<br>`second`<br>`first`|
 | Single To Double Slash | | **before**: `find\nagain`<br>**after**: `find\\\nagain`|
 | Sort Numerically Ascending | For each line uses the first number as sort key |**before**:<br>`10. red`<br>`2. green`<br><br>**after**:<br><br>`2. green`<br>`10. red`|
 | Sort Numerically Descending | For each line uses the first number as sort key |**before**:<br>`10. red`<br>`2. |

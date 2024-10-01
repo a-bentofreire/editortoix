@@ -34,6 +34,7 @@ export const utilityList: TUtilityDef[] = [
   { f: transformutilities.mixer, id: 'editor.mixer' },
   { f: lineutilities.removeDuplicatedLines, id: 'editor.removeDuplicatedLines' },
   { f: lineutilities.removeEmptyLines, id: 'editor.removeEmptyLines' },
+  { f: lineutilities.reverseLines, id: 'editor.reverseLines' },
   { f: lineutilities.joinLines, id: 'editor.joinLines' },
   { f: lineutilities.splitLines, id: 'editor.splitLines' },
   { f: lineutilities.sortNumericallyAscending, id: 'editor.sortNumericallyAscending' },

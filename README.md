@@ -1,5 +1,8 @@
 # Code Editor Utility Belt
 
+![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/a-bentofreire.vsctoix?label=vscode)
+![GitHub Repo stars](https://img.shields.io/github/stars/a-bentofreire/editortoix)
+
 [EditorToIX](https://www.devtoix.com/en/projects/editortoix) are open-source utilities available for multiple code editors in form of extension or plugins.
 
 If you find this project useful, please, read the [Support this Project](https://www.devtoix.com/en/projects/editortoix#support-this-project) on how to contribute.
@@ -297,7 +300,10 @@ ex:
 If you find this project useful, consider supporting it:
 
 - Donate:
+
 [![Donate via PayPal](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/blue-rect-paypal-34px.png)](https://www.paypal.com/donate/?business=MCZDHYSK6TCKJ&no_recurring=0&item_name=Support+Open+Source&currency_code=EUR)
+
+[![Buy me a Coffee](https://www.devtoix.com/assets/buymeacoffee-small.png)](https://buymeacoffee.com/abentofreire)
 
 - Visit the project [homepage](https://www.devtoix.com/en/projects/editortoix)
 - Give the project a ⭐ on [Github](https://github.com/a-bentofreire/editortoix)
@@ -316,7 +322,7 @@ If you find this project useful, consider supporting it:
 
 MIT License - [vsx and phoenix Editors](#availability)
 
-GPLv2 License - [Linux Mint Xed Editor](#availability)
+GPLv2 License - [Linux Code Editors](#availability)
 
 ## Copyrights
   

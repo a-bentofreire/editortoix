@@ -139,6 +139,3 @@ export namespace ep {
   }
 
 }
-
-declare const module;
-module.exports = { ep };

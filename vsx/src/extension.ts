@@ -6,7 +6,6 @@
 
 import * as vscode from 'vscode';
 import * as utilityList from './common/utility-list';
-import * as l10n from '@vscode/l10n';
 
 // ------------------------------------------------------------------------
 //                               Startup Code

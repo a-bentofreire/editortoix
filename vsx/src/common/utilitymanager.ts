@@ -5,7 +5,6 @@
 // ------------------------------------------------------------------------
 
 import * as vscode from 'vscode';
-import { l10n, window } from 'vscode';
 
 export namespace um {
 
@@ -100,13 +99,13 @@ export namespace um {
             const userinputs = [];
 
             for (let i = 0; i < reqCount; i++) {
-                let inputReq = IXUserInputReqs[i];
+                const inputReq = IXUserInputReqs[i];
                 if (inputReq.prompt) {
-                    inputReq.prompt = l10n.t(inputReq.prompt);
+                    inputReq.prompt = _(inputReq.prompt);
                 }
                 const userinput = inputReq.items
-                    ? await window.showQuickPick(inputReq.items, { placeHolder: inputReq.placeHolder })
-                    : await window.showInputBox(inputReq);
+                    ? await vscode.window.showQuickPick(inputReq.items, { placeHolder: inputReq.placeHolder })
+                    : await vscode.window.showInputBox(inputReq);
                 if (userinput === undefined) {
                     return;
                 }
@@ -304,7 +303,8 @@ export namespace um {
         const vscConfig = vscode.workspace.getConfiguration("vsctoix");
         return vscConfig.get(itemName);
     }
-}
 
-declare const module;
-module.exports = { um };
+    export function _(msg: string) {
+        return vscode.l10n !== undefined ? vscode.l10n.t(msg) : msg;
+    }
+}

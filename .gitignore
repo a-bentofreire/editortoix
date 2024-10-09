@@ -9,7 +9,7 @@ phoenix/**.js.map
 phoenix/.sass-cache/*
 phoenix/nls/*-dev1.tsv
 phoenix/tests/
-vsx/out
+vsx/*.map
 .vscode-test/
 .vsix
 xed/debian/editortoix/*

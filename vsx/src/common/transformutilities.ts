@@ -438,6 +438,3 @@ export namespace transformutilities {
       });
   }
 }
-
-declare const module;
-module.exports = { transformutilities };

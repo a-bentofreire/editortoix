@@ -42,12 +42,9 @@ export namespace clipboardutilities {
           return all;
         });
         vscode.env.clipboard.writeText(foundPatterns.join('\n')).then(() => {
-            vscode.window.showInformationMessage(vscode.l10n.t('Text copied to clipboard!'));
+            vscode.window.showInformationMessage(um._('Text copied to clipboard!'));
         });
       });
   }
 
 }
-
-declare const module;
-module.exports = { clipboardutilities };

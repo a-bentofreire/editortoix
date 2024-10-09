@@ -3,7 +3,7 @@
 ![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/a-bentofreire.vsctoix?label=vscode)
 ![GitHub Repo stars](https://img.shields.io/github/stars/a-bentofreire/editortoix)
 
-[EditorToIX](https://www.devtoix.com/en/projects/editortoix) are open-source utilities available for multiple code editors in form of extension or plugins.
+[EditorToIX](https://www.devtoix.com/en/projects/editortoix) are open-source text utilities available for multiple code editors in form of extension or plugins.
 
 If you find this project useful, please, read the [Support this Project](https://www.devtoix.com/en/projects/editortoix#support-this-project) on how to contribute.
 

@@ -2,7 +2,7 @@
     "name": "vsctoix",
     "displayName": "EditorToIX",
     "description": "extract,join,split,encode,mix,change case and slash,del dup,regex, and more",
-    "version": "4.0.11",
+    "version": "4.0.12",
     "publisher": "a-bentofreire",
     "keywords": [
         "transform",
@@ -51,7 +51,7 @@
         "Other"
     ],
     "activationEvents": [],
-    "main": "./out/extension",
+    "main": "./bundle.js",
     "l10n": "./l10n",
     "contributes": {
         "configuration": {
@@ -231,8 +231,9 @@
     },
     "scripts": {
         "vscode:prepublish": "../l10n/convert-l10n.sh && cp ../README.md README.md && npm run compile",
-        "compile": "tsc -p ./",
-        "watch": "tsc -watch -p ./",
+        "compile": "npm run check-types && node esbuild.js --production",
+        "compile-dev": "npm run check-types && node esbuild.js",
+        "check-types": "tsc --noEmit",
         "build-l10n": "vscode-l10n-dev extract --outDir i18n",
         "publish": "vsce publish",
         "lint": "eslint . --ext .ts,.tsx",
@@ -247,6 +248,7 @@
         "@typescript-eslint/parser": "^7.13.0",
         "@vscode/l10n-dev": "^0.0.35",
         "@vscode/test-electron": "^2.4.0",
+        "esbuild": "^0.24.0",
         "eslint": "^8.57.0",
         "typescript": "^5.4.5"
     },
@@ -254,8 +256,5 @@
         "id": "7be54cff-39ea-4a8f-bc54-aaecc06d6318",
         "publisherDisplayName": "Alexandre Bento Freire",
         "publisherId": "2d11840a-7f14-4779-ab8f-bf37482edd5f"
-    },
-    "dependencies": {
-        "@vscode/l10n": "^0.0.18"
     }
 }

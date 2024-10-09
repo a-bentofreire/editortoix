@@ -99,6 +99,3 @@ export namespace insertutilities {
   }
 
 }
-
-declare const module;
-module.exports = { insertutilities };

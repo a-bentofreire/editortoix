@@ -229,7 +229,7 @@ export namespace lineutilities {
       at = start + maxChars;
       if (!toBreakWords) {
         stest = line.substring(start, at).replace(/[\w_]/g, '0');
-        for (at -= start; at > 0 && stest[at - 1] === '0'; at--) { }
+        for (at -= start; at > 0 && stest[at - 1] === '0'; at--);
         if ((!at) && (stest[0] === '0')) {
           at = maxChars;
         }
@@ -317,6 +317,3 @@ export namespace lineutilities {
       });
   }
 }
-
-declare const module;
-module.exports = { lineutilities };

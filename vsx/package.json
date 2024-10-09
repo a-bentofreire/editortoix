@@ -2,7 +2,7 @@
     "name": "vsctoix",
     "displayName": "EditorToIX",
     "description": "extract,join,split,encode,mix,change case and slash,del dup,regex, and more",
-    "version": "4.0.12",
+    "version": "4.0.13",
     "publisher": "a-bentofreire",
     "keywords": [
         "transform",
@@ -52,6 +52,7 @@
     ],
     "activationEvents": [],
     "main": "./bundle.js",
+    "browser": "./bundle.js",
     "l10n": "./l10n",
     "contributes": {
         "configuration": {
@@ -238,6 +239,7 @@
         "publish": "vsce publish",
         "lint": "eslint . --ext .ts,.tsx",
         "test": "npm run compile && node ./node_modules/vscode/bin/test",
+        "test-web": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=.",
         "gen-utilities-data": "cd src/tools && node ../../out/tools/gen-utilities-data.js",
         "postinstall": "node ./node_modules/vscode/bin/install"
     },
@@ -248,6 +250,7 @@
         "@typescript-eslint/parser": "^7.13.0",
         "@vscode/l10n-dev": "^0.0.35",
         "@vscode/test-electron": "^2.4.0",
+        "@vscode/test-web": "^0.0.62",
         "esbuild": "^0.24.0",
         "eslint": "^8.57.0",
         "typescript": "^5.4.5"

@@ -11,7 +11,7 @@ If you find this project useful, please, read the [Support this Project](https:/
 
 | Id  | Old Name | Code Editor |
 | ------------- | ------------- | ------------- |
-| **vsx** |  VscToIX | [Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=a-bentofreire.vsctoix)<br>[Cursor AI](https://www.cursor.com/)<br>[Google Project IDX](https://idx.dev/)<br>[open-vsx.org](https://open-vsx.org/extension/a-bentofreire/vsctoix) |
+| **vsx** |  VscToIX | [Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=a-bentofreire.vsctoix)<br>[Cursor AI](https://www.cursor.com/)<br>[Google Project IDX](https://idx.dev/)<br>[open-vsx.org](https://open-vsx.org/extension/a-bentofreire/vsctoix)<hr>[vscode.dev](https://vscode.dev)<br>[github.dev](https://github.dev/)|
 | **linux** | XedToIX | [Linux Mint Xed Editor](https://launchpad.net/~a-bentofreire/+archive/ubuntu/toix)<br>[Pluma Code Editor](https://mate-desktop.org/)<br>[Gedit](https://gedit-technology.github.io/apps/gedit/) |
 | **phoenix** | BracketsToIX | [Phoenix Code](https://phcode.dev/) |
 

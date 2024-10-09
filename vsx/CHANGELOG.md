@@ -4,31 +4,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [4.0.13]
+### Updated
+- Updated package.json to support web code editors.
+
+
+## [4.0.12]
+### Updated
+- Updated code to be bundled.
+
 ## [4.0.11]
 ### Added
-- Add Reverse Lines
+- Add Reverse Lines.
 
 ## [4.0.7]
 ### Updated
 - Remove copy-paste package dependency.
 - Fix dynamic Portuguese translations.
 - Add German translations.
-- Add languages to Readme.md.
+- Add languages to README.md.
 
 ## [4.0.6]
 ### Updated
-- Improve Readme.md.
+- Improve README.md.
 - Improve translations.
 
 ## [4.0.5]
 ### Updated
-- Improve Readme.md.
+- Improve README.md.
 - Change Icon.
 - Support translations.
 
 ## [4.0.1]
 ### Updated
-- Improve Readme.md.
+- Improve README.md.
 - Fix Capitalize issue.
 
 ## [4.0.0]

@@ -10,6 +10,7 @@ phoenix/.sass-cache/*
 phoenix/nls/*-dev1.tsv
 phoenix/tests/
 vsx/*.map
+vsx/.vscode-test-web/
 .vscode-test/
 .vsix
 xed/debian/editortoix/*

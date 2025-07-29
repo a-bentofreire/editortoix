@@ -250,7 +250,7 @@
         "@typescript-eslint/parser": "^7.13.0",
         "@vscode/l10n-dev": "^0.0.35",
         "@vscode/test-electron": "^2.4.0",
-        "@vscode/test-web": "^0.0.62",
+        "@vscode/test-web": "^0.0.71",
         "esbuild": "^0.25.0",
         "eslint": "^8.57.0",
         "typescript": "^5.4.5"
